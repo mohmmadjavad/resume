@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Resume — Mohammad Javad Mahmoudi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg: #07050f;
+    --s2: #120e20;
+    --border: rgba(168,85,247,0.2);
+    --accent: #a855f7;
+    --accent2: #818cf8;
+    --accent3: #e879f9;
+    --text: #ede9fe;
+    --muted: #94a3b8;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Vazirmatn', sans-serif;
+    overflow: hidden;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 8mm 9mm 7mm;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    position: relative;
+  }
+
+  /* Grid background */
+  .page::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(168,85,247,0.03) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(168,85,247,0.03) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events:none;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 64px;
+    gap: 10px;
+    align-items: start;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(168,85,247,0.4);
+    position: relative;
+    z-index:1;
+    flex-shrink: 0;
+  }
+  .header::after {
+    content:''; position:absolute; bottom:-1px; right:0;
+    width:80px; height:2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+  }
+
+  .badge {
+    font-family:'JetBrains Mono',monospace;
+    font-size:7px; color:var(--accent);
+    letter-spacing:0.2em; text-transform:uppercase;
+    margin-bottom:3px; opacity:0.85;
+    display:flex; align-items:center; gap:6px;
+  }
+  .badge::before { content:''; width:16px; height:1px; background:var(--accent); display:inline-block; }
+
+  .name-fa {
+    font-size:26px; font-weight:900; line-height:1.1;
+    color: var(--accent);
+    margin-bottom:2px;
+  }
+  .name-en {
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px; color:var(--muted); line-height:1; margin-bottom:5px;
+    letter-spacing:0.05em;
+  }
+  .title-row { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+  .title-fa { font-size:9px; font-weight:500; opacity:0.85; }
+  .title-en {
+    font-family:'JetBrains Mono',monospace; font-size:8px; color:var(--accent2);
+    background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.25);
+    padding:2px 8px; border-radius:10px;
+  }
+  .contacts { display:flex; flex-wrap:wrap; gap:3px; }
+  .ci {
+    display:flex; align-items:center; gap:4px;
+    background:var(--s2); border:1px solid var(--border);
+    padding:3px 8px; font-family:'JetBrains Mono',monospace;
+    font-size:7px; color:var(--text); border-radius:3px;
+    text-decoration:none;
+  }
+  .ci svg { width:9px; height:9px; flex-shrink:0; }
+
+  /* Profile img */
+  .profile {
+    width:60px; height:60px; border-radius:50%;
+    border:2px solid var(--accent);
+    background:var(--s2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:14px;
+    font-weight:700; color:var(--accent);
+    overflow:hidden; flex-shrink:0;
+  }
+  .profile img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
+
+  /* ── MAIN GRID ── */
+  .main {
+    display: grid;
+    grid-template-columns: 90mm 1fr;
+    gap: 9px;
+    flex: 1;
+    align-items: start;
+    position: relative;
+    z-index:1;
+    min-height: 0;
+  }
+
+  /* ── SECTION TITLE ── */
+  .stitle {
+    font-size:8.5px; font-weight:700;
+    color:var(--text); text-transform:uppercase;
+    letter-spacing:0.1em;
+    border-right:2px solid var(--accent);
+    padding-right:6px; margin-bottom:5px;
+    margin-top:7px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .stitle:first-child { margin-top:0; }
+  .stitle span {
+    font-family:'JetBrains Mono',monospace;
+    font-size:6px; color:var(--accent); letter-spacing:0.15em; opacity:0.7;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:3px; margin-bottom:0;
+  }
+  .sk {
+    background:rgba(168,85,247,0.07); border:1px solid var(--border);
+    padding:4px 6px; border-radius:3px;
+  }
+  .sk-name { font-size:7px; font-weight:600; margin-bottom:1px; }
+  .sk-en { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--muted); }
+  .sk-bar { height:2px; background:rgba(168,85,247,0.15); margin-top:3px; border-radius:1px; overflow:hidden; }
+  .sk-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent3)); border-radius:1px; }
+
+  /* ── EXPERIENCE ── */
+  .exp-item { padding-right:10px; margin-bottom:5px; position:relative; }
+  .exp-item::before { content:''; position:absolute; right:0; top:5px; bottom:-5px; width:1px; background:linear-gradient(180deg,var(--accent),transparent); opacity:0.3; }
+  .exp-item:last-child::before { display:none; }
+  .exp-dot { position:absolute; right:-3px; top:5px; width:7px; height:7px; background:var(--accent); border-radius:50%; }
+  .exp-period { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--accent); margin-bottom:1px; }
+  .exp-role-fa { font-size:8px; font-weight:700; }
+  .exp-role-en { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--muted); margin-bottom:2px; }
+  .exp-desc { font-size:6.5px; line-height:1.5; opacity:0.8; }
+
+  /* ── EDU + LANG ── */
+  .edu-lang { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+  .edu-card {
+    background:rgba(168,85,247,0.06); border:1px solid var(--border);
+    padding:6px 8px; border-radius:3px;
+  }
+  .edu-deg-fa { font-size:7.5px; font-weight:700; margin-bottom:1px; }
+  .edu-deg-en { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--accent2); margin-bottom:2px; }
+  .edu-school { font-size:6px; color:var(--muted); }
+  .edu-tags { display:flex; gap:2px; flex-wrap:wrap; margin-top:3px; }
+  .etag {
+    font-family:'JetBrains Mono',monospace; font-size:5.5px;
+    padding:1.5px 5px; background:rgba(168,85,247,0.08);
+    border:1px solid var(--border); color:var(--accent); border-radius:2px;
+  }
+  .lang-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
+  .lang-item { background:rgba(168,85,247,0.06); border:1px solid var(--border); padding:5px 6px; border-radius:3px; }
+  .lang-fa { font-size:7px; font-weight:600; margin-bottom:1px; }
+  .lang-en { font-family:'JetBrains Mono',monospace; font-size:5.5px; color:var(--muted); margin-bottom:3px; }
+  .dots { display:flex; gap:2.5px; }
+  .dot { width:5px; height:5px; border-radius:50%; border:1px solid var(--border); }
+  .dot.on { background:var(--accent); border-color:var(--accent); }
+
+  /* ── RIGHT COL: PROJECTS (2-column grid) ── */
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .pc {
+    background:rgba(168,85,247,0.05); border:1px solid var(--border);
+    border-radius:4px; padding:6px 8px; position:relative;
+  }
+  .pc.feat {
+    grid-column: 1 / -1;
+    border-color:rgba(168,85,247,0.3);
+  }
+  .pc-tag {
+    font-family:'JetBrains Mono',monospace; font-size:6px;
+    color:#f59e0b; text-transform:uppercase; letter-spacing:0.1em;
+    margin-bottom:2px; display:flex; align-items:center; gap:3px;
+  }
+  .pc-tag::before { content:'▸'; color:var(--accent); font-size:5px; }
+  .pc-title-fa { font-size:9px; font-weight:700; margin-bottom:1px; }
+  .pc-title-en { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--muted); margin-bottom:3px; }
+  .pc-desc { font-size:6.5px; line-height:1.55; opacity:0.8; margin-bottom:3px; }
+  .pc-tech { display:flex; flex-wrap:wrap; gap:2px; }
+  .ptag {
+    font-family:'JetBrains Mono',monospace; font-size:5.5px;
+    padding:1.5px 5px; background:rgba(168,85,247,0.08);
+    border:1px solid rgba(168,85,247,0.2); color:var(--accent); border-radius:10px;
+  }
+  .ptag.b { background:rgba(129,140,248,0.08); border-color:rgba(129,140,248,0.2); color:var(--accent2); }
+  .ptag.p { background:rgba(232,121,249,0.08); border-color:rgba(232,121,249,0.2); color:var(--accent3); }
+  .pc-dur {
+    position:absolute; top:5px; left:7px;
+    font-family:'JetBrains Mono',monospace; font-size:5.5px;
+    color:#f59e0b; opacity:0.8;
+  }
+  .pc-link {
+    font-family:'JetBrains Mono',monospace; font-size:6px;
+    color:var(--accent); text-decoration:none; display:inline-block; margin-top:3px;
+  }
+  .ar-tag {
+    display:inline-flex; align-items:center; gap:3px;
+    font-family:'JetBrains Mono',monospace; font-size:5.5px;
+    color:var(--accent3); background:rgba(232,121,249,0.08);
+    border:1px solid rgba(232,121,249,0.25); padding:1.5px 5px;
+    border-radius:8px; margin-bottom:3px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:5px; margin-top:5px;
+    border-top:1px solid var(--border);
+    position:relative; z-index:1;
+    flex-shrink: 0;
+  }
+  .footer-text { font-family:'JetBrains Mono',monospace; font-size:6px; color:var(--muted); opacity:0.5; }
+  .footer-dots { display:flex; gap:4px; }
+  .fdot { width:4px; height:4px; border-radius:50%; background:var(--accent); opacity:0.4; }
+  .fdot:nth-child(2) { background:var(--accent2); }
+  .fdot:nth-child(3) { background:var(--accent3); }
+
+  /* ── PRINT ── */
+  @media print {
+    @page { size: A4 portrait; margin: 0; }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    html,body { overflow:hidden !important; }
+  }
+  @media screen {
+    body { display:flex; justify-content:center; align-items:flex-start; background:#111; padding:20px; min-height:100vh; }
+    .print-btn-overlay {
+      position:fixed; bottom:20px; left:20px; z-index:100;
+      background:linear-gradient(135deg,#a855f7,#e879f9);
+      color:#fff; border:none; padding:10px 20px;
+      font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:13px;
+      cursor:pointer; border-radius:50px;
+      box-shadow:0 0 24px rgba(168,85,247,0.5);
+    }
+    .print-btn-overlay:hover { transform:translateY(-2px); }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn-overlay" onclick="window.print()">🖨 چاپ / PDF</button>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="badge">Full Stack Developer · Software Engineer</div>
+      <div class="name-fa">محمد جواد محمودی</div>
+      <div class="name-en">Mohammad Javad Mahmoudi</div>
+      <div class="title-row">
+        <span class="title-fa">توسعه‌دهنده وب و نرم‌افزار</span>
+        <span class="title-en">Full Stack Developer</span>
+      </div>
+      <div class="contacts">
+        <a class="ci" href="tel:09120120745">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          09120120745
+        </a>
+        <a class="ci" href="https://t.me/immdjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg>
+          @immdjavad
+        </a>
+        <a class="ci" href="https://instagram.com/immdjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @immdjavad
+        </a>
+        <a class="ci" href="https://linkedin.com/in/immdjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <div class="profile">
+      <img src="assets/profile.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerText='MJM'">
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- ── LEFT COL ── -->
+    <div>
+
+      <!-- SKILLS -->
+      <div class="stitle">مهارت‌ها <span>Technical Skills</span></div>
+      <div class="skills-grid">
+        <div class="sk"><div class="sk-name">پایتون</div><div class="sk-en">Python</div><div class="sk-bar"><div class="sk-fill" style="width:90%"></div></div></div>
+        <div class="sk"><div class="sk-name">جنگو</div><div class="sk-en">Django</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
+        <div class="sk"><div class="sk-name">جاوااسکریپت</div><div class="sk-en">JavaScript</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
+        <div class="sk"><div class="sk-name">HTML / CSS</div><div class="sk-en">HTML / CSS</div><div class="sk-bar"><div class="sk-fill" style="width:85%"></div></div></div>
+        <div class="sk"><div class="sk-name">ربات تلگرام</div><div class="sk-en">Telegram Bot</div><div class="sk-bar"><div class="sk-fill" style="width:85%"></div></div></div>
+        <div class="sk"><div class="sk-name">وب‌اسکرپینگ</div><div class="sk-en">Web Scraping</div><div class="sk-bar"><div class="sk-fill" style="width:80%"></div></div></div>
+        <div class="sk"><div class="sk-name">پایگاه داده</div><div class="sk-en">SQL / ORM</div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
+        <div class="sk"><div class="sk-name">تحلیل داده</div><div class="sk-en">Data Analysis</div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
+        <div class="sk"><div class="sk-name">فتوشاپ</div><div class="sk-en">Photoshop</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
+        <div class="sk"><div class="sk-name">SVG / انیمیشن</div><div class="sk-en">SVG / Animation</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
+        <div class="sk"><div class="sk-name">گیت</div><div class="sk-en">Git</div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk"><div class="sk-name">لینوکس / سرور</div><div class="sk-en">Linux / Server</div><div class="sk-bar"><div class="sk-fill" style="width:60%"></div></div></div>
+      </div>
+
+      <!-- EXPERIENCE -->
+      <div class="stitle">سابقه کاری <span>Experience</span></div>
+      <div class="exp">
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div class="exp-period">2022 — اکنون · Present</div>
+          <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
+          <div class="exp-role-en">Freelance Full Stack Developer</div>
+          <div class="exp-desc">ساخت پروژه‌های واقعی: وب‌سایت‌های شرکتی، ربات‌های تلگرامی، نرم‌افزار دسکتاپ و ابزارهای داده. تحویل کامل از صفر تا راه‌اندازی.</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot" style="background:#f59e0b"></div>
+          <div class="exp-period" style="color:#f59e0b">2017 — 2023 · ۶+ سال</div>
+          <div class="exp-role-fa">طراح و ویرایشگر تصویر</div>
+          <div class="exp-role-en">Freelance Photo Editor & Graphic Designer</div>
+          <div class="exp-desc">بیش از ۶ سال کار با فتوشاپ برای آتلیه‌های عکاسی — دیدگاه بصری منحصربه‌فرد در UI/UX.</div>
+        </div>
+      </div>
+
+      <!-- EDU + LANG -->
+      <div class="stitle">تحصیلات و زبان‌ها <span>Education & Languages</span></div>
+      <div class="edu-lang">
+        <div class="edu-card">
+          <div class="edu-deg-fa">کارشناسی مهندسی کامپیوتر</div>
+          <div class="edu-deg-en">B.Sc. Computer Engineering</div>
+          <div class="edu-school">دانشجوی در حال تحصیل · Enrolled</div>
+          <div class="edu-tags">
+            <span class="etag">الگوریتم</span>
+            <span class="etag">سیستم‌عامل</span>
+            <span class="etag">داده‌کاوی</span>
+          </div>
+        </div>
+        <div>
+          <div class="lang-grid">
+            <div class="lang-item">
+              <div class="lang-fa">فارسی</div>
+              <div class="lang-en">Persian — Native</div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
+              </div>
+            </div>
+            <div class="lang-item">
+              <div class="lang-fa">انگلیسی</div>
+              <div class="lang-en">English — Intermediate</div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT COL: PROJECTS ── -->
+    <div>
+      <div class="stitle" style="margin-top:0;">پروژه‌ها <span>Projects</span></div>
+      <div class="projects">
+
+        <div class="pc feat">
+          <div class="pc-dur">⏱ ۴ ماه</div>
+          <div class="pc-tag">وب‌سایت شرکتی · Featured</div>
+          <div class="pc-title-fa">آذین دژ</div>
+          <div class="pc-title-en">Azin Dej — UPVC Door & Window Platform</div>
+          <div class="pc-desc">پلتفرم شرکتی با تخمین قیمت آنلاین تعاملی. طراحی SVG داینامیک درب و پنجره، انتخاب بازشو با انیمیشن، رنگ‌بندی، شیشه، یراق‌آلات، فاکتور. پنل ادمین سفارشی، گالری و مقالات.</div>
+          <div class="pc-tech">
+            <span class="ptag">Django</span><span class="ptag">Python</span>
+            <span class="ptag b">JavaScript</span><span class="ptag">SVG</span>
+            <span class="ptag b">Custom Admin</span><span class="ptag p">PostgreSQL</span>
+          </div>
+          <a class="pc-link" href="https://azindejwin.ir">🌐 azindejwin.ir</a>
+        </div>
+
+        <div class="pc">
+          <div class="ar-tag">AR Virtual Try-On · پرو مجازی</div>
+          <div class="pc-tag">فروشگاه آنلاین · In Progress</div>
+          <div class="pc-title-fa">فروشگاه لباس</div>
+          <div class="pc-title-en">Fashion E-Commerce Store</div>
+          <div class="pc-desc">فروشگاه مدرن با ربات چت Eilik، پنل ادمین سفارشی، انیمیشن‌های روان و پرو مجازی AR با MediaPipe.</div>
+          <div class="pc-tech">
+            <span class="ptag">Django</span><span class="ptag b">AI Chatbot</span>
+            <span class="ptag p">AR / MediaPipe</span><span class="ptag b">Custom Admin</span>
+          </div>
+        </div>
+
+        <div class="pc">
+          <div class="pc-tag">ربات تلگرام · Telegram Bot</div>
+          <div class="pc-title-fa">ربات کالا ۲</div>
+          <div class="pc-title-en">Kala2 — Used Goods Price Bot</div>
+          <div class="pc-desc">اسکرپ آگهی‌های دیوار و ارسال قیمت، متن و تصاویر کالای دست‌دوم از طریق تلگرام.</div>
+          <div class="pc-tech"><span class="ptag">Python</span><span class="ptag">Web Scraping</span><span class="ptag b">Telegram API</span></div>
+        </div>
+
+        <div class="pc">
+          <div class="pc-tag">ابزار داده · Data Tool</div>
+          <div class="pc-title-fa">استخراج‌گر کانال تلگرام</div>
+          <div class="pc-title-en">Telegram Channel Extractor — teledata</div>
+          <div class="pc-desc">استخراج تمام پیام‌ها و رسانه‌های یک کانال در بازه زمانی دلخواه — خروجی Excel و پوشه Media.</div>
+          <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">Telethon</span><span class="ptag">Excel Export</span></div>
+          <a class="pc-link" href="https://github.com/immdjavad/teledata">github · teledata</a>
+        </div>
+
+        <div class="pc">
+          <div class="pc-tag">نرم‌افزار دسکتاپ · Desktop App</div>
+          <div class="pc-title-fa">نرم‌افزار حسابداری و انبارداری</div>
+          <div class="pc-title-en">Accounting & Inventory Management</div>
+          <div class="pc-desc">سیستم جامع حسابداری و مدیریت انبار برای کسب‌وکارهای کوچک و متوسط.</div>
+          <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">SQLite</span></div>
+        </div>
+
+        <div class="pc">
+          <div class="pc-tag">پروژه دانشگاهی · Academic</div>
+          <div class="pc-title-fa">تحلیل داده و داده‌کاوی</div>
+          <div class="pc-title-en">Data Analysis & Mining</div>
+          <div class="pc-desc">پیش‌پردازش، مدل‌سازی و تجسم داده با پایتون.</div>
+          <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">Pandas</span><span class="ptag">Matplotlib</span><span class="ptag b">Scikit-learn</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-text">محمد جواد محمودی · Mohammad Javad Mahmoudi</div>
+    <div class="footer-dots"><div class="fdot"></div><div class="fdot"></div><div class="fdot"></div></div>
+    <div class="footer-text">Full Stack · Python · Django · Creative · 2024</div>
+  </div>
+
+</div>
+</body>
+</html>
