@@ -58,22 +58,50 @@
 
   .wrapper { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:44px 24px 90px; }
 
-  /* PRINT BTN */
-  .print-btn {
-    position:fixed; bottom:30px; left:30px; z-index:100;
-    background: linear-gradient(135deg, var(--accent), var(--accent3));
-    color:#fff; border:none;
-    padding:13px 26px 13px 20px;
-    font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:13px;
-    cursor:pointer;
-    border-radius: 50px;
-    transition:all 0.3s ease;
-    box-shadow: 0 0 28px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.4);
-    display:flex; align-items:center; gap:8px;
+  /* FLOATING BTNS */
+  .fab-group {
+    position: fixed; bottom: 30px; left: 30px; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
   }
-  .print-btn svg { width:16px; height:16px; flex-shrink:0; }
-  .print-btn:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 0 50px var(--accent-glow), 0 8px 30px rgba(0,0,0,0.5); }
-  .print-btn .en { font-family:'JetBrains Mono',monospace; font-size:10px; opacity:0.75; display:block; line-height:1; margin-top:1px; }
+  .print-btn, .share-btn {
+    position: relative !important;
+    bottom: auto !important; left: auto !important;
+    width: 48px; height: 48px;
+    border: none; border-radius: 12px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  .print-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    box-shadow: 0 0 22px var(--accent-glow), 0 4px 16px rgba(0,0,0,0.4);
+    color: #fff;
+  }
+  .share-btn {
+    background: rgba(19,15,34,0.9);
+    border: 1px solid rgba(139,92,246,0.35);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    color: var(--accent);
+    backdrop-filter: blur(10px);
+  }
+  .print-btn svg, .share-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .print-btn:hover { transform: translateY(-3px) scale(1.08); box-shadow: 0 0 40px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.5); }
+  .share-btn:hover { transform: translateY(-3px) scale(1.08); border-color: var(--accent); background: rgba(139,92,246,0.15); box-shadow: 0 0 24px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.4); }
+  /* tooltip */
+  .print-btn::after, .share-btn::after {
+    content: attr(data-tip);
+    position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+    background: rgba(13,10,26,0.95); border: 1px solid rgba(139,92,246,0.3);
+    color: var(--text); font-family: 'Vazirmatn', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .print-btn:hover::after, .share-btn:hover::after { opacity: 1; }
+  @media(max-width:768px){
+    .fab-group { bottom: 16px; left: 16px; }
+    .print-btn, .share-btn { width: 42px; height: 42px; border-radius: 10px; }
+    .print-btn svg, .share-btn svg { width: 18px; height: 18px; }
+  }
 
   /* HEADER */
   .header {
@@ -385,7 +413,7 @@
     .project-card.featured{grid-column:unset;}
     .project-card:nth-child(n){grid-column:unset;grid-row:unset;}
     .two-col{grid-template-columns:1fr;}
-    .print-btn{bottom:16px;left:16px;padding:11px 18px;font-size:12px;}
+
     .name-fa{font-size:2rem;}
     .name-en{font-size:1.6rem;}
     .projects-grid{display:flex !important;flex-direction:column;}
@@ -423,7 +451,7 @@
     @page { size: A4 portrait; margin: 0; }
     * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; box-sizing:border-box !important; }
 
-    body::before, .orb, .print-btn, .lightbox,
+    body::before, .orb, .fab-group, .lightbox,
     .project-gallery, .gallery-toggle, .project-actions,
     .project-img-real, .project-img-placeholder,
     .project-link, .coming-soon, .ar-badge,
@@ -555,11 +583,14 @@
   </button>
 </div>
 
-<button class="print-btn" onclick="window.open('print.html','_blank')">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-  چاپ / دانلود PDF
-  <span class="en">Print / Save as PDF</span>
-</button>
+<div class="fab-group">
+  <button class="share-btn" data-tip="اشتراک‌گذاری" onclick="shareResume()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+  <button class="print-btn" data-tip="چاپ / PDF" onclick="window.open('print.html','_blank')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  </button>
+</div>
 
 <div class="wrapper">
 
@@ -992,6 +1023,27 @@
 </div>
 
 <script>
+  // Share
+  async function shareResume() {
+    const shareData = {
+      title: 'رزومه محمد جواد محمودی — Full Stack Developer',
+      text: '👨‍💻 محمد جواد محمودی — توسعه‌دهنده Full Stack\nمتخصص Python · Django · JavaScript\nپروژه‌های واقعی: آذین دژ، فروشگاه لباس، ربات‌های تلگرامی و بیشتر',
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch(e) { if (e.name !== 'AbortError') fallbackShare(); }
+    } else { fallbackShare(); }
+  }
+  function fallbackShare() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.querySelector('.share-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+      btn.dataset.tip = 'لینک کپی شد!';
+      setTimeout(() => { btn.innerHTML = orig; btn.dataset.tip = 'اشتراک‌گذاری'; }, 2000);
+    });
+  }
+
   // Gallery toggle
   function toggleGallery(btn) {
     btn.classList.toggle('active');
