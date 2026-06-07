@@ -235,9 +235,11 @@ body::after{
 /* ── AMBIENT BG TINT ── */
 #ambient{
   position:fixed;inset:0;z-index:1;
-  background:radial-gradient(ellipse at 30% 50%, var(--bg-tint), transparent 70%);
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%),
+    radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%);
   pointer-events:none;
-  transition:background 1.4s ease;
+  transition:background 1.6s ease;
 }
 
 /* ── SCANLINE ── */
@@ -369,8 +371,7 @@ body::after{
   align-items:center;justify-content:center;
   text-align:center;padding:48px 40px;
   z-index:10;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
+  overflow:hidden;
 }
 
 /* ── CHAPTER LABEL ── */
@@ -841,7 +842,10 @@ body::after{
   .fab-btn{width:38px;height:38px;border-radius:8px;}
   .fab-btn svg{width:15px;height:15px;}
   
-  .scene{height:260vh;}
+  .scene{height:300vh;}
+  
+  /* Project scenes need more scroll room on mobile */
+  #scene-3,#scene-4,#scene-5,#scene-6,#scene-7{height:340vh;}
   
   .profile-hero-img{width:80px;height:80px;}
   .profile-hero-wrap{margin-bottom:16px;}
@@ -1261,7 +1265,7 @@ body::after{
 
 <script>
 /* ════════════════════════════════════════════
-   THREE.JS — PARTICLE UNIVERSE + MORPHING GEO
+   THREE.JS — EPIC COSMIC ARCHITECTURE
 ════════════════════════════════════════════ */
 (function initThree(){
   const canvas = document.getElementById('bg-canvas');
@@ -1273,158 +1277,359 @@ body::after{
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(72, W/H, 0.1, 100);
-  camera.position.z = 5;
+  const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
+  camera.position.z = 8;
 
-  /* ── PARTICLE FIELD ── */
-  const N = 2400;
-  const pos  = new Float32Array(N*3);
-  const col  = new Float32Array(N*3);
-  const vel  = new Float32Array(N*3);
+  /* ═══════════════════════════
+     1) GALAXY PARTICLE FIELD
+  ═══════════════════════════ */
+  const GALAXY_N = 6000;
+  const gPos = new Float32Array(GALAXY_N * 3);
+  const gCol = new Float32Array(GALAXY_N * 3);
+  const gVel = new Float32Array(GALAXY_N * 3);
 
-  const palette = [
+  const palGalaxy = [
     new THREE.Color('#9d4edd'),
     new THREE.Color('#c77dff'),
     new THREE.Color('#7dd3fc'),
     new THREE.Color('#e0aaff'),
-    new THREE.Color('#3d0a6b'),
+    new THREE.Color('#5a189a'),
+    new THREE.Color('#f8c0ff'),
   ];
 
-  for(let i=0;i<N;i++){
-    const r = 9 + Math.random()*4;
-    const theta = Math.random()*Math.PI*2;
-    const phi   = Math.acos(2*Math.random()-1);
-    pos[i*3]   = r*Math.sin(phi)*Math.cos(theta);
-    pos[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
-    pos[i*3+2] = (Math.random()-0.5)*10;
-    vel[i*3]   = (Math.random()-.5)*.003;
-    vel[i*3+1] = (Math.random()-.5)*.003;
-    vel[i*3+2] = (Math.random()-.5)*.002;
-    const c = palette[Math.floor(Math.random()*palette.length)];
-    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+  for(let i = 0; i < GALAXY_N; i++){
+    const arm = Math.floor(Math.random() * 3);
+    const r = 3 + Math.pow(Math.random(), 0.6) * 22;
+    const baseAngle = arm * (Math.PI * 2 / 3);
+    const spin = r * 0.18;
+    const spread = (Math.random() - 0.5) * 2.2;
+    const theta = baseAngle + spin + spread;
+    const phi = (Math.random() - 0.5) * 0.5;
+
+    gPos[i*3]   = r * Math.cos(theta);
+    gPos[i*3+1] = r * Math.sin(theta) * 0.3 + phi * r * 0.15;
+    gPos[i*3+2] = (Math.random() - 0.5) * 6;
+
+    gVel[i*3]   = (Math.random() - 0.5) * 0.0015;
+    gVel[i*3+1] = (Math.random() - 0.5) * 0.0008;
+    gVel[i*3+2] = (Math.random() - 0.5) * 0.001;
+
+    const c = palGalaxy[Math.floor(Math.random() * palGalaxy.length)];
+    gCol[i*3] = c.r; gCol[i*3+1] = c.g; gCol[i*3+2] = c.b;
   }
 
-  const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  pGeo.setAttribute('color',   new THREE.BufferAttribute(col,3));
-
-  const pMat = new THREE.PointsMaterial({
-    size:0.028, vertexColors:true,
-    transparent:true, opacity:0.52,
-    depthWrite:false, blending:THREE.AdditiveBlending,
-    sizeAttenuation:true
+  const galaxyGeo = new THREE.BufferGeometry();
+  galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
+  galaxyGeo.setAttribute('color', new THREE.BufferAttribute(gCol, 3));
+  const galaxyMat = new THREE.PointsMaterial({
+    size: 0.038, vertexColors: true,
+    transparent: true, opacity: 0.65,
+    depthWrite: false, blending: THREE.AdditiveBlending,
+    sizeAttenuation: true
   });
-  const particles = new THREE.Points(pGeo, pMat);
-  scene.add(particles);
+  const galaxy = new THREE.Points(galaxyGeo, galaxyMat);
+  galaxy.rotation.x = Math.PI * 0.12;
+  scene.add(galaxy);
 
-  /* ── MORPHING MAIN SHAPE ── */
-  const geoPool = [
-    new THREE.IcosahedronGeometry(1.2, 1),
-    new THREE.OctahedronGeometry(1.3, 0),
-    new THREE.TetrahedronGeometry(1.5, 0),
-    new THREE.IcosahedronGeometry(1.1, 2),
-    new THREE.OctahedronGeometry(1.25,1),
+  /* ═══════════════════════════
+     2) CENTRAL MASSIVE ICOSAHEDRON RING SYSTEM
+  ═══════════════════════════ */
+  const RING_COUNT = 4;
+  const rings = [];
+
+  const ringConfigs = [
+    { radius: 2.8, tube: 0.012, segments: 180, color: 0x9d4edd, opacity: 0.45, tiltX: 0, tiltZ: 0 },
+    { radius: 3.4, tube: 0.008, segments: 200, color: 0x7dd3fc, opacity: 0.28, tiltX: 0.4, tiltZ: 0.2 },
+    { radius: 4.1, tube: 0.006, segments: 220, color: 0xe0aaff, opacity: 0.2,  tiltX: -0.6, tiltZ: 0.8 },
+    { radius: 5.0, tube: 0.004, segments: 240, color: 0xc77dff, opacity: 0.15, tiltX: 1.1,  tiltZ: -0.4 },
   ];
 
-  const wireMat = new THREE.MeshBasicMaterial({
-    color:0x9d4edd, wireframe:true,
-    transparent:true, opacity:0.17
-  });
-  const wireMesh = new THREE.Mesh(geoPool[0], wireMat);
-  wireMesh.position.set(1.8, 0.1, -1.2);
-  scene.add(wireMesh);
-
-  const innerMat = new THREE.MeshBasicMaterial({
-    color:0x2d0052, transparent:true, opacity:0.09
-  });
-  const innerMesh = new THREE.Mesh(geoPool[0], innerMat);
-  innerMesh.position.copy(wireMesh.position);
-  innerMesh.scale.setScalar(0.96);
-  scene.add(innerMesh);
-
-  const wire2 = new THREE.MeshBasicMaterial({
-    color:0x7dd3fc, wireframe:true, transparent:true, opacity:0.09
-  });
-  const mesh2 = new THREE.Mesh(geoPool[1], wire2);
-  mesh2.position.set(-2.2, 0.4, -1.8);
-  mesh2.scale.setScalar(0.62);
-  scene.add(mesh2);
-
-  const wire3 = new THREE.MeshBasicMaterial({
-    color:0xe0aaff, wireframe:true, transparent:true, opacity:0.11
-  });
-  const mesh3 = new THREE.Mesh(geoPool[2], wire3);
-  mesh3.position.set(0.3, -1.8, -2);
-  mesh3.scale.setScalar(0.45);
-  scene.add(mesh3);
-
-  let mx=0, my=0;
-  document.addEventListener('mousemove', e=>{
-    mx = (e.clientX/window.innerWidth  - 0.5)*2;
-    my =-(e.clientY/window.innerHeight - 0.5)*2;
+  ringConfigs.forEach(cfg => {
+    const geo = new THREE.TorusGeometry(cfg.radius, cfg.tube, 4, cfg.segments);
+    const mat = new THREE.MeshBasicMaterial({
+      color: cfg.color, transparent: true, opacity: cfg.opacity,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.rotation.x = cfg.tiltX;
+    mesh.rotation.z = cfg.tiltZ;
+    scene.add(mesh);
+    rings.push({ mesh, mat, cfg });
   });
 
-  let scrollP = 0;
+  /* ═══════════════════════════
+     3) HERO MEGA SHAPE — Large central icosahedron
+  ═══════════════════════════ */
+  const heroGeoPool = [
+    new THREE.IcosahedronGeometry(2.0, 1),
+    new THREE.OctahedronGeometry(2.1, 0),
+    new THREE.TetrahedronGeometry(2.4, 0),
+    new THREE.IcosahedronGeometry(1.9, 2),
+    new THREE.OctahedronGeometry(2.0, 1),
+    new THREE.IcosahedronGeometry(2.2, 0),
+  ];
+
+  // Outer wireframe — glowing
+  const heroWireMat = new THREE.MeshBasicMaterial({
+    color: 0x9d4edd, wireframe: true,
+    transparent: true, opacity: 0.22,
+    blending: THREE.AdditiveBlending
+  });
+  const heroMesh = new THREE.Mesh(heroGeoPool[0], heroWireMat);
+  heroMesh.position.set(2.2, 0.2, -2.0);
+  scene.add(heroMesh);
+
+  // Inner solid fill (subtle)
+  const heroFillMat = new THREE.MeshBasicMaterial({
+    color: 0x1a0033, transparent: true, opacity: 0.12
+  });
+  const heroFill = new THREE.Mesh(heroGeoPool[0], heroFillMat);
+  heroFill.position.copy(heroMesh.position);
+  heroFill.scale.setScalar(0.98);
+  scene.add(heroFill);
+
+  /* ═══════════════════════════
+     4) SECONDARY SHAPES (Satellites)
+  ═══════════════════════════ */
+  const satellites = [];
+
+  const satConfigs = [
+    { geo: new THREE.IcosahedronGeometry(0.85, 1), pos: [-3.5, 1.2, -1.5], color: 0x7dd3fc, speed: 0.38, opacity: 0.28 },
+    { geo: new THREE.OctahedronGeometry(0.7, 0),   pos: [0.5, -2.6, -1.0], color: 0xe0aaff, speed: 0.55, opacity: 0.22 },
+    { geo: new THREE.IcosahedronGeometry(0.55, 0), pos: [-1.8, -1.5, -2.5],color: 0xc77dff, speed: 0.72, opacity: 0.32 },
+    { geo: new THREE.TetrahedronGeometry(0.9, 0),  pos: [3.8, -0.8, -2.2], color: 0x9d4edd, speed: 0.44, opacity: 0.20 },
+    { geo: new THREE.OctahedronGeometry(0.5, 1),   pos: [-2.8, -2.2, -1.8],color: 0xf8c0ff, speed: 0.61, opacity: 0.18 },
+  ];
+
+  satConfigs.forEach(cfg => {
+    const mat = new THREE.MeshBasicMaterial({
+      color: cfg.color, wireframe: true,
+      transparent: true, opacity: cfg.opacity,
+      blending: THREE.AdditiveBlending
+    });
+    const mesh = new THREE.Mesh(cfg.geo, mat);
+    mesh.position.set(...cfg.pos);
+    scene.add(mesh);
+    satellites.push({ mesh, mat, cfg });
+  });
+
+  /* ═══════════════════════════
+     5) FLOATING GRID PLANES
+  ═══════════════════════════ */
+  function createGridPlane(size, divisions, color, opacity, rx, ry, rz, px, py, pz) {
+    const geo = new THREE.BufferGeometry();
+    const step = size / divisions;
+    const half = size / 2;
+    const verts = [];
+
+    for(let i = 0; i <= divisions; i++){
+      const x = -half + i * step;
+      verts.push(x, 0, -half, x, 0, half);
+    }
+    for(let j = 0; j <= divisions; j++){
+      const z = -half + j * step;
+      verts.push(-half, 0, z, half, 0, z);
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
+    const mat = new THREE.LineBasicMaterial({
+      color, transparent: true, opacity,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    const grid = new THREE.LineSegments(geo, mat);
+    grid.rotation.set(rx, ry, rz);
+    grid.position.set(px, py, pz);
+    return { grid, mat };
+  }
+
+  const grid1 = createGridPlane(30, 22, 0x9d4edd, 0.07, 0, 0, 0, 0, -6, -8);
+  const grid2 = createGridPlane(24, 18, 0x7dd3fc, 0.05, Math.PI/2, 0, 0.4, 0, 0, -10);
+  scene.add(grid1.grid);
+  scene.add(grid2.grid);
+
+  /* ═══════════════════════════
+     6) ENERGY BEAM LINES
+  ═══════════════════════════ */
+  const beams = [];
+  const beamCount = 12;
+
+  for(let b = 0; b < beamCount; b++){
+    const angle = (b / beamCount) * Math.PI * 2;
+    const r1 = 2.6, r2 = 12 + Math.random() * 8;
+    const verts = new Float32Array([
+      Math.cos(angle) * r1, Math.sin(angle) * r1, 0,
+      Math.cos(angle + 0.05) * r2, Math.sin(angle + 0.05) * r2, (Math.random()-0.5)*4
+    ]);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
+    const hue = (b / beamCount) * 60 + 260;
+    const mat = new THREE.LineBasicMaterial({
+      color: new THREE.Color(`hsl(${hue},80%,65%)`),
+      transparent: true, opacity: 0.08,
+      blending: THREE.AdditiveBlending
+    });
+    const line = new THREE.LineSegments(geo, mat);
+    scene.add(line);
+    beams.push({ line, mat, angle, phase: Math.random() * Math.PI * 2 });
+  }
+
+  /* ═══════════════════════════
+     7) AMBIENT GLOW SPHERES
+  ═══════════════════════════ */
+  const glowSpheres = [];
+  const glowConfigs = [
+    { r: 0.6, pos: [2.0, 0.2, -2.0], color: 0x9d4edd, opacity: 0.06 },
+    { r: 0.4, pos: [-3.5, 1.2, -1.5],color: 0x7dd3fc, opacity: 0.05 },
+    { r: 0.3, pos: [0.5, -2.6, -1.0],color: 0xe0aaff, opacity: 0.07 },
+  ];
+  glowConfigs.forEach(cfg => {
+    const geo = new THREE.SphereGeometry(cfg.r * 3.5, 16, 16);
+    const mat = new THREE.MeshBasicMaterial({
+      color: cfg.color, transparent: true, opacity: cfg.opacity,
+      blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(...cfg.pos);
+    scene.add(mesh);
+    glowSpheres.push({ mesh, mat, cfg });
+  });
+
+  /* ═══════════════════════════
+     8) FLOATING HEXAGON RING
+  ═══════════════════════════ */
+  (function(){
+    const HEX = 6;
+    const hexR = 6.5;
+    const verts = [];
+    for(let i = 0; i <= HEX; i++){
+      const a = (i / HEX) * Math.PI * 2;
+      verts.push(hexR * Math.cos(a), hexR * Math.sin(a), 0);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts.flat()), 3));
+    const mat = new THREE.LineBasicMaterial({
+      color: 0xc77dff, transparent: true, opacity: 0.14,
+      blending: THREE.AdditiveBlending
+    });
+    const hex = new THREE.Line(geo, mat);
+    hex.rotation.z = Math.PI / 6;
+    scene.add(hex);
+
+    // Second inner hexagon
+    const verts2 = [];
+    for(let i = 0; i <= HEX; i++){
+      const a = (i / HEX) * Math.PI * 2;
+      verts2.push(4.5 * Math.cos(a), 4.5 * Math.sin(a), 0);
+    }
+    const geo2 = new THREE.BufferGeometry();
+    geo2.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts2.flat()), 3));
+    const mat2 = new THREE.LineBasicMaterial({
+      color: 0x7dd3fc, transparent: true, opacity: 0.09,
+      blending: THREE.AdditiveBlending
+    });
+    const hex2 = new THREE.Line(geo2, mat2);
+    hex2.rotation.z = 0;
+    scene.add(hex2);
+
+    glowSpheres.push({ mesh: hex, mat, cfg: { hexRing: true } });
+    glowSpheres.push({ mesh: hex2, mat: mat2, cfg: { hexRing2: true } });
+  })();
+
+  /* ══ MOUSE & SCROLL ══ */
+  let mx = 0, my = 0, scrollP = 0, t = 0;
   let geoIdx = 0;
-  let t = 0;
 
-  function morphToGeo(idx){
-    if(idx===geoIdx) return;
-    const newGeo = geoPool[idx % geoPool.length];
-    wireMesh.geometry = newGeo;
-    innerMesh.geometry = newGeo;
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
+    my =-(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function morphHero(idx){
+    if(idx === geoIdx) return;
+    const newGeo = heroGeoPool[idx % heroGeoPool.length];
+    heroMesh.geometry = newGeo;
+    heroFill.geometry = newGeo;
     geoIdx = idx;
   }
 
+  /* ══ TICK ══ */
   function tick(){
     requestAnimationFrame(tick);
-    t += 0.007;
+    t += 0.005;
 
     const sceneIdx = Math.floor(scrollP * 11);
-    morphToGeo(sceneIdx % geoPool.length);
+    morphHero(sceneIdx % heroGeoPool.length);
 
-    const pPos = pGeo.attributes.position.array;
-    for(let i=0;i<N;i++){
-      pPos[i*3]   += vel[i*3];
-      pPos[i*3+1] += vel[i*3+1];
-      pPos[i*3+2] += vel[i*3+2];
-      const d = Math.sqrt(pPos[i*3]*pPos[i*3]+pPos[i*3+1]*pPos[i*3+1]+pPos[i*3+2]*pPos[i*3+2]);
-      if(d>13 || d<7){
-        vel[i*3]   *= -1;
-        vel[i*3+1] *= -1;
-        vel[i*3+2] *= -1;
+    /* Galaxy drift */
+    galaxy.rotation.y  = t * 0.018 + mx * 0.04;
+    galaxy.rotation.x  = Math.PI * 0.12 + my * 0.025 + t * 0.006;
+    galaxy.rotation.z  = t * 0.004;
+
+    /* Drift galaxy particles slowly */
+    const pPos = galaxyGeo.attributes.position.array;
+    for(let i = 0; i < GALAXY_N; i++){
+      pPos[i*3]   += gVel[i*3];
+      pPos[i*3+1] += gVel[i*3+1];
+      pPos[i*3+2] += gVel[i*3+2];
+      const d = Math.sqrt(pPos[i*3]*pPos[i*3] + pPos[i*3+1]*pPos[i*3+1]);
+      if(d > 26 || d < 2){
+        gVel[i*3]   *= -1;
+        gVel[i*3+1] *= -1;
       }
     }
-    pGeo.attributes.position.needsUpdate = true;
+    galaxyGeo.attributes.position.needsUpdate = true;
 
-    particles.rotation.y = t*0.03 + mx*0.06;
-    particles.rotation.x = t*0.018+ my*0.04;
+    /* Rings orbit */
+    rings.forEach((r, i) => {
+      r.mesh.rotation.z = t * (0.06 + i * 0.015) + mx * 0.03;
+      r.mesh.rotation.x = r.cfg.tiltX + my * 0.02 + Math.sin(t * 0.3 + i) * 0.05;
+      r.mat.opacity = r.cfg.opacity * (0.85 + Math.sin(t * 0.8 + i) * 0.15);
+    });
 
-    wireMesh.rotation.x  = t*0.28 + my*0.12;
-    wireMesh.rotation.y  = t*0.44 + mx*0.12;
-    innerMesh.rotation.copy(wireMesh.rotation);
-    wireMat.opacity = 0.16 + Math.sin(t*1.1)*0.05;
+    /* Hero mega shape */
+    heroMesh.rotation.x = t * 0.22 + my * 0.10;
+    heroMesh.rotation.y = t * 0.35 + mx * 0.10;
+    heroFill.rotation.copy(heroMesh.rotation);
+    heroWireMat.opacity = 0.20 + Math.sin(t * 0.9) * 0.07;
+    const hue = ((sceneIdx * 40 + t * 3) % 360) / 360;
+    heroWireMat.color.setHSL(hue, 0.82, 0.64);
 
-    const hue = ((sceneIdx*38 + t*4) % 360)/360;
-    wireMat.color.setHSL(hue, 0.78, 0.62);
+    /* Hero position drift (subtle float) */
+    heroMesh.position.y = 0.2 + Math.sin(t * 0.4) * 0.3;
+    heroFill.position.y = heroMesh.position.y;
 
-    mesh2.rotation.x = -t*0.34;
-    mesh2.rotation.z =  t*0.22;
-    mesh3.rotation.y =  t*0.52;
-    mesh3.rotation.x =  t*0.28;
+    /* Satellites orbit */
+    satellites.forEach((s, i) => {
+      s.mesh.rotation.x = -t * s.cfg.speed * 0.7;
+      s.mesh.rotation.y =  t * s.cfg.speed;
+      s.mesh.rotation.z =  t * s.cfg.speed * 0.4;
+      s.mesh.position.y = s.cfg.pos[1] + Math.sin(t * 0.3 + i * 1.2) * 0.25;
+      s.mat.opacity = s.cfg.opacity * (0.8 + Math.sin(t * 1.1 + i) * 0.2);
+    });
 
-    camera.position.x += (mx*0.28 - camera.position.x)*0.04;
-    camera.position.y += (my*0.18 - camera.position.y)*0.04;
-    camera.position.z  = 5 - scrollP*1.8;
+    /* Beam pulse */
+    beams.forEach((b, i) => {
+      b.mat.opacity = 0.04 + Math.abs(Math.sin(t * 0.6 + b.phase)) * 0.09;
+    });
+
+    /* Grid subtle drift */
+    grid1.grid.position.y = -6 + Math.sin(t * 0.15) * 0.3;
+    grid1.mat.opacity = 0.04 + scrollP * 0.06;
+    grid2.mat.opacity = 0.03 + scrollP * 0.04;
+
+    /* Camera parallax */
+    camera.position.x += (mx * 0.35 - camera.position.x) * 0.035;
+    camera.position.y += (my * 0.22 - camera.position.y) * 0.035;
+    camera.position.z  = 8 - scrollP * 2.2;
 
     renderer.render(scene, camera);
   }
   tick();
 
-  window.addEventListener('resize',()=>{
-    const w=window.innerWidth, h=window.innerHeight;
-    camera.aspect=w/h; camera.updateProjectionMatrix();
-    renderer.setSize(w,h);
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
   });
 
   window._threeSetScroll = p => { scrollP = p; };
@@ -1802,16 +2007,16 @@ function forceRevealScene(scene){
 /* ── AMBIENT TINT PER SCENE ── */
 const ambientEl = document.getElementById('ambient');
 const tints = [
-  'radial-gradient(ellipse at 50% 50%,rgba(157,78,221,.09),transparent 65%)',
-  'radial-gradient(ellipse at 35% 50%,rgba(99,102,241,.08),transparent 65%)',
-  'radial-gradient(ellipse at 50% 45%,rgba(20,20,30,.15), transparent 65%)',
-  'radial-gradient(ellipse at 55% 50%,rgba(168,85,247,.11),transparent 65%)',
-  'radial-gradient(ellipse at 45% 50%,rgba(245,158,11,.07),transparent 65%)',
-  'radial-gradient(ellipse at 40% 50%,rgba(125,211,252,.07),transparent 65%)',
-  'radial-gradient(ellipse at 50% 50%,rgba(52,211,153,.08),transparent 65%)',
-  'radial-gradient(ellipse at 50% 50%,rgba(157,78,221,.09),transparent 65%)',
-  'radial-gradient(ellipse at 50% 55%,rgba(99,102,241,.07),transparent 65%)',
-  'radial-gradient(ellipse at 50% 50%,rgba(157,78,221,.13),transparent 65%)',
+  'radial-gradient(ellipse 65% 55% at 50% 50%,rgba(157,78,221,.14),transparent 65%), radial-gradient(ellipse 35% 40% at 80% 20%,rgba(125,211,252,.06),transparent 60%)',
+  'radial-gradient(ellipse 60% 55% at 35% 50%,rgba(99,102,241,.13),transparent 65%), radial-gradient(ellipse 30% 35% at 70% 75%,rgba(157,78,221,.07),transparent 55%)',
+  'radial-gradient(ellipse 55% 50% at 50% 45%,rgba(20,20,50,.22), transparent 65%)',
+  'radial-gradient(ellipse 65% 55% at 55% 50%,rgba(168,85,247,.16),transparent 65%), radial-gradient(ellipse 30% 30% at 20% 30%,rgba(125,211,252,.07),transparent 50%)',
+  'radial-gradient(ellipse 60% 55% at 45% 50%,rgba(245,158,11,.10),transparent 65%), radial-gradient(ellipse 25% 35% at 75% 70%,rgba(157,78,221,.08),transparent 55%)',
+  'radial-gradient(ellipse 60% 55% at 40% 50%,rgba(125,211,252,.11),transparent 65%), radial-gradient(ellipse 30% 30% at 70% 25%,rgba(99,102,241,.06),transparent 55%)',
+  'radial-gradient(ellipse 60% 55% at 50% 50%,rgba(52,211,153,.12),transparent 65%), radial-gradient(ellipse 25% 30% at 25% 75%,rgba(157,78,221,.07),transparent 55%)',
+  'radial-gradient(ellipse 65% 55% at 50% 50%,rgba(157,78,221,.14),transparent 65%), radial-gradient(ellipse 30% 35% at 80% 30%,rgba(52,211,153,.06),transparent 55%)',
+  'radial-gradient(ellipse 60% 50% at 50% 55%,rgba(99,102,241,.11),transparent 65%), radial-gradient(ellipse 25% 30% at 20% 70%,rgba(245,158,11,.05),transparent 55%)',
+  'radial-gradient(ellipse 65% 60% at 50% 50%,rgba(157,78,221,.18),transparent 65%), radial-gradient(ellipse 30% 35% at 75% 25%,rgba(125,211,252,.08),transparent 55%)',
 ];
 
 allScenes.forEach((s,i)=>{
@@ -1832,7 +2037,7 @@ function sceneAnim(sceneId, reveals, opts={}){
     inEnd: opts.inEnd||0.32,
     out0: opts.out0||0.70,
     outEnd: opts.outEnd||0.84,
-    scrub: opts.scrub||0.65
+    scrub: opts.scrub||0.3
   };
 
   const tl = gsap.timeline({
@@ -1860,7 +2065,7 @@ sceneAnim('scene-0',[
   {id:'s0-fa'},
   {id:'s0-en'},
   {id:'s0-title'},
-], {in0:0.03, inEnd:0.28, out0:0.70, outEnd:0.84, stagger:0.04});
+], {in0:0.03, inEnd:0.28, out0:0.70, outEnd:0.84, stagger:0.04, scrub:0.3});
 
 /* SCENE 1 */
 sceneAnim('scene-1',[
@@ -1869,7 +2074,7 @@ sceneAnim('scene-1',[
   {id:'s1-hen'},
   {id:'s1-body'},
   {id:'s1-ben'},
-], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.04});
+], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.04, scrub:0.3});
 
 /* SCENE 2 */
 sceneAnim('scene-2',[
@@ -1877,48 +2082,48 @@ sceneAnim('scene-2',[
   {id:'s2-h'},
   {id:'s2-hen'},
   {id:'s2-terminal'},
-], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.05});
+], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.05, scrub:0.3});
 
 /* SCENE 3 */
 sceneAnim('scene-3',[
   {id:'s3-ch'},
-  {id:'s3-img', in:[0.06,0.20]},
-  {id:'s3-pr', in:[0.10,0.30]},
-], {out0:0.70, outEnd:0.84});
+  {id:'s3-img', in:[0.06,0.18]},
+  {id:'s3-pr', in:[0.10,0.28]},
+], {out0:0.72, outEnd:0.86, scrub:0.3});
 
 /* SCENE 4 */
 sceneAnim('scene-4',[
   {id:'s4-ch'},
-  {id:'s4-img', in:[0.06,0.20]},
-  {id:'s4-pr', in:[0.10,0.30]},
-], {out0:0.70, outEnd:0.84});
+  {id:'s4-img', in:[0.06,0.18]},
+  {id:'s4-pr', in:[0.10,0.28]},
+], {out0:0.72, outEnd:0.86, scrub:0.3});
 
 /* SCENE 5 */
 sceneAnim('scene-5',[
   {id:'s5-ch'},
-  {id:'s5-img', in:[0.06,0.20]},
-  {id:'s5-pr', in:[0.10,0.30]},
-], {out0:0.70, outEnd:0.84});
+  {id:'s5-img', in:[0.06,0.18]},
+  {id:'s5-pr', in:[0.10,0.28]},
+], {out0:0.72, outEnd:0.86, scrub:0.3});
 
 /* SCENE 6 */
 sceneAnim('scene-6',[
   {id:'s6-ch'},
-  {id:'s6-img', in:[0.06,0.20]},
-  {id:'s6-pr', in:[0.10,0.30]},
-], {out0:0.70, outEnd:0.84});
+  {id:'s6-img', in:[0.06,0.18]},
+  {id:'s6-pr', in:[0.10,0.28]},
+], {out0:0.72, outEnd:0.86, scrub:0.3});
 
 /* SCENE 7 */
 sceneAnim('scene-7',[
   {id:'s7-ch'},
-  {id:'s7-img', in:[0.06,0.20]},
-  {id:'s7-pr', in:[0.10,0.30]},
-], {out0:0.70, outEnd:0.84});
+  {id:'s7-img', in:[0.06,0.18]},
+  {id:'s7-pr', in:[0.10,0.28]},
+], {out0:0.72, outEnd:0.86, scrub:0.3});
 
 /* SCENE 8 */
 (function(){
   const el = document.getElementById('scene-8');
   const tl = gsap.timeline({
-    scrollTrigger:{trigger:el, start:'top top', end:'bottom bottom', scrub:0.65}
+    scrollTrigger:{trigger:el, start:'top top', end:'bottom bottom', scrub:0.3}
   });
   tl.to('#s8-ch',  {opacity:1,duration:0.10},0.03);
   tl.to('#s8-e1',  {opacity:1,duration:0.14},0.08);
@@ -1934,13 +2139,13 @@ sceneAnim('scene-9',[
   {id:'s9-ch'},
   {id:'s9-edu'},
   {id:'s9-lg'},
-], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.06});
+], {in0:0.04, inEnd:0.30, out0:0.70, outEnd:0.84, stagger:0.06, scrub:0.3});
 
 /* SCENE 10 */
 (function(){
   const el = document.getElementById('scene-10');
   const tl = gsap.timeline({
-    scrollTrigger:{trigger:el, start:'top top', end:'bottom bottom', scrub:0.55}
+    scrollTrigger:{trigger:el, start:'top top', end:'bottom bottom', scrub:0.3}
   });
   const items = [
     {id:'s10-ch',  t:0.03},
