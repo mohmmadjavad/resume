@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
 
+# Prevent indexing print version
+Disallow: /print.html
+
+# Prevent indexing assets folder
+Disallow: /assets/
+
 # Sitemaps
 Sitemap: https://immdjavad.ir/sitemap.xml
