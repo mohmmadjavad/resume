@@ -1552,18 +1552,88 @@ body::after{
   /* ══ MOUSE & SCROLL ══ */
   let mx = 0, my = 0, scrollP = 0, t = 0;
   let geoIdx = 0;
+  let morphing = false;
+
+  /* ── Morph state (tweened manually in tick) ── */
+  const morphState = {
+    scale:   1.0,   // current render scale of heroMesh
+    opacity: 0.22,  // current wireframe opacity
+    phase:   'idle' // 'out' | 'in' | 'idle'
+  };
+  let morphTargetIdx = 0;
+  let morphProgress  = 0; // 0→1 per phase
 
   document.addEventListener('mousemove', e => {
     mx = (e.clientX / window.innerWidth  - 0.5) * 2;
     my =-(e.clientY / window.innerHeight - 0.5) * 2;
   });
 
+  /* ── Easing helpers ── */
+  function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
+  function easeInCubic(x) { return x * x * x; }
+  function lerp(a, b, t)  { return a + (b - a) * t; }
+
   function morphHero(idx){
-    if(idx === geoIdx) return;
-    const newGeo = heroGeoPool[idx % heroGeoPool.length];
-    heroMesh.geometry = newGeo;
-    heroFill.geometry = newGeo;
-    geoIdx = idx;
+    const target = idx % heroGeoPool.length;
+    if(target === geoIdx && morphState.phase === 'idle') return;
+    if(morphState.phase !== 'idle') {
+      /* Already morphing — just update target so we finish to the right shape */
+      morphTargetIdx = target;
+      return;
+    }
+    morphTargetIdx  = target;
+    morphState.phase = 'out';
+    morphProgress    = 0;
+    morphing         = true;
+  }
+
+  /* ── Advance morph each frame (speed in progress units/frame) ── */
+  const MORPH_SPEED = 0.055; // ~18 frames per phase at 60fps
+
+  function tickMorph(){
+    if(morphState.phase === 'idle') return;
+
+    morphProgress = Math.min(1, morphProgress + MORPH_SPEED);
+
+    if(morphState.phase === 'out'){
+      const e = easeInCubic(morphProgress);
+      /* Scale down + fade out */
+      morphState.scale   = lerp(1.0, 0.28, e);
+      morphState.opacity = lerp(0.22, 0.0,  e);
+      /* Small spin-burst: add extra rotation each frame */
+      heroMesh.rotation.z += 0.04 * (1 - morphProgress);
+
+      if(morphProgress >= 1){
+        /* Swap geometry */
+        const newGeo = heroGeoPool[morphTargetIdx];
+        heroMesh.geometry = newGeo;
+        heroFill.geometry = newGeo;
+        geoIdx = morphTargetIdx;
+        /* Start scale from big (bloom-in feel) */
+        morphState.scale   = 1.82;
+        morphState.opacity = 0.0;
+        morphState.phase   = 'in';
+        morphProgress      = 0;
+      }
+
+    } else if(morphState.phase === 'in'){
+      const e = easeOutCubic(morphProgress);
+      morphState.scale   = lerp(1.82, 1.0,  e);
+      morphState.opacity = lerp(0.0,  0.22, e);
+
+      if(morphProgress >= 1){
+        morphState.scale   = 1.0;
+        morphState.opacity = 0.22;
+        morphState.phase   = 'idle';
+        morphProgress      = 0;
+        morphing           = false;
+      }
+    }
+
+    /* Apply to meshes */
+    heroMesh.scale.setScalar(morphState.scale);
+    heroFill.scale.setScalar(morphState.scale * 0.98);
+    heroWireMat.opacity = morphState.opacity;
   }
 
   /* ══ TICK ══ */
@@ -1604,9 +1674,15 @@ body::after{
     heroMesh.rotation.x = t * 0.22 + my * 0.10;
     heroMesh.rotation.y = t * 0.35 + mx * 0.10;
     heroFill.rotation.copy(heroMesh.rotation);
-    heroWireMat.opacity = 0.20 + Math.sin(t * 0.9) * 0.07;
+    /* Only apply idle pulse when NOT morphing — tickMorph owns opacity otherwise */
+    if(morphState.phase === 'idle'){
+      heroWireMat.opacity = 0.20 + Math.sin(t * 0.9) * 0.07;
+    }
     const hue = ((sceneIdx * 40 + t * 3) % 360) / 360;
     heroWireMat.color.setHSL(hue, 0.82, 0.64);
+
+    /* Advance morph transition every frame */
+    tickMorph();
 
     /* Hero position drift (subtle float) */
     heroMesh.position.y = 0.2 + Math.sin(t * 0.4) * 0.3;
