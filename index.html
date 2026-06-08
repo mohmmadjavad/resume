@@ -200,7 +200,7 @@
   --terminal-blue:#7dd3fc;
   --terminal-amber:#f59e0b;
 }
-html{scroll-behavior:smooth;scrollbar-width:none;}
+html{scroll-behavior:smooth;scrollbar-width:none;scroll-snap-type:none;}
 html::-webkit-scrollbar{display:none;}
 body{
   background:var(--void);
@@ -257,7 +257,7 @@ body::after{
   background:linear-gradient(90deg,var(--accent),var(--accent3),var(--ember));
   z-index:100;
   box-shadow:0 0 12px var(--glow);
-  transition:width 0.12s linear;
+  transition:width 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
 }
 
 /* ── CURSOR (Desktop Only) ── */
@@ -358,7 +358,7 @@ body::after{
 ══════════════════════════════ */
 .scene{
   position:relative;
-  height:400vh;
+  height:250vh;
 }
 .scene-sticky{
   position:sticky;top:0;height:100vh;
@@ -836,9 +836,13 @@ body::after{
 /* ── FOOTER LINE ── */
 #footer-line{
   opacity:0;margin-top:52px;
-  font-family:'JetBrains Mono',monospace;font-size:.58rem;
-  letter-spacing:.26em;color:rgba(237,233,254,.2);
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  letter-spacing:.18em;color:rgba(237,233,254,.55);
   text-align:center;
+  padding-top:20px;
+  border-top:1px solid rgba(157,78,221,.15);
+  max-width:480px;
+  margin-left:auto;margin-right:auto;
 }
 
 /* ══════════════════════════════
@@ -857,10 +861,10 @@ body::after{
   .fab-btn{width:38px;height:38px;border-radius:8px;}
   .fab-btn svg{width:15px;height:15px;}
   
-  .scene{height:360vh;}
+  .scene{height:220vh;}
   
   /* Project scenes need more scroll room on mobile */
-  #scene-3,#scene-4,#scene-5,#scene-6,#scene-7{height:420vh;}
+  #scene-3,#scene-4,#scene-5,#scene-6,#scene-7{height:260vh;}
   
   .profile-hero-img{width:80px;height:80px;}
   .profile-hero-wrap{margin-bottom:16px;}
@@ -971,6 +975,7 @@ body::after{
       <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
       <div class="hero-name-en" id="s0-en">Mohammad Javad Mahmoudi</div>
       <div class="hero-title" id="s0-title" data-full="Full Stack Developer · Python · Django · Creative Engineer"></div>
+      <div id="s0-tagline" style="opacity:0;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(237,233,254,0.32);text-transform:uppercase;">کد + طراحی + محصول — هر سه با هم</div>
     </div>
   </div>
 </section>
@@ -980,13 +985,13 @@ body::after{
   <div class="scene-sticky">
     <div class="scene-inner">
       <div class="chapter-marker" id="s1-ch">01 · درباره من · About</div>
-      <div class="scene-headline-fa" id="s1-h">توسعه‌دهنده‌ای<br>که می‌سازد</div>
-      <div class="scene-headline-en" id="s1-hen">A Builder, Not Just a Coder</div>
+      <div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div>
+      <div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div>
       <div class="scene-body" id="s1-body">
-        بیش از ۲ سال تجربه حرفه‌ای در ساخت پروژه‌های پیچیده و واقعی. دانشجوی مهندسی کامپیوتر با رویکردی خلاقانه. علاوه بر برنامه‌نویسی، ۶ سال تجربه فتوشاپ که دیدگاهی بصری متمایز در طراحی رابط کاربری می‌دهد.
+        Python · Django · Full Stack · دانشجوی مهندسی کامپیوتر
       </div>
       <div class="scene-body-en" id="s1-ben">
-        Full Stack Developer · Python &amp; Django · 2+ years professional · CS undergraduate · 6+ years Photoshop
+        2+ yrs professional · 6 yrs design · real products shipped
       </div>
     </div>
   </div>
@@ -1131,7 +1136,10 @@ body::after{
           <span class="tech-chip">Excel Export</span>
           <span class="tech-chip green">CustomTkinter</span>
         </div>
-      </div>
+        <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          GitHub →
+        </a>
     </div>
   </div>
 </section>
@@ -1160,6 +1168,11 @@ body::after{
           <span class="tech-chip green">ReportLab</span>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;color:var(--accent2);">💼 سفارشی‌سازی برای مشتری · Custom Enterprise Solution</span>
+        <br><br>
+        <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          GitHub →
+        </a>
       </div>
     </div>
   </div>
@@ -1256,6 +1269,10 @@ body::after{
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span>09120120745</span>
         </a>
+        <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>mohmmadjavad.mahmoodi@gmail.com</span>
+        </a>
         <a class="contact-link" href="https://immdjavad.ir" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span>immdjavad.ir</span>
@@ -1263,7 +1280,7 @@ body::after{
       </div>
 
       <div id="footer-line">
-        Mohammad Javad Mahmoudi · 2024 · FULL STACK · PYTHON · DJANGO · CREATIVE
+        محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.
       </div>
     </div>
   </div>
@@ -1277,16 +1294,18 @@ body::after{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
 <script>
 /* ════════════════════════════════════════════
    THREE.JS — EPIC COSMIC ARCHITECTURE
+   with Adaptive Particle Count (FPS-aware)
 ════════════════════════════════════════════ */
 (function initThree(){
   const canvas = document.getElementById('bg-canvas');
   const W = window.innerWidth, H = window.innerHeight;
 
-  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias: window.devicePixelRatio < 2});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(W, H);
   renderer.setClearColor(0x000000, 0);
@@ -1295,13 +1314,114 @@ body::after{
   const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
   camera.position.z = 8;
 
+  /* ═══════════════════════════════════════════════
+     SMART ADAPTIVE QUALITY SYSTEM
+     — Continuous FPS monitoring (not one-shot)
+     — 4 tiers: ultra(3) / high(2) / mid(1) / low(0)
+     — Upgrades quality if performance recovers
+     — Throttles particle drift on weak devices
+     — Adjusts pixelRatio, rings, sats, beams
+  ═══════════════════════════════════════════════ */
+  const isMobile = window.innerWidth <= 768;
+
+  const TIERS = {
+    3: { particles: 5000, pr: Math.min(window.devicePixelRatio, 2.5), rings: 4, sats: 5, beams: 12, driftEvery: 1 },
+    2: { particles: 2800, pr: Math.min(window.devicePixelRatio, 2),   rings: 4, sats: 4, beams:  8, driftEvery: 1 },
+    1: { particles: 1200, pr: Math.min(window.devicePixelRatio, 1.5), rings: 3, sats: 3, beams:  4, driftEvery: 2 },
+    0: { particles:  500, pr: 1,                                       rings: 2, sats: 2, beams:  0, driftEvery: 3 },
+  };
+
+  let qualityLevel = 3; // همه دستگاه‌ها از بالاترین کیفیت شروع می‌کنن — FPS خودش downgrade می‌کنه
+  let GALAXY_N     = TIERS[qualityLevel].particles;
+
+  let _fpsFrameCount  = 0;
+  let _fpsLastTime    = performance.now();
+  let _fpsHistory     = [];
+  const FPS_INTERVAL  = 4000;   // sample every 4 s
+  const FPS_HISTORY   = 5;      // rolling window of 5 samples
+  let _driftTick      = 0;
+  let _qualityLocked  = false;
+  let _qualityLockTimer = null;
+
+  function _recordFpsSample(){
+    const now = performance.now();
+    if(now - _fpsLastTime < FPS_INTERVAL) return;
+    const fps = _fpsFrameCount / ((now - _fpsLastTime) / 1000);
+    _fpsHistory.push(fps);
+    if(_fpsHistory.length > FPS_HISTORY) _fpsHistory.shift();
+    _fpsFrameCount = 0;
+    _fpsLastTime   = now;
+    if(_fpsHistory.length >= 2) _checkAndAdapt();
+  }
+
+  function _avgFps(){
+    return _fpsHistory.reduce((a,b)=>a+b,0) / _fpsHistory.length;
+  }
+
+  function _checkAndAdapt(){
+    if(_qualityLocked) return;
+    const avg = _avgFps();
+    let target = qualityLevel;
+    if     (avg < 18 && qualityLevel > 0) target = Math.max(0, qualityLevel - 1);
+    else if(avg < 28 && qualityLevel > 1) target = qualityLevel - 1;
+    else if(avg > 52 && qualityLevel < 3) target = qualityLevel + 1;
+    if(target !== qualityLevel) _applyQuality(target);
+  }
+
+  function _rebuildGalaxy(){
+    if(typeof galaxy === 'undefined') return;
+    scene.remove(galaxy);
+    galaxyGeo.dispose();
+    const newPos = new Float32Array(GALAXY_N * 3);
+    const newCol = new Float32Array(GALAXY_N * 3);
+    const newVel = new Float32Array(GALAXY_N * 3);
+    for(let i = 0; i < GALAXY_N; i++){
+      const arm   = Math.floor(Math.random() * 3);
+      const r     = 3 + Math.pow(Math.random(), 0.6) * 22;
+      const theta = arm*(Math.PI*2/3) + r*0.18 + (Math.random()-0.5)*2.2;
+      const phi   = (Math.random()-0.5)*0.5;
+      newPos[i*3]   = r*Math.cos(theta);
+      newPos[i*3+1] = r*Math.sin(theta)*0.3 + phi*r*0.15;
+      newPos[i*3+2] = (Math.random()-0.5)*6;
+      newVel[i*3]   = (Math.random()-0.5)*0.0015;
+      newVel[i*3+1] = (Math.random()-0.5)*0.0008;
+      newVel[i*3+2] = (Math.random()-0.5)*0.001;
+      const c = palGalaxy[Math.floor(Math.random()*palGalaxy.length)];
+      newCol[i*3]=c.r; newCol[i*3+1]=c.g; newCol[i*3+2]=c.b;
+    }
+    galaxyGeo = new THREE.BufferGeometry();
+    galaxyGeo.setAttribute('position', new THREE.BufferAttribute(newPos, 3));
+    galaxyGeo.setAttribute('color',    new THREE.BufferAttribute(newCol, 3));
+    gVel  = newVel;
+    galaxy = new THREE.Points(galaxyGeo, galaxyMat);
+    galaxy.rotation.x = Math.PI * 0.12;
+    scene.add(galaxy);
+  }
+
+  function _applyQuality(level){
+    qualityLevel = level;
+    const cfg = TIERS[level];
+    GALAXY_N = cfg.particles;
+    _rebuildGalaxy();
+    renderer.setPixelRatio(cfg.pr);
+    if(typeof rings !== 'undefined'){
+      rings.forEach((r,i)      => { r.mesh.visible = i < cfg.rings;  });
+      satellites.forEach((s,i) => { s.mesh.visible = i < cfg.sats;   });
+      beams.forEach((b,i)      => { b.line.visible = i < cfg.beams;  });
+    }
+    // Lock 8 s to prevent thrashing
+    _qualityLocked = true;
+    clearTimeout(_qualityLockTimer);
+    _qualityLockTimer = setTimeout(()=>{ _qualityLocked = false; }, 8000);
+  }
+
   /* ═══════════════════════════
      1) GALAXY PARTICLE FIELD
   ═══════════════════════════ */
-  const GALAXY_N = 6000;
-  const gPos = new Float32Array(GALAXY_N * 3);
-  const gCol = new Float32Array(GALAXY_N * 3);
-  const gVel = new Float32Array(GALAXY_N * 3);
+  // GALAXY_N is set adaptively above
+  let gPos = new Float32Array(GALAXY_N * 3);
+  let gCol = new Float32Array(GALAXY_N * 3);
+  let gVel = new Float32Array(GALAXY_N * 3);
 
   const palGalaxy = [
     new THREE.Color('#9d4edd'),
@@ -1333,7 +1453,7 @@ body::after{
     gCol[i*3] = c.r; gCol[i*3+1] = c.g; gCol[i*3+2] = c.b;
   }
 
-  const galaxyGeo = new THREE.BufferGeometry();
+  let galaxyGeo = new THREE.BufferGeometry();
   galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
   galaxyGeo.setAttribute('color', new THREE.BufferAttribute(gCol, 3));
   const galaxyMat = new THREE.PointsMaterial({
@@ -1342,7 +1462,7 @@ body::after{
     depthWrite: false, blending: THREE.AdditiveBlending,
     sizeAttenuation: true
   });
-  const galaxy = new THREE.Points(galaxyGeo, galaxyMat);
+  let galaxy = new THREE.Points(galaxyGeo, galaxyMat);
   galaxy.rotation.x = Math.PI * 0.12;
   scene.add(galaxy);
 
@@ -1641,6 +1761,10 @@ body::after{
     requestAnimationFrame(tick);
     t += 0.005;
 
+    /* ── Continuous FPS monitoring ── */
+    _fpsFrameCount++;
+    _recordFpsSample();
+
     const sceneIdx = Math.floor(scrollP * 11);
     morphHero(sceneIdx % heroGeoPool.length);
 
@@ -1649,19 +1773,23 @@ body::after{
     galaxy.rotation.x  = Math.PI * 0.12 + my * 0.025 + t * 0.006;
     galaxy.rotation.z  = t * 0.004;
 
-    /* Drift galaxy particles slowly */
+    /* Drift galaxy particles — throttled on low-end devices */
+    _driftTick++;
+    if(_driftTick % TIERS[qualityLevel].driftEvery === 0){
     const pPos = galaxyGeo.attributes.position.array;
-    for(let i = 0; i < GALAXY_N; i++){
-      pPos[i*3]   += gVel[i*3];
-      pPos[i*3+1] += gVel[i*3+1];
-      pPos[i*3+2] += gVel[i*3+2];
+    const pCount = pPos.length / 3;
+    for(let i = 0; i < pCount; i++){
+      pPos[i*3]   += gVel[i*3]   || 0;
+      pPos[i*3+1] += gVel[i*3+1] || 0;
+      pPos[i*3+2] += gVel[i*3+2] || 0;
       const d = Math.sqrt(pPos[i*3]*pPos[i*3] + pPos[i*3+1]*pPos[i*3+1]);
       if(d > 26 || d < 2){
-        gVel[i*3]   *= -1;
-        gVel[i*3+1] *= -1;
+        if(gVel[i*3]   !== undefined) gVel[i*3]   *= -1;
+        if(gVel[i*3+1] !== undefined) gVel[i*3+1] *= -1;
       }
     }
     galaxyGeo.attributes.position.needsUpdate = true;
+    }
 
     /* Rings orbit */
     rings.forEach((r, i) => {
@@ -1791,6 +1919,8 @@ body::after{
         '  <span class="highlight">whois</span>     - درباره من',
         '  <span class="highlight">projects</span>  - پروژه‌های فعال',
         '  <span class="highlight">contact</span>   - اطلاعات تماس',
+        '  <span class="highlight">print</span>     - <span class="amber">باز کردن صفحه قابل چاپ</span>',
+        '  <span class="highlight">share</span>     - <span class="green">اشتراک‌گذاری رزومه</span>',
         '  <span class="highlight">clear</span>     - پاک کردن ترمینال',
         '',
         '<span class="dim">یک دستور تایپ کنید و Enter بزنید</span>'
@@ -1852,6 +1982,12 @@ body::after{
     },
     'clear': {
       clear: true
+    },
+    'print': {
+      action: 'print'
+    },
+    'share': {
+      action: 'share'
     }
   };
 
@@ -1883,7 +2019,7 @@ body::after{
     lines.push('');
     renderCategories(lines);
     lines.push('');
-    lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, clear</div>');
+    lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');
     return lines;
   }
 
@@ -1946,6 +2082,34 @@ body::after{
       return;
     }
 
+    if(cmdResult.action === 'print'){
+      cmdResult.cmd = cmd;
+      cmdResult.output = [
+        '<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>',
+        '',
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">',
+        '<button onclick="window.open(\'print.html\',\'_blank\')" style="background:linear-gradient(135deg,#9d4edd,#c77dff);border:none;border-radius:4px;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">🖨 باز کردن print.html</button>',
+        '</div>'
+      ];
+      addOutputLines(cmdResult);
+      setTimeout(() => window.open('print.html','_blank'), 400);
+      return;
+    }
+
+    if(cmdResult.action === 'share'){
+      cmdResult.cmd = cmd;
+      cmdResult.output = [
+        '<span class="green">✓ اشتراک‌گذاری رزومه</span>',
+        '',
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">',
+        '<button onclick="shareResume()" style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.4);border-radius:4px;color:#34d399;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">📤 اشتراک‌گذاری</button>',
+        '<button onclick="navigator.clipboard.writeText(window.location.href).then(()=>this.textContent=\'✓ کپی شد!\')" style="background:rgba(157,78,221,0.15);border:1px solid rgba(157,78,221,0.4);border-radius:4px;color:#c77dff;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">📋 کپی لینک</button>',
+        '</div>'
+      ];
+      addOutputLines(cmdResult);
+      return;
+    }
+
     cmdResult.cmd = cmd;
     addOutputLines(cmdResult);
   }
@@ -1962,7 +2126,7 @@ body::after{
 /* ════════════════════════════════════════════
    GSAP + SCROLLTRIGGER
 ════════════════════════════════════════════ */
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 /* ── TYPEWRITER HERO TITLE ── */
 (function typewriter(){
@@ -2045,6 +2209,110 @@ function smoothScrollTo(element, offset = 0) {
   }, 600);
 }
 
+/* ── SNAP-PER-SCENE SCROLL ── */
+(function initSnapScroll(){
+  /*
+   * Each .scene is 250vh tall. The sticky content sits at the
+   * vertical CENTRE of that block (scrub 0→1, peak visibility ~0.35–0.65).
+   * We snap to sceneTop + sceneHeight * 0.25 so the content is
+   * fully visible when the scroll settles.
+   *
+   * One wheel gesture = one scene forward/back.
+   * A fast flick (high deltaY in one event) = two scenes.
+   * Three scenes only if the single-event delta is extreme (>800px).
+   */
+
+  let isSnapping    = false;
+  let snapTimeout   = null;
+  let currentSnapIdx = 0;
+  const COOLDOWN    = 1200; // ms — must fully cover the CSS smooth scroll duration
+
+  /* ── sweet-spot positions ──
+   * GSAP scrub goes 0→1 over the full scene height (250vh).
+   * Content peaks at scrub ≈ 0.35–0.65.
+   * We snap to sceneTop + 38% of height so content is centred. */
+  function getSnapPositions(){
+    return Array.from(allScenes).map(s => {
+      const top = s.getBoundingClientRect().top + window.pageYOffset;
+      return top + s.offsetHeight * 0.38;
+    });
+  }
+
+  /* ── nearest snap index based on current scroll ── */
+  function getCurrentIndex(){
+    const positions = getSnapPositions();
+    const scrollY   = window.pageYOffset + window.innerHeight * 0.5;
+    let best = 0, bestDist = Infinity;
+    positions.forEach((p, i) => {
+      const dist = Math.abs(p - scrollY);
+      if(dist < bestDist){ bestDist = dist; best = i; }
+    });
+    return best;
+  }
+
+  function doSnap(targetIdx){
+    const positions = getSnapPositions();
+    const idx = Math.max(0, Math.min(positions.length - 1, targetIdx));
+    if(idx === currentSnapIdx && isSnapping) return;
+    currentSnapIdx = idx;
+    isSnapping = true;
+    clearTimeout(snapTimeout);
+    gsap.to(window, {
+      scrollTo: { y: positions[idx], autoKill: false },
+      duration: 1.15,
+      ease: 'power2.inOut',
+      onComplete: () => { isSnapping = false; }
+    });
+    snapTimeout = setTimeout(() => { isSnapping = false; }, COOLDOWN);
+  }
+
+  /* ── WHEEL — always exactly ONE step per gesture ── */
+  let wheelTimer    = null;
+  let wheelLocked   = false; // direction lock for the current gesture
+  let wheelDir      = 0;
+
+  document.addEventListener('wheel', e => {
+    e.preventDefault();
+
+    // During a snap animation, ignore all wheel events completely
+    if(isSnapping) return;
+
+    // First event of a new gesture sets direction and fires immediately
+    if(!wheelLocked){
+      wheelLocked = true;
+      wheelDir    = e.deltaY > 0 ? 1 : -1;
+      doSnap(getCurrentIndex() + wheelDir);
+    }
+
+    // Unlock after no wheel events for 150ms (gesture fully ended)
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { wheelLocked = false; }, 150);
+
+  }, { passive: false });
+
+  /* ── TOUCH — always exactly ONE step per swipe ── */
+  let touchStartY = 0;
+  let touchMoved  = false;
+
+  document.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
+    touchMoved  = false;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    touchMoved = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if(isSnapping || !touchMoved) return;
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if(Math.abs(dy) < 30) return;          // ignore micro-swipes
+    const dir = dy > 0 ? 1 : -1;
+    doSnap(getCurrentIndex() + dir);
+    touchMoved = false;
+  }, { passive: true });
+})();
+
 /* ── CHAPTER NAV ── */
 const navDots = document.querySelectorAll('.nav-dot');
 
@@ -2124,57 +2392,71 @@ allScenes.forEach((s,i)=>{
 
 /* ── SCENE 0 — HERO ── */
 (function(){
+
+  // تنظیم اولیه — همه المان‌های hero مخفی باشن
+  gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'], {opacity:0});
+
+  // انیمیشن ورود — بعد از لود صفحه، مستقل از اسکرول
+  const enterTl = gsap.timeline({ delay: 0.3 });
+  enterTl.fromTo('#s0-ch',      {opacity:0, y:40, letterSpacing:'1em'},           {opacity:1, y:0, letterSpacing:'0.38em', duration:0.6, ease:'power3.out'});
+  enterTl.fromTo('#s0-profile', {opacity:0, scale:0.65, filter:'blur(20px)'},     {opacity:1, scale:1, filter:'blur(0px)', duration:0.65, ease:'back.out(1.4)'}, '-=0.4');
+  enterTl.fromTo('#s0-fa',      {opacity:0, y:80, scale:0.82},                    {opacity:1, y:0, scale:1, duration:0.7, ease:'expo.out'}, '-=0.5');
+  enterTl.fromTo('#s0-en',      {opacity:0, y:30, letterSpacing:'0.7em'},         {opacity:1, y:0, letterSpacing:'0.28em', duration:0.55, ease:'power2.out'}, '-=0.4');
+  enterTl.fromTo('#s0-title',   {opacity:0, y:20},                                {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.3');
+  enterTl.fromTo('#s0-tagline', {opacity:0, y:14},                                {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.35');
+
+  // ScrollTrigger فقط برای exit — وقتی اسکرول شد المان‌ها برن
   const el = document.getElementById('scene-0');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+  const exitTl = gsap.timeline({
+    scrollTrigger:{
+      trigger:el, start:'top top', end:'bottom bottom', scrub:1.4,
+      onEnterBack: () => {
+        gsap.to(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],
+          {opacity:1, y:0, x:0, scale:1, filter:'blur(0px)', letterSpacing:'inherit', duration:0.5, ease:'power2.out', overwrite:true});
+      }
+    }
   });
 
-  // Enter
-  tl.fromTo('#s0-ch',    {opacity:0, y:30, letterSpacing:'0.8em'}, {opacity:1, y:0, letterSpacing:'0.38em', duration:0.12}, 0.03);
-  tl.fromTo('#s0-profile',{opacity:0, scale:0.7, filter:'blur(12px)'}, {opacity:1, scale:1, filter:'blur(0px)', duration:0.14}, 0.06);
-  tl.fromTo('#s0-fa',    {opacity:0, y:60, scale:0.88}, {opacity:1, y:0, scale:1, duration:0.16}, 0.10);
-  tl.fromTo('#s0-en',    {opacity:0, y:24, letterSpacing:'0.55em'}, {opacity:1, y:0, letterSpacing:'0.28em', duration:0.14}, 0.16);
-  tl.fromTo('#s0-title', {opacity:0, y:16}, {opacity:1, y:0, duration:0.12}, 0.22);
-
-  // Exit — slide up + blur out
-  tl.to(['#s0-ch','#s0-title','#s0-en'], {opacity:0, y:-40, filter:'blur(8px)', duration:0.10}, 0.72);
-  tl.to('#s0-fa',     {opacity:0, y:-80, scale:1.08, duration:0.12}, 0.70);
-  tl.to('#s0-profile',{opacity:0, scale:1.15, filter:'blur(16px)', duration:0.10}, 0.72);
+  // یه نگه‌دار برای اینکه exit دیر شروع کنه (المان‌ها تا scrub=0.60 بمونن)
+  exitTl.to({}, {duration:0.60});
+  exitTl.to(['#s0-ch','#s0-title','#s0-en','#s0-tagline'], {opacity:0, y:-50, filter:'blur(10px)', duration:0.14, ease:'power2.in'}, 0.64);
+  exitTl.to('#s0-fa',      {opacity:0, y:-100, scale:1.1, filter:'blur(4px)', duration:0.16, ease:'power2.in'}, 0.62);
+  exitTl.to('#s0-profile', {opacity:0, scale:1.2, filter:'blur(20px)', duration:0.14, ease:'power2.in'}, 0.64);
 })();
 
 /* ── SCENE 1 — ABOUT ── */
 (function(){
   const el = document.getElementById('scene-1');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
 
-  tl.fromTo('#s1-ch',   {opacity:0, x:40},            {opacity:1, x:0, duration:0.11},           0.04);
-  tl.fromTo('#s1-h',    {opacity:0, y:70, scale:0.9},  {opacity:1, y:0, scale:1, duration:0.16},  0.08);
-  tl.fromTo('#s1-hen',  {opacity:0, x:-30},            {opacity:1, x:0, duration:0.12},           0.16);
-  tl.fromTo('#s1-body', {opacity:0, y:40, filter:'blur(6px)'}, {opacity:1, y:0, filter:'blur(0px)', duration:0.14}, 0.21);
-  tl.fromTo('#s1-ben',  {opacity:0, y:20},             {opacity:1, y:0, duration:0.12},           0.28);
+  tl.fromTo('#s1-ch',   {opacity:0, x:60, scale:0.9},             {opacity:1, x:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
+  tl.fromTo('#s1-h',    {opacity:0, y:90, scale:0.84},            {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},    0.07);
+  tl.fromTo('#s1-hen',  {opacity:0, x:-50, filter:'blur(6px)'},   {opacity:1, x:0, filter:'blur(0px)', duration:0.16, ease:'power2.out'}, 0.16);
+  tl.fromTo('#s1-body', {opacity:0, y:50, filter:'blur(8px)'},    {opacity:1, y:0, filter:'blur(0px)', duration:0.18, ease:'power2.out'}, 0.22);
+  tl.fromTo('#s1-ben',  {opacity:0, y:24},                        {opacity:1, y:0, duration:0.14, ease:'power2.out'},           0.30);
 
-  tl.to(['#s1-ch','#s1-hen','#s1-ben'], {opacity:0, x:60, duration:0.09}, 0.72);
-  tl.to('#s1-h',    {opacity:0, y:-60, scale:0.94, duration:0.11},           0.70);
-  tl.to('#s1-body', {opacity:0, y:-30, filter:'blur(6px)', duration:0.10},   0.73);
+  tl.to(['#s1-ch','#s1-hen','#s1-ben'], {opacity:0, x:80, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
+  tl.to('#s1-h',    {opacity:0, y:-80, scale:0.92, duration:0.15, ease:'power2.in'}, 0.63);
+  tl.to('#s1-body', {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.66);
 })();
 
 /* ── SCENE 2 — SKILLS ── */
 (function(){
   const el = document.getElementById('scene-2');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
 
-  tl.fromTo('#s2-ch',       {opacity:0, y:24},            {opacity:1, y:0, duration:0.10},          0.04);
-  tl.fromTo('#s2-h',        {opacity:0, y:60, scale:0.9}, {opacity:1, y:0, scale:1, duration:0.15}, 0.08);
-  tl.fromTo('#s2-hen',      {opacity:0, x:-20},           {opacity:1, x:0, duration:0.11},          0.15);
-  tl.fromTo('#s2-terminal', {opacity:0, y:50, scale:0.95, filter:'blur(8px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.16}, 0.20);
+  tl.fromTo('#s2-ch',       {opacity:0, y:30, scale:0.9},              {opacity:1, y:0, scale:1, duration:0.15, ease:'power3.out'}, 0.03);
+  tl.fromTo('#s2-h',        {opacity:0, y:80, scale:0.84},             {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},   0.07);
+  tl.fromTo('#s2-hen',      {opacity:0, x:-40, filter:'blur(6px)'},    {opacity:1, x:0, filter:'blur(0px)', duration:0.15, ease:'power2.out'}, 0.16);
+  tl.fromTo('#s2-terminal', {opacity:0, y:70, scale:0.92, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.2)'}, 0.22);
 
-  tl.to(['#s2-ch','#s2-hen'],    {opacity:0, y:-30, duration:0.09}, 0.72);
-  tl.to('#s2-h',        {opacity:0, y:-60, scale:1.06, duration:0.11}, 0.70);
-  tl.to('#s2-terminal', {opacity:0, y:-40, scale:0.96, filter:'blur(6px)', duration:0.12}, 0.73);
+  tl.to(['#s2-ch','#s2-hen'],   {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
+  tl.to('#s2-h',        {opacity:0, y:-80, scale:1.08, filter:'blur(4px)', duration:0.15, ease:'power2.in'}, 0.63);
+  tl.to('#s2-terminal', {opacity:0, y:-60, scale:0.94, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.66);
 })();
 
 /* ── SCENES 3–7 — PROJECT SCENES (Cinematic slide-in) ── */
@@ -2182,127 +2464,127 @@ allScenes.forEach((s,i)=>{
   const el = document.getElementById(sceneId);
   if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
 
-  const xIn  = dir === 'left' ? -80 : 80;
-  const xOut = dir === 'left' ?  80 : -80;
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
 
-  tl.fromTo(`#${chId}`, {opacity:0, y:20, scale:0.96},          {opacity:1, y:0, scale:1, duration:0.11},  0.04);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.88, filter:'blur(10px)'},  {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:50, filter:'blur(6px)'},   {opacity:1, y:0, filter:'blur(0px)', duration:0.18}, 0.13);
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                                    {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},              {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                            {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
 
   // Exit — opposite side
-  tl.to(`#${chId}`,  {opacity:0, y:-20, duration:0.09},                         0.72);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.92, filter:'blur(8px)', duration:0.12}, 0.70);
-  tl.to(`#${prId}`,  {opacity:0, y:-40, filter:'blur(5px)', duration:0.11},     0.73);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},                    0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'},      0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},                    0.65);
 })('scene-3','s3-ch','s3-img','s3-pr','right');
 (function makeProjectAnim(sceneId, chId, imgId, prId, dir){
   const el = document.getElementById(sceneId);
   if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  const xIn  = dir === 'left' ? -80 : 80;
-  const xOut = dir === 'left' ?  80 : -80;
-  tl.fromTo(`#${chId}`, {opacity:0, y:20, scale:0.96},          {opacity:1, y:0, scale:1, duration:0.11},  0.04);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.88, filter:'blur(10px)'},  {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:50, filter:'blur(6px)'},   {opacity:1, y:0, filter:'blur(0px)', duration:0.18}, 0.13);
-  tl.to(`#${chId}`,  {opacity:0, y:-20, duration:0.09},                         0.72);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.92, filter:'blur(8px)', duration:0.12}, 0.70);
-  tl.to(`#${prId}`,  {opacity:0, y:-40, filter:'blur(5px)', duration:0.11},     0.73);
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
 })('scene-4','s4-ch','s4-img','s4-pr','left');
 (function makeProjectAnim(sceneId, chId, imgId, prId, dir){
   const el = document.getElementById(sceneId);
   if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  const xIn  = dir === 'left' ? -80 : 80;
-  const xOut = dir === 'left' ?  80 : -80;
-  tl.fromTo(`#${chId}`, {opacity:0, y:20, scale:0.96},          {opacity:1, y:0, scale:1, duration:0.11},  0.04);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.88, filter:'blur(10px)'},  {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:50, filter:'blur(6px)'},   {opacity:1, y:0, filter:'blur(0px)', duration:0.18}, 0.13);
-  tl.to(`#${chId}`,  {opacity:0, y:-20, duration:0.09},                         0.72);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.92, filter:'blur(8px)', duration:0.12}, 0.70);
-  tl.to(`#${prId}`,  {opacity:0, y:-40, filter:'blur(5px)', duration:0.11},     0.73);
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
 })('scene-5','s5-ch','s5-img','s5-pr','right');
 (function makeProjectAnim(sceneId, chId, imgId, prId, dir){
   const el = document.getElementById(sceneId);
   if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  const xIn  = dir === 'left' ? -80 : 80;
-  const xOut = dir === 'left' ?  80 : -80;
-  tl.fromTo(`#${chId}`, {opacity:0, y:20, scale:0.96},          {opacity:1, y:0, scale:1, duration:0.11},  0.04);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.88, filter:'blur(10px)'},  {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:50, filter:'blur(6px)'},   {opacity:1, y:0, filter:'blur(0px)', duration:0.18}, 0.13);
-  tl.to(`#${chId}`,  {opacity:0, y:-20, duration:0.09},                         0.72);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.92, filter:'blur(8px)', duration:0.12}, 0.70);
-  tl.to(`#${prId}`,  {opacity:0, y:-40, filter:'blur(5px)', duration:0.11},     0.73);
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
 })('scene-6','s6-ch','s6-img','s6-pr','left');
 (function makeProjectAnim(sceneId, chId, imgId, prId, dir){
   const el = document.getElementById(sceneId);
   if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  const xIn  = dir === 'left' ? -80 : 80;
-  const xOut = dir === 'left' ?  80 : -80;
-  tl.fromTo(`#${chId}`, {opacity:0, y:20, scale:0.96},          {opacity:1, y:0, scale:1, duration:0.11},  0.04);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.88, filter:'blur(10px)'},  {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:50, filter:'blur(6px)'},   {opacity:1, y:0, filter:'blur(0px)', duration:0.18}, 0.13);
-  tl.to(`#${chId}`,  {opacity:0, y:-20, duration:0.09},                         0.72);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.92, filter:'blur(8px)', duration:0.12}, 0.70);
-  tl.to(`#${prId}`,  {opacity:0, y:-40, filter:'blur(5px)', duration:0.11},     0.73);
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
 })('scene-7','s7-ch','s7-img','s7-pr','right');
 
 /* ── SCENE 8 — EXPERIENCE ── */
 (function(){
   const el = document.getElementById('scene-8');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.5 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  tl.fromTo('#s8-ch',  {opacity:0, y:24},                    {opacity:1, y:0, duration:0.11},         0.03);
-  tl.fromTo('#s8-e1',  {opacity:0, x:-60, filter:'blur(8px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.16}, 0.08);
-  tl.fromTo('#s8-div', {opacity:0, scaleX:0},                {opacity:1, scaleX:1, width:'200px', duration:0.12}, 0.20);
-  tl.fromTo('#s8-e2',  {opacity:0, x:60, filter:'blur(8px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.16}, 0.26);
+  tl.fromTo('#s8-ch',  {opacity:0, y:30, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},  0.03);
+  tl.fromTo('#s8-e1',  {opacity:0, x:-80, filter:'blur(12px)'},     {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.07);
+  tl.fromTo('#s8-div', {opacity:0, scaleX:0},                       {opacity:1, scaleX:1, width:'200px', duration:0.18, ease:'power2.inOut'}, 0.22);
+  tl.fromTo('#s8-e2',  {opacity:0, x:80, filter:'blur(12px)'},      {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.28);
 
-  tl.to(['#s8-ch','#s8-div'],  {opacity:0, y:-24, duration:0.09}, 0.72);
-  tl.to('#s8-e1', {opacity:0, x:-50, filter:'blur(6px)', duration:0.10}, 0.71);
-  tl.to('#s8-e2', {opacity:0, x:50,  filter:'blur(6px)', duration:0.10}, 0.73);
+  tl.to(['#s8-ch','#s8-div'],  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
+  tl.to('#s8-e1', {opacity:0, x:-70, filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.62);
+  tl.to('#s8-e2', {opacity:0, x:70,  filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.64);
 })();
 
 /* ── SCENE 9 — EDUCATION ── */
 (function(){
   const el = document.getElementById('scene-9');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  tl.fromTo('#s9-ch',  {opacity:0, y:20},                     {opacity:1, y:0, duration:0.10},           0.04);
-  tl.fromTo('#s9-edu', {opacity:0, y:60, scale:0.9, filter:'blur(8px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.18}, 0.08);
-  tl.fromTo('#s9-lg',  {opacity:0, y:30, scale:0.95},         {opacity:1, y:0, scale:1, duration:0.14},  0.20);
+  tl.fromTo('#s9-ch',  {opacity:0, y:28, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},           0.03);
+  tl.fromTo('#s9-edu', {opacity:0, y:80, scale:0.86, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.3)'}, 0.07);
+  tl.fromTo('#s9-lg',  {opacity:0, y:40, scale:0.92},               {opacity:1, y:0, scale:1, duration:0.18, ease:'power2.out'},            0.22);
 
-  tl.to('#s9-ch',  {opacity:0, y:-20, duration:0.09},                       0.72);
-  tl.to('#s9-edu', {opacity:0, y:-50, scale:1.05, filter:'blur(6px)', duration:0.12}, 0.70);
-  tl.to('#s9-lg',  {opacity:0, y:-30, scale:0.96, duration:0.10},           0.73);
+  tl.to('#s9-ch',  {opacity:0, y:-32, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
+  tl.to('#s9-edu', {opacity:0, y:-70, scale:1.06, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.62);
+  tl.to('#s9-lg',  {opacity:0, y:-40, scale:0.94, duration:0.13, ease:'power2.in'},          0.65);
 })();
 
 /* ── SCENE 10 — CONTACT ── */
 (function(){
   const el = document.getElementById('scene-10');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:0.6 }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
   const items = [
-    {id:'s10-ch',     from:{opacity:0, y:24},              t:0.04},
-    {id:'s10-h',      from:{opacity:0, y:60, scale:0.88},  t:0.08},
-    {id:'s10-hen',    from:{opacity:0, x:-30},             t:0.15},
-    {id:'s10-cg',     from:{opacity:0, y:40, scale:0.96, filter:'blur(6px)'}, t:0.22},
-    {id:'footer-line',from:{opacity:0, y:20},              t:0.34},
+    {id:'s10-ch',      from:{opacity:0, y:30, scale:0.9},                    ease:'power3.out', t:0.03},
+    {id:'s10-h',       from:{opacity:0, y:80, scale:0.84},                   ease:'expo.out',   t:0.07},
+    {id:'s10-hen',     from:{opacity:0, x:-50, filter:'blur(8px)'},           ease:'power2.out', t:0.16},
+    {id:'s10-cg',      from:{opacity:0, y:50, scale:0.92, filter:'blur(10px)'}, ease:'back.out(1.2)', t:0.24},
+    {id:'footer-line', from:{opacity:0, y:24},                               ease:'power2.out', t:0.36},
   ];
-  items.forEach(({id, from, t})=>{
+  items.forEach(({id, from, ease, t})=>{
     const to = {...from};
     Object.keys(to).forEach(k=>{
       if(k==='opacity') to[k]=1;
@@ -2310,7 +2592,8 @@ allScenes.forEach((s,i)=>{
       else if(k==='scale') to[k]=1;
       else if(k==='filter') to[k]='blur(0px)';
     });
-    to.duration = 0.14;
+    to.duration = 0.18;
+    to.ease     = ease || 'power2.out';
     tl.fromTo(`#${id}`, from, to, t);
   });
 })();
