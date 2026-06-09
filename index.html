@@ -406,6 +406,77 @@ body::after{
   background: #0a0416;
   display: block;
   margin: 0 auto;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.profile-hero-img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 60px rgba(157,78,221,0.45);
+  border-color: rgba(199,125,255,0.7);
+}
+
+/* ── PROFILE MODAL ── */
+#profile-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(2,0,8,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, background 0.35s ease;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+}
+#profile-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(2,0,8,0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+#profile-modal img {
+  width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(199,125,255,0.5);
+  box-shadow: 0 0 80px rgba(157,78,221,0.5), 0 0 160px rgba(157,78,221,0.2);
+  transform: scale(0.7);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  cursor: default;
+}
+#profile-modal.open img {
+  transform: scale(1);
+}
+#profile-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(199,125,255,0.35);
+  border-radius: 50%;
+  background: rgba(10,4,22,0.8);
+  color: var(--accent2);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 1;
+}
+#profile-modal-close:hover {
+  background: rgba(157,78,221,0.2);
+  border-color: var(--accent2);
+  transform: scale(1.1);
+}
+@media(max-width:768px){
+  #profile-modal-close { top: 16px; right: 16px; width: 38px; height: 38px; }
 }
 
 /* ── PROJECT IMAGE ── */
@@ -528,7 +599,7 @@ body::after{
 .terminal-body {
   padding: 14px 16px;
   min-height: 200px;
-  max-height: 280px;
+  max-height: 520px;
   overflow-y: auto;
   font-size: 0.68rem;
   line-height: 1.65;
@@ -870,6 +941,9 @@ body::after{
   
   .scene{height:220vh;}
   
+  /* Skills scene needs more room for taller terminal on mobile */
+  #scene-2{height:280vh;}
+
   /* Project scenes need more scroll room on mobile */
   #scene-3,#scene-4,#scene-5,#scene-6,#scene-7{height:260vh;}
   
@@ -898,7 +972,7 @@ body::after{
   .terminal-body{
     padding:10px;
     min-height:160px;
-    max-height:210px;
+    max-height:55vh;
     font-size:0.6rem;
     line-height:1.5;
   }
@@ -914,7 +988,7 @@ body::after{
 @media(max-width:400px){
   .terminal-body{
     min-height:140px;
-    max-height:180px;
+    max-height:52vh;
     font-size:0.56rem;
     padding:8px;
   }
@@ -1294,6 +1368,12 @@ body::after{
 </section>
 
 </div><!-- /scroll-container -->
+
+<!-- PROFILE MODAL -->
+<div id="profile-modal" role="dialog" aria-modal="true" aria-label="تصویر پروفایل بزرگ">
+  <button id="profile-modal-close" aria-label="بستن">✕</button>
+  <img src="assets/profile.png" alt="تصویر پروفایل محمد جواد محمودی" draggable="false">
+</div>
 
 <!-- NOSCRIPT FALLBACK — for crawlers & users without JS -->
 <noscript>
@@ -2286,10 +2366,12 @@ function smoothScrollTo(element, offset = 0) {
     snapTimeout = setTimeout(() => { isSnapping = false; }, COOLDOWN);
   }
 
-  /* ── WHEEL — always exactly ONE step per gesture ── */
+  /* ── WHEEL — desktop only: require sustained scrolling to advance ── */
   let wheelTimer    = null;
   let wheelLocked   = false; // direction lock for the current gesture
   let wheelDir      = 0;
+  let wheelAccum    = 0;           // accumulated deltaY for desktop
+  const WHEEL_THRESHOLD = 300;    // px of accumulated delta needed on desktop
 
   document.addEventListener('wheel', e => {
     e.preventDefault();
@@ -2297,18 +2379,59 @@ function smoothScrollTo(element, offset = 0) {
     // During a snap animation, ignore all wheel events completely
     if(isSnapping) return;
 
-    // First event of a new gesture sets direction and fires immediately
-    if(!wheelLocked){
+    const delta = e.deltaY;
+    const dir   = delta > 0 ? 1 : -1;
+
+    // If direction changes mid-gesture, reset accumulator
+    if(wheelDir !== 0 && dir !== wheelDir) {
+      wheelAccum = 0;
+    }
+    wheelDir = dir;
+    wheelAccum += Math.abs(delta);
+
+    // Reset accumulator after 400ms of no wheel events
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      wheelLocked = false;
+      wheelAccum  = 0;
+      wheelDir    = 0;
+    }, 400);
+
+    // Fire only when accumulated delta crosses threshold and not already locked
+    if(!wheelLocked && wheelAccum >= WHEEL_THRESHOLD) {
       wheelLocked = true;
-      wheelDir    = e.deltaY > 0 ? 1 : -1;
-      doSnap(getCurrentIndex() + wheelDir);
+      wheelAccum  = 0;
+      doSnap(getCurrentIndex() + dir);
     }
 
-    // Unlock after no wheel events for 150ms (gesture fully ended)
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => { wheelLocked = false; }, 150);
-
   }, { passive: false });
+
+  /* ── KEYBOARD ARROWS — desktop only: hold to advance ── */
+  if(window.innerWidth > 768){
+    let keyHoldTimer  = null;
+    let keyHoldActive = false;
+    const KEY_HOLD_MS = 400; // ms of holding before advancing
+
+    document.addEventListener('keydown', e => {
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if(isSnapping || keyHoldActive) return;
+
+      const dir = e.key === 'ArrowDown' ? 1 : -1;
+
+      keyHoldTimer = setTimeout(() => {
+        keyHoldActive = true;
+        doSnap(getCurrentIndex() + dir);
+      }, KEY_HOLD_MS);
+    });
+
+    document.addEventListener('keyup', e => {
+      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      clearTimeout(keyHoldTimer);
+      keyHoldActive = false;
+    });
+  }
 
   /* ── TOUCH — always exactly ONE step per swipe ── */
   let touchStartY = 0;
@@ -2623,6 +2746,32 @@ allScenes.forEach((s,i)=>{
     to.duration = 0.18;
     to.ease     = ease || 'power2.out';
     tl.fromTo(`#${id}`, from, to, t);
+  });
+})();
+
+/* ── PROFILE MODAL ── */
+(function(){
+  const modal    = document.getElementById('profile-modal');
+  const closeBtn = document.getElementById('profile-modal-close');
+  const trigger  = document.querySelector('.profile-hero-img');
+  if(!modal || !trigger) return;
+
+  function openModal(){
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  trigger.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
+  modal.addEventListener('click', closeModal);
+  modal.querySelector('img').addEventListener('click', e => e.stopPropagation());
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 })();
 
