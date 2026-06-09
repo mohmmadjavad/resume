@@ -53,7 +53,11 @@
 <meta name="twitter:title" content="محمد جواد محمودی — Full Stack Developer | Python, Django">
 <meta name="twitter:description" content="توسعه‌دهنده Full Stack · Python · Django · ۲+ سال تجربه. ساخت وب‌سایت، ربات تلگرام و نرم‌افزارهای دسکتاپ.">
 <meta name="twitter:image" content="https://immdjavad.ir/assets/profile.png">
-<meta name="twitter:image:alt" content="Mohammad Javad Mahmoudi Profile">
+<meta name="twitter:image:alt" content="Mohammad Javad Mahmoudi — Full Stack Developer Profile Photo">
+<meta name="twitter:label1" content="تخصص">
+<meta name="twitter:data1" content="Python · Django · Full Stack">
+<meta name="twitter:label2" content="تجربه">
+<meta name="twitter:data2" content="۲+ سال حرفه‌ای">
 
 <!-- Google Specific -->
 <meta name="google-site-verification" content="G0NGGvr2cWmmrBWksDthwKY8DLTvyryd1CoLUEqgGj8">
@@ -110,7 +114,7 @@
       "https://stackoverflow.com/users/immdjavad"
     ],
     "telephone": "+98-912-0120745",
-    "email": "mailto:contact@immdjavad.ir",
+    "email": "contact@immdjavad.ir",
     "alumniOf": {
       "@type": "EducationalOrganization",
       "name": "Computer Engineering Student"
@@ -144,6 +148,35 @@
     "@type": "SearchAction",
     "target": "https://immdjavad.ir/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- ImageObject Structured Data — for Google image search association -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": "https://immdjavad.ir/assets/profile.png",
+  "url": "https://immdjavad.ir/assets/profile.png",
+  "contentUrl": "https://immdjavad.ir/assets/profile.png",
+  "width": "979",
+  "height": "979",
+  "name": "Mohammad Javad Mahmoudi Profile Photo",
+  "description": "عکس پروفایل محمد جواد محمودی — توسعه‌دهنده Full Stack",
+  "caption": "محمد جواد محمودی (Mohammad Javad Mahmoudi) — Full Stack Developer",
+  "representativeOfPage": true,
+  "about": {
+    "@type": "Person",
+    "@id": "https://immdjavad.ir/#person",
+    "name": "Mohammad Javad Mahmoudi",
+    "alternateName": "محمد جواد محمودی",
+    "url": "https://immdjavad.ir/"
+  },
+  "author": {
+    "@type": "Person",
+    "@id": "https://immdjavad.ir/#person",
+    "name": "Mohammad Javad Mahmoudi"
   }
 }
 </script>
@@ -976,10 +1009,19 @@ body::after{
   <div class="scene-sticky">
     <div class="scene-inner">
       <div class="chapter-marker" id="s0-ch">خوش آمدید · Welcome</div>
-      <div class="profile-hero-wrap" id="s0-profile">
-        <img class="profile-hero-img" src="assets/profile.png" alt="تصویر پروفایل محمد جواد محمودی" loading="eager" fetchpriority="high">
+      <div class="profile-hero-wrap" id="s0-profile" itemscope itemtype="https://schema.org/Person">
+        <img class="profile-hero-img" src="assets/profile.png"
+             alt="محمد جواد محمودی — توسعه‌دهنده Full Stack"
+             title="Mohammad Javad Mahmoudi"
+             itemprop="image"
+             loading="eager" fetchpriority="high"
+             width="260" height="260">
+        <meta itemprop="name" content="Mohammad Javad Mahmoudi">
+        <meta itemprop="alternateName" content="محمد جواد محمودی">
+        <meta itemprop="url" content="https://immdjavad.ir/">
+        <meta itemprop="jobTitle" content="Full Stack Developer">
       </div>
-      <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
+      <h1 class="hero-name-fa" id="s0-fa" itemprop="name" itemscope itemtype="https://schema.org/Person">محمد جواد محمودی</h1>
       <div class="hero-name-en" id="s0-en">Mohammad Javad Mahmoudi</div>
       <div class="hero-title" id="s0-title" data-full="Full Stack Developer · Python · Django · Creative Engineer"></div>
       <div id="s0-tagline" style="opacity:0;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(237,233,254,0.32);text-transform:uppercase;">کد + طراحی + محصول — هر سه با هم</div>
@@ -2331,6 +2373,52 @@ function smoothScrollTo(element, offset = 0) {
     doSnap(getCurrentIndex() + dir);
     touchMoved = false;
   }, { passive: true });
+
+  /* ── KEYBOARD — Arrow keys, Page Down/Up, Space, Home/End ── */
+  document.addEventListener('keydown', e => {
+    if(isSnapping) return;
+    const cur = getCurrentIndex();
+    const last = allScenes.length - 1;
+    if(e.key === 'ArrowDown' || e.key === 'PageDown'){
+      e.preventDefault();
+      doSnap(cur + 1);
+    } else if(e.key === 'ArrowUp' || e.key === 'PageUp'){
+      e.preventDefault();
+      doSnap(cur - 1);
+    } else if(e.key === ' '){
+      e.preventDefault();
+      doSnap(e.shiftKey ? cur - 1 : cur + 1);
+    } else if(e.key === 'Home'){
+      e.preventDefault();
+      doSnap(0);
+    } else if(e.key === 'End'){
+      e.preventDefault();
+      doSnap(last);
+    }
+  });
+
+  /* ── IDLE SNAP — covers scrollbar drag and any other scroll source ── *
+   * When the user stops scrolling (from scrollbar, trackpad momentum, etc.)
+   * we wait briefly then snap to the nearest scene.                       */
+  let idleScrollTimer = null;
+  let userIsScrolling = false;
+
+  window.addEventListener('scroll', () => {
+    // Don't interfere when we ourselves are snapping
+    if(isSnapping) return;
+
+    userIsScrolling = true;
+    clearTimeout(idleScrollTimer);
+
+    // After 80ms of no scroll events, snap to nearest
+    idleScrollTimer = setTimeout(() => {
+      if(!isSnapping){
+        doSnap(getCurrentIndex());
+      }
+      userIsScrolling = false;
+    }, 80);
+  }, { passive: true });
+
 })();
 
 /* ── CHAPTER NAV ── */
