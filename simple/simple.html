@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://immdjavad.ir/simple">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Javad Mahmoudi — Full Stack Developer</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23130f22'/%3E%3Ctext x='50%25' y='50%25' font-size='70' text-anchor='middle' dy='.35em' fill='%23a855f7'%3E🐍%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07050f;
+    --surface: #0e0a1a;
+    --surface2: #130f22;
+    --border: rgba(139,92,246,0.15);
+    --accent: #a855f7;
+    --accent-glow: rgba(168,85,247,0.35);
+    --accent2: #818cf8;
+    --accent3: #e879f9;
+    --accent4: #f59e0b;
+    --text: #ede9fe;
+    --muted: #6b7280;
+    --card: rgba(13,10,26,0.85);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Vazirmatn', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* GRID BG */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events:none; z-index:0;
+  }
+
+  /* ORBS */
+  .orb { position:fixed; border-radius:50%; filter:blur(130px); opacity:0.18; pointer-events:none; z-index:0; animation:drift 22s ease-in-out infinite; }
+  .orb1 { width:700px; height:700px; background:#7c3aed; top:-250px; right:-250px; animation-delay:0s; }
+  .orb2 { width:500px; height:500px; background:#4f46e5; bottom:-180px; left:-180px; animation-delay:-11s; }
+  .orb3 { width:350px; height:350px; background:#d946ef; top:40%; left:40%; animation-delay:-6s; }
+  @keyframes drift {
+    0%,100% { transform:translate(0,0) scale(1); }
+    33% { transform:translate(25px,-18px) scale(1.04); }
+    66% { transform:translate(-18px,28px) scale(0.96); }
+  }
+
+  .wrapper { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:44px 24px 90px; }
+
+  /* FLOATING BTNS */
+  .fab-group {
+    position: fixed; bottom: 30px; left: 30px; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .print-btn, .share-btn {
+    position: relative !important;
+    bottom: auto !important; left: auto !important;
+    width: 48px; height: 48px;
+    border: none; border-radius: 12px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  .print-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    box-shadow: 0 0 22px var(--accent-glow), 0 4px 16px rgba(0,0,0,0.4);
+    color: #fff;
+  }
+  .share-btn {
+    background: rgba(19,15,34,0.9);
+    border: 1px solid rgba(139,92,246,0.35);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    color: var(--accent);
+    backdrop-filter: blur(10px);
+  }
+  .print-btn svg, .share-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .print-btn:hover { transform: translateY(-3px) scale(1.08); box-shadow: 0 0 40px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.5); }
+  .share-btn:hover { transform: translateY(-3px) scale(1.08); border-color: var(--accent); background: rgba(139,92,246,0.15); box-shadow: 0 0 24px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.4); }
+  /* tooltip */
+  .print-btn::after, .share-btn::after {
+    content: attr(data-tip);
+    position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+    background: rgba(13,10,26,0.95); border: 1px solid rgba(139,92,246,0.3);
+    color: var(--text); font-family: 'Vazirmatn', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .print-btn:hover::after, .share-btn:hover::after { opacity: 1; }
+  @media(max-width:768px){
+    .fab-group { bottom: 16px; left: 16px; }
+    .print-btn, .share-btn { width: 42px; height: 42px; border-radius: 10px; }
+    .print-btn svg, .share-btn svg { width: 18px; height: 18px; }
+  }
+
+  /* HEADER */
+  .header {
+    display:grid; grid-template-columns:1fr auto; gap:40px; align-items:start;
+    margin-bottom:56px; padding-bottom:36px;
+    border-bottom:1px solid var(--border); position:relative;
+  }
+  .header::after {
+    content:''; position:absolute; bottom:-1px; right:0;
+    width:140px; height:2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .badge {
+    font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    color:var(--accent); letter-spacing:0.22em; text-transform:uppercase;
+    margin-bottom:14px; opacity:0.85; display:flex; align-items:center; gap:10px;
+  }
+  .badge::before { content:''; width:28px; height:1px; background:var(--accent); display:inline-block; }
+  .name-fa {
+    font-size: clamp(2.2rem,5vw,3.6rem); font-weight:900; line-height:1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 45%, var(--accent3) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    margin-bottom:4px;
+  }
+  .name-en {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(1.8rem,4vw,3rem);
+    letter-spacing:0.1em; color:var(--muted); line-height:1; margin-bottom:20px;
+  }
+  .title-wrap { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+  .title-fa { font-size:1rem; font-weight:500; opacity:0.85; }
+  .title-en {
+    font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--accent2);
+    background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.25);
+    padding:4px 12px; border-radius:20px;
+  }
+
+  /* CONTACT BAR */
+  .contact-bar { display:flex; flex-wrap:wrap; gap:8px; }
+  .contact-item {
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface2); border:1px solid var(--border);
+    padding:8px 16px; font-size:0.78rem;
+    font-family:'JetBrains Mono',monospace; color:var(--text);
+    transition:all 0.3s; text-decoration:none; border-radius:8px;
+    position:relative; overflow:hidden;
+  }
+  .contact-item svg { width:15px; height:15px; flex-shrink:0; }
+  .contact-item::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    opacity:0; transition:opacity 0.3s;
+  }
+  .contact-item:hover::before { opacity:0.12; }
+  .contact-item:hover { border-color:var(--accent); color:var(--accent); }
+  .contact-item span { position:relative; z-index:1; }
+  .contact-item svg { position:relative; z-index:1; }
+
+  /* PROFILE IMG */
+  .profile-img-wrap {
+    position:relative; width:148px; height:148px; flex-shrink:0;
+  }
+  .profile-ring {
+    position:absolute; inset:-3px; border-radius:50%;
+    background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+    animation: spinRing 8s linear infinite;
+    z-index:0;
+  }
+  .profile-ring-inner {
+    position:absolute; inset:3px; background:var(--bg); border-radius:50%; z-index:1;
+  }
+  @keyframes spinRing { to { transform:rotate(360deg); } }
+  .profile-img {
+    position:absolute; inset:6px; width:calc(100% - 12px); height:calc(100% - 12px);
+    object-fit:cover; border-radius:50%; z-index:2; display:block;
+  }
+  .profile-fallback {
+    position:absolute; inset:6px; width:calc(100% - 12px); height:calc(100% - 12px);
+    background:var(--surface2); border-radius:50%; z-index:2;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bebas Neue',sans-serif; font-size:2.6rem; color:var(--accent); letter-spacing:0.05em;
+  }
+
+  /* SECTION */
+  .section { margin-bottom:52px; }
+  .section-header { display:flex; align-items:center; gap:16px; margin-bottom:26px; }
+  .section-num { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:rgba(139,92,246,0.2); line-height:1; user-select:none; }
+  .section-titles { flex:1; }
+  .section-title-fa { font-size:1.25rem; font-weight:700; line-height:1; }
+  .section-title-en { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-top:3px; opacity:0.8; }
+  .section-line { flex:1; height:1px; background:linear-gradient(90deg, var(--accent), transparent); opacity:0.25; }
+
+  /* ABOUT */
+  .about-text {
+    font-size:0.93rem; line-height:2.1; opacity:0.85; max-width:720px;
+    padding:22px 26px; background:var(--surface2); border-right:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    box-shadow: inset 0 0 40px rgba(139,92,246,0.04);
+  }
+
+  /* SKILLS */
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:12px; }
+  .skill-item {
+    background:var(--surface2); border:1px solid var(--border);
+    padding:14px 16px; border-radius:10px; position:relative; overflow:hidden;
+    transition:all 0.3s;
+  }
+  .skill-item:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 8px 30px rgba(139,92,246,0.15); }
+  .skill-name-fa { font-size:0.83rem; font-weight:600; margin-bottom:2px; }
+  .skill-name-en { font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--muted); }
+  .skill-bar { margin-top:10px; height:2px; background:var(--border); overflow:hidden; border-radius:2px; }
+  .skill-fill {
+    height:100%; width:0;
+    background:linear-gradient(90deg, var(--accent), var(--accent3));
+    box-shadow:0 0 8px var(--accent-glow);
+    border-radius:2px; transition:width 1.3s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 18px;
+  }
+  /* آذین دژ: بزرگ چپ، ۲ ردیف */
+  .project-card.featured {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    border-color: rgba(139,92,246,0.28);
+  }
+  /* فروشگاه لباس: راست بالا */
+  .project-card:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 2; }
+  /* ربات کالا ۲ */
+  .project-card:nth-child(3) { grid-column: 1 / 2; grid-row: 2 / 3; }
+  /* استخراج‌گر تلگرام */
+  .project-card:nth-child(4) { grid-column: 2 / 3; grid-row: 2 / 3; }
+  /* حسابداری */
+  .project-card:nth-child(5) { grid-column: 3 / 4; grid-row: 2 / 3; }
+  /* داده‌کاوی */
+  .project-card:nth-child(6) { grid-column: 1 / 4; }
+  .project-card {
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    overflow:hidden; position:relative; transition:all 0.4s ease;
+    backdrop-filter:blur(12px);
+  }
+  .project-card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 24px 60px rgba(139,92,246,0.15); }
+  .project-img-placeholder {
+    width:100%; height:160px; background:var(--surface2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.2rem; border-bottom:1px solid var(--border);
+  }
+  .project-img-real {
+    width:100%; height:160px; object-fit:cover; display:block;
+    border-bottom:1px solid var(--border);
+  }
+  .project-body { padding:20px; }
+  .project-tag {
+    font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--accent4);
+    text-transform:uppercase; letter-spacing:0.14em; margin-bottom:8px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .project-tag::before { content:'▸'; color:var(--accent); }
+  .project-title-fa { font-size:1.05rem; font-weight:700; margin-bottom:3px; }
+  .project-title-en { font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--muted); margin-bottom:12px; }
+  .project-desc { font-size:0.81rem; line-height:1.9; opacity:0.78; margin-bottom:14px; }
+  .project-tech { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .tech-tag {
+    font-family:'JetBrains Mono',monospace; font-size:0.63rem; padding:3px 9px;
+    background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.22);
+    color:var(--accent); border-radius:20px;
+  }
+  .tech-tag.blue { background:rgba(129,140,248,0.08); border-color:rgba(129,140,248,0.22); color:var(--accent2); }
+  .tech-tag.pink { background:rgba(232,121,249,0.08); border-color:rgba(232,121,249,0.22); color:var(--accent3); }
+  .project-link { font-family:'JetBrains Mono',monospace; font-size:0.71rem; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:5px; border-bottom:1px solid transparent; transition:border-color 0.3s; }
+  .project-link:hover { border-color:var(--accent); }
+  .project-duration { position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:0.64rem; background:rgba(0,0,0,0.65); border:1px solid var(--border); color:var(--accent4); padding:3px 9px; border-radius:20px; backdrop-filter:blur(10px); }
+  .coming-soon { font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--accent4); display:inline-flex; align-items:center; gap:5px; }
+
+  /* PROJECT GALLERY */
+  .project-gallery { border-top:1px solid var(--border); margin-top:16px; overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .project-gallery.open { max-height:500px; }
+  .gallery-toggle {
+    display:flex; align-items:center; gap:7px; margin-top:14px;
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--accent);
+    background:rgba(168,85,247,0.07); border:1px solid rgba(168,85,247,0.2);
+    padding:7px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s;
+    width:fit-content;
+  }
+  .gallery-toggle:hover { background:rgba(168,85,247,0.15); border-color:var(--accent); }
+  .gallery-toggle svg { width:13px; height:13px; transition:transform 0.3s; flex-shrink:0; }
+  .gallery-toggle.active svg { transform:rotate(180deg); }
+  .gallery-toggle .gt-count {
+    background:var(--accent); color:var(--bg); border-radius:50%;
+    width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+    font-size:0.6rem; font-weight:700; flex-shrink:0;
+  }
+  .gallery-inner { padding:14px 0 4px; display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
+  .gallery-shot {
+    aspect-ratio:16/9; border-radius:6px; overflow:hidden;
+    border:1px solid var(--border); cursor:pointer; position:relative;
+    background:var(--surface2); transition:all 0.25s;
+  }
+  .gallery-shot:hover { border-color:var(--accent); transform:scale(1.03); box-shadow:0 6px 24px rgba(139,92,246,0.25); }
+  .gallery-shot img { width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-shot-empty {
+    width:100%; height:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:5px; color:var(--border);
+  }
+  .gallery-shot-empty svg { width:20px; height:20px; opacity:0.4; }
+  .gallery-shot-empty span { font-family:'JetBrains Mono',monospace; font-size:0.58rem; opacity:0.4; }
+
+  /* AR BADGE */
+  .ar-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(232,121,249,0.1));
+    border:1px solid rgba(232,121,249,0.3); color:var(--accent3);
+    font-family:'JetBrains Mono',monospace; font-size:0.65rem; padding:4px 10px;
+    border-radius:20px; margin-bottom:14px; letter-spacing:0.05em;
+  }
+  .ar-badge svg { width:12px; height:12px; }
+
+  /* SCHEMATIC SECTION */
+  .schematic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .schematic-item {
+    aspect-ratio:16/10; background:var(--surface2); border:1px solid var(--border);
+    border-radius:10px; overflow:hidden; cursor:pointer; position:relative;
+    transition:all 0.3s;
+  }
+  .schematic-item:hover { border-color:var(--accent); transform:scale(1.02); box-shadow:0 12px 40px rgba(139,92,246,0.2); }
+  .schematic-item img { width:100%; height:100%; object-fit:cover; display:block; }
+  .schematic-placeholder {
+    width:100%; height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    color:var(--border);
+  }
+  .schematic-placeholder svg { width:28px; height:28px; opacity:0.5; }
+  .schematic-placeholder span { font-family:'JetBrains Mono',monospace; font-size:0.65rem; opacity:0.4; letter-spacing:0.1em; }
+  .schematic-label {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(transparent, rgba(7,5,15,0.9));
+    padding:20px 12px 10px;
+    font-family:'JetBrains Mono',monospace; font-size:0.67rem; color:var(--accent);
+    opacity:0; transition:opacity 0.3s;
+  }
+  .schematic-item:hover .schematic-label { opacity:1; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:1000; align-items:center; justify-content:center; }
+  .lightbox.active { display:flex; }
+  .lightbox-overlay { position:absolute; inset:0; background:rgba(7,5,15,0.95); cursor:zoom-out; }
+  .lightbox-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .lightbox-content img { max-width:85vw; max-height:82vh; object-fit:contain; border-radius:8px; border:1px solid var(--border); display:block; }
+  .lightbox-counter { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.12em; }
+  .lightbox-close { position:absolute; top:20px; left:20px; color:var(--muted); font-size:1.6rem; cursor:pointer; background:rgba(7,5,15,0.7); border:1px solid var(--border); width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%; z-index:3; transition:all 0.2s; line-height:1; }
+  .lightbox-close:hover { color:#fff; border-color:var(--accent); }
+  .lightbox-arrow { position:absolute; top:50%; transform:translateY(-50%); background:rgba(7,5,15,0.7); border:1px solid var(--border); color:var(--text); width:46px; height:46px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:3; transition:all 0.25s; }
+  .lightbox-arrow:hover { border-color:var(--accent); color:var(--accent); background:rgba(139,92,246,0.15); }
+  .lightbox-arrow svg { width:20px; height:20px; }
+  .lightbox-prev { right: 20px; }
+  .lightbox-next { left: 20px; }
+  .lightbox-arrow.hidden { opacity:0; pointer-events:none; }
+
+  /* EXPERIENCE */
+  .exp-item { position:relative; padding-right:30px; margin-bottom:32px; }
+  .exp-item::before { content:''; position:absolute; right:0; top:8px; bottom:-32px; width:1px; background:linear-gradient(180deg, var(--accent), transparent); opacity:0.3; }
+  .exp-item:last-child::before { display:none; }
+  .exp-dot { position:absolute; right:-5px; top:8px; width:11px; height:11px; background:var(--accent); border-radius:50%; box-shadow:0 0 14px var(--accent-glow); }
+  .exp-period { font-family:'JetBrains Mono',monospace; font-size:0.69rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:6px; }
+  .exp-role-fa { font-size:1rem; font-weight:700; margin-bottom:2px; }
+  .exp-role-en { font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--muted); margin-bottom:10px; }
+  .exp-desc { font-size:0.84rem; line-height:1.9; opacity:0.8; }
+
+  /* EDUCATION */
+  .edu-card { background:var(--surface2); border:1px solid var(--border); padding:24px; border-radius:12px; display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start; }
+  .edu-icon { width:48px; height:48px; background:rgba(139,92,246,0.12); border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+  .edu-icon svg { width:24px; height:24px; color:var(--accent); }
+  .edu-degree-fa { font-size:1.05rem; font-weight:700; margin-bottom:4px; }
+  .edu-degree-en { font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent2); margin-bottom:8px; }
+  .edu-school { font-size:0.83rem; color:var(--muted); }
+
+  /* LANGUAGES */
+  .lang-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:14px; }
+  .lang-item { background:var(--surface2); border:1px solid var(--border); padding:16px 18px; border-radius:10px; }
+  .lang-name-fa { font-size:0.88rem; font-weight:600; margin-bottom:2px; }
+  .lang-name-en { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--muted); margin-bottom:10px; }
+  .lang-dots { display:flex; gap:5px; }
+  .lang-dot { width:9px; height:9px; border:1px solid var(--border); border-radius:50%; transition:all 0.3s; }
+  .lang-dot.filled { background:var(--accent); border-color:var(--accent); box-shadow:0 0 7px var(--accent-glow); }
+
+  /* TWO COL */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+
+  /* FOOTER */
+  .resume-footer { margin-top:56px; padding-top:24px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .footer-text { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--muted); opacity:0.5; }
+  .footer-dots { display:flex; gap:6px; align-items:center; }
+  .footer-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; opacity:0.3; animation:pulse 2s infinite; }
+  .footer-dot:nth-child(2) { animation-delay:0.3s; background:var(--accent2); }
+  .footer-dot:nth-child(3) { animation-delay:0.6s; background:var(--accent3); }
+  @keyframes pulse { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
+
+  /* RESPONSIVE */
+  @media(max-width:768px){
+    .wrapper{padding:22px 16px 70px;}
+    .header{grid-template-columns:1fr;gap:22px;text-align:center;align-items:center;justify-items:center;}
+    .header-text{display:flex;flex-direction:column;align-items:center;}
+    .profile-img-wrap{width:110px;height:110px;order:-1;}
+    .project-card.featured{grid-column:unset;}
+    .project-card:nth-child(n){grid-column:unset;grid-row:unset;}
+    .two-col{grid-template-columns:1fr;}
+
+    .name-fa{font-size:2rem;}
+    .name-en{font-size:1.6rem;}
+    .projects-grid{display:flex !important;flex-direction:column;}
+    .skills-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
+    .schematic-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
+    .badge{justify-content:center;}
+    .title-wrap{justify-content:center;}
+    .contact-bar{justify-content:center;}
+  }
+  @media(max-width:480px){
+    .contact-item{font-size:0.72rem;padding:7px 11px;}
+    .lang-grid{grid-template-columns:1fr 1fr;}
+  }
+
+  /* VIEW BTN */
+  .project-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+  .view-btn {
+    display:inline-flex; align-items:center; gap:7px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    color:#fff; text-decoration:none;
+    font-family:'Vazirmatn',sans-serif; font-weight:600; font-size:0.78rem;
+    padding:8px 16px; border-radius:20px;
+    transition:all 0.3s; box-shadow:0 4px 15px rgba(168,85,247,0.3);
+  }
+  .view-btn svg { width:13px; height:13px; flex-shrink:0; }
+  .view-btn:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(168,85,247,0.5); }
+  .view-btn-dim { background:linear-gradient(135deg,#374151,#4b5563); box-shadow:0 4px 15px rgba(0,0,0,0.3); }
+  .view-btn-dim:hover { box-shadow:0 8px 25px rgba(0,0,0,0.4); }
+
+  /* PRINT LAYOUT COLS - transparent on screen */
+  .print-col-left, .print-col-right { display: contents; }
+
+  /* PRINT */
+  @media print{
+    @page { size: A4 portrait; margin: 0; }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; box-sizing:border-box !important; }
+
+    body::before, .orb, .fab-group, .lightbox,
+    .project-gallery, .gallery-toggle, .project-actions,
+    .project-img-real, .project-img-placeholder,
+    .project-link, .coming-soon, .ar-badge,
+    .footer-dots, .profile-ring, .profile-ring-inner,
+    .section-num, .section-line,
+    .project-card:nth-child(n+4),
+    .section:has(.about-text),
+    .resume-footer { display:none !important; }
+
+    html, body {
+      background: #07050f !important;
+      width: 210mm !important;
+      height: 297mm !important;
+      overflow: hidden !important;
+    }
+
+    .wrapper {
+      padding: 7mm 8mm !important;
+      max-width: 210mm !important;
+      width: 210mm !important;
+      min-height: 297mm !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .header {
+      display: grid !important;
+      grid-template-columns: 1fr 56px !important;
+      gap: 10px !important;
+      margin-bottom: 7px !important;
+      padding-bottom: 6px !important;
+      border-bottom: 1px solid rgba(139,92,246,0.5) !important;
+    }
+    .badge { font-size:0.5rem !important; margin-bottom:3px !important; letter-spacing:0.12em !important; }
+    .name-fa { font-size:1.35rem !important; margin-bottom:1px !important; background:none !important; -webkit-text-fill-color:#a855f7 !important; color:#a855f7 !important; }
+    .name-en { font-size:0.82rem !important; margin-bottom:4px !important; }
+    .title-wrap { margin-bottom:4px !important; gap:5px !important; }
+    .title-fa { font-size:0.62rem !important; }
+    .title-en { font-size:0.52rem !important; padding:1px 6px !important; }
+    .contact-bar { gap:3px !important; }
+    .contact-item { padding:2px 7px !important; font-size:0.54rem !important; border-radius:3px !important; border-color:rgba(139,92,246,0.3) !important; }
+    .contact-item svg { width:10px !important; height:10px !important; }
+    .profile-img-wrap { width:52px !important; height:52px !important; }
+    .profile-img { border-radius:50% !important; border:2px solid #a855f7 !important; inset:0 !important; width:100% !important; height:100% !important; }
+    .profile-fallback { border-radius:50% !important; border:2px solid #a855f7 !important; font-size:1.1rem !important; }
+
+    /* دو ستون اصلی */
+    .print-layout {
+      display: grid !important;
+      grid-template-columns: 85mm 1fr !important;
+      gap: 9px !important;
+      flex: 1 !important;
+      align-items: start !important;
+    }
+    .print-col-left, .print-col-right {
+      display: block !important;
+    }
+
+    .section { margin-bottom:7px !important; }
+    .section-header { margin-bottom:4px !important; gap:5px !important; }
+    .section-title-fa { font-size:0.7rem !important; }
+    .section-title-en { font-size:0.48rem !important; }
+
+    .skills-grid { grid-template-columns:repeat(3,1fr) !important; gap:3px !important; }
+    .skill-item { padding:4px 5px !important; border-radius:2px !important; background:rgba(139,92,246,0.08) !important; border-color:rgba(139,92,246,0.2) !important; }
+    .skill-name-fa { font-size:0.56rem !important; }
+    .skill-name-en { font-size:0.46rem !important; }
+    .skill-bar { margin-top:3px !important; height:2px !important; }
+    .skill-fill { box-shadow:none !important; }
+
+    .projects-grid { grid-template-columns:1fr !important; gap:5px !important; }
+    .project-card.featured { grid-column:span 1 !important; }
+    .project-card { border-radius:3px !important; background:rgba(139,92,246,0.06) !important; border-color:rgba(139,92,246,0.22) !important; }
+    .project-body { padding:5px 8px !important; }
+    .project-tag { font-size:0.46rem !important; margin-bottom:1px !important; }
+    .project-title-fa { font-size:0.68rem !important; margin-bottom:1px !important; }
+    .project-title-en { font-size:0.5rem !important; margin-bottom:3px !important; }
+    .project-desc { font-size:0.54rem !important; line-height:1.4 !important; margin-bottom:3px !important; }
+    .project-desc br { display:none !important; }
+    .project-desc span[style] { display:none !important; }
+    .project-tech { gap:2px !important; }
+    .tech-tag { font-size:0.44rem !important; padding:1px 4px !important; }
+    .project-duration { font-size:0.44rem !important; padding:1px 5px !important; }
+
+    .exp-item { padding-right:10px !important; margin-bottom:6px !important; }
+    .exp-dot { width:6px !important; height:6px !important; right:-3px !important; box-shadow:none !important; }
+    .exp-period { font-size:0.5rem !important; margin-bottom:1px !important; }
+    .exp-role-fa { font-size:0.65rem !important; }
+    .exp-role-en { font-size:0.5rem !important; margin-bottom:2px !important; }
+    .exp-desc { font-size:0.54rem !important; line-height:1.4 !important; }
+    .exp-desc span { display:none !important; }
+
+    .two-col { grid-template-columns:1fr 1fr !important; gap:5px !important; }
+    .edu-card { padding:6px 8px !important; gap:7px !important; border-radius:2px !important; background:rgba(139,92,246,0.06) !important; border-color:rgba(139,92,246,0.2) !important; }
+    .edu-icon { width:28px !important; height:28px !important; border-radius:4px !important; }
+    .edu-icon svg { width:13px !important; height:13px !important; }
+    .edu-degree-fa { font-size:0.64rem !important; }
+    .edu-degree-en { font-size:0.52rem !important; margin-bottom:2px !important; }
+    .edu-school { font-size:0.52rem !important; }
+    .edu-card div[style] { margin-top:4px !important; }
+
+    .lang-grid { grid-template-columns:1fr 1fr !important; gap:3px !important; }
+    .lang-item { padding:5px 6px !important; border-radius:2px !important; background:rgba(139,92,246,0.06) !important; border-color:rgba(139,92,246,0.2) !important; }
+    .lang-name-fa { font-size:0.6rem !important; }
+    .lang-name-en { font-size:0.48rem !important; margin-bottom:4px !important; }
+    .lang-dot { width:6px !important; height:6px !important; box-shadow:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-overlay" onclick="closeLightbox()"></div>
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-arrow lightbox-prev" onclick="lbNav(-1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="lightbox-content">
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+  </div>
+  <button class="lightbox-arrow lightbox-next" onclick="lbNav(1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+
+<div class="fab-group">
+  <button class="share-btn" data-tip="اشتراک‌گذاری" onclick="shareResume()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+  <button class="print-btn" data-tip="چاپ / PDF" onclick="window.open('print.html','_blank')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  </button>
+</div>
+
+<div class="wrapper">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="header-text">
+      <div class="badge">Full Stack Developer · Software Engineer</div>
+      <h1 class="name-fa">محمد جواد محمودی</h1>
+      <div class="name-en">Mohammad Javad Mahmoudi</div>
+      <div class="title-wrap">
+        <span class="title-fa">توسعه‌دهنده وب و نرم‌افزار</span>
+        <span class="title-en">Full Stack Developer</span>
+      </div>
+      <div class="contact-bar">
+
+        <!-- Telegram -->
+        <a class="contact-item" href="https://t.me/immdjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg>
+          <span>immdjavad@</span>
+        </a>
+
+        <!-- Instagram -->
+        <a class="contact-item" href="https://instagram.com/immdjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span>immdjavad@</span>
+        </a>
+
+        <!-- GitHub -->
+        <a class="contact-item" href="https://github.com/mohmmadjavad" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+
+         <!-- Phone -->
+        <a class="contact-item" href="tel:09120120745">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span id="phoneSpan" onclick="if(this.innerText!=='09120120745'){this.innerText='09120120745';this.style.color='#a855f7';setTimeout(()=>{window.location.href='tel:09120120745';},600);}else{window.location.href='tel:09120120745';}" style="cursor:pointer"> کلیک کن</span>
+        </a>
+
+      </div>
+    </div>
+    <div class="profile-img-wrap">
+      <div class="profile-ring"></div>
+      <div class="profile-ring-inner"></div>
+      <img class="profile-img" src="assets/profile.jpg" alt="Mohammad Javad Mahmoudi"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="profile-fallback" style="display:none;">MJM</div>
+    </div>
+  </header>
+
+  <div class="print-layout">
+  <div class="print-col-left">
+  <!-- ══ ABOUT ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-titles">
+        <div class="section-title-fa">درباره من</div>
+        <div class="section-title-en">About Me</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-text">
+      توسعه‌دهنده Full Stack با تخصص در Python و Django، با بیش از ۲ سال تجربه حرفه‌ای در ساخت پروژه‌های واقعی و پیچیده. دانشجوی کارشناسی مهندسی کامپیوتر با رویکرد عملی و خلاقانه در طراحی نرم‌افزار. علاوه بر برنامه‌نویسی، بیش از ۶ سال تجربه در طراحی و ویرایش تصویر با فتوشاپ دارم که دیدگاه بصری متفاوتی در توسعه رابط کاربری به من می‌دهد.
+      <br><br>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.77rem;color:var(--muted);">Full Stack Developer specializing in Python/Django with 2+ years of hands-on experience building complex real-world applications. CS undergraduate with a creative approach to software design and 6+ years of Photoshop expertise that shapes a unique visual sensibility in UI/UX work.</span>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-titles">
+        <div class="section-title-fa">مهارت‌ها</div>
+        <div class="section-title-en">Technical Skills</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
+      <div class="skill-item"><div class="skill-name-fa">پایتون</div><div class="skill-name-en">Python</div><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">جنگو</div><div class="skill-name-en">Django</div><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">جاوااسکریپت</div><div class="skill-name-en">JavaScript</div><div class="skill-bar"><div class="skill-fill" data-w="75"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">HTML / CSS</div><div class="skill-name-en">HTML / CSS</div><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">ربات تلگرام</div><div class="skill-name-en">Telegram Bot</div><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">وب‌اسکرپینگ</div><div class="skill-name-en">Web Scraping</div><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">پایگاه داده</div><div class="skill-name-en">SQL / ORM</div><div class="skill-bar"><div class="skill-fill" data-w="78"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">تحلیل داده</div><div class="skill-name-en">Data Analysis</div><div class="skill-bar"><div class="skill-fill" data-w="65"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">فتوشاپ</div><div class="skill-name-en">Photoshop</div><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">SVG / انیمیشن</div><div class="skill-name-en">SVG / Animation</div><div class="skill-bar"><div class="skill-fill" data-w="75"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">گیت</div><div class="skill-name-en">Git</div><div class="skill-bar"><div class="skill-fill" data-w="72"></div></div></div>
+      <div class="skill-item"><div class="skill-name-fa">لینوکس / سرور</div><div class="skill-name-en">Linux / Server</div><div class="skill-bar"><div class="skill-fill" data-w="60"></div></div></div>
+    </div>
+  </section>
+
+  </div><!-- /print-col-left -->
+  <div class="print-col-right">
+  <!-- ══ PROJECTS ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-titles">
+        <div class="section-title-fa">پروژه‌ها</div>
+        <div class="section-title-en">Projects</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <!-- AZIN DEJ FEATURED -->
+      <div class="project-card featured">
+        <img class="project-img-real" src="assets/projects/azindej.jpg" alt="آذین دژ"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>🏗️</div>'">
+        <div class="project-body">
+          <div class="project-tag">وب‌سایت شرکتی · Featured Project</div>
+          <div class="project-title-fa">آذین دژ</div>
+          <div class="project-title-en">Azin Dej — UPVC Door & Window Platform</div>
+          <div class="project-desc">
+            پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با قابلیت تخمین قیمت آنلاین کاملاً تعاملی. کاربر می‌تواند با SVG داینامیک انواع درب و پنجره با اشکال هندسی متنوع طراحی کند، نوع بازشو را با انیمیشن تغییر دهد، رنگ‌بندی، پروفیل شیشه و یراق‌آلات انتخاب کند، چند پنجره را ترکیب نماید و فاکتور دریافت کند. پنل ادمین کاملاً سفارشی، گالری پروژه، مقالات و سیستم ارتباط با مشتری نیز دارد.
+            <br><br><span style="font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--muted);">Advanced UPVC platform with fully interactive SVG configurator. Users design door/window types geometrically with animated opening modes, glass profiles, hardware, colors — combine them into complex shapes and receive detailed quotes. Custom admin panel, project gallery, and blog included.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Django</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">SVG Animations</span>
+            <span class="tech-tag blue">JavaScript</span>
+            <span class="tech-tag blue">Custom Admin</span>
+            <span class="tech-tag pink">PostgreSQL</span>
+          </div>
+          <div class="project-actions">
+            <a class="project-link" href="https://azindejwin.ir" target="_blank">🌐 azindejwin.ir →</a>
+            <a class="view-btn" href="https://azindejwin.ir" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              مشاهده پروژه
+            </a>
+          </div>
+          <button class="gallery-toggle" onclick="toggleGallery(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18M7 21h10M12 17v4"/></svg>
+            شماتیک پروژه
+            <span class="gt-count">9</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="project-gallery">
+            <div class="gallery-inner">
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 0)"><img src="assets/screenshots/azindej/1.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 1)"><img src="assets/screenshots/azindej/2.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 2)"><img src="assets/screenshots/azindej/3.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 3)"><img src="assets/screenshots/azindej/4.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 4)"><img src="assets/screenshots/azindej/5.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 5)"><img src="assets/screenshots/azindej/6.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 6)"><img src="assets/screenshots/azindej/7.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 7)"><img src="assets/screenshots/azindej/8.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('azindej', 8)"><img src="assets/screenshots/azindej/9.jpg" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARAZANDEH STORE -->
+      <div class="project-card">
+        <img class="project-img-real" src="assets/projects/baeazandeh.jpg" alt="فروشگاه لباس"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>👗</div>'">
+        <div class="project-body">
+          <div class="project-tag">فروشگاه آنلاین · In Progress</div>
+          <div class="ar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12H3a9 9 0 0 0 18 0h-2"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2"/><circle cx="12" cy="12" r="4"/></svg>
+            AR Virtual Try-On · پرو مجازی
+          </div>
+          <div class="project-title-fa">فروشگاه لباس</div>
+          <div class="project-title-en">Fashion E-Commerce Store</div>
+          <div class="project-desc">
+            فروشگاه اینترنتی لباس با طراحی گرافیکی فوق‌العاده مدرن، ربات چت هوشمند Eilik، پنل ادمین حرفه‌ای سفارشی و انیمیشن‌های روان. قابلیت پرو مجازی AR با تکنولوژی MediaPipe — کاربر می‌تواند لباس را روی تصویر واقعی خود ببیند.
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Visually stunning fashion store with Eilik AI chatbot, custom admin, and AR virtual try-on powered by MediaPipe — users see clothing overlaid on their real-time image. Launching soon.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Django</span>
+            <span class="tech-tag blue">AI Chatbot</span>
+            <span class="tech-tag pink">AR / MediaPipe</span>
+            <span class="tech-tag blue">Custom Admin</span>
+          </div>
+          <div class="project-actions">
+            <span class="coming-soon">🚀 به زودی آنلاین</span>
+            
+          </div>
+          <button class="gallery-toggle" style="margin-top:12px;" onclick="toggleGallery(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18M7 21h10M12 17v4"/></svg>
+            شماتیک پروژه
+            <span class="gt-count">8</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="project-gallery">
+            <div class="gallery-inner">
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 0)"><img src="assets/screenshots/barazandeh/1.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 1)"><img src="assets/screenshots/barazandeh/2.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 2)"><img src="assets/screenshots/barazandeh/3.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 3)"><img src="assets/screenshots/barazandeh/4.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 4)"><img src="assets/screenshots/barazandeh/5.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 5)"><img src="assets/screenshots/barazandeh/6.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 6)"><img src="assets/screenshots/barazandeh/7.jpg" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('barazandeh', 7)"><img src="assets/screenshots/barazandeh/8.jpg" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KALA2 -->
+      <div class="project-card">
+        <img class="project-img-real" src="assets/projects/kala2.png" alt="ربات کالا۲"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>🤖</div>'">
+        <div class="project-body">
+          <div class="project-tag">ربات تلگرام · Telegram Bot</div>
+          <div class="project-title-fa">ربات کالا ۲</div>
+          <div class="project-title-en">Kala2 — Used Goods Price Bot</div>
+          <div class="project-desc">
+            ربات تلگرامی که آگهی‌های دیوار را اسکرپ می‌کند و قیمت کالای دست‌دوم، متن آگهی و تصاویر را برای کاربر می‌فرستد.
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Scrapes Divar listings to deliver used-goods prices, ad descriptions, and photos via Telegram.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Web Scraping</span>
+            <span class="tech-tag blue">Telegram API</span>
+          </div>
+          <div class="project-actions">
+            <a class="view-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+          <button class="gallery-toggle" onclick="toggleGallery(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18M7 21h10M12 17v4"/></svg>
+            شماتیک پروژه
+            <span class="gt-count">5</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="project-gallery">
+            <div class="gallery-inner">
+              <div class="gallery-shot" onclick="openProjectLightbox('kala2', 0)"><img src="assets/screenshots/kala2/1.png" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('kala2', 1)"><img src="assets/screenshots/kala2/2.png" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('kala2', 2)"><img src="assets/screenshots/kala2/3.png" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('kala2', 3)"><img src="assets/screenshots/kala2/4.png" alt=""></div>
+              <div class="gallery-shot" onclick="openProjectLightbox('kala2', 4)"><img src="assets/screenshots/kala2/5.png" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHANNEL SCRAPER -->
+      <div class="project-card">
+        <img class="project-img-real" src="assets/projects/teledata.png" alt="استخراج‌گر کانال"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>📊</div>'">
+        <div class="project-body">
+          <div class="project-tag">ابزار داده · Data Tool</div>
+          <div class="project-title-fa">استخراج‌گر کانال تلگرام</div>
+          <div class="project-title-en">Telegram Channel Data Extractor</div>
+          <div class="project-desc">
+            آیدی کانال و بازه زمانی می‌دهید، تمام پیام‌ها و رسانه‌ها را استخراج کرده در اکسل و پوشه Media ذخیره می‌کند.
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Input a channel ID and date range — extracts all messages and media, exporting to Excel and a Media folder.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag blue">Telethon</span>
+            <span class="tech-tag">Excel Export</span>
+          </div>
+          <div class="project-actions">
+            <a class="view-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader/teledata" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              teledata
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCOUNTING -->
+      <div class="project-card">
+        <img class="project-img-real" src="assets/projects/Accounting.jpg" alt="نرم‌افزار حسابداری"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>📦</div>'">
+        <div class="project-body">
+          <div class="project-tag">نرم‌افزار دسکتاپ · Desktop App</div>
+          <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
+          <div class="project-title-en">Accounting & Inventory Management</div>
+          <div class="project-desc">
+            سیستم جامع مدیریت حسابداری و انبار با امکانات کامل برای کسب‌وکارهای کوچک و متوسط.
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Full-featured accounting and inventory desktop application for SMBs.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag blue">SQLite</span>
+          </div>
+          <div class="project-actions">
+            <a class="view-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATA MINING -->
+      <div class="project-card">
+        <img class="project-img-real" src="assets/projects/data mining.jpg" alt="داده‌کاوی"
+          onerror="this.outerHTML='<div class=\'project-img-placeholder\'>🔬</div>'">
+        <div class="project-body">
+          <div class="project-tag">پروژه دانشگاهی · Academic</div>
+          <div class="project-title-fa">تحلیل داده و داده‌کاوی</div>
+          <div class="project-title-en">Data Analysis & Mining</div>
+          <div class="project-desc">
+            پروژه دانشگاهی در حوزه داده‌کاوی با پایتون، شامل پیش‌پردازش، مدل‌سازی و تجسم داده.
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Academic data mining project: preprocessing, ML modeling, and visualization in Python.</span>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag blue">Pandas</span>
+            <span class="tech-tag">Matplotlib</span>
+            <span class="tech-tag blue">Scikit-learn</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ EXPERIENCE ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-titles">
+        <div class="section-title-fa">سابقه کاری</div>
+        <div class="section-title-en">Experience</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div style="padding-right:14px;">
+
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">2022 — اکنون · Present</div>
+        <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
+        <div class="exp-role-en">Freelance Full Stack Developer</div>
+        <div class="exp-desc">
+          ساخت و توسعه پروژه‌های واقعی: وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده. تحویل محصول نهایی به کلاینت از صفر تا راه‌اندازی.
+          <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);display:block;margin-top:6px;">End-to-end delivery of real projects: complex company websites, Telegram bots, desktop software, e-commerce platforms, and data extraction tools — from zero to production.</span>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-dot" style="background:var(--accent4);box-shadow:0 0 14px rgba(245,158,11,0.4)"></div>
+        <div class="exp-period" style="color:var(--accent4)">2017 — 2023 · ۶+ سال</div>
+        <div class="exp-role-fa">طراح و ویرایشگر تصویر (فریلنسر)</div>
+        <div class="exp-role-en">Freelance Photo Editor & Graphic Designer</div>
+        <div class="exp-desc">
+          بیش از ۶ سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی و پروژه‌های شخصی. این تجربه دیدگاه بصری خاصی در طراحی UI/UX به من می‌دهد که توسعه‌دهندگان معمولی ندارند.
+          <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);display:block;margin-top:6px;">6+ years of professional Photoshop for photography studios and personal projects — giving a rare visual design perspective that most developers lack.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ EDUCATION + LANGUAGES ══ -->
+  <div class="two-col">
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div class="section-titles">
+          <div class="section-title-fa">تحصیلات</div>
+          <div class="section-title-en">Education</div>
+        </div>
+        <div class="section-line"></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--accent)"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div>
+          <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
+          <div class="edu-degree-en">B.Sc. Computer Engineering</div>
+          <div class="edu-school">دانشجوی در حال تحصیل · Currently Enrolled</div>
+          <div style="margin-top:12px;display:flex;gap:7px;flex-wrap:wrap;">
+            <span class="tech-tag">الگوریتم‌ها</span>
+            <span class="tech-tag blue">سیستم‌عامل</span>
+            <span class="tech-tag">داده‌کاوی</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div class="section-titles">
+          <div class="section-title-fa">زبان‌ها</div>
+          <div class="section-title-en">Languages</div>
+        </div>
+        <div class="section-line"></div>
+      </div>
+      <div class="lang-grid">
+        <div class="lang-item">
+          <div class="lang-name-fa">فارسی</div>
+          <div class="lang-name-en">Persian — Native</div>
+          <div class="lang-dots">
+            <div class="lang-dot filled"></div><div class="lang-dot filled"></div>
+            <div class="lang-dot filled"></div><div class="lang-dot filled"></div><div class="lang-dot filled"></div>
+          </div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name-fa">انگلیسی</div>
+          <div class="lang-name-en">English — Intermediate</div>
+          <div class="lang-dots">
+            <div class="lang-dot filled"></div><div class="lang-dot filled"></div>
+            <div class="lang-dot filled"></div><div class="lang-dot"></div><div class="lang-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  </div><!-- /print-col-right -->
+  </div><!-- /print-layout -->
+  <!-- ══ FOOTER ══ -->
+  <footer class="resume-footer">
+    <div class="footer-text">محمد جواد محمودی · Mohammad Javad Mahmoudi · 2024</div>
+    <div class="footer-dots">
+      <div class="footer-dot"></div><div class="footer-dot"></div><div class="footer-dot"></div>
+    </div>
+    <div class="footer-text" style="font-size:0.6rem;opacity:0.3;">FULL STACK · PYTHON · DJANGO · CREATIVE</div>
+  </footer>
+
+</div>
+
+<script>
+  // Share
+  async function shareResume() {
+    const shareData = {
+      title: 'رزومه محمد جواد محمودی — Full Stack Developer',
+      text: '👨‍💻 محمد جواد محمودی — توسعه‌دهنده Full Stack\nمتخصص Python · Django · JavaScript\nپروژه‌های واقعی: آذین دژ، فروشگاه لباس، ربات‌های تلگرامی و بیشتر',
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch(e) { if (e.name !== 'AbortError') fallbackShare(); }
+    } else { fallbackShare(); }
+  }
+  function fallbackShare() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.querySelector('.share-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+      btn.dataset.tip = 'لینک کپی شد!';
+      setTimeout(() => { btn.innerHTML = orig; btn.dataset.tip = 'اشتراک‌گذاری'; }, 2000);
+    });
+  }
+
+  // Gallery toggle
+  function toggleGallery(btn) {
+    btn.classList.toggle('active');
+    const gallery = btn.nextElementSibling;
+    gallery.classList.toggle('open');
+    const countEl = btn.querySelector('.gt-count');
+    // update label
+    const isOpen = gallery.classList.contains('open');
+    btn.title = isOpen ? 'بستن' : 'نمایش تصاویر';
+  }
+
+  // Project galleries registry
+  const projectGalleries = {
+    azindej: ['assets/screenshots/azindej/1.jpg','assets/screenshots/azindej/2.jpg','assets/screenshots/azindej/3.jpg','assets/screenshots/azindej/4.jpg','assets/screenshots/azindej/5.jpg','assets/screenshots/azindej/6.jpg','assets/screenshots/azindej/7.jpg','assets/screenshots/azindej/8.jpg','assets/screenshots/azindej/9.jpg'],
+    barazandeh: ['assets/screenshots/barazandeh/1.jpg','assets/screenshots/barazandeh/2.jpg','assets/screenshots/barazandeh/3.jpg','assets/screenshots/barazandeh/4.jpg','assets/screenshots/barazandeh/5.jpg','assets/screenshots/barazandeh/6.jpg','assets/screenshots/barazandeh/7.jpg','assets/screenshots/barazandeh/8.jpg'],
+    kala2: ['assets/screenshots/kala2/1.png','assets/screenshots/kala2/2.png','assets/screenshots/kala2/3.png','assets/screenshots/kala2/4.png','assets/screenshots/kala2/5.png'],
+  };
+  let lbImages = [], lbIndex = 0;
+
+  function openProjectLightbox(project, idx) {
+    lbImages = projectGalleries[project] || [];
+    lbIndex = idx;
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderLightbox() {
+    const img = document.getElementById('lightbox-img');
+    const counter = document.getElementById('lightbox-counter');
+    img.src = lbImages[lbIndex];
+    counter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+    document.querySelector('.lightbox-prev').classList.toggle('hidden', lbIndex === 0);
+    document.querySelector('.lightbox-next').classList.toggle('hidden', lbIndex === lbImages.length - 1);
+  }
+
+  function lbNav(dir) {
+    lbIndex = Math.max(0, Math.min(lbImages.length - 1, lbIndex + dir));
+    renderLightbox();
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') lbNav(-1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') lbNav(1);
+  });
+
+  // Touch/swipe support
+  let lbTouchX = null;
+  document.getElementById('lightbox').addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; });
+  document.getElementById('lightbox').addEventListener('touchend', e => {
+    if (lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(dx) > 40) lbNav(dx > 0 ? -1 : 1);
+    lbTouchX = null;
+  });
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section, .project-card, .skill-item, .schematic-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // Skill bars
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach((bar, i) => {
+          const w = bar.getAttribute('data-w') + '%';
+          setTimeout(() => { bar.style.width = w; }, i * 60);
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('#skillsGrid').forEach(el => skillObserver.observe(el));
+</script>
+</body>
+</html>
