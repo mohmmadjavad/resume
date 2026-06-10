@@ -1410,8 +1410,8 @@ body::after{
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
-  camera.position.z = 8;
+  const camera = new THREE.PerspectiveCamera(60, W/H, 0.1, 300);
+  camera.position.z = 28;
 
   /* ═══════════════════════════════════════════════
      SMART ADAPTIVE QUALITY SYSTEM
@@ -1513,44 +1513,152 @@ body::after{
     gPos = new Float32Array(N * 3);
     gCol = new Float32Array(N * 3);
     gVel = new Float32Array(N * 3);
-    const palArr = [PAL.purple, PAL.violet, PAL.lavender, PAL.ice, PAL.deepPurple, PAL.pink];
 
-    for(let i = 0; i < N; i++){
-      const arm   = Math.floor(Math.random() * 2);          // 2 arms — cleaner Milky Way look
-      const r     = 0.8 + Math.pow(Math.random(), 0.6) * 22;
-      const spin  = r * 0.30;                               // tighter spin per unit radius
-      const spread= (Math.random() - 0.5) * 1.6;           // narrower arm spread
-      const theta = arm * Math.PI + spin + spread;
-      // Disc thickness: very thin — just ±0.06*r, not random 8 units
-      const thick = (Math.random() - 0.5) * 0.12 * r;
-      gPos[i*3]   =  r * Math.cos(theta);
-      gPos[i*3+1] =  thick;
-      gPos[i*3+2] =  r * Math.sin(theta);
-      // Very slow drift — almost none so shape stays stable
-      gVel[i*3]   = (Math.random() - 0.5) * 0.00015;
-      gVel[i*3+1] = (Math.random() - 0.5) * 0.00005;
-      gVel[i*3+2] = (Math.random() - 0.5) * 0.00015;
-      const c = palArr[Math.floor(Math.random() * palArr.length)];
-      gCol[i*3]=c.r; gCol[i*3+1]=c.g; gCol[i*3+2]=c.b;
+    /* Local helpers (global lerp defined later in tick scope) */
+    function _lerp(a,b,t){ return a + (b-a)*t; }
+    function gauss(sigma){ return (Math.random()+Math.random()+Math.random()-1.5)*sigma*1.15; }
+
+    /* ── 4-arm logarithmic spiral galaxy ──────────────────────────
+       Real galaxies use logarithmic spirals: r = a * e^(b*theta)
+       Arms offset by PI/2 each (4-arm symmetry like Milky Way)
+       Dust lanes, spherical halo, dense bulge
+    ────────────────────────────────────────────────────────────── */
+
+    const NUM_ARMS   = 4;
+    const B          = 0.28;
+    const ARM_WIDTH  = 0.38;
+    const DISC_RAD   = 18;
+    const DISC_THICK = 0.055;
+
+    const CORE_N = Math.floor(N * 0.18);
+    const ARM_N  = Math.floor(N * 0.58);
+    const HALO_N = Math.floor(N * 0.12);
+    const DUST_N = Math.floor(N * 0.07);
+
+    let idx = 0;
+
+    function star(x, y, z, c){
+      if(idx >= N) return;
+      gPos[idx*3]=x; gPos[idx*3+1]=y; gPos[idx*3+2]=z;
+      gCol[idx*3]=c.r; gCol[idx*3+1]=c.g; gCol[idx*3+2]=c.b;
+      gVel[idx*3]=gVel[idx*3+1]=gVel[idx*3+2]=0;
+      idx++;
     }
-    // Extra dense core stars
-    const coreN = Math.floor(N * 0.12);
-    for(let i = N - coreN; i < N; i++){
-      const r  = Math.random() * 2.2;
+
+    /* ── 1. Core bulge — dense ellipsoidal cluster ── */
+    for(let i = 0; i < CORE_N; i++){
+      const r  = Math.pow(Math.random(), 2.2) * 2.8;
+      const ph = Math.acos(2*Math.random()-1);
       const th = Math.random() * Math.PI * 2;
-      gPos[i*3]   = r * Math.cos(th);
-      gPos[i*3+1] = (Math.random()-0.5) * 0.3;
-      gPos[i*3+2] = r * Math.sin(th);
-      gVel[i*3] = gVel[i*3+1] = gVel[i*3+2] = 0;
-      const c = [PAL.white, PAL.lavender, PAL.violet][Math.floor(Math.random()*3)];
-      gCol[i*3]=c.r; gCol[i*3+1]=c.g; gCol[i*3+2]=c.b;
+      const x  = r * Math.sin(ph) * Math.cos(th);
+      const y  = r * Math.cos(ph) * 0.45;          // flattened vertically
+      const z  = r * Math.sin(ph) * Math.sin(th);
+      // Inner core: white/yellow; outer bulge: warm orange/violet
+      const warmth = r / 2.8;
+      const c = new THREE.Color();
+      if(r < 0.8){
+        c.setRGB(1.0, 0.98, 0.82 + Math.random()*0.18);  // bright white-yellow
+      } else if(warmth < 0.5){
+        c.setRGB(1.0, 0.85 - warmth*0.3, 0.5 - warmth*0.4);  // warm
+      } else {
+        // mix violet into the outer bulge
+        const mix = (warmth - 0.5) * 2;
+        c.setRGB(_lerp(0.8, PAL.violet.r, mix*0.5), _lerp(0.55, PAL.violet.g, mix*0.5), _lerp(0.1, PAL.violet.b, mix*0.6));
+      }
+      star(x, y, z, c);
     }
+
+    /* ── 2. Spiral arm stars ── */
+    const starsPerArm = Math.floor(ARM_N / NUM_ARMS);
+    for(let arm = 0; arm < NUM_ARMS; arm++){
+      const armOffset = (arm / NUM_ARMS) * Math.PI * 2;
+      for(let i = 0; i < starsPerArm; i++){
+        // r: concentrate stars at inner-mid disc, sparse at edge
+        const r     = 1.2 + Math.pow(Math.random(), 0.75) * (DISC_RAD - 1.2);
+        // Logarithmic spiral angle at this r
+        const logSpin = Math.log(r / 0.8) / B;
+        // Angular spread: wide in inner arm, narrows then widens (like real arms)
+        const spread = ARM_WIDTH * (0.3 + 0.7 * (r / DISC_RAD));
+        const theta  = armOffset + logSpin + gauss(spread * 0.5);
+        // Disc thickness tapers: thin in arms, slightly thicker at edge
+        const thick  = gauss(DISC_THICK * r * (0.5 + 0.5 * r/DISC_RAD));
+        const x = r * Math.cos(theta);
+        const z = r * Math.sin(theta);
+
+        // Color: inner arms = hot blue-white (young OB stars), outer = cooler violet/pink
+        const ageFrac = r / DISC_RAD;
+        const c = new THREE.Color();
+        const brightness = 0.7 + Math.random() * 0.3;
+        if(ageFrac < 0.25){
+          // Inner arm — hot blue-white star clusters
+          c.setRGB(brightness*0.82, brightness*0.90, brightness*1.0);
+        } else if(ageFrac < 0.55){
+          // Mid arm — mix of white and violet/lavender
+          const mix = (ageFrac - 0.25) / 0.3;
+          c.setRGB(_lerp(0.82, PAL.lavender.r, mix)*brightness,
+                   _lerp(0.90, PAL.lavender.g, mix)*brightness,
+                   _lerp(1.0,  PAL.lavender.b, mix)*brightness);
+        } else {
+          // Outer arm — violet to pink/purple
+          const mix = (ageFrac - 0.55) / 0.45;
+          const base = Math.random() < 0.5 ? PAL.violet : PAL.pink;
+          c.setRGB(_lerp(PAL.lavender.r, base.r, mix)*brightness,
+                   _lerp(PAL.lavender.g, base.g, mix)*brightness,
+                   _lerp(PAL.lavender.b, base.b, mix)*brightness);
+        }
+        star(x, thick, z, c);
+      }
+    }
+
+    /* ── 3. Dust lanes — darker, slightly behind each arm ── */
+    const dustPerArm = Math.floor(DUST_N / NUM_ARMS);
+    for(let arm = 0; arm < NUM_ARMS; arm++){
+      const armOffset = (arm / NUM_ARMS) * Math.PI * 2;
+      for(let i = 0; i < dustPerArm; i++){
+        const r      = 2.5 + Math.pow(Math.random(), 0.8) * (DISC_RAD * 0.7);
+        const logSpin= Math.log(r / 0.8) / B;
+        // Dust lane is slightly AHEAD of arm (leading edge)
+        const dustShift = -0.22 - Math.random() * 0.15;
+        const theta  = armOffset + logSpin + dustShift + gauss(0.12);
+        const thick  = gauss(DISC_THICK * r * 0.3);
+        const dim    = 0.08 + Math.random() * 0.12;
+        const c = new THREE.Color(dim * 0.6, dim * 0.3, dim * 0.8);
+        star(r*Math.cos(theta), thick, r*Math.sin(theta), c);
+      }
+    }
+
+    /* ── 4. Spherical halo (faint, ancient stars) ── */
+    for(let i = 0; i < HALO_N; i++){
+      const r  = 4 + Math.pow(Math.random(), 1.5) * 20;
+      const ph = Math.acos(2*Math.random()-1);
+      const th = Math.random() * Math.PI * 2;
+      const dim= 0.10 + Math.random() * 0.25;
+      const c  = new THREE.Color(dim*0.85, dim*0.75, dim);  // faint blue-white
+      star(
+        r*Math.sin(ph)*Math.cos(th),
+        r*Math.cos(ph)*0.7,
+        r*Math.sin(ph)*Math.sin(th),
+        c
+      );
+    }
+
+    /* ── 5. Scattered interarm stars ── */
+    while(idx < N){
+      const r     = 1.5 + Math.random() * DISC_RAD * 0.9;
+      const theta = Math.random() * Math.PI * 2;
+      const thick = gauss(DISC_THICK * r * 1.5);
+      const dim   = 0.12 + Math.random() * 0.22;
+      const palArr= [PAL.purple, PAL.violet, PAL.lavender, PAL.deepPurple];
+      const c = palArr[Math.floor(Math.random()*palArr.length)].clone().multiplyScalar(dim * 2.5);
+      star(r*Math.cos(theta), thick, r*Math.sin(theta), c);
+    }
+
     galaxyGeo = new THREE.BufferGeometry();
     galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
     galaxyGeo.setAttribute('color',    new THREE.BufferAttribute(gCol, 3));
     galaxyMat = new THREE.PointsMaterial({
-      size: 0.038, vertexColors: true,
-      transparent: true, opacity: 0.78,
+      size: 0.042, vertexColors: true,
+      transparent: true, opacity: 0.88,
       depthWrite: false, blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
@@ -1558,21 +1666,29 @@ body::after{
     galaxyGroup.add(galaxyPoints);
   }
   buildGalaxy(GALAXY_N);
-  galaxyGroup.rotation.x = Math.PI * 0.22;  // slight tilt — shows spiral from above-ish angle
+  galaxyGroup.rotation.x = Math.PI * 0.10;  // nearly face-on — shows full spiral structure
 
-  /* ── Galaxy core nebula glow (haze at center) ── */
-  const coreGeo = new THREE.SphereGeometry(1.8, 24, 24);
+  /* ── Galaxy core nebula glow (multi-layer haze at center) ── */
+  const coreGeo = new THREE.SphereGeometry(1.4, 24, 24);
   const coreMat = new THREE.MeshBasicMaterial({
-    color: 0x9d4edd, transparent: true, opacity: 0.07,
+    color: 0xffe8aa, transparent: true, opacity: 0.18,
     blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide,
   });
   const coreGlow = new THREE.Mesh(coreGeo, coreMat);
   galaxyGroup.add(coreGlow);
 
-  /* ── Outer diffuse halo ── */
-  const haloGeo = new THREE.SphereGeometry(7, 16, 16);
+  /* Mid glow ring */
+  const midGlowGeo = new THREE.SphereGeometry(3.2, 20, 20);
+  const midGlowMat = new THREE.MeshBasicMaterial({
+    color: 0xc77dff, transparent: true, opacity: 0.055,
+    blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide,
+  });
+  galaxyGroup.add(new THREE.Mesh(midGlowGeo, midGlowMat));
+
+  /* Outer diffuse halo */
+  const haloGeo = new THREE.SphereGeometry(12, 16, 16);
   const haloMat = new THREE.MeshBasicMaterial({
-    color: 0x5a189a, transparent: true, opacity: 0.03,
+    color: 0x5a189a, transparent: true, opacity: 0.022,
     blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide,
   });
   galaxyGroup.add(new THREE.Mesh(haloGeo, haloMat));
@@ -2127,30 +2243,15 @@ body::after{
 
     /* ── Galaxy fade & scale ── */
     const galaxyFade = clamp(remap(DIVE_START, DIVE_END, scrollP, 1, 0), 0, 1);
-    galaxyMat.opacity = 0.72 * galaxyFade;
-    coreMat.opacity   = 0.07 * galaxyFade;
+    galaxyMat.opacity = 0.88 * galaxyFade;
+    coreMat.opacity   = 0.18 * galaxyFade;
 
-    /* Galaxy rotation — slower as we dive */
-    galaxyGroup.rotation.y  = t * 0.015 + mx * 0.035;
-    galaxyGroup.rotation.x  = Math.PI * 0.13 + my * 0.022 + t * 0.005;
+    /* Galaxy rotation — slow majestic spin, nearly face-on */
+    galaxyGroup.rotation.y  = t * 0.010 + mx * 0.025;
+    galaxyGroup.rotation.x  = Math.PI * 0.10 + my * 0.015 + t * 0.003;
 
-    /* Galaxy particle drift — very subtle, just shimmer not deform */
-    _driftTick++;
-    if(_driftTick % TIERS[qualityLevel].driftEvery === 0){
-      const pPos = galaxyGeo.attributes.position.array;
-      const pCount = pPos.length / 3;
-      for(let i = 0; i < pCount; i++){
-        pPos[i*3]   += gVel[i*3];
-        pPos[i*3+1] += gVel[i*3+1];
-        pPos[i*3+2] += gVel[i*3+2];
-        const d2 = pPos[i*3]*pPos[i*3] + pPos[i*3+2]*pPos[i*3+2];
-        if(d2 > 550 || d2 < 0.5){   // bounce at r~23 or center
-          gVel[i*3]   *= -1;
-          gVel[i*3+2] *= -1;
-        }
-      }
-      galaxyGeo.attributes.position.needsUpdate = true;
-    }
+    /* Galaxy particle drift — disabled: spiral shape must stay crisp */
+    // drift removed — logarithmic spiral degrades with random drift
 
     /* ── Solar system fade in ── */
     const solarFade = clamp(remap(SOLAR_START, DIVE_END + 0.06, scrollP, 0, 1), 0, 1);
@@ -2227,16 +2328,16 @@ body::after{
 
     if(scrollP < DIVE_START){
       const p = invLerp(0, DIVE_START, scrollP);
-      camZ = lerp(14, 10, easeInOut(p));
-      camY = lerp(1.5, 0.5, easeInOut(p)) + my * 0.18;
-      camX = mx * 0.3;
-      fov  = lerp(62, 65, easeInOut(p));
+      camZ = lerp(28, 22, easeInOut(p));
+      camY = lerp(3.0, 1.5, easeInOut(p)) + my * 0.35;
+      camX = mx * 0.5;
+      fov  = lerp(60, 63, easeInOut(p));
     } else if(scrollP < DIVE_END){
       const p = invLerp(DIVE_START, DIVE_END, scrollP);
-      camZ = lerp(10, -4, easeInOut(p));
-      camY = lerp(0.5, 0, easeInOut(p)) + my * 0.18 * (1-p);
+      camZ = lerp(22, -4, easeInOut(p));
+      camY = lerp(1.5, 0, easeInOut(p)) + my * 0.18 * (1-p);
       camX = mx * 0.3 * (1 - p * 0.5);
-      fov  = lerp(65, 85, easeInOut(p));
+      fov  = lerp(63, 90, easeInOut(p));
     } else if(scrollP < BH_START){
       const p = invLerp(DIVE_END, BH_START, scrollP);
       camZ = lerp(-4, 3.5, easeInOut(Math.min(p*2, 1)));
