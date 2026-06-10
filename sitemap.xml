@@ -3,13 +3,34 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://immdjavad.ir/</loc>
-    <lastmod>2025-06-01</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://immdjavad.ir/assets/profile.jpg</image:loc>
+      <image:loc>https://immdjavad.ir/assets/profile.png</image:loc>
       <image:title>Mohammad Javad Mahmoudi — Full Stack Developer</image:title>
       <image:caption>محمد جواد محمودی — توسعه‌دهنده Full Stack متخصص Python و Django</image:caption>
     </image:image>
+    <image:image>
+      <image:loc>https://immdjavad.ir/assets/projects/azindej.png</image:loc>
+      <image:title>Azindej UPVC Windows Project — Mohammad Javad Mahmoudi</image:title>
+      <image:caption>پروژه سایت آذین دژ — طراحی و توسعه توسط محمد جواد محمودی</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://immdjavad.ir/assets/projects/baeazandeh.png</image:loc>
+      <image:title>Baeazandeh Project — Mohammad Javad Mahmoudi</image:title>
+      <image:caption>پروژه باعزندان — توسعه توسط محمد جواد محمودی</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://immdjavad.ir/assets/projects/Accounting.png</image:loc>
+      <image:title>Accounting Software — Mohammad Javad Mahmoudi</image:title>
+      <image:caption>نرم‌افزار حسابداری — توسعه توسط محمد جواد محمودی</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://immdjavad.ir/simple</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
