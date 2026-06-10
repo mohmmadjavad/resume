@@ -1772,6 +1772,56 @@ body::after{
   let geoIdx = 0;
   let morphing = false;
 
+  /* ══ GYROSCOPE (mobile tilt) ══ */
+  let gyroX = 0, gyroY = 0;          // smoothed gyro influence
+  let rawGyroX = 0, rawGyroY = 0;    // raw device tilt
+  let gyroEnabled = false;
+
+  function requestGyro(){
+    if(typeof DeviceOrientationEvent !== 'undefined' &&
+       typeof DeviceOrientationEvent.requestPermission === 'function'){
+      // iOS 13+ needs explicit permission
+      DeviceOrientationEvent.requestPermission()
+        .then(r => { if(r === 'granted') attachGyro(); })
+        .catch(()=>{});
+    } else {
+      attachGyro();
+    }
+  }
+
+  function attachGyro(){
+    window.addEventListener('deviceorientation', e => {
+      if(e.gamma === null) return;
+      gyroEnabled = true;
+      // gamma = left/right tilt (-90..90), beta = front/back tilt (-180..180)
+      rawGyroX = Math.max(-1, Math.min(1,  (e.gamma || 0) / 25));
+      rawGyroY = Math.max(-1, Math.min(1, -(e.beta  || 0) / 25));
+    }, true);
+  }
+
+  // Auto-attach on non-iOS; iOS will be triggered by first touch
+  if(/Mobi|Android/i.test(navigator.userAgent) &&
+     !/(iPhone|iPad)/i.test(navigator.userAgent)){
+    attachGyro();
+  }
+  // iOS: request on first touchstart
+  let gyroAsked = false;
+  window.addEventListener('touchstart', () => {
+    if(gyroAsked) return;
+    gyroAsked = true;
+    requestGyro();
+  }, { once: true });
+
+  /* ══ CINEMATIC SCROLL PARALLAX ══ */
+  // We track a "previous" scrollP to detect transitions and drive
+  // dramatic camera movements between steps
+  let prevScrollP     = 0;
+  let scrollVel       = 0;     // velocity of scroll progress (per frame)
+  let camZoomBurst    = 0;     // extra z push on step change
+  let galaxyTiltBurst = 0;     // extra galaxy tilt on step change
+  let camRollTarget   = 0;     // camera roll during transition
+  let camRoll         = 0;
+
   /* ── Morph state (tweened manually in tick) ── */
   const morphState = {
     scale:   1.0,   // current render scale of heroMesh
@@ -1863,13 +1913,46 @@ body::after{
     _fpsFrameCount++;
     _recordFpsSample();
 
+    /* ── Smooth gyroscope ── */
+    if(gyroEnabled){
+      gyroX += (rawGyroX - gyroX) * 0.06;
+      gyroY += (rawGyroY - gyroY) * 0.06;
+    }
+    // Combined pointer: mouse on desktop, gyro on mobile
+    const ptrX = gyroEnabled ? gyroX : mx;
+    const ptrY = gyroEnabled ? gyroY : my;
+
+    /* ── Scroll velocity & cinematic burst ── */
+    const rawVel = scrollP - prevScrollP;
+    scrollVel += (rawVel - scrollVel) * 0.18;
+    prevScrollP = scrollP;
+
+    const absBurst = Math.abs(scrollVel);
+    // Zoom burst: fly deeper into galaxy on each step change
+    if(absBurst > 0.0008){
+      camZoomBurst    += scrollVel * 14;
+      galaxyTiltBurst += scrollVel * 22;
+      camRollTarget    = scrollVel * 0.45;
+    }
+    camZoomBurst    *= 0.88;   // decay
+    galaxyTiltBurst *= 0.88;
+    camRoll         += (camRollTarget - camRoll) * 0.055;
+    camRollTarget   *= 0.92;
+
     const sceneIdx = Math.floor(scrollP * 11);
     morphHero(sceneIdx % heroGeoPool.length);
 
-    /* Galaxy drift */
-    galaxy.rotation.y  = t * 0.018 + mx * 0.04;
-    galaxy.rotation.x  = Math.PI * 0.12 + my * 0.025 + t * 0.006;
-    galaxy.rotation.z  = t * 0.004;
+    /* ── Galaxy — cinematic parallax dive ── */
+    // Base orbit + pointer parallax + scroll burst tilt + slow z-roll
+    galaxy.rotation.y  = t * 0.018 + ptrX * 0.06 + galaxyTiltBurst * 0.14;
+    galaxy.rotation.x  = Math.PI * 0.12 + ptrY * 0.04 + t * 0.006 + galaxyTiltBurst * 0.08;
+    // Slow roll that varies per scene — gives a "new angle" feel each step
+    galaxy.rotation.z  = t * 0.004 + scrollP * 0.55 + camRoll * 0.3;
+    // Galaxy z: subtle pull-back/push on scroll — feel of moving through space
+    galaxy.position.z  = scrollP * -1.8 + camZoomBurst * 0.12;
+    // Small XY drift per scene for variety
+    galaxy.position.x  = Math.sin(scrollP * Math.PI * 1.5) * 1.2 + ptrX * 0.4;
+    galaxy.position.y  = Math.cos(scrollP * Math.PI * 1.2) * 0.7 + ptrY * 0.3;
 
     /* Drift galaxy particles — throttled on low-end devices */
     _driftTick++;
@@ -1889,16 +1972,16 @@ body::after{
     galaxyGeo.attributes.position.needsUpdate = true;
     }
 
-    /* Rings orbit */
+    /* Rings orbit — also react to scroll burst */
     rings.forEach((r, i) => {
-      r.mesh.rotation.z = t * (0.06 + i * 0.015) + mx * 0.03;
-      r.mesh.rotation.x = r.cfg.tiltX + my * 0.02 + Math.sin(t * 0.3 + i) * 0.05;
+      r.mesh.rotation.z = t * (0.06 + i * 0.015) + ptrX * 0.04 + scrollVel * 1.5;
+      r.mesh.rotation.x = r.cfg.tiltX + ptrY * 0.03 + Math.sin(t * 0.3 + i) * 0.05;
       r.mat.opacity = r.cfg.opacity * (0.85 + Math.sin(t * 0.8 + i) * 0.15);
     });
 
     /* Hero mega shape */
-    heroMesh.rotation.x = t * 0.22 + my * 0.10;
-    heroMesh.rotation.y = t * 0.35 + mx * 0.10;
+    heroMesh.rotation.x = t * 0.22 + ptrY * 0.10;
+    heroMesh.rotation.y = t * 0.35 + ptrX * 0.10;
     heroFill.rotation.copy(heroMesh.rotation);
     /* Only apply idle pulse when NOT morphing — tickMorph owns opacity otherwise */
     if(morphState.phase === 'idle'){
@@ -1933,10 +2016,15 @@ body::after{
     grid1.mat.opacity = 0.04 + scrollP * 0.06;
     grid2.mat.opacity = 0.03 + scrollP * 0.04;
 
-    /* Camera parallax */
-    camera.position.x += (mx * 0.35 - camera.position.x) * 0.035;
-    camera.position.y += (my * 0.22 - camera.position.y) * 0.035;
-    camera.position.z  = 8 - scrollP * 2.2;
+    /* ── Camera — cinematic parallax with burst zoom ── */
+    const targetCamX = ptrX * 0.42 + camZoomBurst * 0.04;
+    const targetCamY = ptrY * 0.28 + camZoomBurst * 0.02;
+    camera.position.x += (targetCamX - camera.position.x) * 0.038;
+    camera.position.y += (targetCamY - camera.position.y) * 0.038;
+    // Zoom: base z + scroll + burst dive-in
+    camera.position.z  = 8 - scrollP * 2.2 + camZoomBurst * 0.22;
+    // Slight camera roll for cinematic feel during transitions
+    camera.rotation.z  = camRoll * 0.5;
 
     renderer.render(scene, camera);
   }
