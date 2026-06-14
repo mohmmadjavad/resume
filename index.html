@@ -770,34 +770,6 @@ body::after{
   color: var(--terminal-prompt);
 }
 
-/* ── SPLIT TEXT CHAR ANIMATION ── */
-.scene-headline-fa span,
-.scene-headline-en span,
-.hero-name-fa span {
-  display: inline-block;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* ── PERFORMANCE: کاهش blur روی موبایل ── */
-@media (max-width: 768px) {
-  .terminal {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  #profile-modal.open {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  /* scene content - GPU composite hint */
-  .scene-inner > * {
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-}
-
 /* ── TEXT FOG (مه پشت متن) ── */
 .scene-inner::before {
   content: '';
@@ -1457,12 +1429,7 @@ body::after{
     0: { particles:  500, pr: 1,                                       rings: 2, sats: 2, beams:  0, driftEvery: 3 },
   };
 
-  let qualityLevel = isMobile ? (
-    // گوشی‌های ضعیف از tier 1 شروع کنن، قوی‌ترا از tier 2
-    (navigator.deviceMemory !== undefined && navigator.deviceMemory <= 2) ||
-    (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 2)
-      ? 0 : 2
-  ) : 3; // دسکتاپ از بالاترین کیفیت شروع می‌کنه — FPS خودش downgrade می‌کنه
+  let qualityLevel = 3; // همه دستگاه‌ها از بالاترین کیفیت شروع می‌کنن — FPS خودش downgrade می‌کنه
   let GALAXY_N     = TIERS[qualityLevel].particles;
 
   let _fpsFrameCount  = 0;
@@ -1593,13 +1560,9 @@ body::after{
     depthWrite: false, blending: THREE.AdditiveBlending,
     sizeAttenuation: true
   });
-  const galaxy = new THREE.Points(galaxyGeo, galaxyMat);
+  let galaxy = new THREE.Points(galaxyGeo, galaxyMat);
   galaxy.rotation.x = Math.PI * 0.12;
   scene.add(galaxy);
-
-  // اعمال کیفیت اولیه — visibility ring/sat/beam
-  // (باید بعد از ساختن rings, satellites, beams صدا زده بشه، پس defer می‌کنیم)
-  let _initQualityApplied = false;
 
   /* ═══════════════════════════
      2) CENTRAL MASSIVE ICOSAHEDRON RING SYSTEM
@@ -1945,18 +1908,6 @@ body::after{
   function tick(){
     requestAnimationFrame(tick);
     t += 0.005;
-
-    /* ── اعمال کیفیت اولیه پس از ساخت همه اشیاء ── */
-    if (!_initQualityApplied) {
-      _initQualityApplied = true;
-      if (qualityLevel < 3) {
-        const cfg = TIERS[qualityLevel];
-        rings.forEach((r,i)      => { r.mesh.visible = i < cfg.rings; });
-        satellites.forEach((s,i) => { s.mesh.visible = i < cfg.sats; });
-        beams.forEach((b,i)      => { b.line.visible = i < cfg.beams; });
-        renderer.setPixelRatio(cfg.pr);
-      }
-    }
 
     /* ── Continuous FPS monitoring ── */
     _fpsFrameCount++;
@@ -2363,85 +2314,6 @@ body::after{
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-/* ════════════════════════════════════════════
-   PERFORMANCE DETECTION — موبایل ضعیف
-   اگر Low tier باشه، blur حذف میشه و
-   انیمیشن‌ها ساده‌تر اجرا میشن
-════════════════════════════════════════════ */
-const _isMobileWeak = (() => {
-  const ua = navigator.userAgent;
-  const isOldAndroid = /Android [1-8]\./i.test(ua);
-  const isLowRam = navigator.deviceMemory !== undefined && navigator.deviceMemory <= 2;
-  const isSlowCPU = navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 2;
-  return isOldAndroid || isLowRam || isSlowCPU;
-})();
-
-/* ── روی موبایل ضعیف: scrub رو کم‌تر کن ── */
-const _scrubVal = _isMobileWeak ? 0.6 : 1.4;
-
-/* ── helper: از‌ حذف blur روی دستگاه‌های ضعیف ── */
-function mf(fromObj, toObj) {
-  if (_isMobileWeak) {
-    // حذف filter از from/to
-    const f = {...fromObj}; delete f.filter;
-    const t = {...toObj};   delete t.filter;
-    return [f, t];
-  }
-  return [fromObj, toObj];
-}
-
-/* ════════════════════════════════════════════
-   CREATIVE TEXT REVEAL SYSTEM
-   انیمیشن خلاقانه نمایش متن بین scene‌ها
-════════════════════════════════════════════ */
-
-/* --- Split text به کاراکتر برای scene headlineها --- */
-function splitTextChars(el) {
-  if (!el || el.dataset.split) return;
-  el.dataset.split = '1';
-  const text = el.textContent;
-  el.textContent = '';
-  el.style.overflow = 'hidden';
-  [...text].forEach(ch => {
-    const span = document.createElement('span');
-    span.textContent = ch === ' ' ? '\u00A0' : ch;
-    span.style.cssText = 'display:inline-block;opacity:0;transform:translateY(60px) rotateX(-90deg);transform-origin:50% 100%;';
-    el.appendChild(span);
-  });
-}
-
-/* --- reveal با stagger جذاب --- */
-function revealSplitText(el, delay = 0) {
-  if (!el) return;
-  const chars = el.querySelectorAll('span');
-  if (!chars.length) return;
-  if (_isMobileWeak) {
-    // ساده - فقط fade
-    gsap.to(chars, { opacity:1, duration:0.3, stagger:0.018, delay, ease:'power2.out',
-      clearProps:'transform' });
-  } else {
-    gsap.to(chars, {
-      opacity:1, y:0, rotateX:0,
-      duration:0.55, stagger:0.022, delay,
-      ease:'back.out(1.6)',
-      clearProps:'transform'
-    });
-  }
-}
-
-function hideSplitText(el, dir = 'up') {
-  if (!el) return;
-  const chars = el.querySelectorAll('span');
-  if (!chars.length) return;
-  const yVal = dir === 'up' ? -40 : 40;
-  gsap.to(chars, {
-    opacity:0, y: yVal,
-    duration: _isMobileWeak ? 0.18 : 0.28,
-    stagger: _isMobileWeak ? 0.008 : 0.012,
-    ease: 'power2.in'
-  });
-}
-
 /* ── TYPEWRITER HERO TITLE ── */
 (function typewriter(){
   const el = document.getElementById('s0-title');
@@ -2539,7 +2411,7 @@ function smoothScrollTo(element, offset = 0) {
   let isSnapping    = false;
   let snapTimeout   = null;
   let currentSnapIdx = 0;
-  const COOLDOWN    = 650; // ms — must fully cover the CSS smooth scroll duration
+  const COOLDOWN    = 1200; // ms — must fully cover the CSS smooth scroll duration
 
   /* ── sweet-spot positions ──
    * GSAP scrub goes 0→1 over the full scene height (250vh).
@@ -2573,8 +2445,8 @@ function smoothScrollTo(element, offset = 0) {
     clearTimeout(snapTimeout);
     gsap.to(window, {
       scrollTo: { y: positions[idx], autoKill: false },
-      duration: 0.52,
-      ease: 'power3.out',
+      duration: 1.15,
+      ease: 'power2.inOut',
       onComplete: () => { isSnapping = false; }
     });
     snapTimeout = setTimeout(() => { isSnapping = false; }, COOLDOWN);
@@ -2585,7 +2457,7 @@ function smoothScrollTo(element, offset = 0) {
   let wheelLocked   = false; // direction lock for the current gesture
   let wheelDir      = 0;
   let wheelAccum    = 0;           // accumulated deltaY for desktop
-  const WHEEL_THRESHOLD = 160;    // px of accumulated delta needed on desktop
+  const WHEEL_THRESHOLD = 300;    // px of accumulated delta needed on desktop
 
   document.addEventListener('wheel', e => {
     e.preventDefault();
@@ -2697,8 +2569,8 @@ navDots.forEach((dot,i)=>{
       const snapY = top + s.offsetHeight * 0.38;
       gsap.to(window, {
         scrollTo: { y: snapY, autoKill: false },
-        duration: 0.52,
-        ease: 'power3.out'
+        duration: 1.15,
+        ease: 'power2.inOut'
       });
     }
   });
@@ -2792,143 +2664,165 @@ allScenes.forEach((s,i)=>{
 /* ── SCENE 1 — ABOUT ── */
 (function(){
   const el = document.getElementById('scene-1');
-
-  /* Split headline chars برای انیمیشن حرف‌به‌حرف */
-  const hEl = document.getElementById('s1-h');
-  splitTextChars(hEl);
-
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal,
-      onEnter: () => { revealSplitText(hEl, 0.08); },
-      onEnterBack: () => { revealSplitText(hEl, 0.04); },
-      onLeave: () => { hideSplitText(hEl, 'up'); },
-      onLeaveBack: () => { hideSplitText(hEl, 'down'); },
-    }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
 
-  const [f_ch, t_ch]     = mf({opacity:0, x:60, scale:0.9}, {opacity:1, x:0, scale:1, duration:0.16, ease:'power3.out'});
-  const [f_hen, t_hen]   = mf({opacity:0, x:-50, filter:'blur(6px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.16, ease:'power2.out'});
-  const [f_body, t_body] = mf({opacity:0, y:50, filter:'blur(8px)'}, {opacity:1, y:0, filter:'blur(0px)', duration:0.18, ease:'power2.out'});
+  tl.fromTo('#s1-ch',   {opacity:0, x:60, scale:0.9},             {opacity:1, x:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
+  tl.fromTo('#s1-h',    {opacity:0, y:90, scale:0.84},            {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},    0.07);
+  tl.fromTo('#s1-hen',  {opacity:0, x:-50, filter:'blur(6px)'},   {opacity:1, x:0, filter:'blur(0px)', duration:0.16, ease:'power2.out'}, 0.16);
+  tl.fromTo('#s1-body', {opacity:0, y:50, filter:'blur(8px)'},    {opacity:1, y:0, filter:'blur(0px)', duration:0.18, ease:'power2.out'}, 0.22);
+  tl.fromTo('#s1-ben',  {opacity:0, y:24},                        {opacity:1, y:0, duration:0.14, ease:'power2.out'},           0.30);
 
-  tl.fromTo('#s1-ch',   f_ch,   t_ch,                                     0.03);
-  tl.fromTo('#s1-hen',  f_hen,  t_hen,                                    0.16);
-  tl.fromTo('#s1-body', f_body, t_body,                                   0.22);
-  tl.fromTo('#s1-ben',  {opacity:0, y:24}, {opacity:1, y:0, duration:0.14, ease:'power2.out'}, 0.30);
-
-  tl.to(['#s1-ch','#s1-hen','#s1-ben'], {opacity:0, x:80, duration:0.13, ease:'power2.in'}, 0.65);
-  tl.to('#s1-body', {opacity:0, y:-40, duration:0.13, ease:'power2.in'}, 0.66);
+  tl.to(['#s1-ch','#s1-hen','#s1-ben'], {opacity:0, x:80, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
+  tl.to('#s1-h',    {opacity:0, y:-80, scale:0.92, duration:0.15, ease:'power2.in'}, 0.63);
+  tl.to('#s1-body', {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.66);
 })();
 
 /* ── SCENE 2 — SKILLS ── */
 (function(){
   const el = document.getElementById('scene-2');
-
-  const hEl = document.getElementById('s2-h');
-  splitTextChars(hEl);
-
-  const [f_hen, t_hen]  = mf({opacity:0, x:-40, filter:'blur(6px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.15, ease:'power2.out'});
-  const [f_trm, t_trm]  = mf({opacity:0, y:70, scale:0.92, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.2)'});
-
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal,
-      onEnter:     () => revealSplitText(hEl, 0.06),
-      onEnterBack: () => revealSplitText(hEl, 0.04),
-      onLeave:     () => hideSplitText(hEl, 'up'),
-      onLeaveBack: () => hideSplitText(hEl, 'down'),
-    }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
 
-  tl.fromTo('#s2-ch',       {opacity:0, y:30, scale:0.9},  {opacity:1, y:0, scale:1, duration:0.15, ease:'power3.out'}, 0.03);
-  tl.fromTo('#s2-hen',      f_hen, t_hen,                                                                                0.16);
-  tl.fromTo('#s2-terminal', f_trm, t_trm,                                                                               0.22);
+  tl.fromTo('#s2-ch',       {opacity:0, y:30, scale:0.9},              {opacity:1, y:0, scale:1, duration:0.15, ease:'power3.out'}, 0.03);
+  tl.fromTo('#s2-h',        {opacity:0, y:80, scale:0.84},             {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},   0.07);
+  tl.fromTo('#s2-hen',      {opacity:0, x:-40, filter:'blur(6px)'},    {opacity:1, x:0, filter:'blur(0px)', duration:0.15, ease:'power2.out'}, 0.16);
+  tl.fromTo('#s2-terminal', {opacity:0, y:70, scale:0.92, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.2)'}, 0.22);
 
-  tl.to(['#s2-ch','#s2-hen'],   {opacity:0, y:-40, duration:0.13, ease:'power2.in'}, 0.65);
-  tl.to('#s2-terminal', {opacity:0, y:-60, scale:0.94, duration:0.15, ease:'power2.in'}, 0.66);
+  tl.to(['#s2-ch','#s2-hen'],   {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
+  tl.to('#s2-h',        {opacity:0, y:-80, scale:1.08, filter:'blur(4px)', duration:0.15, ease:'power2.in'}, 0.63);
+  tl.to('#s2-terminal', {opacity:0, y:-60, scale:0.94, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.66);
 })();
 
 /* ── SCENES 3–7 — PROJECT SCENES (Cinematic slide-in) ── */
-function makeProjectAnim(sceneId, chId, imgId, prId, dir){
+(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
   const el = document.getElementById(sceneId);
   if(!el) return;
+  const tl = gsap.timeline({
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
+  });
+
   const xIn  = dir === 'left' ? -100 : 100;
   const xOut = dir === 'left' ?  100 : -100;
 
-  const [f_img, t_img] = mf(
-    {opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},
-    {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}
-  );
-  const [f_pr, t_pr] = mf(
-    {opacity:0, y:70, filter:'blur(10px)'},
-    {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}
-  );
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                                    {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},              {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                            {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
 
+  // Exit — opposite side
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},                    0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'},      0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},                    0.65);
+})('scene-3','s3-ch','s3-img','s3-pr','right');
+(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
+  const el = document.getElementById(sceneId);
+  if(!el) return;
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92}, {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
-  tl.fromTo(`#${imgId}`, f_img, t_img, 0.07);
-  tl.fromTo(`#${prId}`, f_pr, t_pr, 0.18);
-  tl.to(`#${chId}`,  {opacity:0, y:-30, duration:0.13, ease:'power2.in'},       0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, duration:0.16, ease:'power2.in'}, 0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, duration:0.14, ease:'power2.in'},       0.65);
-}
-makeProjectAnim('scene-3','s3-ch','s3-img','s3-pr','right');
-makeProjectAnim('scene-4','s4-ch','s4-img','s4-pr','left');
-makeProjectAnim('scene-5','s5-ch','s5-img','s5-pr','right');
-makeProjectAnim('scene-6','s6-ch','s6-img','s6-pr','left');
-makeProjectAnim('scene-7','s7-ch','s7-img','s7-pr','right');
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
+})('scene-4','s4-ch','s4-img','s4-pr','left');
+(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
+  const el = document.getElementById(sceneId);
+  if(!el) return;
+  const tl = gsap.timeline({
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
+  });
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
+})('scene-5','s5-ch','s5-img','s5-pr','right');
+(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
+  const el = document.getElementById(sceneId);
+  if(!el) return;
+  const tl = gsap.timeline({
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
+  });
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
+})('scene-6','s6-ch','s6-img','s6-pr','left');
+(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
+  const el = document.getElementById(sceneId);
+  if(!el) return;
+  const tl = gsap.timeline({
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
+  });
+  const xIn  = dir === 'left' ? -100 : 100;
+  const xOut = dir === 'left' ?  100 : -100;
+  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
+  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
+  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
+  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
+  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
+  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
+})('scene-7','s7-ch','s7-img','s7-pr','right');
 
 /* ── SCENE 8 — EXPERIENCE ── */
 (function(){
   const el = document.getElementById('scene-8');
-  const [f_e1, t_e1] = mf({opacity:0, x:-80, filter:'blur(12px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'});
-  const [f_e2, t_e2] = mf({opacity:0, x:80,  filter:'blur(12px)'}, {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'});
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  tl.fromTo('#s8-ch',  {opacity:0, y:30, scale:0.9}, {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
-  tl.fromTo('#s8-e1',  f_e1, t_e1, 0.07);
-  tl.fromTo('#s8-div', {opacity:0, scaleX:0}, {opacity:1, scaleX:1, width:'200px', duration:0.18, ease:'power2.inOut'}, 0.22);
-  tl.fromTo('#s8-e2',  f_e2, t_e2, 0.28);
-  tl.to(['#s8-ch','#s8-div'], {opacity:0, y:-30, duration:0.13, ease:'power2.in'}, 0.64);
-  tl.to('#s8-e1', {opacity:0, x:-70, duration:0.13, ease:'power2.in'}, 0.62);
-  tl.to('#s8-e2', {opacity:0, x:70,  duration:0.13, ease:'power2.in'}, 0.64);
+  tl.fromTo('#s8-ch',  {opacity:0, y:30, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},  0.03);
+  tl.fromTo('#s8-e1',  {opacity:0, x:-80, filter:'blur(12px)'},     {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.07);
+  tl.fromTo('#s8-div', {opacity:0, scaleX:0},                       {opacity:1, scaleX:1, width:'200px', duration:0.18, ease:'power2.inOut'}, 0.22);
+  tl.fromTo('#s8-e2',  {opacity:0, x:80, filter:'blur(12px)'},      {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.28);
+
+  tl.to(['#s8-ch','#s8-div'],  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
+  tl.to('#s8-e1', {opacity:0, x:-70, filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.62);
+  tl.to('#s8-e2', {opacity:0, x:70,  filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.64);
 })();
 
 /* ── SCENE 9 — EDUCATION ── */
 (function(){
   const el = document.getElementById('scene-9');
-  const [f_edu, t_edu] = mf(
-    {opacity:0, y:80, scale:0.86, filter:'blur(14px)'},
-    {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.3)'}
-  );
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  tl.fromTo('#s9-ch',  {opacity:0, y:28, scale:0.9}, {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
-  tl.fromTo('#s9-edu', f_edu, t_edu, 0.07);
-  tl.fromTo('#s9-lg',  {opacity:0, y:40, scale:0.92}, {opacity:1, y:0, scale:1, duration:0.18, ease:'power2.out'}, 0.22);
-  tl.to('#s9-ch',  {opacity:0, y:-32, duration:0.13, ease:'power2.in'}, 0.64);
-  tl.to('#s9-edu', {opacity:0, y:-70, scale:1.06, duration:0.15, ease:'power2.in'}, 0.62);
-  tl.to('#s9-lg',  {opacity:0, y:-40, scale:0.94, duration:0.13, ease:'power2.in'}, 0.65);
+  tl.fromTo('#s9-ch',  {opacity:0, y:28, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},           0.03);
+  tl.fromTo('#s9-edu', {opacity:0, y:80, scale:0.86, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.3)'}, 0.07);
+  tl.fromTo('#s9-lg',  {opacity:0, y:40, scale:0.92},               {opacity:1, y:0, scale:1, duration:0.18, ease:'power2.out'},            0.22);
+
+  tl.to('#s9-ch',  {opacity:0, y:-32, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
+  tl.to('#s9-edu', {opacity:0, y:-70, scale:1.06, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.62);
+  tl.to('#s9-lg',  {opacity:0, y:-40, scale:0.94, duration:0.13, ease:'power2.in'},          0.65);
 })();
 
 /* ── SCENE 10 — CONTACT ── */
 (function(){
   const el = document.getElementById('scene-10');
   const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:_scrubVal }
+    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
   });
-  const rawItems = [
-    {id:'s10-ch',      from:{opacity:0, y:30, scale:0.9},                    ease:'power3.out',   t:0.03},
-    {id:'s10-h',       from:{opacity:0, y:80, scale:0.84},                   ease:'expo.out',     t:0.07},
-    {id:'s10-hen',     from:{opacity:0, x:-50, filter:'blur(8px)'},           ease:'power2.out',   t:0.16},
+  const items = [
+    {id:'s10-ch',      from:{opacity:0, y:30, scale:0.9},                    ease:'power3.out', t:0.03},
+    {id:'s10-h',       from:{opacity:0, y:80, scale:0.84},                   ease:'expo.out',   t:0.07},
+    {id:'s10-hen',     from:{opacity:0, x:-50, filter:'blur(8px)'},           ease:'power2.out', t:0.16},
     {id:'s10-cg',      from:{opacity:0, y:50, scale:0.92, filter:'blur(10px)'}, ease:'back.out(1.2)', t:0.24},
-    {id:'footer-line', from:{opacity:0, y:24},                               ease:'power2.out',   t:0.36},
+    {id:'footer-line', from:{opacity:0, y:24},                               ease:'power2.out', t:0.36},
   ];
-  rawItems.forEach(({id, from, ease, t})=>{
-    const [f, toBase] = mf(from, {});
-    const to = {...f};
+  items.forEach(({id, from, ease, t})=>{
+    const to = {...from};
     Object.keys(to).forEach(k=>{
       if(k==='opacity') to[k]=1;
       else if(k==='y'||k==='x') to[k]=0;
@@ -2937,7 +2831,7 @@ makeProjectAnim('scene-7','s7-ch','s7-img','s7-pr','right');
     });
     to.duration = 0.18;
     to.ease     = ease || 'power2.out';
-    tl.fromTo(`#${id}`, f, to, t);
+    tl.fromTo(`#${id}`, from, to, t);
   });
 })();
 
