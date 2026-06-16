@@ -190,7 +190,7 @@
   --terminal-blue:#7dd3fc;
   --terminal-amber:#f59e0b;
 }
-html{scroll-behavior:auto;scrollbar-width:none;scroll-snap-type:none;}
+html{scroll-behavior:smooth;scrollbar-width:none;}
 html::-webkit-scrollbar{display:none;}
 body{
   background:var(--void);
@@ -198,6 +198,10 @@ body{
   font-family:'Vazirmatn',sans-serif;
   overflow-x:hidden;
   overscroll-behavior:none;
+  /* ⭐ FIX: CSS Scroll Snap */
+  scroll-snap-type:y mandatory;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling:touch;
 }
 
 body::before{
@@ -340,19 +344,28 @@ body::after{
 .scene{
   position:relative;
   height:100vh;
+  height:100dvh; /* dynamic viewport height for mobile */
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
 }
 .scene-sticky{
-  position:sticky;top:0;height:100vh;
-  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  height:100vh;
+  height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
 }
 .scene-inner{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  text-align:center;padding:48px 40px;
+  text-align:center;
+  padding:80px 40px 60px;
   z-index:10;
-  overflow:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 .space-warp-overlay {
@@ -704,13 +717,14 @@ body::after{
 
 #footer-line{opacity:0;margin-top:52px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;color:rgba(237,233,254,.55);text-align:center;padding-top:20px;border-top:1px solid rgba(157,78,221,.15);max-width:480px;margin-left:auto;margin-right:auto;}
 
+/* ⭐ FIX: Mobile optimizations */
 @media(max-width:768px){
   #chapter-nav{right:6px;gap:7px;}
   .nav-dot{width:4px;height:4px;position:relative;}
   .nav-dot::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;display:block;}
   .nav-dot::after{display:none;}
   .lang-pair{gap:16px;}
-  .scene-inner{padding:16px 10px;}
+  .scene-inner{padding:60px 16px 50px;justify-content:center;}
   #fab-group{bottom:12px;left:12px;gap:7px;}
   .fab-btn{width:38px;height:38px;border-radius:8px;}
   .fab-btn svg{width:15px;height:15px;}
@@ -732,7 +746,7 @@ body::after{
   .terminal-header{padding:6px 10px;gap:5px;}
   .terminal-dot{width:8px;height:8px;}
   .terminal-title{font-size:0.5rem;margin-left:6px;}
-  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.6rem;line-height:1.5;}
+  .terminal-body{padding:10px;min-height:160px;max-height:40vh;font-size:0.6rem;line-height:1.5;}
   .terminal-input-line input{font-size:0.6rem;}
   .skill-category{margin:7px 0 4px;padding-top:6px;}
   .skill-cat-label{font-size:0.52rem;letter-spacing:0.14em;margin-bottom:3px;}
@@ -742,7 +756,7 @@ body::after{
 }
 
 @media(max-width:400px){
-  .terminal-body{min-height:140px;max-height:52vh;font-size:0.56rem;padding:8px;}
+  .terminal-body{min-height:140px;max-height:35vh;font-size:0.56rem;padding:8px;}
   .skill-tag{font-size:0.5rem;padding:2px 5px;}
   .skill-cat-label{font-size:0.48rem;}
   .terminal-title{font-size:0.44rem;}
@@ -1089,7 +1103,6 @@ body::after{
 <script src="vendor/js/three.min.js"></script>
 <script src="vendor/js/gsap.min.js"></script>
 <script src="vendor/js/ScrollTrigger.min.js"></script>
-<script src="vendor/js/ScrollToPlugin.min.js"></script>
 
 <script>
 /* ════════════════════════════════════════════
@@ -1099,13 +1112,14 @@ body::after{
 (function initThree(){
   const canvas = document.getElementById('bg-canvas');
   const W = window.innerWidth, H = window.innerHeight;
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
   const renderer = new THREE.WebGLRenderer({
     canvas, alpha:true,
-    antialias: false,
+    antialias: !isMobile,
     powerPreference: 'high-performance'
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.5));
   renderer.setSize(W, H);
   renderer.setClearColor(0x000000, 0);
 
@@ -1114,7 +1128,7 @@ body::after{
   camera.position.z = 8;
 
   /* ══ PIXEL-STYLE PARTICLES ══ */
-  const PARTICLE_COUNT = 1200;
+  const PARTICLE_COUNT = isMobile ? 500 : 1200;
   const posArray = new Float32Array(PARTICLE_COUNT * 3);
   const colArray = new Float32Array(PARTICLE_COUNT * 3);
   const velArray = new Float32Array(PARTICLE_COUNT * 3);
@@ -1159,7 +1173,7 @@ body::after{
   pixelTexture.needsUpdate = true;
 
   const particleMat = new THREE.PointsMaterial({
-    size: 0.06,
+    size: isMobile ? 0.08 : 0.06,
     map: pixelTexture,
     vertexColors: true,
     transparent: true,
@@ -1174,7 +1188,7 @@ body::after{
   scene.add(particles);
 
   /* ══ CENTRAL GLOW RING ══ */
-  const ringGeo = new THREE.TorusGeometry(3.2, 0.015, 8, 120);
+  const ringGeo = new THREE.TorusGeometry(3.2, 0.015, isMobile ? 6 : 8, isMobile ? 60 : 120);
   const ringMat = new THREE.MeshBasicMaterial({
     color: 0x9d4edd,
     transparent: true,
@@ -1187,21 +1201,23 @@ body::after{
   ring.rotation.z = 0.2;
   scene.add(ring);
 
-  const ring2Geo = new THREE.TorusGeometry(4.5, 0.008, 6, 100);
-  const ring2Mat = new THREE.MeshBasicMaterial({
-    color: 0x7dd3fc,
-    transparent: true,
-    opacity: 0.2,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-  ring2.rotation.x = -0.5;
-  ring2.rotation.z = 0.7;
-  scene.add(ring2);
+  if(!isMobile){
+    const ring2Geo = new THREE.TorusGeometry(4.5, 0.008, 6, 100);
+    const ring2Mat = new THREE.MeshBasicMaterial({
+      color: 0x7dd3fc,
+      transparent: true,
+      opacity: 0.2,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.x = -0.5;
+    ring2.rotation.z = 0.7;
+    scene.add(ring2);
+  }
 
   /* ══ CENTRAL CORE ══ */
-  const coreGeo = new THREE.IcosahedronGeometry(1.8, 1);
+  const coreGeo = new THREE.IcosahedronGeometry(1.8, isMobile ? 0 : 1);
   const coreMat = new THREE.MeshBasicMaterial({
     color: 0x9d4edd,
     wireframe: true,
@@ -1215,7 +1231,8 @@ body::after{
 
   /* ══ FLOATING SHAPES ══ */
   const shapes = [];
-  for(let i = 0; i < 3; i++){
+  const shapeCount = isMobile ? 2 : 3;
+  for(let i = 0; i < shapeCount; i++){
     const geo = new THREE.OctahedronGeometry(0.6 + i * 0.2, 0);
     const mat = new THREE.MeshBasicMaterial({
       color: i === 0 ? 0x7dd3fc : i === 1 ? 0xe0aaff : 0xc77dff,
@@ -1235,7 +1252,7 @@ body::after{
   }
 
   /* ══ WARP TUNNEL RING ══ */
-  const warpRingGeo = new THREE.TorusGeometry(6, 0.02, 8, 80);
+  const warpRingGeo = new THREE.TorusGeometry(6, 0.02, isMobile ? 6 : 8, isMobile ? 40 : 80);
   const warpRingMat = new THREE.MeshBasicMaterial({
     color: 0xc77dff,
     transparent: true,
@@ -1249,7 +1266,8 @@ body::after{
 
   /* ══ SPEED LINES ══ */
   const speedLines = [];
-  for(let i = 0; i < 30; i++){
+  const speedLineCount = isMobile ? 15 : 30;
+  for(let i = 0; i < speedLineCount; i++){
     const lineGeo = new THREE.BufferGeometry();
     const length = 1 + Math.random() * 3;
     const verts = new Float32Array([
@@ -1291,7 +1309,7 @@ body::after{
       rawGyroY = Math.max(-1, Math.min(1, -(e.beta || 0) / 25));
     }, true);
   }
-  if(/Mobi|Android/i.test(navigator.userAgent) && !/(iPhone|iPad)/i.test(navigator.userAgent)){
+  if(isMobile && !/(iPhone|iPad)/i.test(navigator.userAgent)){
     attachGyro();
   }
   let gyroAsked = false;
@@ -1332,7 +1350,6 @@ body::after{
     const targetBurst = scrollP > 0.88 ? Math.min(1, (scrollP - 0.88) * 8) : 0;
     finalBurst += (targetBurst - finalBurst) * 0.06;
 
-    // Trigger final burst overlay animation
     if(finalBurstEl){
       if(finalBurst > 0.15 && !finalBurstEl.classList.contains('active')){
         finalBurstEl.classList.add('active');
@@ -1351,13 +1368,11 @@ body::after{
       pPos[i*3+1] += velArray[i*3+1];
       pPos[i*3+2] += velArray[i*3+2];
 
-      // Warp effect during space dive
       if(spaceIntensity > 0.1){
         pPos[i*3+2] -= spaceIntensity * 0.008;
         if(pPos[i*3+2] < -15) pPos[i*3+2] = 15;
       }
 
-      // Final burst: particles explode outward
       if(finalBurst > 0.1){
         const dx = pPos[i*3], dy = pPos[i*3+1], dz = pPos[i*3+2];
         const dist = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
@@ -1377,10 +1392,10 @@ body::after{
     particleGeo.attributes.position.needsUpdate = true;
     particles.material.opacity = 0.7 - finalBurst * 0.4;
 
-    /* ── Camera: big zoom out on final burst ── */
+    /* ── Camera ── */
     const baseZ = 8;
     const diveZ = 5.5 * spaceIntensity;
-    const burstZ = finalBurst * 25; // Massive zoom out
+    const burstZ = finalBurst * 25;
     camera.position.z = baseZ - scrollP * 1.8 - diveZ + burstZ;
     camera.position.x = ptrX * 0.35 * (1 - finalBurst);
     camera.position.y = ptrY * 0.22 * (1 - finalBurst);
@@ -1390,11 +1405,6 @@ body::after{
     ring.rotation.x = 0.3 + ptrY * 0.03;
     ring.scale.setScalar(1 + spaceIntensity * 0.5 + finalBurst * 4);
     ring.material.opacity = 0.4 - finalBurst * 0.35;
-
-    ring2.rotation.z = t * 0.05 - ptrX * 0.03;
-    ring2.rotation.x = -0.5 + ptrY * 0.02;
-    ring2.scale.setScalar(1 + spaceIntensity * 0.7 + finalBurst * 5);
-    ring2.material.opacity = 0.2 - finalBurst * 0.18;
 
     /* ── Core ── */
     core.rotation.x = t * 0.25;
@@ -1680,9 +1690,9 @@ body::after{
 })();
 
 /* ════════════════════════════════════════════
-   GSAP + SCROLLTRIGGER — FAST & ACCURATE
+   GSAP + SCROLLTRIGGER — ANIMATIONS ONLY
 ════════════════════════════════════════════ */
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 /* ── TYPEWRITER HERO TITLE ── */
 (function typewriter(){
@@ -1742,116 +1752,10 @@ ScrollTrigger.create({
   onLeaveBack:()=>gsap.to('#scroll-hint',{opacity:1,duration:0.2,pointerEvents:'auto'})
 });
 
-/* ════════════════════════════════════════════
-   PERFECT SNAP SCROLL — Exact per scene
-════════════════════════════════════════════ */
-const allScenes = document.querySelectorAll('.scene');
-const revealedScenes = new Set();
-
-/* Force page to top on load so we always start at scene-0 */
-if('scrollRestoration' in history) history.scrollRestoration = 'manual';
-window.scrollTo(0, 0);
-
-(function initSnapScroll(){
-  const TOTAL = allScenes.length;
-  let currentIdx = 0;    // single source of truth — never recalculate mid-snap
-  let isSnapping = false;
-  let snapGuard = null;
-
-  function getSnapTops(){
-    return Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
-  }
-
-  function syncIdx(){
-    const tops = getSnapTops();
-    const mid = window.pageYOffset + window.innerHeight * 0.5;
-    let best = 0, bestDist = Infinity;
-    tops.forEach((p, i) => { const d = Math.abs(p - mid); if(d < bestDist){ bestDist = d; best = i; } });
-    currentIdx = best;
-  }
-
-  function doSnap(dir){
-    if(isSnapping) return;
-    const target = Math.max(0, Math.min(TOTAL - 1, currentIdx + dir));
-    if(target === currentIdx) return;
-
-    currentIdx = target;    // commit before animation
-    isSnapping = true;
-    clearTimeout(snapGuard);
-
-    const tops = getSnapTops();
-    gsap.killTweensOf(window);
-    gsap.to(window, {
-      scrollTo: { y: tops[currentIdx], autoKill: false },
-      duration: 0.6,
-      ease: 'power3.inOut',
-      onComplete: () => { isSnapping = false; clearTimeout(snapGuard); }
-    });
-    snapGuard = setTimeout(() => { isSnapping = false; }, 900);
-  }
-
-  function snapTo(idx){
-    if(isSnapping) return;
-    const target = Math.max(0, Math.min(TOTAL - 1, idx));
-    currentIdx = target;
-    isSnapping = true;
-    clearTimeout(snapGuard);
-    const tops = getSnapTops();
-    gsap.killTweensOf(window);
-    gsap.to(window, {
-      scrollTo: { y: tops[currentIdx], autoKill: false },
-      duration: 0.6,
-      ease: 'power3.inOut',
-      onComplete: () => { isSnapping = false; clearTimeout(snapGuard); }
-    });
-    snapGuard = setTimeout(() => { isSnapping = false; }, 900);
-  }
-
-  /* ── WHEEL ── */
-  let wheelAccum = 0, wheelFlushTimer = null;
-  const WHEEL_THRESHOLD = 80;
-
-  document.addEventListener('wheel', e => {
-    e.preventDefault();
-    if(isSnapping) return;
-    wheelAccum += e.deltaY;
-    clearTimeout(wheelFlushTimer);
-    wheelFlushTimer = setTimeout(() => { wheelAccum = 0; }, 200);
-    if(Math.abs(wheelAccum) >= WHEEL_THRESHOLD){
-      const dir = wheelAccum > 0 ? 1 : -1;
-      wheelAccum = 0;
-      clearTimeout(wheelFlushTimer);
-      doSnap(dir);
-    }
-  }, { passive: false });
-
-  /* ── KEYBOARD ── */
-  if(window.innerWidth > 768){
-    document.addEventListener('keydown', e => {
-      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-      e.preventDefault();
-      doSnap(e.key === 'ArrowDown' ? 1 : -1);
-    });
-  }
-
-  /* ── TOUCH ── */
-  let tsY = 0, tMoved = false;
-  document.addEventListener('touchstart', e => { tsY = e.touches[0].clientY; tMoved = false; }, { passive: true });
-  document.addEventListener('touchmove', () => { tMoved = true; }, { passive: true });
-  document.addEventListener('touchend', e => {
-    if(isSnapping || !tMoved) return;
-    const dy = tsY - e.changedTouches[0].clientY;
-    if(Math.abs(dy) < 30) return;
-    doSnap(dy > 0 ? 1 : -1);
-    tMoved = false;
-  }, { passive: true });
-
-  syncIdx();
-})();
-
 /* ── CHAPTER NAV ── */
 const navDots = document.querySelectorAll('.nav-dot');
+const allScenes = document.querySelectorAll('.scene');
+
 allScenes.forEach((s, i) => {
   ScrollTrigger.create({
     trigger: s, start: 'top 50%', end: 'bottom 50%',
@@ -1868,9 +1772,7 @@ function activateNav(i){
 navDots.forEach((dot, i) => {
   dot.addEventListener('click', () => {
     if(allScenes[i]){
-      activateNav(i);
-      const tops = Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
-      gsap.to(window, { scrollTo: { y: tops[i], autoKill: false }, duration: 0.55, ease: 'power3.inOut' });
+      allScenes[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 });
@@ -1894,8 +1796,8 @@ const tints = [
 allScenes.forEach((s, i) => {
   ScrollTrigger.create({
     trigger: s, start: 'top 50%',
-    onEnter: () => { ambientEl.style.background = tints[i]; },
-    onEnterBack: () => { ambientEl.style.background = tints[i]; }
+    onEnter: () => { if(ambientEl) ambientEl.style.background = tints[i]; },
+    onEnterBack: () => { if(ambientEl) ambientEl.style.background = tints[i]; }
   });
 });
 
@@ -1913,7 +1815,6 @@ enterTl.fromTo('#s0-en', {opacity:0, y:30}, {opacity:1, y:0, duration:0.4, ease:
 enterTl.fromTo('#s0-title', {opacity:0, y:20}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
 enterTl.fromTo('#s0-tagline', {opacity:0, y:14}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
 
-// Reveal function for all other scenes
 function revealElements(ids){
   ids.forEach(id => {
     const el = document.getElementById(id);
@@ -1939,7 +1840,6 @@ const sceneElements = {
   'scene-10': ['s10-ch','s10-h','s10-hen','s10-cg','footer-line'],
 };
 
-/* Pre-set all non-hero elements to y:28 so reveal animates from centre, not bottom */
 Object.values(sceneElements).flat().forEach(id => {
   const el = document.getElementById(id);
   if(el) gsap.set(el, {opacity:0, y:28});
@@ -2016,6 +1916,7 @@ async function shareResume(){
   });
 })();
 
+/* ── SCROLL PROGRESS UPDATE ── */
 window.addEventListener('scroll', () => {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   if(window._threeSetScroll && max > 0) window._threeSetScroll(window.scrollY / max);
