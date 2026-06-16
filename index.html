@@ -13,12 +13,10 @@
 <meta name="geo.placename" content="Iran">
 <link rel="canonical" href="https://immdjavad.ir/">
 
-<!-- Alternate Languages -->
 <link rel="alternate" hreflang="fa" href="https://immdjavad.ir/">
 <link rel="alternate" hreflang="en" href="https://immdjavad.ir/">
 <link rel="alternate" hreflang="x-default" href="https://immdjavad.ir/">
 
-<!-- Favicon / Icons -->
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -27,7 +25,6 @@
 <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon.png">
 <meta name="msapplication-TileImage" content="assets/favicon.png">
 
-<!-- Open Graph / Facebook -->
 <meta property="og:title" content="محمد جواد محمودی | Mohammad Javad Mahmoudi">
 <meta property="og:description" content="توسعه‌دهنده Full Stack · Python · Django · ۲+ سال تجربه حرفه‌ای. مشاهده نمونه کارها، پروژه‌های شرکتی، ربات‌های تلگرام و نرم‌افزارهای دسکتاپ.">
 <meta property="og:image" content="https://immdjavad.ir/assets/profile.png">
@@ -46,7 +43,6 @@
 <meta property="profile:username" content="immdjavad">
 <meta property="profile:gender" content="male">
 
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@immdjavad">
 <meta name="twitter:creator" content="@immdjavad">
@@ -55,10 +51,8 @@
 <meta name="twitter:image" content="https://immdjavad.ir/assets/profile.png">
 <meta name="twitter:image:alt" content="Mohammad Javad Mahmoudi Profile">
 
-<!-- Google Specific -->
 <meta name="google-site-verification" content="G0NGGvr2cWmmrBWksDthwKY8DLTvyryd1CoLUEqgGj8">
 
-<!-- Structured Data: Person + WebSite + ProfilePage -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -130,7 +124,6 @@
 }
 </script>
 
-<!-- Website Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -148,7 +141,6 @@
 }
 </script>
 
-<!-- BreadcrumbList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -198,16 +190,16 @@
   --terminal-blue:#7dd3fc;
   --terminal-amber:#f59e0b;
 }
-html{scroll-behavior:smooth;scrollbar-width:none;scroll-snap-type:none;}
+html{scroll-behavior:auto;scrollbar-width:none;scroll-snap-type:none;}
 html::-webkit-scrollbar{display:none;}
 body{
   background:var(--void);
   color:var(--text);
   font-family:'Vazirmatn',sans-serif;
   overflow-x:hidden;
+  overscroll-behavior:none;
 }
 
-/* ── VIGNETTE ── */
 body::before{
   content:'';
   position:fixed;inset:0;
@@ -215,7 +207,6 @@ body::before{
   pointer-events:none;z-index:5;
 }
 
-/* ── NOISE GRAIN ── */
 body::after{
   content:'';
   position:fixed;inset:0;
@@ -224,23 +215,20 @@ body::after{
   pointer-events:none;z-index:6;
 }
 
-/* ── CANVAS ── */
 #bg-canvas{
   position:fixed;inset:0;z-index:0;
   pointer-events:none;
 }
 
-/* ── AMBIENT BG TINT ── */
 #ambient{
   position:fixed;inset:0;z-index:1;
   background:
     radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%),
     radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%);
   pointer-events:none;
-  transition:background 1.6s ease;
+  transition:background 0.8s ease;
 }
 
-/* ── SCANLINE ── */
 .scanline{
   position:fixed;top:-100%;left:0;width:100%;height:3px;
   background:linear-gradient(90deg,transparent,rgba(157,78,221,0.1),transparent);
@@ -249,16 +237,14 @@ body::after{
 }
 @keyframes scan{0%{top:-3px;}100%{top:100%;}}
 
-/* ── PROGRESS ── */
 #scroll-progress{
   position:fixed;top:0;left:0;height:1px;width:0%;
   background:linear-gradient(90deg,var(--accent),var(--accent3),var(--ember));
   z-index:100;
   box-shadow:0 0 12px var(--glow);
-  transition:width 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+  transition:width 0.15s linear;
 }
 
-/* ── CURSOR (Desktop Only) ── */
 @media(min-width:769px){
   body{cursor:none;}
   #cursor{
@@ -278,7 +264,6 @@ body::after{
   }
 }
 
-/* ── CHAPTER NAV ── */
 #chapter-nav{
   position:fixed;right:26px;top:50%;transform:translateY(-50%);
   z-index:50;display:flex;flex-direction:column;gap:11px;
@@ -286,7 +271,7 @@ body::after{
 .nav-dot{
   width:5px;height:5px;border-radius:50%;
   background:rgba(237,233,254,0.18);cursor:pointer;
-  transition:all .35s ease;position:relative;
+  transition:all .25s ease;position:relative;
 }
 .nav-dot.active{
   background:var(--accent2);
@@ -304,7 +289,6 @@ body::after{
 }
 .nav-dot:hover::after{opacity:1;}
 
-/* ── FAB BUTTONS ── */
 #fab-group{
   position:fixed;bottom:28px;left:28px;z-index:50;
   display:flex;flex-direction:column;gap:10px;
@@ -312,7 +296,7 @@ body::after{
 .fab-btn{
   width:46px;height:46px;border:none;border-radius:10px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:all .3s ease;flex-shrink:0;
+  transition:all .25s ease;flex-shrink:0;
 }
 .fab-btn svg{width:18px;height:18px;}
 .fab-print{
@@ -331,11 +315,10 @@ body::after{
 .fab-print:hover{box-shadow:0 0 36px var(--glow),0 8px 22px rgba(0,0,0,0.5);}
 .fab-share:hover{border-color:var(--accent);background:rgba(157,78,221,0.12);}
 
-/* ── SCROLL HINT ── */
 #scroll-hint{
   position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:9px;
-  z-index:50;opacity:1;transition:opacity .6s;
+  z-index:50;opacity:1;transition:opacity .4s;
 }
 #scroll-hint span{
   font-family:'JetBrains Mono',monospace;font-size:0.58rem;
@@ -356,7 +339,7 @@ body::after{
 ══════════════════════════════ */
 .scene{
   position:relative;
-  height:250vh;
+  height:100vh;
 }
 .scene-sticky{
   position:sticky;top:0;height:100vh;
@@ -372,7 +355,36 @@ body::after{
   overflow:hidden;
 }
 
-/* ── CHAPTER LABEL ── */
+.space-warp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  background: radial-gradient(ellipse at center, rgba(157,78,221,0.15) 0%, transparent 70%);
+}
+.space-warp-overlay.active {
+  opacity: 1;
+}
+
+.final-burst-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, rgba(157,78,221,0.2) 30%, transparent 70%);
+}
+.final-burst-overlay.active {
+  animation: finalPulse 0.8s ease-out;
+}
+@keyframes finalPulse {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.5); }
+  100% { opacity: 0; transform: scale(2); }
+}
+
 .chapter-marker{
   font-family:'JetBrains Mono',monospace;
   font-size:0.63rem;letter-spacing:0.38em;
@@ -387,7 +399,6 @@ body::after{
 }
 .chapter-marker::after{background:linear-gradient(90deg,var(--accent),transparent);}
 
-/* ── PROFILE IMAGE IN HERO ── */
 .profile-hero-wrap {
   opacity: 0;
   margin-bottom: 24px;
@@ -413,7 +424,6 @@ body::after{
   border-color: rgba(199,125,255,0.7);
 }
 
-/* ── PROFILE MODAL ── */
 #profile-modal {
   position: fixed;
   inset: 0;
@@ -473,11 +483,7 @@ body::after{
   border-color: var(--accent2);
   transform: scale(1.1);
 }
-@media(max-width:768px){
-  #profile-modal-close { top: 16px; right: 16px; width: 38px; height: 38px; }
-}
 
-/* ── PROJECT IMAGE ── */
 .project-image-wrap {
   opacity: 0;
   margin-bottom: 18px;
@@ -497,7 +503,6 @@ body::after{
   transition: transform 0.4s ease;
 }
 
-/* ── HERO ── */
 .hero-name-fa{
   font-size:clamp(3.2rem,9.5vw,9.5rem);
   font-weight:900;line-height:.88;
@@ -523,7 +528,6 @@ body::after{
 }
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-/* ── SECTION HEADLINES ── */
 .scene-headline-fa{
   font-size:clamp(2.2rem,6.5vw,7rem);
   font-weight:900;line-height:.95;opacity:0;
@@ -550,9 +554,6 @@ body::after{
   margin-top:12px;direction:ltr;text-align:center;
 }
 
-/* ══════════════════════════════
-   INTERACTIVE TERMINAL (Compact)
-══════════════════════════════ */
 .terminal-wrapper {
   opacity:0;
   width:100%;
@@ -605,269 +606,85 @@ body::after{
   scrollbar-width: thin;
   scrollbar-color: rgba(157,78,221,0.25) transparent;
 }
-.terminal-body::-webkit-scrollbar {
-  width: 4px;
-}
-.terminal-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-.terminal-body::-webkit-scrollbar-thumb {
-  background: rgba(157,78,221,0.25);
-  border-radius: 2px;
-}
-.terminal-line {
-  margin-bottom: 1px;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-.terminal-line .prompt {
-  color: var(--terminal-prompt);
-  font-weight: 700;
-}
-.terminal-line .cmd {
-  color: var(--terminal-text);
-}
-.terminal-line .output {
-  color: var(--terminal-output);
-}
-.terminal-line .highlight {
-  color: var(--terminal-highlight);
-  text-shadow: 0 0 6px rgba(199,125,255,0.3);
-}
-.terminal-line .green {
-  color: var(--terminal-green);
-}
-.terminal-line .blue {
-  color: var(--terminal-blue);
-}
-.terminal-line .amber {
-  color: var(--terminal-amber);
-}
-.terminal-line .dim {
-  color: var(--terminal-dim);
-}
-.terminal-input-line {
-  display: flex;
-  align-items: center;
-  margin-top: 3px;
-}
-.terminal-input-line .prompt {
-  color: var(--terminal-prompt);
-  font-weight: 700;
-  margin-right: 7px;
-  flex-shrink: 0;
-}
+.terminal-body::-webkit-scrollbar {width: 4px;}
+.terminal-body::-webkit-scrollbar-track {background: transparent;}
+.terminal-body::-webkit-scrollbar-thumb {background: rgba(157,78,221,0.25);border-radius: 2px;}
+.terminal-line {margin-bottom: 1px;white-space: pre-wrap;word-break: break-all;}
+.terminal-line .prompt {color: var(--terminal-prompt);font-weight: 700;}
+.terminal-line .cmd {color: var(--terminal-text);}
+.terminal-line .output {color: var(--terminal-output);}
+.terminal-line .highlight {color: var(--terminal-highlight);text-shadow: 0 0 6px rgba(199,125,255,0.3);}
+.terminal-line .green {color: var(--terminal-green);}
+.terminal-line .blue {color: var(--terminal-blue);}
+.terminal-line .amber {color: var(--terminal-amber);}
+.terminal-line .dim {color: var(--terminal-dim);}
+.terminal-input-line {display: flex;align-items: center;margin-top: 3px;}
+.terminal-input-line .prompt {color: var(--terminal-prompt);font-weight: 700;margin-right: 7px;flex-shrink: 0;}
 .terminal-input-line input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--terminal-text);
-  font-family: inherit;
-  font-size: 0.68rem;
-  flex: 1;
-  caret-color: var(--terminal-highlight);
+  background: transparent;border: none;outline: none;
+  color: var(--terminal-text);font-family: inherit;
+  font-size: 0.68rem;flex: 1;caret-color: var(--terminal-highlight);
 }
-.terminal-input-line input::placeholder {
-  color: rgba(237,233,254,0.12);
-}
-.terminal-cursor {
-  display: inline-block;
-  width: 7px;
-  height: 14px;
-  background: var(--terminal-highlight);
-  animation: terminalBlink 1s step-end infinite;
-  vertical-align: middle;
-  margin-left: 1px;
-  box-shadow: 0 0 6px rgba(199,125,255,0.4);
-}
-@keyframes terminalBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
+.terminal-input-line input::placeholder {color: rgba(237,233,254,0.12);}
 
-/* ── SKILL CATEGORIES IN TERMINAL ── */
-.skill-category {
-  margin: 10px 0 6px;
-  padding-top: 8px;
-  border-top: 1px dashed rgba(157,78,221,0.16);
-}
-.skill-category:first-child {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-}
-.skill-cat-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  color: var(--terminal-prompt);
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
+.skill-category {margin: 10px 0 6px;padding-top: 8px;border-top: 1px dashed rgba(157,78,221,0.16);}
+.skill-category:first-child {margin-top: 0;padding-top: 0;border-top: none;}
+.skill-cat-label {font-size: 0.6rem;letter-spacing: 0.18em;color: var(--terminal-prompt);margin-bottom: 5px;text-transform: uppercase;}
+.skill-tags {display: flex;flex-wrap: wrap;gap: 5px;}
 .skill-tag {
-  font-size: 0.6rem;
-  padding: 3px 8px;
-  border: 1px solid rgba(157,78,221,0.24);
-  border-radius: 2px;
-  color: var(--terminal-output);
-  background: rgba(157,78,221,0.05);
-  letter-spacing: 0.05em;
-  transition: all 0.25s ease;
-  cursor: default;
-  white-space: nowrap;
+  font-size: 0.6rem;padding: 3px 8px;
+  border: 1px solid rgba(157,78,221,0.24);border-radius: 2px;
+  color: var(--terminal-output);background: rgba(157,78,221,0.05);
+  letter-spacing: 0.05em;transition: all 0.25s ease;cursor: default;white-space: nowrap;
 }
-.skill-tag:hover {
-  border-color: var(--terminal-highlight);
-  color: var(--terminal-highlight);
-  background: rgba(157,78,221,0.12);
-  box-shadow: 0 0 10px rgba(157,78,221,0.15);
-}
-.skill-tag.featured {
-  border-color: rgba(199,125,255,0.45);
-  color: var(--terminal-highlight);
-  background: rgba(157,78,221,0.1);
-  box-shadow: 0 0 8px rgba(157,78,221,0.08);
-}
-.skill-tag.tag-blue {
-  border-color: rgba(125,211,252,0.25);
-  color: var(--terminal-blue);
-}
-.skill-tag.tag-blue:hover {
-  border-color: rgba(125,211,252,0.5);
-  box-shadow: 0 0 8px rgba(125,211,252,0.15);
-}
-.skill-tag.tag-amber {
-  border-color: rgba(245,158,11,0.25);
-  color: var(--terminal-amber);
-}
-.skill-tag.tag-amber:hover {
-  border-color: rgba(245,158,11,0.5);
-  box-shadow: 0 0 8px rgba(245,158,11,0.15);
-}
-.skill-tag.tag-green {
-  border-color: rgba(52,211,153,0.25);
-  color: var(--terminal-green);
-}
-.skill-tag.tag-green:hover {
-  border-color: rgba(52,211,153,0.5);
-  box-shadow: 0 0 8px rgba(52,211,153,0.15);
-}
+.skill-tag:hover {border-color: var(--terminal-highlight);color: var(--terminal-highlight);background: rgba(157,78,221,0.12);box-shadow: 0 0 10px rgba(157,78,221,0.15);}
+.skill-tag.featured {border-color: rgba(199,125,255,0.45);color: var(--terminal-highlight);background: rgba(157,78,221,0.1);box-shadow: 0 0 8px rgba(157,78,221,0.08);}
+.skill-tag.tag-blue {border-color: rgba(125,211,252,0.25);color: var(--terminal-blue);}
+.skill-tag.tag-blue:hover {border-color: rgba(125,211,252,0.5);box-shadow: 0 0 8px rgba(125,211,252,0.15);}
+.skill-tag.tag-amber {border-color: rgba(245,158,11,0.25);color: var(--terminal-amber);}
+.skill-tag.tag-amber:hover {border-color: rgba(245,158,11,0.5);box-shadow: 0 0 8px rgba(245,158,11,0.15);}
+.skill-tag.tag-green {border-color: rgba(52,211,153,0.25);color: var(--terminal-green);}
+.skill-tag.tag-green:hover {border-color: rgba(52,211,153,0.5);box-shadow: 0 0 8px rgba(52,211,153,0.15);}
 
-/* ── AVAILABLE COMMANDS HINT ── */
-.terminal-hint {
-  font-size: 0.54rem;
-  color: var(--terminal-dim);
-  margin-top: 10px;
-  letter-spacing: 0.06em;
-  border-top: 1px dashed rgba(157,78,221,0.12);
-  padding-top: 9px;
-}
-.terminal-hint span {
-  color: var(--terminal-prompt);
-}
+.terminal-hint {font-size: 0.54rem;color: var(--terminal-dim);margin-top: 10px;letter-spacing: 0.06em;border-top: 1px dashed rgba(157,78,221,0.12);padding-top: 9px;}
+.terminal-hint span {color: var(--terminal-prompt);}
 
-/* ── TEXT FOG (مه پشت متن) ── */
 .scene-inner::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(2,0,8,0.55) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(2,0,8,0.55) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
-.scene-inner > * {
-  position: relative;
-  z-index: 1;
-}
+.scene-inner > * {position: relative;z-index: 1;}
 
-
-.project-reveal{
-  opacity:0;max-width:800px;width:100%;text-align:right;
-}
-.project-label{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;
-}
-.project-title-fa{
-  font-size:clamp(1.8rem,5vw,4.2rem);font-weight:900;line-height:1;
-  background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:5px;
-}
-.project-title-en{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(.9rem,2.2vw,1.7rem);letter-spacing:.2em;
-  color:var(--muted);margin-bottom:16px;
-}
-.project-desc-text{
-  font-size:.92rem;line-height:2;
-  color:rgba(237,233,254,.7);font-weight:300;margin-bottom:10px;
-}
-.project-desc-en{
-  font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.8;
-  color:var(--muted);direction:ltr;text-align:left;margin-bottom:18px;
-}
+.project-reveal{opacity:0;max-width:800px;width:100%;text-align:right;}
+.project-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
+.project-title-fa{font-size:clamp(1.8rem,5vw,4.2rem);font-weight:900;line-height:1;background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
+.project-title-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.9rem,2.2vw,1.7rem);letter-spacing:.2em;color:var(--muted);margin-bottom:16px;}
+.project-desc-text{font-size:.92rem;line-height:2;color:rgba(237,233,254,.7);font-weight:300;margin-bottom:10px;}
+.project-desc-en{font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.8;color:var(--muted);direction:ltr;text-align:left;margin-bottom:18px;}
 .tech-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
-.tech-chip{
-  font-family:'JetBrains Mono',monospace;font-size:.62rem;
-  padding:5px 11px;border:1px solid rgba(157,78,221,.28);border-radius:2px;
-  color:var(--accent3);letter-spacing:.08em;background:rgba(157,78,221,.04);
-}
+.tech-chip{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:5px 11px;border:1px solid rgba(157,78,221,.28);border-radius:2px;color:var(--accent3);letter-spacing:.08em;background:rgba(157,78,221,.04);}
 .tech-chip.blue{border-color:rgba(125,211,252,.3);color:var(--ice);background:rgba(125,211,252,.04);}
 .tech-chip.ember{border-color:rgba(245,158,11,.3);color:var(--ember);background:rgba(245,158,11,.04);}
 .tech-chip.green{border-color:rgba(52,211,153,.3);color:var(--green);background:rgba(52,211,153,.04);}
 
-.project-link-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:'JetBrains Mono',monospace;font-size:.68rem;
-  letter-spacing:.14em;color:var(--accent2);text-decoration:none;
-  border-bottom:1px solid rgba(199,125,255,.3);padding-bottom:2px;
-  transition:border-color .3s,color .3s;
-}
+.project-link-btn{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(199,125,255,.3);padding-bottom:2px;transition:border-color .3s,color .3s;}
 .project-link-btn:hover{color:#fff;border-color:#fff;}
 .project-link-btn svg{flex-shrink:0;}
 
-/* ── EXPERIENCE ── */
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
-.exp-period{
-  font-family:'JetBrains Mono',monospace;font-size:.66rem;
-  letter-spacing:.2em;color:var(--accent);margin-bottom:10px;
-}
-.exp-role-fa{
-  font-size:clamp(1.5rem,4vw,3.2rem);font-weight:900;line-height:1.05;
-  background:linear-gradient(130deg,#fff 0%,var(--accent2) 70%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:5px;
-}
-.exp-role-en{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(.85rem,1.9vw,1.45rem);letter-spacing:.2em;
-  color:var(--muted);margin-bottom:16px;
-}
-.exp-desc-text{
-  font-size:.9rem;line-height:2.05;
-  color:rgba(237,233,254,.68);font-weight:300;
-}
+.exp-period{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;color:var(--accent);margin-bottom:10px;}
+.exp-role-fa{font-size:clamp(1.5rem,4vw,3.2rem);font-weight:900;line-height:1.05;background:linear-gradient(130deg,#fff 0%,var(--accent2) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
+.exp-role-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.85rem,1.9vw,1.45rem);letter-spacing:.2em;color:var(--muted);margin-bottom:16px;}
+.exp-desc-text{font-size:.9rem;line-height:2.05;color:rgba(237,233,254,.68);font-weight:300;}
 
-/* ── EDUCATION ── */
 .edu-reveal{opacity:0;max-width:580px;text-align:center;}
-.edu-degree-fa{
-  font-size:clamp(1.8rem,5vw,4rem);font-weight:900;line-height:1.1;
-  background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:5px;
-}
+.edu-degree-fa{font-size:clamp(1.8rem,5vw,4rem);font-weight:900;line-height:1.1;background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
 
-/* ── LANGUAGES ── */
-.lang-pair{
-  opacity:0;display:flex;gap:56px;align-items:center;justify-content:center;
-  margin-top:26px;
-}
+.lang-pair{opacity:0;display:flex;gap:56px;align-items:center;justify-content:center;margin-top:26px;}
 .lang-item{text-align:center;}
 .lang-name-fa{font-size:clamp(1.4rem,3.5vw,2.8rem);font-weight:700;margin-bottom:4px;}
 .lang-name-en{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:var(--muted);margin-bottom:13px;}
@@ -875,82 +692,32 @@ body::after{
 .lang-dot{width:9px;height:9px;border-radius:50%;border:1px solid rgba(157,78,221,.35);background:transparent;}
 .lang-dot.on{background:var(--accent2);border-color:var(--accent2);box-shadow:0 0 10px var(--glow);}
 
-/* ── CONTACT ── */
 .contact-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;opacity:0;margin-top:30px;}
-.contact-link{
-  display:flex;align-items:center;gap:10px;
-  font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.1em;
-  color:var(--text);text-decoration:none;
-  padding:11px 22px;border:1px solid rgba(157,78,221,.28);border-radius:2px;
-  background:rgba(157,78,221,.04);
-  transition:all .32s ease;position:relative;overflow:hidden;
-}
-.contact-link::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--accent),var(--accent3));
-  opacity:0;transition:opacity .32s;
-}
+.contact-link{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.1em;color:var(--text);text-decoration:none;padding:11px 22px;border:1px solid rgba(157,78,221,.28);border-radius:2px;background:rgba(157,78,221,.04);transition:all .25s ease;position:relative;overflow:hidden;}
+.contact-link::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent3));opacity:0;transition:opacity .25s;}
 .contact-link:hover::before{opacity:.1;}
 .contact-link:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-2px);}
 .contact-link svg,.contact-link span{position:relative;z-index:1;}
 .contact-link svg{width:15px;height:15px;flex-shrink:0;}
 
-/* ── DIVIDER LINE ── */
-.scene-divider{
-  width:0;max-width:200px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(157,78,221,.4),transparent);
-  opacity:0;margin:24px auto;
-}
+.scene-divider{width:0;max-width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(157,78,221,.4),transparent);opacity:0;margin:24px auto;}
 
-/* ── FOOTER LINE ── */
-#footer-line{
-  opacity:0;margin-top:52px;
-  font-family:'JetBrains Mono',monospace;font-size:.62rem;
-  letter-spacing:.18em;color:rgba(237,233,254,.55);
-  text-align:center;
-  padding-top:20px;
-  border-top:1px solid rgba(157,78,221,.15);
-  max-width:480px;
-  margin-left:auto;margin-right:auto;
-}
+#footer-line{opacity:0;margin-top:52px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;color:rgba(237,233,254,.55);text-align:center;padding-top:20px;border-top:1px solid rgba(157,78,221,.15);max-width:480px;margin-left:auto;margin-right:auto;}
 
-/* ══════════════════════════════
-   RESPONSIVE - MOBILE
-══════════════════════════════ */
 @media(max-width:768px){
   #chapter-nav{right:6px;gap:7px;}
   .nav-dot{width:4px;height:4px;position:relative;}
-  /* Larger invisible touch target for mobile */
-  .nav-dot::before{
-    content:'';position:absolute;
-    top:50%;left:50%;transform:translate(-50%,-50%);
-    width:28px;height:28px;
-    display:block;
-  }
+  .nav-dot::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;display:block;}
   .nav-dot::after{display:none;}
-  
   .lang-pair{gap:16px;}
-  
   .scene-inner{padding:16px 10px;}
-  
   #fab-group{bottom:12px;left:12px;gap:7px;}
   .fab-btn{width:38px;height:38px;border-radius:8px;}
   .fab-btn svg{width:15px;height:15px;}
-  
-  .scene{height:220vh;}
-  
-  /* Skills scene needs more room for taller terminal on mobile */
-  #scene-2{height:280vh;}
-
-  /* Project scenes need more scroll room on mobile */
-  #scene-3,#scene-4,#scene-5,#scene-6,#scene-7{height:260vh;}
-  
   .profile-hero-img{width:160px;height:160px;}
   .profile-hero-wrap{margin-bottom:16px;}
-  
   .chapter-marker{font-size:0.48rem;gap:8px;margin-bottom:18px;}
   .chapter-marker::before,.chapter-marker::after{width:16px;}
-  
   .project-image-wrap{max-width:88%;margin-bottom:12px;}
   .project-title-fa{font-size:clamp(1.5rem,7vw,2.6rem);}
   .project-title-en{font-size:clamp(.7rem,2.2vw,1.1rem);margin-bottom:10px;}
@@ -960,20 +727,12 @@ body::after{
   .tech-chip{font-size:.54rem;padding:3px 7px;}
   .project-link-btn{font-size:.58rem;}
   .project-label{font-size:.48rem;margin-bottom:6px;}
-  
-  /* Compact Terminal on Mobile */
   .terminal-wrapper{max-width:100%;margin:6px auto 0;}
   .terminal{border-radius:8px;}
   .terminal-header{padding:6px 10px;gap:5px;}
   .terminal-dot{width:8px;height:8px;}
   .terminal-title{font-size:0.5rem;margin-left:6px;}
-  .terminal-body{
-    padding:10px;
-    min-height:160px;
-    max-height:55vh;
-    font-size:0.6rem;
-    line-height:1.5;
-  }
+  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.6rem;line-height:1.5;}
   .terminal-input-line input{font-size:0.6rem;}
   .skill-category{margin:7px 0 4px;padding-top:6px;}
   .skill-cat-label{font-size:0.52rem;letter-spacing:0.14em;margin-bottom:3px;}
@@ -982,14 +741,8 @@ body::after{
   .terminal-hint{font-size:0.48rem;margin-top:7px;padding-top:6px;}
 }
 
-/* Extra small screens */
 @media(max-width:400px){
-  .terminal-body{
-    min-height:140px;
-    max-height:52vh;
-    font-size:0.56rem;
-    padding:8px;
-  }
+  .terminal-body{min-height:140px;max-height:52vh;font-size:0.56rem;padding:8px;}
   .skill-tag{font-size:0.5rem;padding:2px 5px;}
   .skill-cat-label{font-size:0.48rem;}
   .terminal-title{font-size:0.44rem;}
@@ -999,21 +752,20 @@ body::after{
 </head>
 <body>
 
-<!-- UI CHROME -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 <div id="scroll-progress"></div>
 <div class="scanline"></div>
 <div id="ambient"></div>
+<div class="space-warp-overlay" id="space-warp"></div>
+<div class="final-burst-overlay" id="final-burst"></div>
 <canvas id="bg-canvas"></canvas>
 
-<!-- SCROLL HINT -->
 <div id="scroll-hint">
   <div class="scroll-mouse"></div>
   <span>اسکرول</span>
 </div>
 
-<!-- CHAPTER NAV -->
 <nav id="chapter-nav" aria-label="بخش‌های اصلی صفحه">
   <div class="nav-dot active" data-index="0" data-label="ورود"></div>
   <div class="nav-dot" data-index="1" data-label="درباره"></div>
@@ -1028,7 +780,6 @@ body::after{
   <div class="nav-dot" data-index="10" data-label="تماس"></div>
 </nav>
 
-<!-- FAB BUTTONS -->
 <div id="fab-group">
   <button class="fab-btn fab-share" title="Share" onclick="shareResume()" aria-label="اشتراک‌گذاری رزومه">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -1038,9 +789,6 @@ body::after{
   </button>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENES
-══════════════════════════════════════════ -->
 <div id="scroll-container">
 
 <!-- SCENE 0 ─ HERO -->
@@ -1066,12 +814,8 @@ body::after{
       <div class="chapter-marker" id="s1-ch">01 · درباره من · About</div>
       <div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div>
       <div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div>
-      <div class="scene-body" id="s1-body">
-        Python · Django · Full Stack · دانشجوی مهندسی کامپیوتر
-      </div>
-      <div class="scene-body-en" id="s1-ben">
-        2+ yrs professional · 6 yrs design · real products shipped
-      </div>
+      <div class="scene-body" id="s1-body">Python · Django · Full Stack · دانشجوی مهندسی کامپیوتر</div>
+      <div class="scene-body-en" id="s1-ben">2+ yrs professional · 6 yrs design · real products shipped</div>
     </div>
   </div>
 </section>
@@ -1091,9 +835,7 @@ body::after{
             <span class="terminal-dot green"></span>
             <span class="terminal-title">immdjavad@portfolio:~</span>
           </div>
-          <div class="terminal-body" id="terminal-body">
-            <!-- Rendered by JS -->
-          </div>
+          <div class="terminal-body" id="terminal-body"></div>
         </div>
       </div>
     </div>
@@ -1112,18 +854,12 @@ body::after{
         </div>
         <div class="project-title-fa">آذین دژ</div>
         <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
-        <div class="project-desc-text">
-          پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر انواع درب و پنجره را با انیمیشن طراحی می‌کند، رنگ‌بندی، شیشه و یراق‌آلات انتخاب می‌کند، چند پنجره را ترکیب کرده و فاکتور کامل دریافت می‌کند.
-        </div>
+        <div class="project-desc-text">پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر انواع درب و پنجره را با انیمیشن طراحی می‌کند، رنگ‌بندی، شیشه و یراق‌آلات انتخاب می‌کند، چند پنجره را ترکیب کرده و فاکتور کامل دریافت می‌کند.</div>
         <div class="project-desc-en">Advanced UPVC platform — interactive SVG configurator with animated opening modes, glass profiles, hardware selection, and multi-window quoting. Custom Django admin panel + project gallery + blog.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Django</span>
-          <span class="tech-chip">Python</span>
-          <span class="tech-chip">SVG Animations</span>
-          <span class="tech-chip blue">JavaScript</span>
-          <span class="tech-chip blue">Custom Admin</span>
-          <span class="tech-chip ember">PostgreSQL</span>
-          <span class="tech-chip">SEO</span>
+          <span class="tech-chip">Django</span><span class="tech-chip">Python</span><span class="tech-chip">SVG Animations</span>
+          <span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span>
+          <span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
         </div>
         <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -1146,15 +882,11 @@ body::after{
         </div>
         <div class="project-title-fa">فروشگاه لباس</div>
         <div class="project-title-en">Fashion E-Commerce — Smart Chatbot</div>
-        <div class="project-desc-text">
-          فروشگاه اینترنتی با ربات چت هوشمند، پنل ادمین سفارشی حرفه‌ای و رابط کاربری جذاب. تجربه‌ای مدرن برای خرید آنلاین با تمرکز روی تعامل کاربر.
-        </div>
+        <div class="project-desc-text">فروشگاه اینترنتی با ربات چت هوشمند، پنل ادمین سفارشی حرفه‌ای و رابط کاربری جذاب. تجربه‌ای مدرن برای خرید آنلاین با تمرکز روی تعامل کاربر.</div>
         <div class="project-desc-en">Visually stunning fashion store · AI chatbot · custom admin panel · modern UI/UX design.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Django</span>
-          <span class="tech-chip blue">AI Chatbot</span>
-          <span class="tech-chip blue">Custom Admin</span>
-          <span class="tech-chip green">PyQt6</span>
+          <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span>
+          <span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">PyQt6</span>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;color:var(--ember);">🚀 به زودی آنلاین · Launching Soon</span>
       </div>
@@ -1174,15 +906,11 @@ body::after{
         </div>
         <div class="project-title-fa">ربات کالا ۲</div>
         <div class="project-title-en">Kala2 — Divar Scraper Bot</div>
-        <div class="project-desc-text">
-          ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.
-        </div>
+        <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.</div>
         <div class="project-desc-en">Advanced Telegram bot for scraping Divar ads. Fetches price, images and descriptions of second-hand goods directly into Telegram.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Python</span>
-          <span class="tech-chip">Web Scraping</span>
-          <span class="tech-chip blue">Telegram API</span>
-          <span class="tech-chip green">BeautifulSoup</span>
+          <span class="tech-chip">Python</span><span class="tech-chip">Web Scraping</span>
+          <span class="tech-chip blue">Telegram API</span><span class="tech-chip green">BeautifulSoup</span>
         </div>
         <a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -1205,20 +933,17 @@ body::after{
         </div>
         <div class="project-title-fa">Teledata</div>
         <div class="project-title-en">Telegram Channel Extractor</div>
-        <div class="project-desc-text">
-          ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.
-        </div>
+        <div class="project-desc-text">ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.</div>
         <div class="project-desc-en">Tool to extract all messages and media from Telegram channels. Input ID + date range → get Excel file + Media folder.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Python</span>
-          <span class="tech-chip blue">Telethon</span>
-          <span class="tech-chip">Excel Export</span>
-          <span class="tech-chip green">CustomTkinter</span>
+          <span class="tech-chip">Python</span><span class="tech-chip blue">Telethon</span>
+          <span class="tech-chip">Excel Export</span><span class="tech-chip green">CustomTkinter</span>
         </div>
         <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           GitHub →
         </a>
+      </div>
     </div>
   </div>
 </section>
@@ -1235,16 +960,11 @@ body::after{
         </div>
         <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
         <div class="project-title-en">Accounting &amp; Warehouse Management</div>
-        <div class="project-desc-text">
-          سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel. طراحی شده برای کسب‌وکارهای ایرانی.
-        </div>
+        <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel. طراحی شده برای کسب‌وکارهای ایرانی.</div>
         <div class="project-desc-en">Full-featured ERP desktop app built with PyQt6. Includes Persian calendar integration, inventory tracking, invoice generation, and detailed Excel reporting.</div>
         <div class="tech-chips">
-          <span class="tech-chip">PyQt6</span>
-          <span class="tech-chip blue">SQLite</span>
-          <span class="tech-chip ember">Persian Calendar</span>
-          <span class="tech-chip">Excel</span>
-          <span class="tech-chip green">ReportLab</span>
+          <span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span>
+          <span class="tech-chip ember">Persian Calendar</span><span class="tech-chip">Excel</span><span class="tech-chip green">ReportLab</span>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;color:var(--accent2);">💼 سفارشی‌سازی برای مشتری · Custom Enterprise Solution</span>
         <br><br>
@@ -1262,25 +982,18 @@ body::after{
   <div class="scene-sticky">
     <div class="scene-inner">
       <div class="chapter-marker" id="s8-ch">08 · تجربه کاری · Experience</div>
-
       <div class="exp-reveal" id="s8-e1">
         <div class="exp-period">2022 — اکنون · Present</div>
         <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
         <div class="exp-role-en">Freelance Full Stack Developer</div>
-        <div class="exp-desc-text">
-          ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.
-        </div>
+        <div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
       </div>
-
       <div class="scene-divider" id="s8-div"></div>
-
       <div class="exp-reveal" id="s8-e2">
         <div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div>
         <div class="exp-role-fa" style="background:linear-gradient(130deg,#fff 0%,var(--ember) 75%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">طراح و ویرایشگر تصویر</div>
         <div class="exp-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
-        <div class="exp-desc-text">
-          بیش از ۶ سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی و پروژه‌های شخصی — این تجربه دیدگاه بصری خاصی در UI/UX می‌دهد که اکثر توسعه‌دهندگان ندارند.
-        </div>
+        <div class="exp-desc-text">بیش از ۶ سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی و پروژه‌های شخصی — این تجربه دیدگاه بصری خاصی در UI/UX می‌دهد که اکثر توسعه‌دهندگان ندارند.</div>
       </div>
     </div>
   </div>
@@ -1291,32 +1004,24 @@ body::after{
   <div class="scene-sticky">
     <div class="scene-inner">
       <div class="chapter-marker" id="s9-ch">09 · تحصیل و زبان · Education &amp; Languages</div>
-
       <div class="edu-reveal" id="s9-edu">
         <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.26em;color:var(--accent);margin-bottom:12px;">B.Sc. Computer Engineering · Currently Enrolled</div>
         <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
         <div class="tech-chips" style="justify-content:center;margin-top:16px;">
-          <span class="tech-chip">الگوریتم‌ها</span>
-          <span class="tech-chip blue">سیستم‌عامل</span>
-          <span class="tech-chip green">داده‌کاوی</span>
+          <span class="tech-chip">الگوریتم‌ها</span><span class="tech-chip blue">سیستم‌عامل</span><span class="tech-chip green">داده‌کاوی</span>
         </div>
       </div>
-
       <div class="lang-pair" id="s9-lg">
         <div class="lang-item">
           <div class="lang-name-fa">فارسی</div>
           <div class="lang-name-en">Persian — Native</div>
-          <div class="lang-dots">
-            <div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div>
-          </div>
+          <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
         </div>
         <div style="width:1px;height:76px;background:linear-gradient(180deg,transparent,rgba(157,78,221,.38),transparent);"></div>
         <div class="lang-item">
           <div class="lang-name-fa">انگلیسی</div>
           <div class="lang-name-en">English — Intermediate</div>
-          <div class="lang-dots">
-            <div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div><div class="lang-dot"></div>
-          </div>
+          <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div><div class="lang-dot"></div></div>
         </div>
       </div>
     </div>
@@ -1330,7 +1035,6 @@ body::after{
       <div class="chapter-marker" id="s10-ch">10 · تماس · Let's Connect</div>
       <div class="scene-headline-fa" id="s10-h">بیایید<br>بسازیم</div>
       <div class="scene-headline-en" id="s10-hen">Let's Build Something Real</div>
-
       <div class="contact-grid" id="s10-cg">
         <a class="contact-link" href="https://t.me/immdjavad" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg>
@@ -1346,7 +1050,7 @@ body::after{
         </a>
         <a class="contact-link" href="#" id="phone-link" aria-label="شماره تماس">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span id="phone-display">📱 نمایش شماره</span>
+          <span id="phone-display">نمایش شماره</span>
         </a>
         <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1357,15 +1061,12 @@ body::after{
           <span>immdjavad.ir</span>
         </a>
       </div>
-
-      <div id="footer-line">
-        محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.
-      </div>
+      <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.</div>
     </div>
   </div>
 </section>
 
-</div><!-- /scroll-container -->
+</div>
 
 <!-- PROFILE MODAL -->
 <div id="profile-modal" role="dialog" aria-modal="true" aria-label="تصویر پروفایل بزرگ">
@@ -1373,7 +1074,6 @@ body::after{
   <img src="assets/profile.png" alt="تصویر پروفایل محمد جواد محمودی" draggable="false">
 </div>
 
-<!-- NOSCRIPT FALLBACK — for crawlers & users without JS -->
 <noscript>
 <div style="position:fixed;inset:0;background:#020008;color:#ede9fe;font-family:sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:9999;">
   <div>
@@ -1386,9 +1086,6 @@ body::after{
 </div>
 </noscript>
 
-<!-- ══════════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════════ -->
 <script src="vendor/js/three.min.js"></script>
 <script src="vendor/js/gsap.min.js"></script>
 <script src="vendor/js/ScrollTrigger.min.js"></script>
@@ -1396,15 +1093,19 @@ body::after{
 
 <script>
 /* ════════════════════════════════════════════
-   THREE.JS — EPIC COSMIC ARCHITECTURE
-   with Adaptive Particle Count (FPS-aware)
+   THREE.JS — PIXEL COSMIC SPACE DIVE
+   Optimized particles + Final burst zoom out
 ════════════════════════════════════════════ */
 (function initThree(){
   const canvas = document.getElementById('bg-canvas');
   const W = window.innerWidth, H = window.innerHeight;
 
-  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias: window.devicePixelRatio < 2});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const renderer = new THREE.WebGLRenderer({
+    canvas, alpha:true,
+    antialias: false,
+    powerPreference: 'high-performance'
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(W, H);
   renderer.setClearColor(0x000000, 0);
 
@@ -1412,619 +1113,325 @@ body::after{
   const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
   camera.position.z = 8;
 
-  /* ═══════════════════════════════════════════════
-     SMART ADAPTIVE QUALITY SYSTEM
-     — Continuous FPS monitoring (not one-shot)
-     — 4 tiers: ultra(3) / high(2) / mid(1) / low(0)
-     — Upgrades quality if performance recovers
-     — Throttles particle drift on weak devices
-     — Adjusts pixelRatio, rings, sats, beams
-  ═══════════════════════════════════════════════ */
-  const isMobile = window.innerWidth <= 768;
+  /* ══ PIXEL-STYLE PARTICLES ══ */
+  const PARTICLE_COUNT = 1200;
+  const posArray = new Float32Array(PARTICLE_COUNT * 3);
+  const colArray = new Float32Array(PARTICLE_COUNT * 3);
+  const velArray = new Float32Array(PARTICLE_COUNT * 3);
 
-  const TIERS = {
-    3: { particles: 5000, pr: Math.min(window.devicePixelRatio, 2.5), rings: 4, sats: 5, beams: 12, driftEvery: 1 },
-    2: { particles: 2800, pr: Math.min(window.devicePixelRatio, 2),   rings: 4, sats: 4, beams:  8, driftEvery: 1 },
-    1: { particles: 1200, pr: Math.min(window.devicePixelRatio, 1.5), rings: 3, sats: 3, beams:  4, driftEvery: 2 },
-    0: { particles:  500, pr: 1,                                       rings: 2, sats: 2, beams:  0, driftEvery: 3 },
-  };
-
-  let qualityLevel = 3; // همه دستگاه‌ها از بالاترین کیفیت شروع می‌کنن — FPS خودش downgrade می‌کنه
-  let GALAXY_N     = TIERS[qualityLevel].particles;
-
-  let _fpsFrameCount  = 0;
-  let _fpsLastTime    = performance.now();
-  let _fpsHistory     = [];
-  const FPS_INTERVAL  = 4000;   // sample every 4 s
-  const FPS_HISTORY   = 5;      // rolling window of 5 samples
-  let _driftTick      = 0;
-  let _qualityLocked  = false;
-  let _qualityLockTimer = null;
-
-  function _recordFpsSample(){
-    const now = performance.now();
-    if(now - _fpsLastTime < FPS_INTERVAL) return;
-    const fps = _fpsFrameCount / ((now - _fpsLastTime) / 1000);
-    _fpsHistory.push(fps);
-    if(_fpsHistory.length > FPS_HISTORY) _fpsHistory.shift();
-    _fpsFrameCount = 0;
-    _fpsLastTime   = now;
-    if(_fpsHistory.length >= 2) _checkAndAdapt();
-  }
-
-  function _avgFps(){
-    return _fpsHistory.reduce((a,b)=>a+b,0) / _fpsHistory.length;
-  }
-
-  function _checkAndAdapt(){
-    if(_qualityLocked) return;
-    const avg = _avgFps();
-    let target = qualityLevel;
-    if     (avg < 18 && qualityLevel > 0) target = Math.max(0, qualityLevel - 1);
-    else if(avg < 28 && qualityLevel > 1) target = qualityLevel - 1;
-    else if(avg > 52 && qualityLevel < 3) target = qualityLevel + 1;
-    if(target !== qualityLevel) _applyQuality(target);
-  }
-
-  function _rebuildGalaxy(){
-    if(typeof galaxy === 'undefined') return;
-    scene.remove(galaxy);
-    galaxyGeo.dispose();
-    const newPos = new Float32Array(GALAXY_N * 3);
-    const newCol = new Float32Array(GALAXY_N * 3);
-    const newVel = new Float32Array(GALAXY_N * 3);
-    for(let i = 0; i < GALAXY_N; i++){
-      const arm   = Math.floor(Math.random() * 3);
-      const r     = 3 + Math.pow(Math.random(), 0.6) * 22;
-      const theta = arm*(Math.PI*2/3) + r*0.18 + (Math.random()-0.5)*2.2;
-      const phi   = (Math.random()-0.5)*0.5;
-      newPos[i*3]   = r*Math.cos(theta);
-      newPos[i*3+1] = r*Math.sin(theta)*0.3 + phi*r*0.15;
-      newPos[i*3+2] = (Math.random()-0.5)*6;
-      newVel[i*3]   = (Math.random()-0.5)*0.0015;
-      newVel[i*3+1] = (Math.random()-0.5)*0.0008;
-      newVel[i*3+2] = (Math.random()-0.5)*0.001;
-      const c = palGalaxy[Math.floor(Math.random()*palGalaxy.length)];
-      newCol[i*3]=c.r; newCol[i*3+1]=c.g; newCol[i*3+2]=c.b;
-    }
-    galaxyGeo = new THREE.BufferGeometry();
-    galaxyGeo.setAttribute('position', new THREE.BufferAttribute(newPos, 3));
-    galaxyGeo.setAttribute('color',    new THREE.BufferAttribute(newCol, 3));
-    gVel  = newVel;
-    galaxy = new THREE.Points(galaxyGeo, galaxyMat);
-    galaxy.rotation.x = Math.PI * 0.12;
-    scene.add(galaxy);
-  }
-
-  function _applyQuality(level){
-    qualityLevel = level;
-    const cfg = TIERS[level];
-    GALAXY_N = cfg.particles;
-    _rebuildGalaxy();
-    renderer.setPixelRatio(cfg.pr);
-    if(typeof rings !== 'undefined'){
-      rings.forEach((r,i)      => { r.mesh.visible = i < cfg.rings;  });
-      satellites.forEach((s,i) => { s.mesh.visible = i < cfg.sats;   });
-      beams.forEach((b,i)      => { b.line.visible = i < cfg.beams;  });
-    }
-    // Lock 8 s to prevent thrashing
-    _qualityLocked = true;
-    clearTimeout(_qualityLockTimer);
-    _qualityLockTimer = setTimeout(()=>{ _qualityLocked = false; }, 8000);
-  }
-
-  /* ═══════════════════════════
-     1) GALAXY PARTICLE FIELD
-  ═══════════════════════════ */
-  // GALAXY_N is set adaptively above
-  let gPos = new Float32Array(GALAXY_N * 3);
-  let gCol = new Float32Array(GALAXY_N * 3);
-  let gVel = new Float32Array(GALAXY_N * 3);
-
-  const palGalaxy = [
+  const palette = [
     new THREE.Color('#9d4edd'),
     new THREE.Color('#c77dff'),
     new THREE.Color('#7dd3fc'),
     new THREE.Color('#e0aaff'),
     new THREE.Color('#5a189a'),
-    new THREE.Color('#f8c0ff'),
   ];
 
-  for(let i = 0; i < GALAXY_N; i++){
-    const arm = Math.floor(Math.random() * 3);
-    const r = 3 + Math.pow(Math.random(), 0.6) * 22;
-    const baseAngle = arm * (Math.PI * 2 / 3);
-    const spin = r * 0.18;
-    const spread = (Math.random() - 0.5) * 2.2;
-    const theta = baseAngle + spin + spread;
-    const phi = (Math.random() - 0.5) * 0.5;
+  for(let i = 0; i < PARTICLE_COUNT; i++){
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    const r = 3 + Math.pow(Math.random(), 0.7) * 20;
 
-    gPos[i*3]   = r * Math.cos(theta);
-    gPos[i*3+1] = r * Math.sin(theta) * 0.3 + phi * r * 0.15;
-    gPos[i*3+2] = (Math.random() - 0.5) * 6;
+    posArray[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    posArray[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.4;
+    posArray[i*3+2] = r * Math.cos(phi) * 0.6;
 
-    gVel[i*3]   = (Math.random() - 0.5) * 0.0015;
-    gVel[i*3+1] = (Math.random() - 0.5) * 0.0008;
-    gVel[i*3+2] = (Math.random() - 0.5) * 0.001;
+    velArray[i*3]   = (Math.random() - 0.5) * 0.002;
+    velArray[i*3+1] = (Math.random() - 0.5) * 0.001;
+    velArray[i*3+2] = (Math.random() - 0.5) * 0.0015;
 
-    const c = palGalaxy[Math.floor(Math.random() * palGalaxy.length)];
-    gCol[i*3] = c.r; gCol[i*3+1] = c.g; gCol[i*3+2] = c.b;
+    const c = palette[Math.floor(Math.random() * palette.length)];
+    colArray[i*3] = c.r; colArray[i*3+1] = c.g; colArray[i*3+2] = c.b;
   }
 
-  let galaxyGeo = new THREE.BufferGeometry();
-  galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
-  galaxyGeo.setAttribute('color', new THREE.BufferAttribute(gCol, 3));
-  const galaxyMat = new THREE.PointsMaterial({
-    size: 0.038, vertexColors: true,
-    transparent: true, opacity: 0.65,
-    depthWrite: false, blending: THREE.AdditiveBlending,
+  const particleGeo = new THREE.BufferGeometry();
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+  particleGeo.setAttribute('color', new THREE.BufferAttribute(colArray, 3));
+
+  const canvas2d = document.createElement('canvas');
+  canvas2d.width = 4;
+  canvas2d.height = 4;
+  const ctx = canvas2d.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, 4, 4);
+
+  const pixelTexture = new THREE.CanvasTexture(canvas2d);
+  pixelTexture.needsUpdate = true;
+
+  const particleMat = new THREE.PointsMaterial({
+    size: 0.06,
+    map: pixelTexture,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.7,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
     sizeAttenuation: true
   });
-  let galaxy = new THREE.Points(galaxyGeo, galaxyMat);
-  galaxy.rotation.x = Math.PI * 0.12;
-  scene.add(galaxy);
 
-  /* ═══════════════════════════
-     2) CENTRAL MASSIVE ICOSAHEDRON RING SYSTEM
-  ═══════════════════════════ */
-  const RING_COUNT = 4;
-  const rings = [];
+  const particles = new THREE.Points(particleGeo, particleMat);
+  particles.rotation.x = Math.PI * 0.12;
+  scene.add(particles);
 
-  const ringConfigs = [
-    { radius: 2.8, tube: 0.012, segments: 180, color: 0x9d4edd, opacity: 0.45, tiltX: 0, tiltZ: 0 },
-    { radius: 3.4, tube: 0.008, segments: 200, color: 0x7dd3fc, opacity: 0.28, tiltX: 0.4, tiltZ: 0.2 },
-    { radius: 4.1, tube: 0.006, segments: 220, color: 0xe0aaff, opacity: 0.2,  tiltX: -0.6, tiltZ: 0.8 },
-    { radius: 5.0, tube: 0.004, segments: 240, color: 0xc77dff, opacity: 0.15, tiltX: 1.1,  tiltZ: -0.4 },
-  ];
-
-  ringConfigs.forEach(cfg => {
-    const geo = new THREE.TorusGeometry(cfg.radius, cfg.tube, 4, cfg.segments);
-    const mat = new THREE.MeshBasicMaterial({
-      color: cfg.color, transparent: true, opacity: cfg.opacity,
-      blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.rotation.x = cfg.tiltX;
-    mesh.rotation.z = cfg.tiltZ;
-    scene.add(mesh);
-    rings.push({ mesh, mat, cfg });
+  /* ══ CENTRAL GLOW RING ══ */
+  const ringGeo = new THREE.TorusGeometry(3.2, 0.015, 8, 120);
+  const ringMat = new THREE.MeshBasicMaterial({
+    color: 0x9d4edd,
+    transparent: true,
+    opacity: 0.4,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
   });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = 0.3;
+  ring.rotation.z = 0.2;
+  scene.add(ring);
 
-  /* ═══════════════════════════
-     3) HERO MEGA SHAPE — Large central icosahedron
-  ═══════════════════════════ */
-  const heroGeoPool = [
-    new THREE.IcosahedronGeometry(2.0, 1),
-    new THREE.OctahedronGeometry(2.1, 0),
-    new THREE.TetrahedronGeometry(2.4, 0),
-    new THREE.IcosahedronGeometry(1.9, 2),
-    new THREE.OctahedronGeometry(2.0, 1),
-    new THREE.IcosahedronGeometry(2.2, 0),
-  ];
+  const ring2Geo = new THREE.TorusGeometry(4.5, 0.008, 6, 100);
+  const ring2Mat = new THREE.MeshBasicMaterial({
+    color: 0x7dd3fc,
+    transparent: true,
+    opacity: 0.2,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+  ring2.rotation.x = -0.5;
+  ring2.rotation.z = 0.7;
+  scene.add(ring2);
 
-  // Outer wireframe — glowing
-  const heroWireMat = new THREE.MeshBasicMaterial({
-    color: 0x9d4edd, wireframe: true,
-    transparent: true, opacity: 0.22,
+  /* ══ CENTRAL CORE ══ */
+  const coreGeo = new THREE.IcosahedronGeometry(1.8, 1);
+  const coreMat = new THREE.MeshBasicMaterial({
+    color: 0x9d4edd,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.25,
     blending: THREE.AdditiveBlending
   });
-  const heroMesh = new THREE.Mesh(heroGeoPool[0], heroWireMat);
-  heroMesh.position.set(2.2, 0.2, -2.0);
-  scene.add(heroMesh);
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  core.position.set(0, 0, -1.5);
+  scene.add(core);
 
-  // Inner solid fill (subtle)
-  const heroFillMat = new THREE.MeshBasicMaterial({
-    color: 0x1a0033, transparent: true, opacity: 0.12
-  });
-  const heroFill = new THREE.Mesh(heroGeoPool[0], heroFillMat);
-  heroFill.position.copy(heroMesh.position);
-  heroFill.scale.setScalar(0.98);
-  scene.add(heroFill);
-
-  /* ═══════════════════════════
-     4) SECONDARY SHAPES (Satellites)
-  ═══════════════════════════ */
-  const satellites = [];
-
-  const satConfigs = [
-    { geo: new THREE.IcosahedronGeometry(0.85, 1), pos: [-3.5, 1.2, -1.5], color: 0x7dd3fc, speed: 0.38, opacity: 0.28 },
-    { geo: new THREE.OctahedronGeometry(0.7, 0),   pos: [0.5, -2.6, -1.0], color: 0xe0aaff, speed: 0.55, opacity: 0.22 },
-    { geo: new THREE.IcosahedronGeometry(0.55, 0), pos: [-1.8, -1.5, -2.5],color: 0xc77dff, speed: 0.72, opacity: 0.32 },
-    { geo: new THREE.TetrahedronGeometry(0.9, 0),  pos: [3.8, -0.8, -2.2], color: 0x9d4edd, speed: 0.44, opacity: 0.20 },
-    { geo: new THREE.OctahedronGeometry(0.5, 1),   pos: [-2.8, -2.2, -1.8],color: 0xf8c0ff, speed: 0.61, opacity: 0.18 },
-  ];
-
-  satConfigs.forEach(cfg => {
+  /* ══ FLOATING SHAPES ══ */
+  const shapes = [];
+  for(let i = 0; i < 3; i++){
+    const geo = new THREE.OctahedronGeometry(0.6 + i * 0.2, 0);
     const mat = new THREE.MeshBasicMaterial({
-      color: cfg.color, wireframe: true,
-      transparent: true, opacity: cfg.opacity,
+      color: i === 0 ? 0x7dd3fc : i === 1 ? 0xe0aaff : 0xc77dff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3 - i * 0.05,
       blending: THREE.AdditiveBlending
-    });
-    const mesh = new THREE.Mesh(cfg.geo, mat);
-    mesh.position.set(...cfg.pos);
-    scene.add(mesh);
-    satellites.push({ mesh, mat, cfg });
-  });
-
-  /* ═══════════════════════════
-     5) FLOATING GRID PLANES
-  ═══════════════════════════ */
-  function createGridPlane(size, divisions, color, opacity, rx, ry, rz, px, py, pz) {
-    const geo = new THREE.BufferGeometry();
-    const step = size / divisions;
-    const half = size / 2;
-    const verts = [];
-
-    for(let i = 0; i <= divisions; i++){
-      const x = -half + i * step;
-      verts.push(x, 0, -half, x, 0, half);
-    }
-    for(let j = 0; j <= divisions; j++){
-      const z = -half + j * step;
-      verts.push(-half, 0, z, half, 0, z);
-    }
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
-    const mat = new THREE.LineBasicMaterial({
-      color, transparent: true, opacity,
-      blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const grid = new THREE.LineSegments(geo, mat);
-    grid.rotation.set(rx, ry, rz);
-    grid.position.set(px, py, pz);
-    return { grid, mat };
-  }
-
-  const grid1 = createGridPlane(30, 22, 0x9d4edd, 0.07, 0, 0, 0, 0, -6, -8);
-  const grid2 = createGridPlane(24, 18, 0x7dd3fc, 0.05, Math.PI/2, 0, 0.4, 0, 0, -10);
-  scene.add(grid1.grid);
-  scene.add(grid2.grid);
-
-  /* ═══════════════════════════
-     6) ENERGY BEAM LINES
-  ═══════════════════════════ */
-  const beams = [];
-  const beamCount = 12;
-
-  for(let b = 0; b < beamCount; b++){
-    const angle = (b / beamCount) * Math.PI * 2;
-    const r1 = 2.6, r2 = 12 + Math.random() * 8;
-    const verts = new Float32Array([
-      Math.cos(angle) * r1, Math.sin(angle) * r1, 0,
-      Math.cos(angle + 0.05) * r2, Math.sin(angle + 0.05) * r2, (Math.random()-0.5)*4
-    ]);
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
-    const hue = (b / beamCount) * 60 + 260;
-    const mat = new THREE.LineBasicMaterial({
-      color: new THREE.Color(`hsl(${hue},80%,65%)`),
-      transparent: true, opacity: 0.08,
-      blending: THREE.AdditiveBlending
-    });
-    const line = new THREE.LineSegments(geo, mat);
-    scene.add(line);
-    beams.push({ line, mat, angle, phase: Math.random() * Math.PI * 2 });
-  }
-
-  /* ═══════════════════════════
-     7) AMBIENT GLOW SPHERES
-  ═══════════════════════════ */
-  const glowSpheres = [];
-  const glowConfigs = [
-    { r: 0.6, pos: [2.0, 0.2, -2.0], color: 0x9d4edd, opacity: 0.06 },
-    { r: 0.4, pos: [-3.5, 1.2, -1.5],color: 0x7dd3fc, opacity: 0.05 },
-    { r: 0.3, pos: [0.5, -2.6, -1.0],color: 0xe0aaff, opacity: 0.07 },
-  ];
-  glowConfigs.forEach(cfg => {
-    const geo = new THREE.SphereGeometry(cfg.r * 3.5, 16, 16);
-    const mat = new THREE.MeshBasicMaterial({
-      color: cfg.color, transparent: true, opacity: cfg.opacity,
-      blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide
     });
     const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(...cfg.pos);
+    mesh.position.set(
+      (Math.random() - 0.5) * 6,
+      (Math.random() - 0.5) * 4,
+      -2 - Math.random() * 3
+    );
     scene.add(mesh);
-    glowSpheres.push({ mesh, mat, cfg });
-  });
-
-  /* ═══════════════════════════
-     8) FLOATING HEXAGON RING
-  ═══════════════════════════ */
-  (function(){
-    const HEX = 6;
-    const hexR = 6.5;
-    const verts = [];
-    for(let i = 0; i <= HEX; i++){
-      const a = (i / HEX) * Math.PI * 2;
-      verts.push(hexR * Math.cos(a), hexR * Math.sin(a), 0);
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts.flat()), 3));
-    const mat = new THREE.LineBasicMaterial({
-      color: 0xc77dff, transparent: true, opacity: 0.14,
-      blending: THREE.AdditiveBlending
-    });
-    const hex = new THREE.Line(geo, mat);
-    hex.rotation.z = Math.PI / 6;
-    scene.add(hex);
-
-    // Second inner hexagon
-    const verts2 = [];
-    for(let i = 0; i <= HEX; i++){
-      const a = (i / HEX) * Math.PI * 2;
-      verts2.push(4.5 * Math.cos(a), 4.5 * Math.sin(a), 0);
-    }
-    const geo2 = new THREE.BufferGeometry();
-    geo2.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts2.flat()), 3));
-    const mat2 = new THREE.LineBasicMaterial({
-      color: 0x7dd3fc, transparent: true, opacity: 0.09,
-      blending: THREE.AdditiveBlending
-    });
-    const hex2 = new THREE.Line(geo2, mat2);
-    hex2.rotation.z = 0;
-    scene.add(hex2);
-
-    glowSpheres.push({ mesh: hex, mat, cfg: { hexRing: true } });
-    glowSpheres.push({ mesh: hex2, mat: mat2, cfg: { hexRing2: true } });
-  })();
-
-  /* ══ MOUSE & SCROLL ══ */
-  let mx = 0, my = 0, scrollP = 0, t = 0;
-  let geoIdx = 0;
-  let morphing = false;
-
-  /* ══ GYROSCOPE (mobile tilt) ══ */
-  let gyroX = 0, gyroY = 0;          // smoothed gyro influence
-  let rawGyroX = 0, rawGyroY = 0;    // raw device tilt
-  let gyroEnabled = false;
-
-  function requestGyro(){
-    if(typeof DeviceOrientationEvent !== 'undefined' &&
-       typeof DeviceOrientationEvent.requestPermission === 'function'){
-      // iOS 13+ needs explicit permission
-      DeviceOrientationEvent.requestPermission()
-        .then(r => { if(r === 'granted') attachGyro(); })
-        .catch(()=>{});
-    } else {
-      attachGyro();
-    }
+    shapes.push({ mesh, speed: 0.3 + Math.random() * 0.5, offset: Math.random() * Math.PI * 2 });
   }
 
+  /* ══ WARP TUNNEL RING ══ */
+  const warpRingGeo = new THREE.TorusGeometry(6, 0.02, 8, 80);
+  const warpRingMat = new THREE.MeshBasicMaterial({
+    color: 0xc77dff,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const warpRing = new THREE.Mesh(warpRingGeo, warpRingMat);
+  warpRing.position.z = -8;
+  scene.add(warpRing);
+
+  /* ══ SPEED LINES ══ */
+  const speedLines = [];
+  for(let i = 0; i < 30; i++){
+    const lineGeo = new THREE.BufferGeometry();
+    const length = 1 + Math.random() * 3;
+    const verts = new Float32Array([
+      0, 0, 0,
+      0, 0, -length
+    ]);
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
+    const lineMat = new THREE.LineBasicMaterial({
+      color: new THREE.Color().setHSL(0.75 + Math.random() * 0.15, 0.8, 0.6),
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const line = new THREE.Line(lineGeo, lineMat);
+    line.position.set(
+      (Math.random() - 0.5) * 14,
+      (Math.random() - 0.5) * 8,
+      -3 - Math.random() * 10
+    );
+    line.rotation.x = (Math.random() - 0.5) * 0.5;
+    line.rotation.y = (Math.random() - 0.5) * 0.5;
+    scene.add(line);
+    speedLines.push({ line, mat: lineMat, baseZ: line.position.z, speed: 0.05 + Math.random() * 0.15 });
+  }
+
+  /* ══ STATE ══ */
+  let mx = 0, my = 0, scrollP = 0, t = 0;
+  let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0, gyroEnabled = false;
+  let prevScrollP = 0, scrollVel = 0, spaceIntensity = 0, finalBurst = 0;
+  const finalBurstEl = document.getElementById('final-burst');
+
+  /* ══ GYROSCOPE ══ */
   function attachGyro(){
     window.addEventListener('deviceorientation', e => {
       if(e.gamma === null) return;
       gyroEnabled = true;
-      // gamma = left/right tilt (-90..90), beta = front/back tilt (-180..180)
-      rawGyroX = Math.max(-1, Math.min(1,  (e.gamma || 0) / 25));
-      rawGyroY = Math.max(-1, Math.min(1, -(e.beta  || 0) / 25));
+      rawGyroX = Math.max(-1, Math.min(1, (e.gamma || 0) / 25));
+      rawGyroY = Math.max(-1, Math.min(1, -(e.beta || 0) / 25));
     }, true);
   }
-
-  // Auto-attach on non-iOS; iOS will be triggered by first touch
-  if(/Mobi|Android/i.test(navigator.userAgent) &&
-     !/(iPhone|iPad)/i.test(navigator.userAgent)){
+  if(/Mobi|Android/i.test(navigator.userAgent) && !/(iPhone|iPad)/i.test(navigator.userAgent)){
     attachGyro();
   }
-  // iOS: request on first touchstart
   let gyroAsked = false;
   window.addEventListener('touchstart', () => {
     if(gyroAsked) return;
     gyroAsked = true;
-    requestGyro();
+    if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+      DeviceOrientationEvent.requestPermission().then(r => { if(r === 'granted') attachGyro(); }).catch(()=>{});
+    }
   }, { once: true });
 
-  /* ══ CINEMATIC SCROLL PARALLAX ══ */
-  // We track a "previous" scrollP to detect transitions and drive
-  // dramatic camera movements between steps
-  let prevScrollP     = 0;
-  let scrollVel       = 0;     // velocity of scroll progress (per frame)
-  let camZoomBurst    = 0;     // extra z push on step change
-  let galaxyTiltBurst = 0;     // extra galaxy tilt on step change
-  let camRollTarget   = 0;     // camera roll during transition
-  let camRoll         = 0;
-
-  /* ── Morph state (tweened manually in tick) ── */
-  const morphState = {
-    scale:   1.0,   // current render scale of heroMesh
-    opacity: 0.22,  // current wireframe opacity
-    phase:   'idle' // 'out' | 'in' | 'idle'
-  };
-  let morphTargetIdx = 0;
-  let morphProgress  = 0; // 0→1 per phase
-
   document.addEventListener('mousemove', e => {
-    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
-    my =-(e.clientY / window.innerHeight - 0.5) * 2;
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = -(e.clientY / window.innerHeight - 0.5) * 2;
   });
-
-  /* ── Easing helpers ── */
-  function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
-  function easeInCubic(x) { return x * x * x; }
-  function lerp(a, b, t)  { return a + (b - a) * t; }
-
-  function morphHero(idx){
-    const target = idx % heroGeoPool.length;
-    if(target === geoIdx && morphState.phase === 'idle') return;
-    if(morphState.phase !== 'idle') {
-      /* Already morphing — just update target so we finish to the right shape */
-      morphTargetIdx = target;
-      return;
-    }
-    morphTargetIdx  = target;
-    morphState.phase = 'out';
-    morphProgress    = 0;
-    morphing         = true;
-  }
-
-  /* ── Advance morph each frame (speed in progress units/frame) ── */
-  const MORPH_SPEED = 0.055; // ~18 frames per phase at 60fps
-
-  function tickMorph(){
-    if(morphState.phase === 'idle') return;
-
-    morphProgress = Math.min(1, morphProgress + MORPH_SPEED);
-
-    if(morphState.phase === 'out'){
-      const e = easeInCubic(morphProgress);
-      /* Scale down + fade out */
-      morphState.scale   = lerp(1.0, 0.28, e);
-      morphState.opacity = lerp(0.22, 0.0,  e);
-      /* Small spin-burst: add extra rotation each frame */
-      heroMesh.rotation.z += 0.04 * (1 - morphProgress);
-
-      if(morphProgress >= 1){
-        /* Swap geometry */
-        const newGeo = heroGeoPool[morphTargetIdx];
-        heroMesh.geometry = newGeo;
-        heroFill.geometry = newGeo;
-        geoIdx = morphTargetIdx;
-        /* Start scale from big (bloom-in feel) */
-        morphState.scale   = 1.82;
-        morphState.opacity = 0.0;
-        morphState.phase   = 'in';
-        morphProgress      = 0;
-      }
-
-    } else if(morphState.phase === 'in'){
-      const e = easeOutCubic(morphProgress);
-      morphState.scale   = lerp(1.82, 1.0,  e);
-      morphState.opacity = lerp(0.0,  0.22, e);
-
-      if(morphProgress >= 1){
-        morphState.scale   = 1.0;
-        morphState.opacity = 0.22;
-        morphState.phase   = 'idle';
-        morphProgress      = 0;
-        morphing           = false;
-      }
-    }
-
-    /* Apply to meshes */
-    heroMesh.scale.setScalar(morphState.scale);
-    heroFill.scale.setScalar(morphState.scale * 0.98);
-    heroWireMat.opacity = morphState.opacity;
-  }
 
   /* ══ TICK ══ */
   function tick(){
     requestAnimationFrame(tick);
     t += 0.005;
 
-    /* ── Continuous FPS monitoring ── */
-    _fpsFrameCount++;
-    _recordFpsSample();
-
-    /* ── Smooth gyroscope ── */
     if(gyroEnabled){
       gyroX += (rawGyroX - gyroX) * 0.06;
       gyroY += (rawGyroY - gyroY) * 0.06;
     }
-    // Combined pointer: mouse on desktop, gyro on mobile
     const ptrX = gyroEnabled ? gyroX : mx;
     const ptrY = gyroEnabled ? gyroY : my;
 
-    /* ── Scroll velocity & cinematic burst ── */
     const rawVel = scrollP - prevScrollP;
-    scrollVel += (rawVel - scrollVel) * 0.18;
+    scrollVel += (rawVel - scrollVel) * 0.15;
     prevScrollP = scrollP;
 
-    const absBurst = Math.abs(scrollVel);
-    // Zoom burst: fly deeper into galaxy on each step change
-    if(absBurst > 0.0008){
-      camZoomBurst    += scrollVel * 14;
-      galaxyTiltBurst += scrollVel * 22;
-      camRollTarget    = scrollVel * 0.45;
-    }
-    camZoomBurst    *= 0.88;   // decay
-    galaxyTiltBurst *= 0.88;
-    camRoll         += (camRollTarget - camRoll) * 0.055;
-    camRollTarget   *= 0.92;
+    /* ── Space intensity (scene 3-9) ── */
+    const targetIntensity = scrollP > 0.27 ? Math.min(1, (scrollP - 0.27) * 2.2) : 0;
+    spaceIntensity += (targetIntensity - spaceIntensity) * 0.04;
 
-    const sceneIdx = Math.floor(scrollP * 11);
-    morphHero(sceneIdx % heroGeoPool.length);
+    /* ── Final burst (scene 10 / last 12%) ── */
+    const targetBurst = scrollP > 0.88 ? Math.min(1, (scrollP - 0.88) * 8) : 0;
+    finalBurst += (targetBurst - finalBurst) * 0.06;
 
-    /* ── Galaxy — cinematic parallax dive ── */
-    // Base orbit + pointer parallax + scroll burst tilt + slow z-roll
-    galaxy.rotation.y  = t * 0.018 + ptrX * 0.06 + galaxyTiltBurst * 0.14;
-    galaxy.rotation.x  = Math.PI * 0.12 + ptrY * 0.04 + t * 0.006 + galaxyTiltBurst * 0.08;
-    // Slow roll that varies per scene — gives a "new angle" feel each step
-    galaxy.rotation.z  = t * 0.004 + scrollP * 0.55 + camRoll * 0.3;
-    // Galaxy z: subtle pull-back/push on scroll — feel of moving through space
-    galaxy.position.z  = scrollP * -1.8 + camZoomBurst * 0.12;
-    // Small XY drift per scene for variety
-    galaxy.position.x  = Math.sin(scrollP * Math.PI * 1.5) * 1.2 + ptrX * 0.4;
-    galaxy.position.y  = Math.cos(scrollP * Math.PI * 1.2) * 0.7 + ptrY * 0.3;
-
-    /* Drift galaxy particles — throttled on low-end devices */
-    _driftTick++;
-    if(_driftTick % TIERS[qualityLevel].driftEvery === 0){
-    const pPos = galaxyGeo.attributes.position.array;
-    const pCount = pPos.length / 3;
-    for(let i = 0; i < pCount; i++){
-      pPos[i*3]   += gVel[i*3]   || 0;
-      pPos[i*3+1] += gVel[i*3+1] || 0;
-      pPos[i*3+2] += gVel[i*3+2] || 0;
-      const d = Math.sqrt(pPos[i*3]*pPos[i*3] + pPos[i*3+1]*pPos[i*3+1]);
-      if(d > 26 || d < 2){
-        if(gVel[i*3]   !== undefined) gVel[i*3]   *= -1;
-        if(gVel[i*3+1] !== undefined) gVel[i*3+1] *= -1;
+    // Trigger final burst overlay animation
+    if(finalBurstEl){
+      if(finalBurst > 0.15 && !finalBurstEl.classList.contains('active')){
+        finalBurstEl.classList.add('active');
+        setTimeout(() => finalBurstEl.classList.remove('active'), 800);
       }
     }
-    galaxyGeo.attributes.position.needsUpdate = true;
+
+    /* ── Particles ── */
+    particles.rotation.y = t * 0.015 + ptrX * 0.05 + scrollVel * 8;
+    particles.rotation.x = Math.PI * 0.12 + ptrY * 0.03 + scrollVel * 4;
+    particles.rotation.z = t * 0.003 + scrollP * 0.4;
+
+    const pPos = particleGeo.attributes.position.array;
+    for(let i = 0; i < PARTICLE_COUNT; i++){
+      pPos[i*3]   += velArray[i*3];
+      pPos[i*3+1] += velArray[i*3+1];
+      pPos[i*3+2] += velArray[i*3+2];
+
+      // Warp effect during space dive
+      if(spaceIntensity > 0.1){
+        pPos[i*3+2] -= spaceIntensity * 0.008;
+        if(pPos[i*3+2] < -15) pPos[i*3+2] = 15;
+      }
+
+      // Final burst: particles explode outward
+      if(finalBurst > 0.1){
+        const dx = pPos[i*3], dy = pPos[i*3+1], dz = pPos[i*3+2];
+        const dist = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
+        pPos[i*3]   += dx/dist * finalBurst * 0.2;
+        pPos[i*3+1] += dy/dist * finalBurst * 0.2;
+        pPos[i*3+2] += dz/dist * finalBurst * 0.2;
+        if(dist > 28){
+          pPos[i*3] *= 0.3; pPos[i*3+1] *= 0.3; pPos[i*3+2] *= 0.3;
+        }
+      }
+
+      const d = Math.sqrt(pPos[i*3]**2 + pPos[i*3+1]**2 + pPos[i*3+2]**2);
+      if(d > 22 || d < 2.5){
+        velArray[i*3] *= -1; velArray[i*3+1] *= -1; velArray[i*3+2] *= -1;
+      }
     }
+    particleGeo.attributes.position.needsUpdate = true;
+    particles.material.opacity = 0.7 - finalBurst * 0.4;
 
-    /* Rings orbit — also react to scroll burst */
-    rings.forEach((r, i) => {
-      r.mesh.rotation.z = t * (0.06 + i * 0.015) + ptrX * 0.04 + scrollVel * 1.5;
-      r.mesh.rotation.x = r.cfg.tiltX + ptrY * 0.03 + Math.sin(t * 0.3 + i) * 0.05;
-      r.mat.opacity = r.cfg.opacity * (0.85 + Math.sin(t * 0.8 + i) * 0.15);
+    /* ── Camera: big zoom out on final burst ── */
+    const baseZ = 8;
+    const diveZ = 5.5 * spaceIntensity;
+    const burstZ = finalBurst * 25; // Massive zoom out
+    camera.position.z = baseZ - scrollP * 1.8 - diveZ + burstZ;
+    camera.position.x = ptrX * 0.35 * (1 - finalBurst);
+    camera.position.y = ptrY * 0.22 * (1 - finalBurst);
+
+    /* ── Rings ── */
+    ring.rotation.z = t * 0.08 + ptrX * 0.04;
+    ring.rotation.x = 0.3 + ptrY * 0.03;
+    ring.scale.setScalar(1 + spaceIntensity * 0.5 + finalBurst * 4);
+    ring.material.opacity = 0.4 - finalBurst * 0.35;
+
+    ring2.rotation.z = t * 0.05 - ptrX * 0.03;
+    ring2.rotation.x = -0.5 + ptrY * 0.02;
+    ring2.scale.setScalar(1 + spaceIntensity * 0.7 + finalBurst * 5);
+    ring2.material.opacity = 0.2 - finalBurst * 0.18;
+
+    /* ── Core ── */
+    core.rotation.x = t * 0.25;
+    core.rotation.y = t * 0.35;
+    core.scale.setScalar(1 + spaceIntensity * 0.3 + finalBurst * 3);
+    coreMat.opacity = 0.25 + spaceIntensity * 0.2 - finalBurst * 0.25;
+
+    /* ── Floating shapes ── */
+    shapes.forEach((s, i) => {
+      s.mesh.rotation.x = t * s.speed;
+      s.mesh.rotation.y = t * s.speed * 1.3;
+      s.mesh.position.z = -2 - (i + 1) * spaceIntensity * 2 + finalBurst * 4;
+      s.mesh.material.opacity = 0.3 + spaceIntensity * 0.15 - finalBurst * 0.3;
     });
 
-    /* Hero mega shape */
-    heroMesh.rotation.x = t * 0.22 + ptrY * 0.10;
-    heroMesh.rotation.y = t * 0.35 + ptrX * 0.10;
-    heroFill.rotation.copy(heroMesh.rotation);
-    /* Only apply idle pulse when NOT morphing — tickMorph owns opacity otherwise */
-    if(morphState.phase === 'idle'){
-      heroWireMat.opacity = 0.20 + Math.sin(t * 0.9) * 0.07;
+    /* ── Warp ring ── */
+    warpRing.position.z = -8 + spaceIntensity * 6 - finalBurst * 5;
+    warpRingMat.opacity = spaceIntensity * 0.4 - finalBurst * 0.35;
+    warpRing.rotation.z = t * 0.5;
+    warpRing.scale.setScalar(1 - spaceIntensity * 0.3 + finalBurst * 6);
+
+    /* ── Speed lines ── */
+    speedLines.forEach(sl => {
+      sl.line.position.z += sl.speed * (spaceIntensity + finalBurst);
+      if(sl.line.position.z > 3) sl.line.position.z = sl.baseZ;
+      sl.mat.opacity = (spaceIntensity * 0.5 + finalBurst * 0.9) * (1 - Math.abs(sl.line.position.z) / 12);
+    });
+
+    /* ── Space warp overlay ── */
+    const warpOverlay = document.getElementById('space-warp');
+    if(warpOverlay){
+      if(spaceIntensity > 0.05 && !warpOverlay.classList.contains('active')){
+        warpOverlay.classList.add('active');
+      } else if(spaceIntensity <= 0.05 && warpOverlay.classList.contains('active')){
+        warpOverlay.classList.remove('active');
+      }
     }
-    const hue = ((sceneIdx * 40 + t * 3) % 360) / 360;
-    heroWireMat.color.setHSL(hue, 0.82, 0.64);
-
-    /* Advance morph transition every frame */
-    tickMorph();
-
-    /* Hero position drift (subtle float) */
-    heroMesh.position.y = 0.2 + Math.sin(t * 0.4) * 0.3;
-    heroFill.position.y = heroMesh.position.y;
-
-    /* Satellites orbit */
-    satellites.forEach((s, i) => {
-      s.mesh.rotation.x = -t * s.cfg.speed * 0.7;
-      s.mesh.rotation.y =  t * s.cfg.speed;
-      s.mesh.rotation.z =  t * s.cfg.speed * 0.4;
-      s.mesh.position.y = s.cfg.pos[1] + Math.sin(t * 0.3 + i * 1.2) * 0.25;
-      s.mat.opacity = s.cfg.opacity * (0.8 + Math.sin(t * 1.1 + i) * 0.2);
-    });
-
-    /* Beam pulse */
-    beams.forEach((b, i) => {
-      b.mat.opacity = 0.04 + Math.abs(Math.sin(t * 0.6 + b.phase)) * 0.09;
-    });
-
-    /* Grid subtle drift */
-    grid1.grid.position.y = -6 + Math.sin(t * 0.15) * 0.3;
-    grid1.mat.opacity = 0.04 + scrollP * 0.06;
-    grid2.mat.opacity = 0.03 + scrollP * 0.04;
-
-    /* ── Camera — cinematic parallax with burst zoom ── */
-    const targetCamX = ptrX * 0.42 + camZoomBurst * 0.04;
-    const targetCamY = ptrY * 0.28 + camZoomBurst * 0.02;
-    camera.position.x += (targetCamX - camera.position.x) * 0.038;
-    camera.position.y += (targetCamY - camera.position.y) * 0.038;
-    // Zoom: base z + scroll + burst dive-in
-    camera.position.z  = 8 - scrollP * 2.2 + camZoomBurst * 0.22;
-    // Slight camera roll for cinematic feel during transitions
-    camera.rotation.z  = camRoll * 0.5;
 
     renderer.render(scene, camera);
   }
@@ -2050,47 +1457,37 @@ body::after{
     {
       label: '▸ BACK-END & FRAMEWORKS',
       skills: [
-        { name: 'Python', featured: true },
-        { name: 'Django', featured: true },
-        { name: 'PostgreSQL', color: 'amber' },
-        { name: 'SQLite', color: 'blue' },
-        { name: 'REST API', color: 'green' },
-        { name: 'ORM / SQL', color: 'blue' },
+        { name: 'Python', featured: true }, { name: 'Django', featured: true },
+        { name: 'PostgreSQL', color: 'amber' }, { name: 'SQLite', color: 'blue' },
+        { name: 'REST API', color: 'green' }, { name: 'ORM / SQL', color: 'blue' },
       ]
     },
     {
       label: '▸ FRONT-END',
       skills: [
-        { name: 'JavaScript', featured: true },
-        { name: 'HTML / CSS', color: 'blue' },
+        { name: 'JavaScript', featured: true }, { name: 'HTML / CSS', color: 'blue' },
         { name: 'SVG Animation', color: 'green' },
       ]
     },
     {
       label: '▸ BOTS & AUTOMATION',
       skills: [
-        { name: 'Telegram Bot', featured: true },
-        { name: 'Telethon', color: 'blue' },
-        { name: 'Web Scraping', color: 'amber' },
-        { name: 'BeautifulSoup', color: 'green' },
+        { name: 'Telegram Bot', featured: true }, { name: 'Telethon', color: 'blue' },
+        { name: 'Web Scraping', color: 'amber' }, { name: 'BeautifulSoup', color: 'green' },
       ]
     },
     {
       label: '▸ DESKTOP & TOOLS',
       skills: [
-        { name: 'PyQt6', color: 'green' },
-        { name: 'CustomTkinter', color: 'blue' },
-        { name: 'Excel / ReportLab', color: 'amber' },
-        { name: 'Persian Calendar', color: 'green' },
+        { name: 'PyQt6', color: 'green' }, { name: 'CustomTkinter', color: 'blue' },
+        { name: 'Excel / ReportLab', color: 'amber' }, { name: 'Persian Calendar', color: 'green' },
       ]
     },
     {
       label: '▸ DEVOPS & MISC',
       skills: [
-        { name: 'Git', color: 'amber' },
-        { name: 'Linux / Server', color: 'blue' },
-        { name: 'SEO', color: 'green' },
-        { name: 'Data Analysis', color: 'blue' },
+        { name: 'Git', color: 'amber' }, { name: 'Linux / Server', color: 'blue' },
+        { name: 'SEO', color: 'green' }, { name: 'Data Analysis', color: 'blue' },
         { name: 'Photoshop', featured: true },
       ]
     }
@@ -2125,9 +1522,7 @@ body::after{
         '<span class="dim">Freelance · ساختن پروژه‌های واقعی</span>'
       ]
     },
-    'skills': {
-      renderCategories: true
-    },
+    'skills': { renderCategories: true },
     'stack': {
       output: [
         'تکنولوژی‌های اصلی:',
@@ -2166,15 +1561,9 @@ body::after{
         '<span class="dim">بخش آخر صفحه هم لینک‌های کلیک‌شدنی داره ←</span>'
       ]
     },
-    'clear': {
-      clear: true
-    },
-    'print': {
-      action: 'print'
-    },
-    'share': {
-      action: 'share'
-    }
+    'clear': { clear: true },
+    'print': { action: 'print' },
+    'share': { action: 'share' }
   };
 
   function renderCategories(appendToLines){
@@ -2232,10 +1621,8 @@ body::after{
     const existingLines = terminalBody.innerHTML.split('\n');
     const filteredLines = existingLines.filter(line => !line.includes('terminal-input-line'));
     const newLines = [...filteredLines];
-
     newLines.push('');
     newLines.push('<div class="terminal-line"><span class="prompt">❯</span> <span class="cmd">' + cmdOutput.cmd + '</span></div>');
-
     if(cmdOutput.output){
       cmdOutput.output.forEach(line => {
         newLines.push('<div class="terminal-line">' + line + '</div>');
@@ -2244,7 +1631,6 @@ body::after{
     if(cmdOutput.renderCategories){
       renderCategories(newLines);
     }
-
     newLines.push('');
     renderTerminal(newLines, true);
   }
@@ -2260,39 +1646,24 @@ body::after{
     };
 
     if(cmdResult.clear){
-      const lines = [
-        '<div class="terminal-line"><span class="output">پاک شد.</span></div>',
-        ''
-      ];
+      const lines = ['<div class="terminal-line"><span class="output">پاک شد.</span></div>', ''];
       renderTerminal(lines, true);
       return;
     }
 
     if(cmdResult.action === 'print'){
       cmdResult.cmd = cmd;
-      cmdResult.output = [
-        '<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>',
-        '',
-        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">',
-        '<button onclick="window.open(\'print.html\',\'_blank\')" style="background:linear-gradient(135deg,#9d4edd,#c77dff);border:none;border-radius:4px;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">🖨 باز کردن print.html</button>',
-        '</div>'
-      ];
+      cmdResult.output = ['<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>'];
       addOutputLines(cmdResult);
-      setTimeout(() => window.open('print.html','_blank'), 400);
+      setTimeout(() => window.open('print.html','_blank'), 300);
       return;
     }
 
     if(cmdResult.action === 'share'){
       cmdResult.cmd = cmd;
-      cmdResult.output = [
-        '<span class="green">✓ اشتراک‌گذاری رزومه</span>',
-        '',
-        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">',
-        '<button onclick="shareResume()" style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.4);border-radius:4px;color:#34d399;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">📤 اشتراک‌گذاری</button>',
-        '<button onclick="navigator.clipboard.writeText(window.location.href).then(()=>this.textContent=\'✓ کپی شد!\')" style="background:rgba(157,78,221,0.15);border:1px solid rgba(157,78,221,0.4);border-radius:4px;color:#c77dff;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;padding:6px 14px;cursor:pointer;letter-spacing:0.1em;">📋 کپی لینک</button>',
-        '</div>'
-      ];
+      cmdResult.output = ['<span class="green">✓ اشتراک‌گذاری رزومه</span>'];
       addOutputLines(cmdResult);
+      setTimeout(() => shareResume(), 200);
       return;
     }
 
@@ -2305,12 +1676,11 @@ body::after{
     if(input && !input.disabled) input.focus();
   });
 
-  const welcomeLines = buildWelcome();
-  renderTerminal(welcomeLines, true);
+  renderTerminal(buildWelcome(), true);
 })();
 
 /* ════════════════════════════════════════════
-   GSAP + SCROLLTRIGGER
+   GSAP + SCROLLTRIGGER — FAST & ACCURATE
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -2323,28 +1693,25 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     if(i <= full.length){
       el.textContent = full.slice(0, i);
       i++;
-      setTimeout(type, 48);
+      setTimeout(type, 35);
     }
   }
-  setTimeout(type, 900);
+  setTimeout(type, 600);
 })();
 
 /* ── CURSOR (Desktop Only) ── */
 if(window.innerWidth > 768){
-  const cursorDot  = document.getElementById('cursor');
+  const cursorDot = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursor-ring');
   let cx=0, cy=0, rx=0, ry=0;
-
   document.addEventListener('mousemove', e=>{ cx=e.clientX; cy=e.clientY; });
-
   (function animRing(){
-    rx += (cx-rx)*0.11;
-    ry += (cy-ry)*0.11;
-    if(cursorDot) cursorDot.style.cssText  += `;left:${cx}px;top:${cy}px`;
+    rx += (cx-rx)*0.1;
+    ry += (cy-ry)*0.1;
+    if(cursorDot) cursorDot.style.cssText += `;left:${cx}px;top:${cy}px`;
     if(cursorRing) cursorRing.style.cssText += `;left:${rx}px;top:${ry}px`;
     requestAnimationFrame(animRing);
   })();
-
   document.querySelectorAll('a,button,.nav-dot,.skill-tag').forEach(el=>{
     el.addEventListener('mouseenter',()=>{
       cursorDot.style.width='13px'; cursorDot.style.height='13px';
@@ -2370,235 +1737,143 @@ ScrollTrigger.create({
 
 /* ── HIDE SCROLL HINT ── */
 ScrollTrigger.create({
-  trigger:'#scene-0', start:'top+=8% top',
-  onEnter:()=>gsap.to('#scroll-hint',{opacity:0,duration:.7,pointerEvents:'none'}),
-  onLeaveBack:()=>gsap.to('#scroll-hint',{opacity:1,duration:.5,pointerEvents:'auto'})
+  trigger:'#scene-0', start:'top+=3% top',
+  onEnter:()=>gsap.to('#scroll-hint',{opacity:0,duration:0.3,pointerEvents:'none'}),
+  onLeaveBack:()=>gsap.to('#scroll-hint',{opacity:1,duration:0.2,pointerEvents:'auto'})
 });
 
 /* ════════════════════════════════════════════
-   SMOOTH SCROLL NAVIGATION
+   PERFECT SNAP SCROLL — Exact per scene
 ════════════════════════════════════════════ */
 const allScenes = document.querySelectorAll('.scene');
 const revealedScenes = new Set();
 
-function smoothScrollTo(element, offset = 0) {
-  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - offset;
-  window.scrollTo({
-    top: targetPosition,
-    behavior: 'smooth'
-  });
-  setTimeout(() => {
-    if(element && element.focus) {
-      element.setAttribute('tabindex', '-1');
-      element.focus({ preventScroll: true });
-    }
-  }, 600);
-}
+/* Force page to top on load so we always start at scene-0 */
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
 
-/* ── SNAP-PER-SCENE SCROLL ── */
 (function initSnapScroll(){
-  /*
-   * Each .scene is 250vh tall. The sticky content sits at the
-   * vertical CENTRE of that block (scrub 0→1, peak visibility ~0.35–0.65).
-   * We snap to sceneTop + sceneHeight * 0.25 so the content is
-   * fully visible when the scroll settles.
-   *
-   * One wheel gesture = one scene forward/back.
-   * A fast flick (high deltaY in one event) = two scenes.
-   * Three scenes only if the single-event delta is extreme (>800px).
-   */
+  const TOTAL = allScenes.length;
+  let currentIdx = 0;    // single source of truth — never recalculate mid-snap
+  let isSnapping = false;
+  let snapGuard = null;
 
-  let isSnapping    = false;
-  let snapTimeout   = null;
-  let currentSnapIdx = 0;
-  const COOLDOWN    = 1200; // ms — must fully cover the CSS smooth scroll duration
-
-  /* ── sweet-spot positions ──
-   * GSAP scrub goes 0→1 over the full scene height (250vh).
-   * Content peaks at scrub ≈ 0.35–0.65.
-   * We snap to sceneTop + 38% of height so content is centred. */
-  function getSnapPositions(){
-    return Array.from(allScenes).map(s => {
-      const top = s.getBoundingClientRect().top + window.pageYOffset;
-      return top + s.offsetHeight * 0.38;
-    });
+  function getSnapTops(){
+    return Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
   }
 
-  /* ── nearest snap index based on current scroll ── */
-  function getCurrentIndex(){
-    const positions = getSnapPositions();
-    const scrollY   = window.pageYOffset + window.innerHeight * 0.5;
+  function syncIdx(){
+    const tops = getSnapTops();
+    const mid = window.pageYOffset + window.innerHeight * 0.5;
     let best = 0, bestDist = Infinity;
-    positions.forEach((p, i) => {
-      const dist = Math.abs(p - scrollY);
-      if(dist < bestDist){ bestDist = dist; best = i; }
-    });
-    return best;
+    tops.forEach((p, i) => { const d = Math.abs(p - mid); if(d < bestDist){ bestDist = d; best = i; } });
+    currentIdx = best;
   }
 
-  function doSnap(targetIdx){
-    const positions = getSnapPositions();
-    const idx = Math.max(0, Math.min(positions.length - 1, targetIdx));
-    if(idx === currentSnapIdx && isSnapping) return;
-    currentSnapIdx = idx;
+  function doSnap(dir){
+    if(isSnapping) return;
+    const target = Math.max(0, Math.min(TOTAL - 1, currentIdx + dir));
+    if(target === currentIdx) return;
+
+    currentIdx = target;    // commit before animation
     isSnapping = true;
-    clearTimeout(snapTimeout);
+    clearTimeout(snapGuard);
+
+    const tops = getSnapTops();
+    gsap.killTweensOf(window);
     gsap.to(window, {
-      scrollTo: { y: positions[idx], autoKill: false },
-      duration: 1.15,
-      ease: 'power2.inOut',
-      onComplete: () => { isSnapping = false; }
+      scrollTo: { y: tops[currentIdx], autoKill: false },
+      duration: 0.6,
+      ease: 'power3.inOut',
+      onComplete: () => { isSnapping = false; clearTimeout(snapGuard); }
     });
-    snapTimeout = setTimeout(() => { isSnapping = false; }, COOLDOWN);
+    snapGuard = setTimeout(() => { isSnapping = false; }, 900);
   }
 
-  /* ── WHEEL — desktop only: require sustained scrolling to advance ── */
-  let wheelTimer    = null;
-  let wheelLocked   = false; // direction lock for the current gesture
-  let wheelDir      = 0;
-  let wheelAccum    = 0;           // accumulated deltaY for desktop
-  const WHEEL_THRESHOLD = 300;    // px of accumulated delta needed on desktop
+  function snapTo(idx){
+    if(isSnapping) return;
+    const target = Math.max(0, Math.min(TOTAL - 1, idx));
+    currentIdx = target;
+    isSnapping = true;
+    clearTimeout(snapGuard);
+    const tops = getSnapTops();
+    gsap.killTweensOf(window);
+    gsap.to(window, {
+      scrollTo: { y: tops[currentIdx], autoKill: false },
+      duration: 0.6,
+      ease: 'power3.inOut',
+      onComplete: () => { isSnapping = false; clearTimeout(snapGuard); }
+    });
+    snapGuard = setTimeout(() => { isSnapping = false; }, 900);
+  }
+
+  /* ── WHEEL ── */
+  let wheelAccum = 0, wheelFlushTimer = null;
+  const WHEEL_THRESHOLD = 80;
 
   document.addEventListener('wheel', e => {
     e.preventDefault();
-
-    // During a snap animation, ignore all wheel events completely
     if(isSnapping) return;
-
-    const delta = e.deltaY;
-    const dir   = delta > 0 ? 1 : -1;
-
-    // If direction changes mid-gesture, reset accumulator
-    if(wheelDir !== 0 && dir !== wheelDir) {
+    wheelAccum += e.deltaY;
+    clearTimeout(wheelFlushTimer);
+    wheelFlushTimer = setTimeout(() => { wheelAccum = 0; }, 200);
+    if(Math.abs(wheelAccum) >= WHEEL_THRESHOLD){
+      const dir = wheelAccum > 0 ? 1 : -1;
       wheelAccum = 0;
+      clearTimeout(wheelFlushTimer);
+      doSnap(dir);
     }
-    wheelDir = dir;
-    wheelAccum += Math.abs(delta);
-
-    // Reset accumulator after 400ms of no wheel events
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => {
-      wheelLocked = false;
-      wheelAccum  = 0;
-      wheelDir    = 0;
-    }, 400);
-
-    // Fire only when accumulated delta crosses threshold and not already locked
-    if(!wheelLocked && wheelAccum >= WHEEL_THRESHOLD) {
-      wheelLocked = true;
-      wheelAccum  = 0;
-      doSnap(getCurrentIndex() + dir);
-    }
-
   }, { passive: false });
 
-  /* ── KEYBOARD ARROWS — desktop only: hold to advance ── */
+  /* ── KEYBOARD ── */
   if(window.innerWidth > 768){
-    let keyHoldTimer  = null;
-    let keyHoldActive = false;
-    const KEY_HOLD_MS = 400; // ms of holding before advancing
-
     document.addEventListener('keydown', e => {
       if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
       e.preventDefault();
-      if(isSnapping || keyHoldActive) return;
-
-      const dir = e.key === 'ArrowDown' ? 1 : -1;
-
-      keyHoldTimer = setTimeout(() => {
-        keyHoldActive = true;
-        doSnap(getCurrentIndex() + dir);
-      }, KEY_HOLD_MS);
-    });
-
-    document.addEventListener('keyup', e => {
-      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-      clearTimeout(keyHoldTimer);
-      keyHoldActive = false;
+      doSnap(e.key === 'ArrowDown' ? 1 : -1);
     });
   }
 
-  /* ── TOUCH — always exactly ONE step per swipe ── */
-  let touchStartY = 0;
-  let touchMoved  = false;
-
-  document.addEventListener('touchstart', e => {
-    touchStartY = e.touches[0].clientY;
-    touchMoved  = false;
-  }, { passive: true });
-
-  document.addEventListener('touchmove', e => {
-    touchMoved = true;
-  }, { passive: true });
-
+  /* ── TOUCH ── */
+  let tsY = 0, tMoved = false;
+  document.addEventListener('touchstart', e => { tsY = e.touches[0].clientY; tMoved = false; }, { passive: true });
+  document.addEventListener('touchmove', () => { tMoved = true; }, { passive: true });
   document.addEventListener('touchend', e => {
-    if(isSnapping || !touchMoved) return;
-    const dy = touchStartY - e.changedTouches[0].clientY;
-    if(Math.abs(dy) < 30) return;          // ignore micro-swipes
-    const dir = dy > 0 ? 1 : -1;
-    doSnap(getCurrentIndex() + dir);
-    touchMoved = false;
+    if(isSnapping || !tMoved) return;
+    const dy = tsY - e.changedTouches[0].clientY;
+    if(Math.abs(dy) < 30) return;
+    doSnap(dy > 0 ? 1 : -1);
+    tMoved = false;
   }, { passive: true });
+
+  syncIdx();
 })();
 
 /* ── CHAPTER NAV ── */
 const navDots = document.querySelectorAll('.nav-dot');
-
-allScenes.forEach((s,i)=>{
+allScenes.forEach((s, i) => {
   ScrollTrigger.create({
-    trigger:s, start:'top 55%', end:'bottom 45%',
-    onEnter:()=>activateNav(i),
-    onEnterBack:()=>activateNav(i)
+    trigger: s, start: 'top 50%', end: 'bottom 50%',
+    onEnter: () => activateNav(i),
+    onEnterBack: () => activateNav(i)
   });
 });
 
 function activateNav(i){
-  navDots.forEach(d=>d.classList.remove('active'));
+  navDots.forEach(d => d.classList.remove('active'));
   if(navDots[i]) navDots[i].classList.add('active');
 }
 
-navDots.forEach((dot,i)=>{
-  dot.addEventListener('click',()=>{
+navDots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
     if(allScenes[i]){
-      forceRevealScene(allScenes[i]);
       activateNav(i);
-      // Use the same sweet-spot calculation as doSnap (top + 38% of height)
-      const s = allScenes[i];
-      const top = s.getBoundingClientRect().top + window.pageYOffset;
-      const snapY = top + s.offsetHeight * 0.38;
-      gsap.to(window, {
-        scrollTo: { y: snapY, autoKill: false },
-        duration: 1.15,
-        ease: 'power2.inOut'
-      });
+      const tops = Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
+      gsap.to(window, { scrollTo: { y: tops[i], autoKill: false }, duration: 0.55, ease: 'power3.inOut' });
     }
   });
 });
-
-function forceRevealScene(scene){
-  const sceneId = scene.id;
-  if(revealedScenes.has(sceneId)) return;
-
-  const animatedElements = scene.querySelectorAll('[id]');
-  animatedElements.forEach(el => {
-    const computedStyle = window.getComputedStyle(el);
-    if(computedStyle.opacity === '0' || el.style.opacity === '0'){
-      gsap.to(el, {opacity:1, duration:0.5, overwrite:'auto'});
-    }
-  });
-
-  const st = ScrollTrigger.getAll().find(t => t.trigger === scene);
-  if(st && st.animation){
-    st.animation.progress(0.5);
-  }
-
-  revealedScenes.add(sceneId);
-
-  setTimeout(() => {
-    revealedScenes.delete(sceneId);
-  }, 2000);
-}
 
 /* ── AMBIENT TINT PER SCENE ── */
 const ambientEl = document.getElementById('ambient');
@@ -2606,270 +1881,109 @@ const tints = [
   'radial-gradient(ellipse 65% 55% at 50% 50%,rgba(157,78,221,.14),transparent 65%), radial-gradient(ellipse 35% 40% at 80% 20%,rgba(125,211,252,.06),transparent 60%)',
   'radial-gradient(ellipse 60% 55% at 35% 50%,rgba(99,102,241,.13),transparent 65%), radial-gradient(ellipse 30% 35% at 70% 75%,rgba(157,78,221,.07),transparent 55%)',
   'radial-gradient(ellipse 55% 50% at 50% 45%,rgba(20,20,50,.22), transparent 65%)',
-  'radial-gradient(ellipse 65% 55% at 55% 50%,rgba(168,85,247,.16),transparent 65%), radial-gradient(ellipse 30% 30% at 20% 30%,rgba(125,211,252,.07),transparent 50%)',
-  'radial-gradient(ellipse 60% 55% at 45% 50%,rgba(245,158,11,.10),transparent 65%), radial-gradient(ellipse 25% 35% at 75% 70%,rgba(157,78,221,.08),transparent 55%)',
-  'radial-gradient(ellipse 60% 55% at 40% 50%,rgba(125,211,252,.11),transparent 65%), radial-gradient(ellipse 30% 30% at 70% 25%,rgba(99,102,241,.06),transparent 55%)',
-  'radial-gradient(ellipse 60% 55% at 50% 50%,rgba(52,211,153,.12),transparent 65%), radial-gradient(ellipse 25% 30% at 25% 75%,rgba(157,78,221,.07),transparent 55%)',
-  'radial-gradient(ellipse 65% 55% at 50% 50%,rgba(157,78,221,.14),transparent 65%), radial-gradient(ellipse 30% 35% at 80% 30%,rgba(52,211,153,.06),transparent 55%)',
-  'radial-gradient(ellipse 60% 50% at 50% 55%,rgba(99,102,241,.11),transparent 65%), radial-gradient(ellipse 25% 30% at 20% 70%,rgba(245,158,11,.05),transparent 55%)',
-  'radial-gradient(ellipse 65% 60% at 50% 50%,rgba(157,78,221,.18),transparent 65%), radial-gradient(ellipse 30% 35% at 75% 25%,rgba(125,211,252,.08),transparent 55%)',
+  'radial-gradient(ellipse 50% 50% at 50% 50%,rgba(30,10,60,.35), transparent 60%), radial-gradient(ellipse 30% 30% at 50% 50%,rgba(157,78,221,.15),transparent 50%)',
+  'radial-gradient(ellipse 45% 45% at 50% 50%,rgba(20,5,50,.40), transparent 55%), radial-gradient(ellipse 25% 25% at 50% 50%,rgba(100,50,200,.20),transparent 45%)',
+  'radial-gradient(ellipse 40% 40% at 50% 50%,rgba(15,5,40,.45), transparent 50%), radial-gradient(ellipse 20% 20% at 50% 50%,rgba(80,40,180,.25),transparent 40%)',
+  'radial-gradient(ellipse 35% 35% at 50% 50%,rgba(10,5,35,.50), transparent 45%), radial-gradient(ellipse 18% 18% at 50% 50%,rgba(70,30,160,.30),transparent 35%)',
+  'radial-gradient(ellipse 30% 30% at 50% 50%,rgba(10,3,30,.55), transparent 40%), radial-gradient(ellipse 15% 15% at 50% 50%,rgba(60,25,140,.35),transparent 30%)',
+  'radial-gradient(ellipse 50% 50% at 50% 50%,rgba(25,8,50,.35), transparent 55%), radial-gradient(ellipse 25% 25% at 50% 50%,rgba(140,70,220,.15),transparent 45%)',
+  'radial-gradient(ellipse 55% 55% at 50% 50%,rgba(20,8,45,.30), transparent 60%), radial-gradient(ellipse 30% 30% at 50% 50%,rgba(120,60,200,.12),transparent 50%)',
+  'radial-gradient(ellipse 60% 55% at 50% 50%,rgba(157,78,221,.18),transparent 65%), radial-gradient(ellipse 30% 35% at 75% 25%,rgba(125,211,252,.08),transparent 55%)',
 ];
 
-allScenes.forEach((s,i)=>{
+allScenes.forEach((s, i) => {
   ScrollTrigger.create({
-    trigger:s, start:'top 52%',
-    onEnter:()=>{ ambientEl.style.background=tints[i]; },
-    onEnterBack:()=>{ ambientEl.style.background=tints[i]; }
+    trigger: s, start: 'top 50%',
+    onEnter: () => { ambientEl.style.background = tints[i]; },
+    onEnterBack: () => { ambientEl.style.background = tints[i]; }
   });
 });
 
 /* ════════════════════════════════════════════
-   SCENE ANIMATIONS — CINEMATIC
+   SCENE ANIMATIONS — Enter reveal, keep visible
 ════════════════════════════════════════════ */
 
 /* ── SCENE 0 — HERO ── */
-(function(){
+gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'], {opacity:0});
+const enterTl = gsap.timeline({ delay: 0.2 });
+enterTl.fromTo('#s0-ch', {opacity:0, y:40}, {opacity:1, y:0, duration:0.4, ease:'power3.out'});
+enterTl.fromTo('#s0-profile', {opacity:0, scale:0.65}, {opacity:1, scale:1, duration:0.5, ease:'back.out(1.4)'}, '-=0.3');
+enterTl.fromTo('#s0-fa', {opacity:0, y:80}, {opacity:1, y:0, duration:0.5, ease:'expo.out'}, '-=0.35');
+enterTl.fromTo('#s0-en', {opacity:0, y:30}, {opacity:1, y:0, duration:0.4, ease:'power2.out'}, '-=0.3');
+enterTl.fromTo('#s0-title', {opacity:0, y:20}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
+enterTl.fromTo('#s0-tagline', {opacity:0, y:14}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
 
-  // تنظیم اولیه — همه المان‌های hero مخفی باشن
-  gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'], {opacity:0});
-
-  // انیمیشن ورود — بعد از لود صفحه، مستقل از اسکرول
-  const enterTl = gsap.timeline({ delay: 0.3 });
-  enterTl.fromTo('#s0-ch',      {opacity:0, y:40, letterSpacing:'1em'},           {opacity:1, y:0, letterSpacing:'0.38em', duration:0.6, ease:'power3.out'});
-  enterTl.fromTo('#s0-profile', {opacity:0, scale:0.65, filter:'blur(20px)'},     {opacity:1, scale:1, filter:'blur(0px)', duration:0.65, ease:'back.out(1.4)'}, '-=0.4');
-  enterTl.fromTo('#s0-fa',      {opacity:0, y:80, scale:0.82},                    {opacity:1, y:0, scale:1, duration:0.7, ease:'expo.out'}, '-=0.5');
-  enterTl.fromTo('#s0-en',      {opacity:0, y:30, letterSpacing:'0.7em'},         {opacity:1, y:0, letterSpacing:'0.28em', duration:0.55, ease:'power2.out'}, '-=0.4');
-  enterTl.fromTo('#s0-title',   {opacity:0, y:20},                                {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.3');
-  enterTl.fromTo('#s0-tagline', {opacity:0, y:14},                                {opacity:1, y:0, duration:0.5, ease:'power2.out'}, '-=0.35');
-
-  // ScrollTrigger فقط برای exit — وقتی اسکرول شد المان‌ها برن
-  const el = document.getElementById('scene-0');
-  const exitTl = gsap.timeline({
-    scrollTrigger:{
-      trigger:el, start:'top top', end:'bottom bottom', scrub:1.4,
-      onEnterBack: () => {
-        gsap.to(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],
-          {opacity:1, y:0, x:0, scale:1, filter:'blur(0px)', letterSpacing:'inherit', duration:0.5, ease:'power2.out', overwrite:true});
-      }
+// Reveal function for all other scenes
+function revealElements(ids){
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && gsap.getProperty(el, 'opacity') < 0.5){
+      gsap.fromTo(el,
+        {opacity:0, y:28, x:0, scale:1},
+        {opacity:1, y:0, x:0, scale:1, duration:0.5, ease:'power2.out', overwrite:'auto'}
+      );
     }
   });
+}
 
-  // یه نگه‌دار برای اینکه exit دیر شروع کنه (المان‌ها تا scrub=0.60 بمونن)
-  exitTl.to({}, {duration:0.60});
-  exitTl.to(['#s0-ch','#s0-title','#s0-en','#s0-tagline'], {opacity:0, y:-50, filter:'blur(10px)', duration:0.14, ease:'power2.in'}, 0.64);
-  exitTl.to('#s0-fa',      {opacity:0, y:-100, scale:1.1, filter:'blur(4px)', duration:0.16, ease:'power2.in'}, 0.62);
-  exitTl.to('#s0-profile', {opacity:0, scale:1.2, filter:'blur(20px)', duration:0.14, ease:'power2.in'}, 0.64);
-})();
+const sceneElements = {
+  'scene-1': ['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],
+  'scene-2': ['s2-ch','s2-h','s2-hen','s2-terminal'],
+  'scene-3': ['s3-ch','s3-img','s3-pr'],
+  'scene-4': ['s4-ch','s4-img','s4-pr'],
+  'scene-5': ['s5-ch','s5-img','s5-pr'],
+  'scene-6': ['s6-ch','s6-img','s6-pr'],
+  'scene-7': ['s7-ch','s7-img','s7-pr'],
+  'scene-8': ['s8-ch','s8-e1','s8-div','s8-e2'],
+  'scene-9': ['s9-ch','s9-edu','s9-lg'],
+  'scene-10': ['s10-ch','s10-h','s10-hen','s10-cg','footer-line'],
+};
 
-/* ── SCENE 1 — ABOUT ── */
-(function(){
-  const el = document.getElementById('scene-1');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
+/* Pre-set all non-hero elements to y:28 so reveal animates from centre, not bottom */
+Object.values(sceneElements).flat().forEach(id => {
+  const el = document.getElementById(id);
+  if(el) gsap.set(el, {opacity:0, y:28});
+});
 
-  tl.fromTo('#s1-ch',   {opacity:0, x:60, scale:0.9},             {opacity:1, x:0, scale:1, duration:0.16, ease:'power3.out'}, 0.03);
-  tl.fromTo('#s1-h',    {opacity:0, y:90, scale:0.84},            {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},    0.07);
-  tl.fromTo('#s1-hen',  {opacity:0, x:-50, filter:'blur(6px)'},   {opacity:1, x:0, filter:'blur(0px)', duration:0.16, ease:'power2.out'}, 0.16);
-  tl.fromTo('#s1-body', {opacity:0, y:50, filter:'blur(8px)'},    {opacity:1, y:0, filter:'blur(0px)', duration:0.18, ease:'power2.out'}, 0.22);
-  tl.fromTo('#s1-ben',  {opacity:0, y:24},                        {opacity:1, y:0, duration:0.14, ease:'power2.out'},           0.30);
-
-  tl.to(['#s1-ch','#s1-hen','#s1-ben'], {opacity:0, x:80, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
-  tl.to('#s1-h',    {opacity:0, y:-80, scale:0.92, duration:0.15, ease:'power2.in'}, 0.63);
-  tl.to('#s1-body', {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.66);
-})();
-
-/* ── SCENE 2 — SKILLS ── */
-(function(){
-  const el = document.getElementById('scene-2');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-
-  tl.fromTo('#s2-ch',       {opacity:0, y:30, scale:0.9},              {opacity:1, y:0, scale:1, duration:0.15, ease:'power3.out'}, 0.03);
-  tl.fromTo('#s2-h',        {opacity:0, y:80, scale:0.84},             {opacity:1, y:0, scale:1, duration:0.22, ease:'expo.out'},   0.07);
-  tl.fromTo('#s2-hen',      {opacity:0, x:-40, filter:'blur(6px)'},    {opacity:1, x:0, filter:'blur(0px)', duration:0.15, ease:'power2.out'}, 0.16);
-  tl.fromTo('#s2-terminal', {opacity:0, y:70, scale:0.92, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.2)'}, 0.22);
-
-  tl.to(['#s2-ch','#s2-hen'],   {opacity:0, y:-40, filter:'blur(8px)', duration:0.13, ease:'power2.in'}, 0.65);
-  tl.to('#s2-h',        {opacity:0, y:-80, scale:1.08, filter:'blur(4px)', duration:0.15, ease:'power2.in'}, 0.63);
-  tl.to('#s2-terminal', {opacity:0, y:-60, scale:0.94, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.66);
-})();
-
-/* ── SCENES 3–7 — PROJECT SCENES (Cinematic slide-in) ── */
-(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
-  const el = document.getElementById(sceneId);
-  if(!el) return;
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-
-  const xIn  = dir === 'left' ? -100 : 100;
-  const xOut = dir === 'left' ?  100 : -100;
-
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                                    {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},              {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                            {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
-
-  // Exit — opposite side
-  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},                    0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'},      0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},                    0.65);
-})('scene-3','s3-ch','s3-img','s3-pr','right');
-(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
-  const el = document.getElementById(sceneId);
-  if(!el) return;
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  const xIn  = dir === 'left' ? -100 : 100;
-  const xOut = dir === 'left' ?  100 : -100;
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
-  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
-})('scene-4','s4-ch','s4-img','s4-pr','left');
-(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
-  const el = document.getElementById(sceneId);
-  if(!el) return;
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  const xIn  = dir === 'left' ? -100 : 100;
-  const xOut = dir === 'left' ?  100 : -100;
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
-  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
-})('scene-5','s5-ch','s5-img','s5-pr','right');
-(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
-  const el = document.getElementById(sceneId);
-  if(!el) return;
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  const xIn  = dir === 'left' ? -100 : 100;
-  const xOut = dir === 'left' ?  100 : -100;
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
-  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
-})('scene-6','s6-ch','s6-img','s6-pr','left');
-(function makeProjectAnim(sceneId, chId, imgId, prId, dir){
-  const el = document.getElementById(sceneId);
-  if(!el) return;
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  const xIn  = dir === 'left' ? -100 : 100;
-  const xOut = dir === 'left' ?  100 : -100;
-  tl.fromTo(`#${chId}`, {opacity:0, y:28, scale:0.92},                         {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},       0.03);
-  tl.fromTo(`#${imgId}`,{opacity:0, x:xIn, scale:0.84, filter:'blur(16px)'},   {opacity:1, x:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'expo.out'}, 0.07);
-  tl.fromTo(`#${prId}`, {opacity:0, y:70, filter:'blur(10px)'},                 {opacity:1, y:0, filter:'blur(0px)', duration:0.22, ease:'power2.out'}, 0.18);
-  tl.to(`#${chId}`,  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'},  0.64);
-  tl.to(`#${imgId}`, {opacity:0, x:xOut, scale:0.88, filter:'blur(14px)', duration:0.16, ease:'power2.in'}, 0.62);
-  tl.to(`#${prId}`,  {opacity:0, y:-55, filter:'blur(8px)', duration:0.14, ease:'power2.in'},  0.65);
-})('scene-7','s7-ch','s7-img','s7-pr','right');
-
-/* ── SCENE 8 — EXPERIENCE ── */
-(function(){
-  const el = document.getElementById('scene-8');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  tl.fromTo('#s8-ch',  {opacity:0, y:30, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},  0.03);
-  tl.fromTo('#s8-e1',  {opacity:0, x:-80, filter:'blur(12px)'},     {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.07);
-  tl.fromTo('#s8-div', {opacity:0, scaleX:0},                       {opacity:1, scaleX:1, width:'200px', duration:0.18, ease:'power2.inOut'}, 0.22);
-  tl.fromTo('#s8-e2',  {opacity:0, x:80, filter:'blur(12px)'},      {opacity:1, x:0, filter:'blur(0px)', duration:0.22, ease:'expo.out'}, 0.28);
-
-  tl.to(['#s8-ch','#s8-div'],  {opacity:0, y:-30, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
-  tl.to('#s8-e1', {opacity:0, x:-70, filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.62);
-  tl.to('#s8-e2', {opacity:0, x:70,  filter:'blur(10px)', duration:0.13, ease:'power2.in'}, 0.64);
-})();
-
-/* ── SCENE 9 — EDUCATION ── */
-(function(){
-  const el = document.getElementById('scene-9');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  tl.fromTo('#s9-ch',  {opacity:0, y:28, scale:0.9},               {opacity:1, y:0, scale:1, duration:0.16, ease:'power3.out'},           0.03);
-  tl.fromTo('#s9-edu', {opacity:0, y:80, scale:0.86, filter:'blur(14px)'}, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:0.24, ease:'back.out(1.3)'}, 0.07);
-  tl.fromTo('#s9-lg',  {opacity:0, y:40, scale:0.92},               {opacity:1, y:0, scale:1, duration:0.18, ease:'power2.out'},            0.22);
-
-  tl.to('#s9-ch',  {opacity:0, y:-32, filter:'blur(6px)', duration:0.13, ease:'power2.in'}, 0.64);
-  tl.to('#s9-edu', {opacity:0, y:-70, scale:1.06, filter:'blur(10px)', duration:0.15, ease:'power2.in'}, 0.62);
-  tl.to('#s9-lg',  {opacity:0, y:-40, scale:0.94, duration:0.13, ease:'power2.in'},          0.65);
-})();
-
-/* ── SCENE 10 — CONTACT ── */
-(function(){
-  const el = document.getElementById('scene-10');
-  const tl = gsap.timeline({
-    scrollTrigger:{ trigger:el, start:'top top', end:'bottom bottom', scrub:1.4 }
-  });
-  const items = [
-    {id:'s10-ch',      from:{opacity:0, y:30, scale:0.9},                    ease:'power3.out', t:0.03},
-    {id:'s10-h',       from:{opacity:0, y:80, scale:0.84},                   ease:'expo.out',   t:0.07},
-    {id:'s10-hen',     from:{opacity:0, x:-50, filter:'blur(8px)'},           ease:'power2.out', t:0.16},
-    {id:'s10-cg',      from:{opacity:0, y:50, scale:0.92, filter:'blur(10px)'}, ease:'back.out(1.2)', t:0.24},
-    {id:'footer-line', from:{opacity:0, y:24},                               ease:'power2.out', t:0.36},
-  ];
-  items.forEach(({id, from, ease, t})=>{
-    const to = {...from};
-    Object.keys(to).forEach(k=>{
-      if(k==='opacity') to[k]=1;
-      else if(k==='y'||k==='x') to[k]=0;
-      else if(k==='scale') to[k]=1;
-      else if(k==='filter') to[k]='blur(0px)';
+allScenes.forEach(s => {
+  const ids = sceneElements[s.id];
+  if(ids){
+    ScrollTrigger.create({
+      trigger: s,
+      start: 'top 55%',
+      onEnter: () => revealElements(ids),
+      onEnterBack: () => revealElements(ids)
     });
-    to.duration = 0.18;
-    to.ease     = ease || 'power2.out';
-    tl.fromTo(`#${id}`, from, to, t);
-  });
-})();
+  }
+});
 
 /* ── PROFILE MODAL ── */
 (function(){
-  const modal    = document.getElementById('profile-modal');
+  const modal = document.getElementById('profile-modal');
   const closeBtn = document.getElementById('profile-modal-close');
-  const trigger  = document.querySelector('.profile-hero-img');
+  const trigger = document.querySelector('.profile-hero-img');
   if(!modal || !trigger) return;
-
-  function openModal(){
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(){
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
+  function openModal(){ modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow = ''; }
   trigger.addEventListener('click', openModal);
   closeBtn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
   modal.addEventListener('click', closeModal);
   modal.querySelector('img').addEventListener('click', e => e.stopPropagation());
-
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 })();
 
 /* ── SHARE ── */
 async function shareResume(){
-  const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',
-           text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',
-           url: 'https://immdjavad.ir'};
-  if(navigator.share){try{await navigator.share(d);}catch(e){fallback();}}
-  else fallback();
+  const d = {
+    title: 'Mohammad Javad Mahmoudi — Full Stack Developer',
+    text: 'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',
+    url: 'https://immdjavad.ir'
+  };
+  if(navigator.share){
+    try { await navigator.share(d); } catch(e) { fallback(); }
+  } else { fallback(); }
   function fallback(){
-    navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{
+    navigator.clipboard.writeText('https://immdjavad.ir').then(() => {
       const btn = document.querySelector('.fab-share');
       if(!btn) return;
       const orig = btn.innerHTML;
@@ -2877,12 +1991,12 @@ async function shareResume(){
       btn.style.background = 'rgba(52,211,153,0.18)';
       btn.style.borderColor = 'rgba(52,211,153,0.5)';
       btn.style.color = '#34d399';
-      setTimeout(()=>{ btn.innerHTML=orig; btn.style.background=''; btn.style.borderColor=''; btn.style.color=''; }, 2000);
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
     }).catch(()=>{});
   }
 }
 
-/* ── PHONE REVEAL (anti-bot) ── */
+/* ── PHONE REVEAL ── */
 (function(){
   const p = ['\u0030','\u0039','1','2','0','1','2','0','7','4','5'];
   const num = p.join('');
@@ -2902,10 +2016,10 @@ async function shareResume(){
   });
 })();
 
-window.addEventListener('scroll',()=>{
+window.addEventListener('scroll', () => {
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  if(window._threeSetScroll && max>0) window._threeSetScroll(window.scrollY/max);
-},{passive:true});
+  if(window._threeSetScroll && max > 0) window._threeSetScroll(window.scrollY / max);
+}, { passive: true });
 </script>
 </body>
 </html>
