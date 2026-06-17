@@ -162,6 +162,15 @@
 }
 </script>
 
+<!-- Preload Critical Assets -->
+<link rel="preload" href="vendor/fonts/fonts.css" as="style">
+<link rel="preload" href="assets/profile.png" as="image">
+<link rel="preload" href="assets/projects/azindej.png" as="image">
+<link rel="preload" href="assets/projects/baeazandeh.png" as="image">
+<link rel="preload" href="assets/projects/kala2.png" as="image">
+<link rel="preload" href="assets/projects/teledata.png" as="image">
+<link rel="preload" href="assets/projects/Accounting.png" as="image">
+
 <link href="vendor/fonts/fonts.css" rel="stylesheet">
 
 <style>
@@ -190,7 +199,10 @@
   --terminal-blue:#7dd3fc;
   --terminal-amber:#f59e0b;
 }
-html{scroll-behavior:smooth;scrollbar-width:none;}
+html{
+  scroll-behavior: auto; /* Controlled by Lenis */
+  scrollbar-width:none;
+}
 html::-webkit-scrollbar{display:none;}
 body{
   background:var(--void);
@@ -198,6 +210,59 @@ body{
   font-family:'Vazirmatn',sans-serif;
   overflow-x:hidden;
   overscroll-behavior:none;
+}
+
+/* Warp Speed Loading Screen */
+#warp-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  pointer-events: all;
+}
+#warp-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.warp-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.warp-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: warpStreak 1.5s linear infinite;
+}
+@keyframes warpStreak {
+  0% { transform: translateZ(0) scale(1); opacity: 1; }
+  100% { transform: translate3d(calc(var(--tx) * 200), calc(var(--ty) * 200), 500px); opacity: 0; }
+}
+.warp-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent2);
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  animation: warpPulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes warpPulse {
+  0%, 100% { opacity: 0.6; text-shadow: 0 0 10px var(--accent); }
+  50% { opacity: 1; text-shadow: 0 0 30px var(--accent2), 0 0 60px var(--accent); }
 }
 
 body::before{
@@ -243,6 +308,252 @@ body::after{
   z-index:100;
   box-shadow:0 0 12px var(--glow);
   transition:width 0.15s linear;
+}
+
+/* ═══════════════════════════════════════
+   GALAXY MODE TOGGLER
+═══════════════════════════════════════ */
+#galaxy-toggler {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  z-index: 52;
+  display: flex;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(10,4,22,0.8);
+  border-radius: 30px;
+  border: 1px solid rgba(157,78,221,0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.galaxy-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.25);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: transparent;
+  outline: none;
+}
+
+.galaxy-dot:hover {
+  transform: scale(1.4);
+  border-color: rgba(255,255,255,0.9);
+}
+
+.galaxy-dot.active {
+  border-color: #fff;
+  box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+  transform: scale(1.25);
+}
+
+.galaxy-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.galaxy-dot.active::after {
+  opacity: 0.5;
+  animation: galaxyPulse 2s ease-in-out infinite;
+}
+
+@keyframes galaxyPulse {
+  0%, 100% { box-shadow: 0 0 8px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor, 0 0 35px currentColor; }
+}
+
+.galaxy-violet {
+  background: linear-gradient(135deg, #9d4edd, #5a189a);
+  color: #9d4edd;
+  box-shadow: 0 0 12px rgba(157,78,221,0.6);
+}
+
+.galaxy-blue {
+  background: linear-gradient(135deg, #00d4ff, #0066ff);
+  color: #00d4ff;
+  box-shadow: 0 0 12px rgba(0,212,255,0.4);
+}
+
+.galaxy-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #f59e0b;
+  box-shadow: 0 0 12px rgba(245,158,11,0.4);
+}
+
+/* ═══════════════════════════════════════
+   SVG Skill Icons Animation
+═══════════════════════════════════════ */
+.svg-skill-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.svg-skill-icon .spark {
+  animation: sparkGlow 2s ease-in-out infinite;
+}
+@keyframes sparkGlow {
+  0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 2px currentColor); }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px currentColor); }
+}
+
+/* Snake Game Styles */
+.snake-game-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: none;
+}
+.snake-game-container.active {
+  display: block;
+}
+.snake-canvas {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--terminal-border);
+  border-radius: 4px;
+  background: rgba(2,0,8,0.8);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+.snake-score {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--terminal-highlight);
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+}
+.snake-controls {
+  text-align: center;
+  font-size: 0.5rem;
+  color: var(--terminal-dim);
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+}
+.snake-game-over {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--terminal-green);
+  margin-top: 10px;
+  display: none;
+  letter-spacing: 0.1em;
+}
+.snake-game-over.show {
+  display: block;
+  animation: gameOverFlash 0.5s ease-out;
+}
+@keyframes gameOverFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Smooth transitions for theme switching */
+.scene-inner, 
+.terminal, 
+.contact-link, 
+.tech-chip, 
+.project-link-btn, 
+.nav-dot, 
+#scroll-progress, 
+.fab-btn, 
+#cursor,
+#cursor-ring,
+#ambient,
+#galaxy-toggler,
+.scanline,
+.hero-name-fa,
+.scene-headline-fa,
+.exp-role-fa,
+.edu-degree-fa,
+.project-title-fa,
+.chapter-marker,
+.skill-tag,
+.terminal-header,
+.terminal-body {
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media(max-width:768px){
+  #galaxy-toggler {
+    top: 16px;
+    right: 12px;
+    gap: 8px;
+    padding: 6px 10px;
+  }
+  .galaxy-dot {
+    width: 18px;
+    height: 18px;
+  }
+  .snake-game-container {
+    max-width: 90%;
+  }
+  #chapter-nav{right:6px;gap:7px;}
+  .nav-dot{width:4px;height:4px;position:relative;}
+  .nav-dot::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;display:block;}
+  .nav-dot::after{display:none;}
+  .lang-pair{gap:16px;}
+  .scene-inner{padding:16px 10px;}
+  #fab-group{bottom:12px;left:12px;gap:7px;}
+  .fab-btn{width:38px;height:38px;border-radius:8px;}
+  .fab-btn svg{width:15px;height:15px;}
+  .profile-hero-img{width:160px;height:160px;}
+  .profile-hero-wrap{margin-bottom:16px;}
+  .chapter-marker{font-size:0.48rem;gap:8px;margin-bottom:18px;}
+  .chapter-marker::before,.chapter-marker::after{width:16px;}
+  .project-image-wrap{max-width:88%;margin-bottom:12px;}
+  .project-title-fa{font-size:clamp(1.5rem,7vw,2.6rem);}
+  .project-title-en{font-size:clamp(.7rem,2.2vw,1.1rem);margin-bottom:10px;}
+  .project-desc-text{font-size:.76rem;line-height:1.7;margin-bottom:6px;}
+  .project-desc-en{font-size:.58rem;line-height:1.5;margin-bottom:10px;}
+  .tech-chips{margin-bottom:12px;gap:4px;}
+  .tech-chip{font-size:.54rem;padding:3px 7px;}
+  .project-link-btn{font-size:.58rem;}
+  .project-label{font-size:.48rem;margin-bottom:6px;}
+  .terminal-wrapper{max-width:100%;margin:6px auto 0;}
+  .terminal{border-radius:8px;}
+  .terminal-header{padding:6px 10px;gap:5px;}
+  .terminal-dot{width:8px;height:8px;}
+  .terminal-title{font-size:0.5rem;margin-left:6px;}
+  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.6rem;line-height:1.5;}
+  .terminal-input-line input{font-size:0.6rem;}
+  .skill-category{margin:7px 0 4px;padding-top:6px;}
+  .skill-cat-label{font-size:0.52rem;letter-spacing:0.14em;margin-bottom:3px;}
+  .skill-tags{gap:4px;}
+  .skill-tag{font-size:0.54rem;padding:2px 6px;}
+  .terminal-hint{font-size:0.48rem;margin-top:7px;padding-top:6px;}
+}
+
+@media(max-width:400px){
+  #galaxy-toggler {
+    top: 10px;
+    right: 6px;
+    gap: 6px;
+    padding: 5px 8px;
+  }
+  .galaxy-dot {
+    width: 16px;
+    height: 16px;
+  }
+  .snake-game-container {
+    max-width: 95%;
+  }
+  .terminal-body{min-height:140px;max-height:52vh;font-size:0.56rem;padding:8px;}
+  .skill-tag{font-size:0.5rem;padding:2px 5px;}
+  .skill-cat-label{font-size:0.48rem;}
+  .terminal-title{font-size:0.44rem;}
+  .terminal-input-line input{font-size:0.56rem;}
 }
 
 @media(min-width:769px){
@@ -353,6 +664,7 @@ body::after{
   text-align:center;padding:48px 40px;
   z-index:10;
   overflow:hidden;
+  will-change: transform; /* Optimize for parallax */
 }
 
 .space-warp-overlay {
@@ -703,54 +1015,15 @@ body::after{
 .scene-divider{width:0;max-width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(157,78,221,.4),transparent);opacity:0;margin:24px auto;}
 
 #footer-line{opacity:0;margin-top:52px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;color:rgba(237,233,254,.55);text-align:center;padding-top:20px;border-top:1px solid rgba(157,78,221,.15);max-width:480px;margin-left:auto;margin-right:auto;}
-
-@media(max-width:768px){
-  #chapter-nav{right:6px;gap:7px;}
-  .nav-dot{width:4px;height:4px;position:relative;}
-  .nav-dot::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;display:block;}
-  .nav-dot::after{display:none;}
-  .lang-pair{gap:16px;}
-  .scene-inner{padding:16px 10px;}
-  #fab-group{bottom:12px;left:12px;gap:7px;}
-  .fab-btn{width:38px;height:38px;border-radius:8px;}
-  .fab-btn svg{width:15px;height:15px;}
-  .profile-hero-img{width:160px;height:160px;}
-  .profile-hero-wrap{margin-bottom:16px;}
-  .chapter-marker{font-size:0.48rem;gap:8px;margin-bottom:18px;}
-  .chapter-marker::before,.chapter-marker::after{width:16px;}
-  .project-image-wrap{max-width:88%;margin-bottom:12px;}
-  .project-title-fa{font-size:clamp(1.5rem,7vw,2.6rem);}
-  .project-title-en{font-size:clamp(.7rem,2.2vw,1.1rem);margin-bottom:10px;}
-  .project-desc-text{font-size:.76rem;line-height:1.7;margin-bottom:6px;}
-  .project-desc-en{font-size:.58rem;line-height:1.5;margin-bottom:10px;}
-  .tech-chips{margin-bottom:12px;gap:4px;}
-  .tech-chip{font-size:.54rem;padding:3px 7px;}
-  .project-link-btn{font-size:.58rem;}
-  .project-label{font-size:.48rem;margin-bottom:6px;}
-  .terminal-wrapper{max-width:100%;margin:6px auto 0;}
-  .terminal{border-radius:8px;}
-  .terminal-header{padding:6px 10px;gap:5px;}
-  .terminal-dot{width:8px;height:8px;}
-  .terminal-title{font-size:0.5rem;margin-left:6px;}
-  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.6rem;line-height:1.5;}
-  .terminal-input-line input{font-size:0.6rem;}
-  .skill-category{margin:7px 0 4px;padding-top:6px;}
-  .skill-cat-label{font-size:0.52rem;letter-spacing:0.14em;margin-bottom:3px;}
-  .skill-tags{gap:4px;}
-  .skill-tag{font-size:0.54rem;padding:2px 6px;}
-  .terminal-hint{font-size:0.48rem;margin-top:7px;padding-top:6px;}
-}
-
-@media(max-width:400px){
-  .terminal-body{min-height:140px;max-height:52vh;font-size:0.56rem;padding:8px;}
-  .skill-tag{font-size:0.5rem;padding:2px 5px;}
-  .skill-cat-label{font-size:0.48rem;}
-  .terminal-title{font-size:0.44rem;}
-  .terminal-input-line input{font-size:0.56rem;}
-}
 </style>
 </head>
 <body>
+
+<!-- Warp Speed Loader -->
+<div id="warp-loader">
+  <div class="warp-container" id="warp-container"></div>
+  <div class="warp-center-text">WARP SPEED</div>
+</div>
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
@@ -789,18 +1062,25 @@ body::after{
   </button>
 </div>
 
+<!-- GALAXY MODE TOGGLER -->
+<div id="galaxy-toggler" aria-label="تغییر تم کهکشان">
+  <button class="galaxy-dot galaxy-violet active" data-theme="violet" title="کهکشان بنفش"></button>
+  <button class="galaxy-dot galaxy-blue" data-theme="blue" title="کهکشان ماتریسی"></button>
+  <button class="galaxy-dot galaxy-gold" data-theme="gold" title="کهکشان طلایی"></button>
+</div>
+
 <div id="scroll-container">
 
 <!-- SCENE 0 ─ HERO -->
 <section class="scene" id="scene-0">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.15">
       <div class="chapter-marker" id="s0-ch">خوش آمدید · Welcome</div>
-      <div class="profile-hero-wrap" id="s0-profile">
+      <div class="profile-hero-wrap" id="s0-profile" data-parallax="0.25">
         <img class="profile-hero-img" src="assets/profile.png" alt="تصویر پروفایل محمد جواد محمودی" loading="eager" fetchpriority="high">
       </div>
-      <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
-      <h2 class="hero-name-en" id="s0-en" style="font-size:inherit;font-weight:inherit;margin:0;">Mohammad Javad Mahmoudi</h2>
+      <h1 class="hero-name-fa" id="s0-fa" data-parallax="0.35">محمد جواد محمودی</h1>
+      <h2 class="hero-name-en" id="s0-en" data-parallax="0.4" style="font-size:inherit;font-weight:inherit;margin:0;">Mohammad Javad Mahmoudi</h2>
       <div class="hero-title" id="s0-title" data-full="Full Stack Developer · Python · Django · Creative Engineer"></div>
       <div id="s0-tagline" style="opacity:0;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(237,233,254,0.32);text-transform:uppercase;">کد + طراحی + محصول — هر سه با هم</div>
     </div>
@@ -810,7 +1090,7 @@ body::after{
 <!-- SCENE 1 ─ ABOUT -->
 <section class="scene" id="scene-1">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.12">
       <div class="chapter-marker" id="s1-ch">01 · درباره من · About</div>
       <div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div>
       <div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div>
@@ -823,7 +1103,7 @@ body::after{
 <!-- SCENE 2 ─ SKILLS TERMINAL -->
 <section class="scene" id="scene-2">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.1">
       <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
       <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
       <div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
@@ -845,7 +1125,7 @@ body::after{
 <!-- SCENE 3 ─ AZIN DEJ -->
 <section class="scene" id="scene-3">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.08">
       <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی · Featured Project</div>
       <div class="project-reveal" id="s3-pr">
         <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
@@ -857,9 +1137,16 @@ body::after{
         <div class="project-desc-text">پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر انواع درب و پنجره را با انیمیشن طراحی می‌کند، رنگ‌بندی، شیشه و یراق‌آلات انتخاب می‌کند، چند پنجره را ترکیب کرده و فاکتور کامل دریافت می‌کند.</div>
         <div class="project-desc-en">Advanced UPVC platform — interactive SVG configurator with animated opening modes, glass profiles, hardware selection, and multi-window quoting. Custom Django admin panel + project gallery + blog.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Django</span><span class="tech-chip">Python</span><span class="tech-chip">SVG Animations</span>
-          <span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span>
-          <span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
+          <span class="tech-chip">
+            <svg class="svg-skill-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="1" class="spark" fill="currentColor"/></svg>
+            Django
+          </span>
+          <span class="tech-chip">Python</span>
+          <span class="tech-chip">SVG Animations</span>
+          <span class="tech-chip blue">JavaScript</span>
+          <span class="tech-chip blue">Custom Admin</span>
+          <span class="tech-chip ember">PostgreSQL</span>
+          <span class="tech-chip">SEO</span>
         </div>
         <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -873,7 +1160,7 @@ body::after{
 <!-- SCENE 4 ─ FASHION -->
 <section class="scene" id="scene-4">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.08">
       <div class="chapter-marker" id="s4-ch">04 · فروشگاه · E-Commerce</div>
       <div class="project-reveal" id="s4-pr">
         <div class="project-label">فروشگاه آنلاین · In Progress</div>
@@ -885,8 +1172,13 @@ body::after{
         <div class="project-desc-text">فروشگاه اینترنتی با ربات چت هوشمند، پنل ادمین سفارشی حرفه‌ای و رابط کاربری جذاب. تجربه‌ای مدرن برای خرید آنلاین با تمرکز روی تعامل کاربر.</div>
         <div class="project-desc-en">Visually stunning fashion store · AI chatbot · custom admin panel · modern UI/UX design.</div>
         <div class="tech-chips">
-          <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span>
-          <span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">PyQt6</span>
+          <span class="tech-chip">
+            <svg class="svg-skill-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="1" class="spark" fill="currentColor"/></svg>
+            Django
+          </span>
+          <span class="tech-chip blue">AI Chatbot</span>
+          <span class="tech-chip blue">Custom Admin</span>
+          <span class="tech-chip green">PyQt6</span>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;color:var(--ember);">🚀 به زودی آنلاین · Launching Soon</span>
       </div>
@@ -897,7 +1189,7 @@ body::after{
 <!-- SCENE 5 ─ KALA2 BOT -->
 <section class="scene" id="scene-5">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.08">
       <div class="chapter-marker" id="s5-ch">05 · ربات · Telegram Bot</div>
       <div class="project-reveal" id="s5-pr">
         <div class="project-label">ربات جستجوی کالا · Search Bot</div>
@@ -924,7 +1216,7 @@ body::after{
 <!-- SCENE 6 ─ TELEDATA -->
 <section class="scene" id="scene-6">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.08">
       <div class="chapter-marker" id="s6-ch">06 · ابزار داده · Data Tool</div>
       <div class="project-reveal" id="s6-pr">
         <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
@@ -951,7 +1243,7 @@ body::after{
 <!-- SCENE 7 ─ ACCOUNTING SOFTWARE -->
 <section class="scene" id="scene-7">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.08">
       <div class="chapter-marker" id="s7-ch">07 · نرم‌افزار · Desktop App</div>
       <div class="project-reveal" id="s7-pr">
         <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
@@ -980,7 +1272,7 @@ body::after{
 <!-- SCENE 8 ─ EXPERIENCE -->
 <section class="scene" id="scene-8">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.1">
       <div class="chapter-marker" id="s8-ch">08 · تجربه کاری · Experience</div>
       <div class="exp-reveal" id="s8-e1">
         <div class="exp-period">2022 — اکنون · Present</div>
@@ -1002,7 +1294,7 @@ body::after{
 <!-- SCENE 9 ─ EDUCATION & LANGUAGES -->
 <section class="scene" id="scene-9">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.12">
       <div class="chapter-marker" id="s9-ch">09 · تحصیل و زبان · Education &amp; Languages</div>
       <div class="edu-reveal" id="s9-edu">
         <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.26em;color:var(--accent);margin-bottom:12px;">B.Sc. Computer Engineering · Currently Enrolled</div>
@@ -1031,7 +1323,7 @@ body::after{
 <!-- SCENE 10 ─ CONTACT -->
 <section class="scene" id="scene-10">
   <div class="scene-sticky">
-    <div class="scene-inner">
+    <div class="scene-inner" data-parallax="0.05">
       <div class="chapter-marker" id="s10-ch">10 · تماس · Let's Connect</div>
       <div class="scene-headline-fa" id="s10-h">بیایید<br>بسازیم</div>
       <div class="scene-headline-en" id="s10-hen">Let's Build Something Real</div>
@@ -1090,10 +1382,319 @@ body::after{
 <script src="vendor/js/gsap.min.js"></script>
 <script src="vendor/js/ScrollTrigger.min.js"></script>
 <script src="vendor/js/ScrollToPlugin.min.js"></script>
+<!-- Lenis Smooth Scroll -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 <script>
 /* ════════════════════════════════════════════
+   WARP SPEED LOADER
+════════════════════════════════════════════ */
+(function initWarpLoader(){
+  const container = document.getElementById('warp-container');
+  const loader = document.getElementById('warp-loader');
+  if(!container || !loader) return;
+
+  // Create stars
+  const starCount = 200;
+  for(let i = 0; i < starCount; i++){
+    const star = document.createElement('div');
+    star.classList.add('warp-star');
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 20 + Math.random() * 80;
+    star.style.setProperty('--tx', Math.cos(angle));
+    star.style.setProperty('--ty', Math.sin(angle));
+    star.style.left = (50 + Math.cos(angle) * distance) + '%';
+    star.style.top = (50 + Math.sin(angle) * distance) + '%';
+    star.style.animationDuration = (0.5 + Math.random() * 2) + 's';
+    star.style.animationDelay = Math.random() * 1.5 + 's';
+    star.style.width = (1 + Math.random() * 3) + 'px';
+    star.style.height = star.style.width;
+    container.appendChild(star);
+  }
+
+  // Hide loader after content loads
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      // Start Lenis after loader is hidden
+      if(window.initLenis) window.initLenis();
+    }, 1800);
+  });
+
+  // Fallback if load event already fired
+  if(document.readyState === 'complete'){
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      if(window.initLenis) window.initLenis();
+    }, 800);
+  }
+})();
+
+/* ════════════════════════════════════════════
+   LENIS SMOOTH SCROLL
+════════════════════════════════════════════ */
+window.initLenis = function(){
+  const lenis = new Lenis({
+    duration: 1.6,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    smoothTouch: false,
+    touchMultiplier: 2,
+  });
+
+  function raf(time){
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // Connect GSAP ScrollTrigger with Lenis
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+
+  // Store for later use
+  window.__lenis = lenis;
+};
+
+/* ════════════════════════════════════════════
+   ADVANCED PARALLAX ON MOUSE MOVE
+════════════════════════════════════════════ */
+(function initAdvancedParallax(){
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // Touch support
+  document.addEventListener('touchmove', (e) => {
+    if(e.touches.length === 1){
+      mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+    }
+  }, { passive: true });
+
+  function animateParallax(){
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
+
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      const speed = parseFloat(el.dataset.parallax) || 0.1;
+      const x = targetX * 30 * speed;
+      const y = targetY * 30 * speed;
+      el.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Also move particles canvas slightly
+    const canvas = document.getElementById('bg-canvas');
+    if(canvas){
+      canvas.style.transform = `translate(${targetX * 15}px, ${targetY * 15}px)`;
+    }
+
+    requestAnimationFrame(animateParallax);
+  }
+  animateParallax();
+})();
+
+/* ════════════════════════════════════════════
+   PAGE VISIBILITY API - ENERGY SAVING
+════════════════════════════════════════════ */
+(function initEnergySaver(){
+  let particlesPaused = false;
+  let inactivityTimer = null;
+  const INACTIVITY_DELAY = 30000; // 30 seconds
+
+  function pauseParticles(){
+    if(!particlesPaused && window._threePause){
+      window._threePause();
+      particlesPaused = true;
+      console.log('🔋 Particles paused to save energy');
+    }
+  }
+
+  function resumeParticles(){
+    if(particlesPaused && window._threeResume){
+      window._threeResume();
+      particlesPaused = false;
+      console.log('⚡ Particles resumed');
+    }
+  }
+
+  // Handle page visibility
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      pauseParticles();
+    } else {
+      resumeParticles();
+      resetInactivityTimer();
+    }
+  });
+
+  // Handle user inactivity
+  function resetInactivityTimer(){
+    clearTimeout(inactivityTimer);
+    resumeParticles();
+    inactivityTimer = setTimeout(pauseParticles, INACTIVITY_DELAY);
+  }
+
+  ['mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(event => {
+    document.addEventListener(event, resetInactivityTimer, { passive: true });
+  });
+
+  resetInactivityTimer();
+})();
+
+/* ════════════════════════════════════════════
+   GALAXY THEME MANAGER
+════════════════════════════════════════════ */
+(function initGalaxyThemes(){
+  const themes = {
+    violet: {
+      '--void': '#020008',
+      '--accent': '#9d4edd',
+      '--accent2': '#c77dff',
+      '--accent3': '#e0aaff',
+      '--ember': '#f59e0b',
+      '--ice': '#7dd3fc',
+      '--green': '#34d399',
+      '--text': '#ede9fe',
+      '--muted': 'rgba(237,233,254,0.35)',
+      '--glow': 'rgba(157,78,221,0.55)',
+      '--terminal-prompt': '#9d4edd',
+      '--terminal-highlight': '#c77dff',
+      '--terminal-border': 'rgba(157,78,221,0.3)',
+      metaTheme: '#9d4edd',
+      threeColors: ['#9d4edd', '#c77dff', '#7dd3fc', '#e0aaff', '#5a189a'],
+      ringColor: 0x9d4edd,
+      ring2Color: 0x7dd3fc,
+      coreColor: 0x9d4edd,
+      shapeColors: [0x7dd3fc, 0xe0aaff, 0xc77dff]
+    },
+    blue: {
+      '--void': '#000510',
+      '--accent': '#00d4ff',
+      '--accent2': '#00e5ff',
+      '--accent3': '#80f0ff',
+      '--ember': '#ff6b35',
+      '--ice': '#00d4ff',
+      '--green': '#00ff88',
+      '--text': '#e0f0ff',
+      '--muted': 'rgba(200,230,255,0.35)',
+      '--glow': 'rgba(0,212,255,0.55)',
+      '--terminal-prompt': '#00d4ff',
+      '--terminal-highlight': '#00e5ff',
+      '--terminal-border': 'rgba(0,212,255,0.3)',
+      metaTheme: '#00d4ff',
+      threeColors: ['#00d4ff', '#0066ff', '#00e5ff', '#80f0ff', '#0033cc'],
+      ringColor: 0x00d4ff,
+      ring2Color: 0x0066ff,
+      coreColor: 0x00d4ff,
+      shapeColors: [0x0066ff, 0x80f0ff, 0x00e5ff]
+    },
+    gold: {
+      '--void': '#080600',
+      '--accent': '#f59e0b',
+      '--accent2': '#fbbf24',
+      '--accent3': '#fde68a',
+      '--ember': '#ef4444',
+      '--ice': '#fbbf24',
+      '--green': '#10b981',
+      '--text': '#fef3c7',
+      '--muted': 'rgba(254,243,199,0.35)',
+      '--glow': 'rgba(245,158,11,0.55)',
+      '--terminal-prompt': '#f59e0b',
+      '--terminal-highlight': '#fbbf24',
+      '--terminal-border': 'rgba(245,158,11,0.3)',
+      metaTheme: '#f59e0b',
+      threeColors: ['#f59e0b', '#d97706', '#fbbf24', '#fde68a', '#92400e'],
+      ringColor: 0xf59e0b,
+      ring2Color: 0xd97706,
+      coreColor: 0xf59e0b,
+      shapeColors: [0xd97706, 0xfde68a, 0xfbbf24]
+    }
+  };
+
+  let currentTheme = 'violet';
+  const root = document.documentElement;
+  const toggler = document.getElementById('galaxy-toggler');
+  const ambient = document.getElementById('ambient');
+
+  function applyTheme(themeName){
+    const theme = themes[themeName];
+    if(!theme) return;
+    
+    document.body.classList.add('galaxy-transitioning');
+    setTimeout(() => document.body.classList.remove('galaxy-transitioning'), 700);
+
+    Object.entries(theme).forEach(([key, value]) => {
+      if(key.startsWith('--')) {
+        root.style.setProperty(key, value);
+      }
+    });
+
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if(metaTheme) metaTheme.setAttribute('content', theme.metaTheme);
+
+    if(ambient && themeName === 'violet'){
+      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';
+    } else if(ambient && themeName === 'blue'){
+      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';
+    } else if(ambient && themeName === 'gold'){
+      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';
+    }
+
+    const scanline = document.querySelector('.scanline');
+    if(scanline){
+      if(themeName === 'violet') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(157,78,221,0.1),transparent)';
+      else if(themeName === 'blue') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(0,212,255,0.1),transparent)';
+      else if(themeName === 'gold') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(245,158,11,0.1),transparent)';
+    }
+
+    if(window._updateThreeColors && theme.threeColors){
+      window._updateThreeColors(theme.threeColors, theme.ringColor, theme.ring2Color, theme.coreColor, theme.shapeColors);
+    }
+
+    window._currentTheme = theme;
+
+    document.querySelectorAll('.galaxy-dot').forEach(dot => dot.classList.remove('active'));
+    const activeDot = document.querySelector(`.galaxy-dot[data-theme="${themeName}"]`);
+    if(activeDot) activeDot.classList.add('active');
+
+    localStorage.setItem('galaxy-theme', themeName);
+    currentTheme = themeName;
+  }
+
+  if(toggler){
+    toggler.addEventListener('click', (e) => {
+      const dot = e.target.closest('.galaxy-dot');
+      if(!dot) return;
+      const theme = dot.dataset.theme;
+      if(theme && theme !== currentTheme){
+        applyTheme(theme);
+      }
+    });
+  }
+
+  const savedTheme = localStorage.getItem('galaxy-theme');
+  if(savedTheme && themes[savedTheme]){
+    setTimeout(() => applyTheme(savedTheme), 100);
+  }
+
+  window.applyGalaxyTheme = applyTheme;
+  window.getCurrentTheme = () => currentTheme;
+  window.getThemeData = (name) => themes[name];
+})();
+
+/* ════════════════════════════════════════════
    THREE.JS — PIXEL COSMIC SPACE DIVE
+   (Updated with pause/resume for energy saving)
 ════════════════════════════════════════════ */
 (function initThree(){
   const canvas = document.getElementById('bg-canvas');
@@ -1112,19 +1713,24 @@ body::after{
   const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
   camera.position.z = 8;
 
-  /* ══ PIXEL-STYLE PARTICLES ══ */
   const PARTICLE_COUNT = 1200;
   const posArray = new Float32Array(PARTICLE_COUNT * 3);
   const colArray = new Float32Array(PARTICLE_COUNT * 3);
   const velArray = new Float32Array(PARTICLE_COUNT * 3);
 
-  const palette = [
-    new THREE.Color('#9d4edd'),
-    new THREE.Color('#c77dff'),
-    new THREE.Color('#7dd3fc'),
-    new THREE.Color('#e0aaff'),
-    new THREE.Color('#5a189a'),
-  ];
+  const initTheme = window.getThemeData ? window.getThemeData('violet') : null;
+  const initColors = initTheme ? initTheme.threeColors : ['#9d4edd', '#c77dff', '#7dd3fc', '#e0aaff', '#5a189a'];
+  
+  let palette = initColors.map(c => new THREE.Color(c));
+
+  function rebuildPalette(colors){
+    palette = colors.map(c => new THREE.Color(c));
+    for(let i = 0; i < PARTICLE_COUNT; i++){
+      const c = palette[Math.floor(Math.random() * palette.length)];
+      colArray[i*3] = c.r; colArray[i*3+1] = c.g; colArray[i*3+2] = c.b;
+    }
+    if(particleGeo) particleGeo.attributes.color.needsUpdate = true;
+  }
 
   for(let i = 0; i < PARTICLE_COUNT; i++){
     const theta = Math.random() * Math.PI * 2;
@@ -1172,10 +1778,14 @@ body::after{
   particles.rotation.x = Math.PI * 0.12;
   scene.add(particles);
 
-  /* ══ CENTRAL GLOW RING ══ */
+  const initRingColor = initTheme ? initTheme.ringColor : 0x9d4edd;
+  const initRing2Color = initTheme ? initTheme.ring2Color : 0x7dd3fc;
+  const initCoreColor = initTheme ? initTheme.coreColor : 0x9d4edd;
+  const initShapeColors = initTheme ? initTheme.shapeColors : [0x7dd3fc, 0xe0aaff, 0xc77dff];
+
   const ringGeo = new THREE.TorusGeometry(3.2, 0.015, 8, 120);
   const ringMat = new THREE.MeshBasicMaterial({
-    color: 0x9d4edd,
+    color: initRingColor,
     transparent: true,
     opacity: 0.4,
     blending: THREE.AdditiveBlending,
@@ -1188,7 +1798,7 @@ body::after{
 
   const ring2Geo = new THREE.TorusGeometry(4.5, 0.008, 6, 100);
   const ring2Mat = new THREE.MeshBasicMaterial({
-    color: 0x7dd3fc,
+    color: initRing2Color,
     transparent: true,
     opacity: 0.2,
     blending: THREE.AdditiveBlending,
@@ -1199,10 +1809,9 @@ body::after{
   ring2.rotation.z = 0.7;
   scene.add(ring2);
 
-  /* ══ CENTRAL CORE ══ */
   const coreGeo = new THREE.IcosahedronGeometry(1.8, 1);
   const coreMat = new THREE.MeshBasicMaterial({
-    color: 0x9d4edd,
+    color: initCoreColor,
     wireframe: true,
     transparent: true,
     opacity: 0.25,
@@ -1212,12 +1821,11 @@ body::after{
   core.position.set(0, 0, -1.5);
   scene.add(core);
 
-  /* ══ FLOATING SHAPES ══ */
   const shapes = [];
   for(let i = 0; i < 3; i++){
     const geo = new THREE.OctahedronGeometry(0.6 + i * 0.2, 0);
     const mat = new THREE.MeshBasicMaterial({
-      color: i === 0 ? 0x7dd3fc : i === 1 ? 0xe0aaff : 0xc77dff,
+      color: initShapeColors[i],
       wireframe: true,
       transparent: true,
       opacity: 0.3 - i * 0.05,
@@ -1233,7 +1841,6 @@ body::after{
     shapes.push({ mesh, speed: 0.3 + Math.random() * 0.5, offset: Math.random() * Math.PI * 2 });
   }
 
-  /* ══ WARP TUNNEL RING ══ */
   const warpRingGeo = new THREE.TorusGeometry(6, 0.02, 8, 80);
   const warpRingMat = new THREE.MeshBasicMaterial({
     color: 0xc77dff,
@@ -1246,7 +1853,6 @@ body::after{
   warpRing.position.z = -8;
   scene.add(warpRing);
 
-  /* ══ SPEED LINES ══ */
   const speedLines = [];
   for(let i = 0; i < 30; i++){
     const lineGeo = new THREE.BufferGeometry();
@@ -1275,13 +1881,23 @@ body::after{
     speedLines.push({ line, mat: lineMat, baseZ: line.position.z, speed: 0.05 + Math.random() * 0.15 });
   }
 
-  /* ══ STATE ══ */
+  window._updateThreeColors = function(colors, ringColor, ring2Color, coreColor, shapeColors){
+    rebuildPalette(colors);
+    ringMat.color.setHex(ringColor);
+    ring2Mat.color.setHex(ring2Color);
+    coreMat.color.setHex(coreColor);
+    shapes.forEach((s, i) => {
+      if(shapeColors[i]) s.mesh.material.color.setHex(shapeColors[i]);
+    });
+  };
+
   let mx = 0, my = 0, scrollP = 0, t = 0;
   let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0, gyroEnabled = false;
   let prevScrollP = 0, scrollVel = 0, spaceIntensity = 0, finalBurst = 0;
   const finalBurstEl = document.getElementById('final-burst');
+  let animationPaused = false;
+  let animationId = null;
 
-  /* ══ GYROSCOPE ══ */
   function attachGyro(){
     window.addEventListener('deviceorientation', e => {
       if(e.gamma === null) return;
@@ -1307,9 +1923,14 @@ body::after{
     my = -(e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  /* ══ TICK ══ */
   function tick(){
-    requestAnimationFrame(tick);
+    if(animationPaused) {
+      animationId = requestAnimationFrame(tick);
+      renderer.render(scene, camera);
+      return;
+    }
+    
+    animationId = requestAnimationFrame(tick);
     t += 0.005;
 
     if(gyroEnabled){
@@ -1423,6 +2044,20 @@ body::after{
   }
   tick();
 
+  // Pause/Resume functions for energy saving
+  window._threePause = function(){
+    animationPaused = true;
+    particleMat.opacity = 0.2;
+    ringMat.opacity = 0.1;
+    ring2Mat.opacity = 0.05;
+  };
+  window._threeResume = function(){
+    animationPaused = false;
+    particleMat.opacity = 0.7;
+    ringMat.opacity = 0.4;
+    ring2Mat.opacity = 0.2;
+  };
+
   window.addEventListener('resize', () => {
     const w = window.innerWidth, h = window.innerHeight;
     camera.aspect = w / h;
@@ -1434,10 +2069,412 @@ body::after{
 })();
 
 /* ════════════════════════════════════════════
+   SNAKE GAME
+════════════════════════════════════════════ */
+(function initSnakeGame(){
+  
+  window.startSnakeGame = function(containerElement){
+    const existingGame = containerElement.querySelector('.snake-game-container');
+    if(existingGame) existingGame.remove();
+    
+    const gameContainer = document.createElement('div');
+    gameContainer.className = 'snake-game-container active';
+    
+    const scoreDiv = document.createElement('div');
+    scoreDiv.className = 'snake-score';
+    scoreDiv.textContent = '🐍 SCORE: 0  |  HIGH: 0';
+    gameContainer.appendChild(scoreDiv);
+    
+    const canvasWrapper = document.createElement('div');
+    canvasWrapper.style.cssText = 'position:relative; width:100%; touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;';
+    gameContainer.appendChild(canvasWrapper);
+    
+    const canvas = document.createElement('canvas');
+    canvas.className = 'snake-canvas';
+    canvas.width = 300;
+    canvas.height = 300;
+    canvas.style.cssText = 'width:100%; height:auto; display:block;';
+    canvasWrapper.appendChild(canvas);
+    
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 769;
+    
+    let dPadContainer = null;
+    if(isMobile){
+      dPadContainer = document.createElement('div');
+      dPadContainer.className = 'snake-dpad';
+      dPadContainer.style.cssText = `
+        display: grid;
+        grid-template-columns: 50px 50px 50px;
+        grid-template-rows: 50px 50px 50px;
+        gap: 3px;
+        justify-content: center;
+        margin-top: 12px;
+        touch-action: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      `;
+      
+      const buttons = [
+        { text: '▲', row: 1, col: 2, dir: {x:0, y:-1}, code: 'ArrowUp' },
+        { text: '◄', row: 2, col: 1, dir: {x:-1, y:0}, code: 'ArrowLeft' },
+        { text: '●', row: 2, col: 2, dir: null, code: 'Space', isCenter: true },
+        { text: '►', row: 2, col: 3, dir: {x:1, y:0}, code: 'ArrowRight' },
+        { text: '▼', row: 3, col: 2, dir: {x:0, y:1}, code: 'ArrowDown' },
+      ];
+      
+      buttons.forEach(btn => {
+        const button = document.createElement('button');
+        button.textContent = btn.text;
+        button.style.cssText = `
+          grid-row: ${btn.row};
+          grid-column: ${btn.col};
+          background: ${btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)'};
+          border: 1px solid rgba(157,78,221,0.35);
+          border-radius: 8px;
+          color: ${btn.isCenter ? '#fff' : 'var(--terminal-highlight, #c77dff)'};
+          font-size: ${btn.isCenter ? '0.6rem' : '1.1rem'};
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
+          transition: all 0.1s ease;
+          font-weight: bold;
+          letter-spacing: 0.1em;
+        `;
+        
+        button.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          button.style.background = 'rgba(157,78,221,0.4)';
+          button.style.borderColor = 'rgba(199,125,255,0.7)';
+          button.style.transform = 'scale(0.9)';
+          
+          if(btn.isCenter){
+            handleActionKey('Space');
+          } else if(btn.dir && gameRunning) {
+            handleDirectionKey(btn.dir);
+          }
+        });
+        
+        button.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          button.style.background = btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)';
+          button.style.borderColor = 'rgba(157,78,221,0.35)';
+          button.style.transform = 'scale(1)';
+        });
+        
+        button.addEventListener('touchcancel', (e) => {
+          button.style.background = btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)';
+          button.style.borderColor = 'rgba(157,78,221,0.35)';
+          button.style.transform = 'scale(1)';
+        });
+        
+        button.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          if(btn.isCenter){
+            handleActionKey('Space');
+          } else if(btn.dir && gameRunning) {
+            handleDirectionKey(btn.dir);
+          }
+        });
+        
+        dPadContainer.appendChild(button);
+      });
+      
+      gameContainer.appendChild(dPadContainer);
+    }
+    
+    const gameOverDiv = document.createElement('div');
+    gameOverDiv.className = 'snake-game-over';
+    gameOverDiv.textContent = 'GAME OVER! Tap ● to restart';
+    gameContainer.appendChild(gameOverDiv);
+    
+    const controlsDiv = document.createElement('div');
+    controlsDiv.className = 'snake-controls';
+    controlsDiv.textContent = isMobile ? '▲▼◄► D-Pad  |  ● restart' : '↑↓←→ or WASD  |  SPACE restart  |  ESC quit';
+    gameContainer.appendChild(controlsDiv);
+    
+    containerElement.appendChild(gameContainer);
+    
+    const ctx = canvas.getContext('2d');
+    const gridSize = 15;
+    const tileCount = canvas.width / gridSize;
+    
+    let snake = [
+      {x: 10, y: 10},
+      {x: 9, y: 10},
+      {x: 8, y: 10}
+    ];
+    let direction = {x: 1, y: 0};
+    let nextDirection = {x: 1, y: 0};
+    let food = {};
+    let score = 0;
+    let highScore = parseInt(localStorage.getItem('snakeHighScore') || '0');
+    let gameRunning = true;
+    let gameLoop = null;
+    let speed = 120;
+    
+    function getThemeColors(){
+      const theme = window.getCurrentTheme ? window.getCurrentTheme() : 'violet';
+      if(theme === 'violet') return { snake: '#c77dff', food: '#34d399', grid: 'rgba(157,78,221,0.08)' };
+      if(theme === 'blue') return { snake: '#00e5ff', food: '#00ff88', grid: 'rgba(0,212,255,0.08)' };
+      if(theme === 'gold') return { snake: '#fbbf24', food: '#10b981', grid: 'rgba(245,158,11,0.08)' };
+      return { snake: '#c77dff', food: '#34d399', grid: 'rgba(157,78,221,0.08)' };
+    }
+    
+    scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
+    
+    function placeFood(){
+      do {
+        food = {
+          x: Math.floor(Math.random() * tileCount),
+          y: Math.floor(Math.random() * tileCount)
+        };
+      } while(snake.some(segment => segment.x === food.x && segment.y === food.y));
+    }
+    
+    placeFood();
+    
+    let touchStartX = 0, touchStartY = 0;
+    const SWIPE_THRESHOLD = 20;
+    
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if(e.touches.length === 1){
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: false });
+    
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+    
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      if(!gameRunning || e.changedTouches.length === 0) return;
+      
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      
+      if(Math.abs(dx) < SWIPE_THRESHOLD && Math.abs(dy) < SWIPE_THRESHOLD) return;
+      
+      if(Math.abs(dx) > Math.abs(dy)){
+        if(dx > 0) handleDirectionKey({x: 1, y: 0});
+        else handleDirectionKey({x: -1, y: 0});
+      } else {
+        if(dy > 0) handleDirectionKey({x: 0, y: 1});
+        else handleDirectionKey({x: 0, y: -1});
+      }
+    }, { passive: false });
+    
+    canvas.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      handleActionKey('Space');
+    });
+    
+    function handleDirectionKey(dir){
+      if(direction.x === -dir.x && direction.y === -dir.y) return;
+      if(direction.x === 0 && direction.y === 0) return;
+      nextDirection = dir;
+    }
+    
+    function handleActionKey(code){
+      if(code === 'Space' && !gameRunning){
+        restart();
+      } else if(code === 'Escape'){
+        destroyGame();
+      }
+    }
+    
+    function draw(){
+      const colors = getThemeColors();
+      
+      ctx.fillStyle = 'rgba(2,0,8,0.3)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.strokeStyle = colors.grid;
+      ctx.lineWidth = 0.3;
+      for(let i = 0; i < tileCount; i++){
+        ctx.beginPath();
+        ctx.moveTo(i * gridSize, 0);
+        ctx.lineTo(i * gridSize, canvas.height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i * gridSize);
+        ctx.lineTo(canvas.width, i * gridSize);
+        ctx.stroke();
+      }
+      
+      snake.forEach((segment, index) => {
+        const gradient = ctx.createLinearGradient(
+          segment.x * gridSize, segment.y * gridSize,
+          (segment.x + 1) * gridSize, (segment.y + 1) * gridSize
+        );
+        gradient.addColorStop(0, colors.snake);
+        gradient.addColorStop(1, index === 0 ? '#ffffff' : colors.snake);
+        ctx.fillStyle = gradient;
+        
+        const padding = index === 0 ? 1 : 2;
+        ctx.fillRect(
+          segment.x * gridSize + padding,
+          segment.y * gridSize + padding,
+          gridSize - padding * 2,
+          gridSize - padding * 2
+        );
+        
+        if(index === 0){
+          ctx.fillStyle = '#ffffff';
+          const eyeSize = 3;
+          let ex1, ey1, ex2, ey2;
+          if(direction.x === 1) { ex1 = segment.x * gridSize + 11; ey1 = segment.y * gridSize + 3; ex2 = segment.x * gridSize + 11; ey2 = segment.y * gridSize + 10; }
+          else if(direction.x === -1) { ex1 = segment.x * gridSize + 2; ey1 = segment.y * gridSize + 3; ex2 = segment.x * gridSize + 2; ey2 = segment.y * gridSize + 10; }
+          else if(direction.y === -1) { ex1 = segment.x * gridSize + 3; ey1 = segment.y * gridSize + 2; ex2 = segment.x * gridSize + 10; ey2 = segment.y * gridSize + 2; }
+          else { ex1 = segment.x * gridSize + 3; ey1 = segment.y * gridSize + 11; ex2 = segment.x * gridSize + 10; ey2 = segment.y * gridSize + 11; }
+          ctx.fillRect(ex1, ey1, eyeSize, eyeSize);
+          ctx.fillRect(ex2, ey2, eyeSize, eyeSize);
+        }
+      });
+      
+      const pulse = Math.sin(Date.now() * 0.01) * 0.3 + 0.7;
+      ctx.fillStyle = colors.food;
+      ctx.shadowColor = colors.food;
+      ctx.shadowBlur = 8 * pulse;
+      ctx.beginPath();
+      ctx.arc(
+        food.x * gridSize + gridSize / 2,
+        food.y * gridSize + gridSize / 2,
+        gridSize / 2 - 2,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    
+    function update(){
+      direction = {...nextDirection};
+      
+      const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+      
+      if(head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount){
+        gameOver();
+        return;
+      }
+      
+      if(snake.some(segment => segment.x === head.x && segment.y === head.y)){
+        gameOver();
+        return;
+      }
+      
+      snake.unshift(head);
+      
+      if(head.x === food.x && head.y === food.y){
+        score += 10;
+        scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
+        placeFood();
+        if(speed > 60) speed -= 2;
+        clearInterval(gameLoop);
+        gameLoop = setInterval(gameStep, speed);
+      } else {
+        snake.pop();
+      }
+    }
+    
+    function gameStep(){
+      if(!gameRunning) return;
+      update();
+      draw();
+    }
+    
+    function gameOver(){
+      gameRunning = false;
+      clearInterval(gameLoop);
+      if(score > highScore){
+        highScore = score;
+        localStorage.setItem('snakeHighScore', highScore);
+        scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore} 🏆`;
+      }
+      gameOverDiv.classList.add('show');
+      if(isMobile) gameOverDiv.textContent = 'GAME OVER! Tap ● to restart';
+    }
+    
+    function restart(){
+      snake = [
+        {x: 10, y: 10},
+        {x: 9, y: 10},
+        {x: 8, y: 10}
+      ];
+      direction = {x: 1, y: 0};
+      nextDirection = {x: 1, y: 0};
+      score = 0;
+      speed = 120;
+      gameRunning = true;
+      gameOverDiv.classList.remove('show');
+      scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
+      placeFood();
+      clearInterval(gameLoop);
+      gameLoop = setInterval(gameStep, speed);
+    }
+    
+    function handleKey(e){
+      if(!gameRunning && e.code === 'Space'){
+        e.preventDefault();
+        restart();
+        return;
+      }
+      if(!gameRunning) return;
+      
+      switch(e.code){
+        case 'ArrowUp': case 'KeyW':
+          e.preventDefault();
+          handleDirectionKey({x: 0, y: -1});
+          break;
+        case 'ArrowDown': case 'KeyS':
+          e.preventDefault();
+          handleDirectionKey({x: 0, y: 1});
+          break;
+        case 'ArrowLeft': case 'KeyA':
+          e.preventDefault();
+          handleDirectionKey({x: -1, y: 0});
+          break;
+        case 'ArrowRight': case 'KeyD':
+          e.preventDefault();
+          handleDirectionKey({x: 1, y: 0});
+          break;
+        case 'Escape':
+          e.preventDefault();
+          destroyGame();
+          break;
+      }
+    }
+    
+    function destroyGame(){
+      clearInterval(gameLoop);
+      document.removeEventListener('keydown', handleKey);
+      gameContainer.remove();
+    }
+    
+    document.addEventListener('keydown', handleKey);
+    
+    gameRunning = true;
+    gameLoop = setInterval(gameStep, speed);
+    draw();
+    
+    return destroyGame;
+  };
+})();
+
+/* ════════════════════════════════════════════
    INTERACTIVE TERMINAL
 ════════════════════════════════════════════ */
 (function initTerminal(){
   const terminalBody = document.getElementById('terminal-body');
+  let currentSnakeDestroyer = null;
 
   const skillCategories = [
     {
@@ -1488,6 +2525,7 @@ body::after{
         '  <span class="highlight">whois</span>     - درباره من',
         '  <span class="highlight">projects</span>  - پروژه‌های فعال',
         '  <span class="highlight">contact</span>   - اطلاعات تماس',
+        '  <span class="highlight">snake</span>     - <span class="green">🐍 بازی مار!</span>',
         '  <span class="highlight">print</span>     - <span class="amber">باز کردن صفحه قابل چاپ</span>',
         '  <span class="highlight">share</span>     - <span class="green">اشتراک‌گذاری رزومه</span>',
         '  <span class="highlight">clear</span>     - پاک کردن ترمینال',
@@ -1547,6 +2585,7 @@ body::after{
         '<span class="dim">بخش آخر صفحه هم لینک‌های کلیک‌شدنی داره ←</span>'
       ]
     },
+    'snake': { action: 'snake' },
     'clear': { clear: true },
     'print': { action: 'print' },
     'share': { action: 'share' }
@@ -1580,7 +2619,7 @@ body::after{
     lines.push('');
     renderCategories(lines);
     lines.push('');
-    lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');
+    lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="green">snake</span>, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');
     return lines;
   }
 
@@ -1589,14 +2628,14 @@ body::after{
     if(appendInput){
       html += '\n<div class="terminal-input-line" id="terminal-input-line">';
       html += '<span class="prompt">❯</span>';
-      html += '<input type="text" id="terminal-input" placeholder="help را تایپ کنید..." autofocus autocomplete="off" spellcheck="false">';
+      html += '<input type="text" id="terminal-input" placeholder="help را تایپ کنید..." autocomplete="off" spellcheck="false">';
       html += '</div>';
     }
     terminalBody.innerHTML = html;
     if(appendInput){
       const input = document.getElementById('terminal-input');
       if(input){
-        input.focus();
+        input.focus({ preventScroll: true });
         input.addEventListener('keydown', handleTerminalInput);
       }
     }
@@ -1653,25 +2692,38 @@ body::after{
       return;
     }
 
+    if(cmdResult.action === 'snake'){
+      cmdResult.cmd = cmd;
+      cmdResult.output = [
+        '<span class="green">🐍 بازی مار شروع شد!</span>',
+        '<span class="dim">با کلیدهای جهت‌نما یا WASD حرکت کن. ESC برای خروج.</span>'
+      ];
+      addOutputLines(cmdResult);
+      
+      setTimeout(() => {
+        if(currentSnakeDestroyer) currentSnakeDestroyer();
+        currentSnakeDestroyer = window.startSnakeGame(terminalBody);
+      }, 300);
+      return;
+    }
+
     cmdResult.cmd = cmd;
     addOutputLines(cmdResult);
   }
 
   terminalBody.addEventListener('click', () => {
     const input = document.getElementById('terminal-input');
-    if(input && !input.disabled) input.focus();
+    if(input && !input.disabled) input.focus({ preventScroll: true });
   });
 
   renderTerminal(buildWelcome(), true);
 })();
 
 /* ════════════════════════════════════════════
-   GSAP + SCROLLTRIGGER — فقط برای انیمیشن
-   بدون Snap Scroll
+   GSAP + SCROLLTRIGGER
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-/* ── TYPEWRITER HERO TITLE ── */
 (function typewriter(){
   const el = document.getElementById('s0-title');
   const full = el.dataset.full;
@@ -1686,7 +2738,6 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
   setTimeout(type, 600);
 })();
 
-/* ── CURSOR (Desktop Only) ── */
 if(window.innerWidth > 768){
   const cursorDot = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursor-ring');
@@ -1713,23 +2764,30 @@ if(window.innerWidth > 768){
   });
 }
 
-/* ── SCROLL PROGRESS ── */
-ScrollTrigger.create({
-  trigger:'#scroll-container', start:'top top', end:'bottom bottom',
-  onUpdate: self =>{
-    document.getElementById('scroll-progress').style.width = (self.progress*100)+'%';
-    if(window._threeSetScroll) window._threeSetScroll(self.progress);
-  }
-});
+// Scroll progress using Lenis scroll event
+if(window.__lenis){
+  window.__lenis.on('scroll', ({ scroll, limit }) => {
+    const progress = limit > 0 ? scroll / limit : 0;
+    document.getElementById('scroll-progress').style.width = (progress * 100) + '%';
+    if(window._threeSetScroll) window._threeSetScroll(progress);
+  });
+} else {
+  // Fallback for when Lenis is not available
+  ScrollTrigger.create({
+    trigger:'#scroll-container', start:'top top', end:'bottom bottom',
+    onUpdate: self =>{
+      document.getElementById('scroll-progress').style.width = (self.progress*100)+'%';
+      if(window._threeSetScroll) window._threeSetScroll(self.progress);
+    }
+  });
+}
 
-/* ── HIDE SCROLL HINT ── */
 ScrollTrigger.create({
   trigger:'#scene-0', start:'top+=3% top',
   onEnter:()=>gsap.to('#scroll-hint',{opacity:0,duration:0.3,pointerEvents:'none'}),
   onLeaveBack:()=>gsap.to('#scroll-hint',{opacity:1,duration:0.2,pointerEvents:'auto'})
 });
 
-/* ── CHAPTER NAV ── */
 const allScenes = document.querySelectorAll('.scene');
 const navDots = document.querySelectorAll('.nav-dot');
 allScenes.forEach((s, i) => {
@@ -1749,41 +2807,19 @@ navDots.forEach((dot, i) => {
   dot.addEventListener('click', () => {
     if(allScenes[i]){
       activateNav(i);
-      const tops = Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
-      gsap.to(window, { scrollTo: { y: tops[i], autoKill: false }, duration: 0.55, ease: 'power3.inOut' });
+      // Use Lenis scrollTo if available
+      if(window.__lenis){
+        window.__lenis.scrollTo(allScenes[i]);
+      } else {
+        const tops = Array.from(allScenes).map(s => s.getBoundingClientRect().top + window.pageYOffset);
+        gsap.to(window, { scrollTo: { y: tops[i], autoKill: false }, duration: 0.55, ease: 'power3.inOut' });
+      }
     }
   });
 });
 
-/* ── AMBIENT TINT PER SCENE ── */
-const ambientEl = document.getElementById('ambient');
-const tints = [
-  'radial-gradient(ellipse 65% 55% at 50% 50%,rgba(157,78,221,.14),transparent 65%), radial-gradient(ellipse 35% 40% at 80% 20%,rgba(125,211,252,.06),transparent 60%)',
-  'radial-gradient(ellipse 60% 55% at 35% 50%,rgba(99,102,241,.13),transparent 65%), radial-gradient(ellipse 30% 35% at 70% 75%,rgba(157,78,221,.07),transparent 55%)',
-  'radial-gradient(ellipse 55% 50% at 50% 45%,rgba(20,20,50,.22), transparent 65%)',
-  'radial-gradient(ellipse 50% 50% at 50% 50%,rgba(30,10,60,.35), transparent 60%), radial-gradient(ellipse 30% 30% at 50% 50%,rgba(157,78,221,.15),transparent 50%)',
-  'radial-gradient(ellipse 45% 45% at 50% 50%,rgba(20,5,50,.40), transparent 55%), radial-gradient(ellipse 25% 25% at 50% 50%,rgba(100,50,200,.20),transparent 45%)',
-  'radial-gradient(ellipse 40% 40% at 50% 50%,rgba(15,5,40,.45), transparent 50%), radial-gradient(ellipse 20% 20% at 50% 50%,rgba(80,40,180,.25),transparent 40%)',
-  'radial-gradient(ellipse 35% 35% at 50% 50%,rgba(10,5,35,.50), transparent 45%), radial-gradient(ellipse 18% 18% at 50% 50%,rgba(70,30,160,.30),transparent 35%)',
-  'radial-gradient(ellipse 30% 30% at 50% 50%,rgba(10,3,30,.55), transparent 40%), radial-gradient(ellipse 15% 15% at 50% 50%,rgba(60,25,140,.35),transparent 30%)',
-  'radial-gradient(ellipse 50% 50% at 50% 50%,rgba(25,8,50,.35), transparent 55%), radial-gradient(ellipse 25% 25% at 50% 50%,rgba(140,70,220,.15),transparent 45%)',
-  'radial-gradient(ellipse 55% 55% at 50% 50%,rgba(20,8,45,.30), transparent 60%), radial-gradient(ellipse 30% 30% at 50% 50%,rgba(120,60,200,.12),transparent 50%)',
-  'radial-gradient(ellipse 60% 55% at 50% 50%,rgba(157,78,221,.18),transparent 65%), radial-gradient(ellipse 30% 35% at 75% 25%,rgba(125,211,252,.08),transparent 55%)',
-];
-
-allScenes.forEach((s, i) => {
-  ScrollTrigger.create({
-    trigger: s, start: 'top 50%',
-    onEnter: () => { ambientEl.style.background = tints[i]; },
-    onEnterBack: () => { ambientEl.style.background = tints[i]; }
-  });
-});
-
-/* ════════════════════════════════════════════
-   SCENE ANIMATIONS — Enter reveal
-════════════════════════════════════════════ */
 gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'], {opacity:0});
-const enterTl = gsap.timeline({ delay: 0.2 });
+const enterTl = gsap.timeline({ delay: 2.2 }); // Wait for warp loader
 enterTl.fromTo('#s0-ch', {opacity:0, y:40}, {opacity:1, y:0, duration:0.4, ease:'power3.out'});
 enterTl.fromTo('#s0-profile', {opacity:0, scale:0.65}, {opacity:1, scale:1, duration:0.5, ease:'back.out(1.4)'}, '-=0.3');
 enterTl.fromTo('#s0-fa', {opacity:0, y:80}, {opacity:1, y:0, duration:0.5, ease:'expo.out'}, '-=0.35');
@@ -1825,7 +2861,7 @@ allScenes.forEach(s => {
   }
 });
 
-/* ── PROFILE MODAL ── */
+// Profile Modal
 (function(){
   const modal = document.getElementById('profile-modal');
   const closeBtn = document.getElementById('profile-modal-close');
@@ -1840,7 +2876,6 @@ allScenes.forEach(s => {
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 })();
 
-/* ── SHARE ── */
 async function shareResume(){
   const d = {
     title: 'Mohammad Javad Mahmoudi — Full Stack Developer',
@@ -1864,7 +2899,7 @@ async function shareResume(){
   }
 }
 
-/* ── PHONE REVEAL ── */
+// Phone reveal
 (function(){
   const p = ['\u0030','\u0039','1','2','0','1','2','0','7','4','5'];
   const num = p.join('');
@@ -1883,11 +2918,6 @@ async function shareResume(){
     }
   });
 })();
-
-window.addEventListener('scroll', () => {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  if(window._threeSetScroll && max > 0) window._threeSetScroll(window.scrollY / max);
-}, { passive: true });
 </script>
 </body>
 </html>
