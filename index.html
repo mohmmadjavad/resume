@@ -2173,17 +2173,35 @@ window.initLenis = function(){
 ════════════════════════════════════════════ */
 (function initSnakeGame(){
   
-  window.startSnakeGame = function(containerElement){
+  window.startSnakeGame = function(containerElement, onExit){
     const existingGame = containerElement.querySelector('.snake-game-container');
     if(existingGame) existingGame.remove();
     
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 769;
+
     const gameContainer = document.createElement('div');
     gameContainer.className = 'snake-game-container active';
-    
+
+    const scoreRow = document.createElement('div');
+    scoreRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:8px;';
+    gameContainer.appendChild(scoreRow);
+
     const scoreDiv = document.createElement('div');
     scoreDiv.className = 'snake-score';
+    scoreDiv.style.cssText = 'flex:1;margin-bottom:0;';
     scoreDiv.textContent = '🐍 SCORE: 0  |  HIGH: 0';
-    gameContainer.appendChild(scoreDiv);
+    scoreRow.appendChild(scoreDiv);
+
+    if(isMobile){
+      const exitBtn = document.createElement('button');
+      exitBtn.type = 'button';
+      exitBtn.textContent = '✕ خروج';
+      exitBtn.setAttribute('aria-label', 'خروج از بازی مار');
+      exitBtn.style.cssText = 'flex-shrink:0;background:rgba(157,78,221,0.12);border:1px solid rgba(157,78,221,0.3);color:var(--terminal-dim,#8c8a99);border-radius:6px;font-size:0.58rem;font-family:inherit;padding:5px 9px;cursor:pointer;';
+      exitBtn.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); destroyGame(); }, { passive:false });
+      exitBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); destroyGame(); });
+      scoreRow.appendChild(exitBtn);
+    }
     
     const canvasWrapper = document.createElement('div');
     canvasWrapper.style.cssText = 'position:relative; width:100%; touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;';
@@ -2195,8 +2213,6 @@ window.initLenis = function(){
     canvas.height = 300;
     canvas.style.cssText = 'width:100%; height:auto; display:block;';
     canvasWrapper.appendChild(canvas);
-    
-    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 769;
     
     let dPadContainer = null;
     if(isMobile){
@@ -2557,6 +2573,7 @@ window.initLenis = function(){
       clearInterval(gameLoop);
       document.removeEventListener('keydown', handleKey);
       gameContainer.remove();
+      if(typeof onExit === 'function') onExit();
     }
     
     document.addEventListener('keydown', handleKey);
@@ -2575,6 +2592,7 @@ window.initLenis = function(){
 (function initTerminal(){
   const terminalBody = document.getElementById('terminal-body');
   let currentSnakeDestroyer = null;
+  let gameActive = false;
 
   const skillCategories = [
     {
@@ -2735,7 +2753,7 @@ window.initLenis = function(){
     if(appendInput){
       const input = document.getElementById('terminal-input');
       if(input){
-        input.focus({ preventScroll: true });
+        if(!gameActive) input.focus({ preventScroll: true });
         input.addEventListener('keydown', handleTerminalInput);
       }
     }
@@ -2796,13 +2814,32 @@ window.initLenis = function(){
       cmdResult.cmd = cmd;
       cmdResult.output = [
         '<span class="green">🐍 بازی مار شروع شد!</span>',
-        '<span class="dim">با کلیدهای جهت‌نما یا WASD حرکت کن. ESC برای خروج.</span>'
+        '<span class="dim">با کلیدهای جهت‌نما یا WASD حرکت کن. ESC یا دکمه‌ی خروج برای پایان.</span>'
       ];
       addOutputLines(cmdResult);
-      
+
       setTimeout(() => {
         if(currentSnakeDestroyer) currentSnakeDestroyer();
-        currentSnakeDestroyer = window.startSnakeGame(terminalBody);
+        gameActive = true;
+        const inputLine = document.getElementById('terminal-input-line');
+        if(inputLine) inputLine.style.display = 'none';
+        const activeInput = document.getElementById('terminal-input');
+        if(activeInput) activeInput.blur();
+
+        currentSnakeDestroyer = window.startSnakeGame(terminalBody, () => {
+          // وقتی بازی واقعاً تموم شد (ESC، دکمه‌ی خروج، یا باز شدن دوباره) اجرا می‌شود
+          gameActive = false;
+          currentSnakeDestroyer = null;
+          const line = document.getElementById('terminal-input-line');
+          if(line) line.style.display = '';
+          if(document.body.classList.contains('terminal-modal-open')){
+            const input = document.getElementById('terminal-input');
+            if(input && !input.disabled) input.focus({ preventScroll: true });
+          }
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        });
+
+        terminalBody.scrollTop = terminalBody.scrollHeight;
       }, 300);
       return;
     }
@@ -2810,11 +2847,6 @@ window.initLenis = function(){
     cmdResult.cmd = cmd;
     addOutputLines(cmdResult);
   }
-
-  terminalBody.addEventListener('click', () => {
-    const input = document.getElementById('terminal-input');
-    if(input && !input.disabled) input.focus({ preventScroll: true });
-  });
 
   renderTerminal(buildWelcome(), true);
 })();
