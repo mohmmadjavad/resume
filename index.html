@@ -3094,7 +3094,18 @@ const sceneElements = {
     locked = true;
     toggleScrollHint(false);
     triggerBurst();
-    animateBookendOut(introEl, () => { mode = 'journey'; locked = false; activateNav(1); onScroll(); });
+    animateBookendOut(introEl, () => {
+      mode = 'journey';
+      // اسکرول نرم به صحنه‌ی اول میانی به‌جای پرش ناگهانی
+      const firstMiddle = allScenes[1];
+      if(firstMiddle){
+        const top = firstMiddle.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+      locked = false;
+      activateNav(1);
+      onScroll();
+    });
   }
   function enterOutro(){
     if(locked) return;
@@ -3103,11 +3114,22 @@ const sceneElements = {
     tweenProgressTo(1);
     triggerBurst();
     const ids = sceneElements[outroEl.id];
-    animateBookendIn(outroEl, () => {
-      locked = false;
-      activateNav(total - 1);
-      if(ids) revealElements(ids);
-    });
+    // ابتدا به انتهای صحنه‌ی میانی آخر اسکرول می‌کنیم تا گذار روان‌تر باشد
+    const lastMiddle = allScenes[total - 2];
+    function doEnter(){
+      animateBookendIn(outroEl, () => {
+        locked = false;
+        activateNav(total - 1);
+        if(ids) revealElements(ids);
+      });
+    }
+    if(lastMiddle){
+      const top = lastMiddle.getBoundingClientRect().top + window.pageYOffset + lastMiddle.offsetHeight - window.innerHeight;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      setTimeout(doEnter, 320);
+    } else {
+      doEnter();
+    }
   }
   function exitOutro(){
     if(locked) return;
@@ -3180,7 +3202,7 @@ const sceneElements = {
     // journey: فقط دقیقاً روی مرز بالا/پایین مداخله می‌کنیم، در غیر این صورت اسکرول طبیعی و آزاد است
     if(locked) return;
     if(getScrollY() <= 1 && e.deltaY < -4){ e.preventDefault(); enterIntro(); }
-    else if(getScrollY() >= getMaxScroll() - 1 && e.deltaY > 4){ e.preventDefault(); enterOutro(); }
+    else if(getScrollY() >= getMaxScroll() - 2 && e.deltaY > 4){ e.preventDefault(); enterOutro(); }
   }
   window.addEventListener('wheel', onWheel, { passive: false });
 
