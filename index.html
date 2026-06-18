@@ -911,7 +911,7 @@ body::after{
   position:fixed;inset:0;z-index:9500;
   background:rgba(5,2,14,0.86);
   backdrop-filter:blur(6px);
-  display:flex;align-items:flex-end;justify-content:center;
+  display:flex;align-items:flex-start;justify-content:center;
   opacity:0;visibility:hidden;pointer-events:none;
   transition:opacity .25s ease, visibility .25s ease;
 }
@@ -920,14 +920,15 @@ body::after{
 }
 .terminal-modal-panel{
   width:100%;max-width:640px;
-  max-height:82vh;
+  max-height:100%;
+  margin-top:0;
   display:flex;flex-direction:column;
   background:var(--terminal-bg);
   border:1px solid var(--terminal-border);
-  border-bottom:none;
-  border-radius:16px 16px 0 0;
-  box-shadow:0 -10px 40px rgba(0,0,0,0.55), 0 0 30px rgba(157,78,221,0.12);
-  transform:translateY(24px);
+  border-top:none;
+  border-radius:0 0 16px 16px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.55), 0 0 30px rgba(157,78,221,0.12);
+  transform:translateY(-24px);
   transition:transform .3s cubic-bezier(.4,0,.2,1);
   overflow:hidden;
 }
@@ -3094,9 +3095,17 @@ const sceneElements = {
     if(input && !input.disabled) input.focus({ preventScroll: true });
   }
 
+  function syncOverlayToViewport(){
+    if(!window.visualViewport) return;
+    const vv = window.visualViewport;
+    overlay.style.top = vv.offsetTop + 'px';
+    overlay.style.height = vv.height + 'px';
+  }
+
   function openModal(){
     if(isOpen || !isMobileNow()) return;
     isOpen = true;
+    syncOverlayToViewport();
     slot.appendChild(terminalWrapper);
     overlay.classList.add('active');
     document.body.classList.add('terminal-modal-open');
@@ -3106,7 +3115,6 @@ const sceneElements = {
   function closeModal(){
     if(!isOpen) return;
     isOpen = false;
-    panel.style.transform = '';
     overlay.classList.remove('active');
     document.body.classList.remove('terminal-modal-open');
     const input = document.getElementById('terminal-input');
@@ -3131,16 +3139,10 @@ const sceneElements = {
   overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && isOpen) closeModal(); });
 
-  // هماهنگی با کیبورد موبایل: وقتی کیبورد باز می‌شود، مودال بالاتر می‌رود
+  // هماهنگی با کیبورد موبایل: کادر مودال را دقیقاً هم‌اندازه‌ی ناحیه‌ی قابل‌دید (بالای کیبورد) می‌کنیم
   if(window.visualViewport){
-    const vv = window.visualViewport;
-    function adjustForKeyboard(){
-      if(!isOpen) return;
-      const gap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-      panel.style.transform = gap > 60 ? `translateY(-${gap}px)` : '';
-    }
-    vv.addEventListener('resize', adjustForKeyboard);
-    vv.addEventListener('scroll', adjustForKeyboard);
+    window.visualViewport.addEventListener('resize', syncOverlayToViewport);
+    window.visualViewport.addEventListener('scroll', syncOverlayToViewport);
   }
 
   window.addEventListener('resize', () => { if(isOpen && !isMobileNow()) closeModal(); });
