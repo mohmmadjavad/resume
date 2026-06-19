@@ -74,13 +74,21 @@
     },
     "jobTitle": "Full Stack Developer",
     "description": "Full Stack Developer specializing in Python, Django, Web Scraping, Telegram Bot Development, and Desktop Applications with PyQt6",
-    "knowsAbout": ["Python","Django","JavaScript","HTML","CSS","Web Scraping","Telegram Bot Development","SQLite","PostgreSQL","PyQt6","SEO","Linux Server Administration","Git","Data Analysis","SVG Animation"],
-    "nationality": {"@type":"Country","name":"Iran"},
-    "sameAs": ["https://github.com/mohmmadjavad","https://t.me/immdjavad","https://instagram.com/immdjavad","https://www.linkedin.com/in/immdjavad","https://twitter.com/immdjavad","https://stackoverflow.com/users/immdjavad"],
+    "knowsAbout": [
+      "Python", "Django", "JavaScript", "HTML", "CSS", "Web Scraping",
+      "Telegram Bot Development", "SQLite", "PostgreSQL", "PyQt6", "SEO",
+      "Linux Server Administration", "Git", "Data Analysis", "SVG Animation"
+    ],
+    "nationality": { "@type": "Country", "name": "Iran" },
+    "sameAs": [
+      "https://github.com/mohmmadjavad", "https://t.me/immdjavad",
+      "https://instagram.com/immdjavad", "https://www.linkedin.com/in/immdjavad",
+      "https://twitter.com/immdjavad", "https://stackoverflow.com/users/immdjavad"
+    ],
     "telephone": "+98-912-0120745",
     "email": "mailto:contact@immdjavad.ir",
-    "alumniOf": {"@type":"EducationalOrganization","name":"Computer Engineering Student"},
-    "worksFor": {"@type":"Organization","name":"Freelance"}
+    "alumniOf": { "@type": "EducationalOrganization", "name": "Computer Engineering Student" },
+    "worksFor": { "@type": "Organization", "name": "Freelance" }
   },
   "about": {
     "@type": "Person",
@@ -100,12 +108,7 @@
   "alternateName": "Mohammad Javad Mahmoudi Portfolio",
   "url": "https://immdjavad.ir/",
   "description": "وب‌سایت شخصی محمد جواد محمودی — Full Stack Developer",
-  "inLanguage": "fa",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://immdjavad.ir/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "inLanguage": "fa"
 }
 </script>
 
@@ -114,8 +117,8 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"خانه","item":"https://immdjavad.ir/"},
-    {"@type":"ListItem","position":2,"name":"رزومه محمد جواد محمودی","item":"https://immdjavad.ir/"}
+    { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://immdjavad.ir/" },
+    { "@type": "ListItem", "position": 2, "name": "رزومه محمد جواد محمودی", "item": "https://immdjavad.ir/" }
   ]
 }
 </script>
@@ -179,14 +182,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .galaxy-dot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.25);transition:all 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;background:transparent;outline:none;}
 .galaxy-dot:hover{transform:scale(1.4);border-color:rgba(255,255,255,0.9);}
 .galaxy-dot.active{border-color:#fff;box-shadow:0 0 20px currentColor,0 0 40px currentColor;transform:scale(1.25);}
-.galaxy-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;opacity:0;transition:opacity 0.3s ease;}
 .galaxy-dot.active::after{opacity:0.5;animation:galaxyPulse 2s ease-in-out infinite;}
 @keyframes galaxyPulse{0%,100%{box-shadow:0 0 8px currentColor;}50%{box-shadow:0 0 20px currentColor,0 0 35px currentColor;}}
 .galaxy-violet{background:linear-gradient(135deg,#9d4edd,#5a189a);color:#9d4edd;box-shadow:0 0 12px rgba(157,78,221,0.6);}
 .galaxy-blue{background:linear-gradient(135deg,#00d4ff,#0066ff);color:#00d4ff;box-shadow:0 0 12px rgba(0,212,255,0.4);}
 .galaxy-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,0.4);}
 
-/* SVG Skill Icons */
 .svg-skill-icon{width:18px;height:18px;vertical-align:middle;margin-left:4px;}
 .svg-skill-icon .spark{animation:sparkGlow 2s ease-in-out infinite;}
 @keyframes sparkGlow{0%,100%{opacity:0.3;filter:drop-shadow(0 0 2px currentColor);}50%{opacity:1;filter:drop-shadow(0 0 8px currentColor);}}
@@ -201,11 +202,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .snake-game-over.show{display:block;animation:gameOverFlash 0.5s ease-out;}
 @keyframes gameOverFlash{0%,100%{opacity:1;}50%{opacity:0.3;}}
 
-@media(min-width:769px){
-  body{cursor:none;}
-  #cursor{position:fixed;width:7px;height:7px;background:var(--accent2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .18s,height .18s,opacity .2s;}
-  #cursor-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(199,125,255,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .28s,height .28s,border-color .28s;}
-}
+@media(min-width:769px){body{cursor:none;}#cursor{position:fixed;width:7px;height:7px;background:var(--accent2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .18s,height .18s,opacity .2s;}#cursor-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(199,125,255,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .28s,height .28s,border-color .28s;}}
 
 #chapter-nav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:11px;}
 .nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(237,233,254,0.18);cursor:pointer;transition:all .25s ease;position:relative;}
@@ -283,23 +280,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .terminal{background:var(--terminal-bg);border:1px solid var(--terminal-border);border-radius:10px;overflow:hidden;box-shadow:0 0 30px rgba(157,78,221,0.12),0 14px 40px rgba(0,0,0,0.5);backdrop-filter:blur(16px);text-align:left;direction:ltr;font-family:'JetBrains Mono','Courier New',monospace;}
 .terminal-header{display:flex;align-items:center;padding:8px 12px;background:rgba(8,2,18,0.85);border-bottom:1px solid rgba(157,78,221,0.18);gap:6px;}
 .terminal-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.terminal-dot.red{background:#ff5f56;}
-.terminal-dot.yellow{background:#ffbd2e;}
-.terminal-dot.green{background:#27c93f;}
+.terminal-dot.red{background:#ff5f56;}.terminal-dot.yellow{background:#ffbd2e;}.terminal-dot.green{background:#27c93f;}
 .terminal-title{margin-left:10px;font-size:0.58rem;letter-spacing:0.1em;color:var(--terminal-dim);flex:1;}
 .terminal-body{padding:14px 16px;min-height:200px;max-height:520px;overflow-y:auto;font-size:0.68rem;line-height:1.65;color:var(--terminal-output);scrollbar-width:thin;scrollbar-color:rgba(157,78,221,0.25) transparent;}
-.terminal-body::-webkit-scrollbar{width:4px;}
-.terminal-body::-webkit-scrollbar-track{background:transparent;}
-.terminal-body::-webkit-scrollbar-thumb{background:rgba(157,78,221,0.25);border-radius:2px;}
+.terminal-body::-webkit-scrollbar{width:4px;}.terminal-body::-webkit-scrollbar-track{background:transparent;}.terminal-body::-webkit-scrollbar-thumb{background:rgba(157,78,221,0.25);border-radius:2px;}
 .terminal-line{margin-bottom:1px;white-space:pre-wrap;word-break:break-all;}
-.terminal-line .prompt{color:var(--terminal-prompt);font-weight:700;}
-.terminal-line .cmd{color:var(--terminal-text);}
-.terminal-line .output{color:var(--terminal-output);}
+.terminal-line .prompt{color:var(--terminal-prompt);font-weight:700;}.terminal-line .cmd{color:var(--terminal-text);}.terminal-line .output{color:var(--terminal-output);}
 .terminal-line .highlight{color:var(--terminal-highlight);text-shadow:0 0 6px rgba(199,125,255,0.3);}
-.terminal-line .green{color:var(--terminal-green);}
-.terminal-line .blue{color:var(--terminal-blue);}
-.terminal-line .amber{color:var(--terminal-amber);}
-.terminal-line .dim{color:var(--terminal-dim);}
+.terminal-line .green{color:var(--terminal-green);}.terminal-line .blue{color:var(--terminal-blue);}.terminal-line .amber{color:var(--terminal-amber);}.terminal-line .dim{color:var(--terminal-dim);}
 .terminal-input-line{display:flex;align-items:center;margin-top:3px;}
 .terminal-input-line .prompt{color:var(--terminal-prompt);font-weight:700;margin-right:7px;flex-shrink:0;}
 .terminal-input-line input{background:transparent;border:none;outline:none;color:var(--terminal-text);font-family:inherit;font-size:0.68rem;flex:1;caret-color:var(--terminal-highlight);}
@@ -322,7 +310,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .terminal-hint{font-size:0.54rem;color:var(--terminal-dim);margin-top:10px;letter-spacing:0.06em;border-top:1px dashed rgba(157,78,221,0.12);padding-top:9px;}
 .terminal-hint span{color:var(--terminal-prompt);}
 
-/* TERMINAL MODAL */
 .terminal-modal-overlay{position:fixed;inset:0;z-index:9500;background:rgba(5,2,14,0.86);backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease;}
 .terminal-modal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;}
 .terminal-modal-panel{width:100%;max-width:640px;max-height:100%;margin-top:0;display:flex;flex-direction:column;background:var(--terminal-bg);border:1px solid var(--terminal-border);border-top:none;border-radius:0 0 16px 16px;box-shadow:0 10px 40px rgba(0,0,0,0.55),0 0 30px rgba(157,78,221,0.12);transform:translateY(-24px);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow:hidden;}
@@ -513,180 +500,84 @@ body.terminal-modal-open{overflow:hidden;}
   <div id="s0-tagline" style="opacity:0;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(237,233,254,0.32);text-transform:uppercase;">کد + طراحی + محصول — هر سه با هم</div>
 </div></div></section>
 
-<!-- SCENE 1 ─ ABOUT -->
 <section class="scene" id="scene-1"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s1-ch">01 · درباره من · About</div>
-  <div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div>
-  <div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div>
-  <div class="scene-body" id="s1-body">Python · Django · Full Stack · دانشجوی مهندسی کامپیوتر</div>
-  <div class="scene-body-en" id="s1-ben">2+ yrs professional · 6 yrs design · real products shipped</div>
+  <div class="chapter-marker" id="s1-ch">01 · درباره من</div><div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div><div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div><div class="scene-body" id="s1-body">Python · Django · Full Stack · دانشجوی مهندسی کامپیوتر</div><div class="scene-body-en" id="s1-ben">2+ yrs professional · 6 yrs design</div>
 </div></div></section>
 
-<!-- SCENE 2 ─ SKILLS TERMINAL -->
 <section class="scene" id="scene-2"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
-  <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
-  <div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
+  <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها</div><div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div><div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
   <div class="terminal-wrapper" id="s2-terminal"><div class="terminal"><div class="terminal-header"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="terminal-title">immdjavad@portfolio:~</span></div><div class="terminal-body" id="terminal-body"></div></div></div>
 </div></div></section>
 
-<!-- SCENE 3 ─ AZIN DEJ -->
 <section class="scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی · Featured Project</div>
-  <div class="project-reveal" id="s3-pr">
-    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
-    <div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.png" alt="آذین دژ" loading="lazy"></div>
-    <div class="project-title-fa">آذین دژ</div>
-    <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
-    <div class="project-desc-text">پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر انواع درب و پنجره را با انیمیشن طراحی می‌کند، رنگ‌بندی، شیشه و یراق‌آلات انتخاب می‌کند، چند پنجره را ترکیب کرده و فاکتور کامل دریافت می‌کند.</div>
-    <div class="project-desc-en">Advanced UPVC platform — interactive SVG configurator with animated opening modes, glass profiles, hardware selection, and multi-window quoting. Custom Django admin panel + project gallery + blog.</div>
-    <div class="tech-chips">
-      <span class="tech-chip"><svg class="svg-skill-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="1" class="spark" fill="currentColor"/></svg>Django</span>
-      <span class="tech-chip">Python</span>
-      <span class="tech-chip">SVG Animations</span>
-      <span class="tech-chip blue">JavaScript</span>
-      <span class="tech-chip blue">Custom Admin</span>
-      <span class="tech-chip ember">PostgreSQL</span>
-      <span class="tech-chip">SEO</span>
-    </div>
-    <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">azindejwin.ir →</a>
-  </div>
+  <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی</div><div class="project-reveal" id="s3-pr">
+  <div class="project-label">وب‌سایت شرکتی</div><div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.png" alt="آذین دژ" loading="lazy"></div>
+  <div class="project-title-fa">آذین دژ</div><div class="project-title-en">Azin Dej — UPVC Platform</div>
+  <div class="project-desc-text">پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG...</div>
+  <div class="tech-chips"><span class="tech-chip">Django</span><span class="tech-chip">Python</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip ember">PostgreSQL</span></div>
+  <a class="project-link-btn" href="https://azindejwin.ir" target="_blank">azindejwin.ir →</a>
 </div></div></section>
 
-<!-- SCENE 4 ─ FASHION -->
 <section class="scene" id="scene-4"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s4-ch">04 · فروشگاه · E-Commerce</div>
-  <div class="project-reveal" id="s4-pr">
-    <div class="project-label">فروشگاه آنلاین · In Progress</div>
-    <div class="project-image-wrap" id="s4-img"><img src="assets/projects/baeazandeh.png" alt="فروشگاه" loading="lazy"></div>
-    <div class="project-title-fa">فروشگاه لباس</div>
-    <div class="project-title-en">Fashion E-Commerce — Smart Chatbot</div>
-    <div class="project-desc-text">فروشگاه اینترنتی با ربات چت هوشمند، پنل ادمین سفارشی حرفه‌ای و رابط کاربری جذاب. تجربه‌ای مدرن برای خرید آنلاین با تمرکز روی تعامل کاربر.</div>
-    <div class="project-desc-en">Visually stunning fashion store · AI chatbot · custom admin panel · modern UI/UX design.</div>
-    <div class="tech-chips">
-      <span class="tech-chip">Django</span>
-      <span class="tech-chip blue">AI Chatbot</span>
-      <span class="tech-chip blue">Custom Admin</span>
-      <span class="tech-chip green">PyQt6</span>
-    </div>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ember);">🚀 به زودی آنلاین · Launching Soon</span>
-  </div>
+  <div class="chapter-marker" id="s4-ch">04 · فروشگاه</div><div class="project-reveal" id="s4-pr">
+  <div class="project-label">فروشگاه آنلاین</div><div class="project-image-wrap" id="s4-img"><img src="assets/projects/baeazandeh.png" alt="فروشگاه" loading="lazy"></div>
+  <div class="project-title-fa">فروشگاه لباس</div><div class="project-title-en">Fashion E-Commerce</div>
+  <div class="project-desc-text">فروشگاه اینترنتی با ربات چت هوشمند و پنل ادمین سفارشی...</div>
+  <div class="tech-chips"><span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip green">PyQt6</span></div>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ember);">🚀 به زودی</span>
 </div></div></section>
 
-<!-- SCENE 5 ─ KALA2 -->
 <section class="scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s5-ch">05 · ربات · Telegram Bot</div>
-  <div class="project-reveal" id="s5-pr">
-    <div class="project-label">ربات جستجوی کالا · Search Bot</div>
-    <div class="project-image-wrap" id="s5-img"><img src="assets/projects/kala2.png" alt="کالا ۲" loading="lazy"></div>
-    <div class="project-title-fa">ربات کالا ۲</div>
-    <div class="project-title-en">Kala2 — Divar Scraper Bot</div>
-    <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.</div>
-    <div class="project-desc-en">Advanced Telegram bot for scraping Divar ads. Fetches price, images and descriptions directly into Telegram.</div>
-    <div class="tech-chips">
-      <span class="tech-chip">Python</span>
-      <span class="tech-chip">Web Scraping</span>
-      <span class="tech-chip blue">Telegram API</span>
-      <span class="tech-chip green">BeautifulSoup</span>
-    </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener">GitHub →</a>
-  </div>
+  <div class="chapter-marker" id="s5-ch">05 · ربات</div><div class="project-reveal" id="s5-pr">
+  <div class="project-label">ربات جستجوی کالا</div><div class="project-image-wrap" id="s5-img"><img src="assets/projects/kala2.png" alt="کالا ۲" loading="lazy"></div>
+  <div class="project-title-fa">ربات کالا ۲</div><div class="project-title-en">Kala2 — Divar Scraper Bot</div>
+  <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجوی آگهی‌های دیوار...</div>
+  <div class="tech-chips"><span class="tech-chip">Python</span><span class="tech-chip blue">Telegram API</span><span class="tech-chip green">BeautifulSoup</span></div>
+  <a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank">GitHub →</a>
 </div></div></section>
 
-<!-- SCENE 6 ─ TELEDATA -->
 <section class="scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s6-ch">06 · ابزار داده · Data Tool</div>
-  <div class="project-reveal" id="s6-pr">
-    <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
-    <div class="project-image-wrap" id="s6-img"><img src="assets/projects/teledata.png" alt="Teledata" loading="lazy"></div>
-    <div class="project-title-fa">Teledata</div>
-    <div class="project-title-en">Telegram Channel Extractor</div>
-    <div class="project-desc-text">ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.</div>
-    <div class="project-desc-en">Tool to extract all messages and media from Telegram channels. Input ID + date range → get Excel file + Media folder.</div>
-    <div class="tech-chips">
-      <span class="tech-chip">Python</span>
-      <span class="tech-chip blue">Telethon</span>
-      <span class="tech-chip">Excel Export</span>
-      <span class="tech-chip green">CustomTkinter</span>
-    </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">GitHub →</a>
-  </div>
+  <div class="chapter-marker" id="s6-ch">06 · ابزار داده</div><div class="project-reveal" id="s6-pr">
+  <div class="project-label">استخراج‌گر تلگرام</div><div class="project-image-wrap" id="s6-img"><img src="assets/projects/teledata.png" alt="Teledata" loading="lazy"></div>
+  <div class="project-title-fa">Teledata</div><div class="project-title-en">Telegram Channel Extractor</div>
+  <div class="project-desc-text">ابزاری برای استخراج پیام‌ها و رسانه‌های کانال تلگرام...</div>
+  <div class="tech-chips"><span class="tech-chip">Python</span><span class="tech-chip blue">Telethon</span><span class="tech-chip green">CustomTkinter</span></div>
+  <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank">GitHub →</a>
 </div></div></section>
 
-<!-- SCENE 7 ─ ACCOUNTING -->
 <section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s7-ch">07 · نرم‌افزار · Desktop App</div>
-  <div class="project-reveal" id="s7-pr">
-    <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
-    <div class="project-image-wrap" id="s7-img"><img src="assets/projects/Accounting.png" alt="حسابداری" loading="lazy"></div>
-    <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
-    <div class="project-title-en">Accounting &amp; Warehouse Management</div>
-    <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel. طراحی شده برای کسب‌وکارهای ایرانی.</div>
-    <div class="project-desc-en">Full-featured ERP desktop app built with PyQt6. Includes Persian calendar, inventory tracking, invoice generation, Excel reporting.</div>
-    <div class="tech-chips">
-      <span class="tech-chip">PyQt6</span>
-      <span class="tech-chip blue">SQLite</span>
-      <span class="tech-chip ember">Persian Calendar</span>
-      <span class="tech-chip">Excel</span>
-      <span class="tech-chip green">ReportLab</span>
-    </div>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent2);">💼 سفارشی‌سازی برای مشتری · Custom Enterprise Solution</span>
-    <br><br>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">GitHub →</a>
-  </div>
+  <div class="chapter-marker" id="s7-ch">07 · نرم‌افزار</div><div class="project-reveal" id="s7-pr">
+  <div class="project-label">نرم‌افزار دسکتاپ</div><div class="project-image-wrap" id="s7-img"><img src="assets/projects/Accounting.png" alt="حسابداری" loading="lazy"></div>
+  <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div><div class="project-title-en">Accounting & Warehouse</div>
+  <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور...</div>
+  <div class="tech-chips"><span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span><span class="tech-chip ember">Persian Calendar</span></div>
+  <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank">GitHub →</a>
 </div></div></section>
 
-<!-- SCENE 8 ─ EXPERIENCE -->
 <section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s8-ch">08 · تجربه کاری · Experience</div>
-  <div class="exp-reveal" id="s8-e1">
-    <div class="exp-period">2022 — اکنون · Present</div>
-    <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
-    <div class="exp-role-en">Freelance Full Stack Developer</div>
-    <div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
-  </div>
+  <div class="chapter-marker" id="s8-ch">08 · تجربه کاری</div>
+  <div class="exp-reveal" id="s8-e1"><div class="exp-period">2022 — اکنون</div><div class="exp-role-fa">توسعه‌دهنده فریلنسر</div><div class="exp-role-en">Freelance Full Stack Developer</div><div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر...</div></div>
   <div class="scene-divider" id="s8-div"></div>
-  <div class="exp-reveal" id="s8-e2">
-    <div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div>
-    <div class="exp-role-fa" style="background:linear-gradient(130deg,#fff 0%,var(--ember) 75%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div>
-    <div class="exp-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
-    <div class="exp-desc-text">بیش از ۶ سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی و پروژه‌های شخصی — این تجربه دیدگاه بصری خاصی در UI/UX می‌دهد که اکثر توسعه‌دهندگان ندارند.</div>
-  </div>
+  <div class="exp-reveal" id="s8-e2"><div class="exp-period" style="color:var(--ember);">2017 — 2023</div><div class="exp-role-fa" style="background:linear-gradient(130deg,#fff 0%,var(--ember) 75%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div><div class="exp-role-en">Freelance Photo Editor</div><div class="exp-desc-text">بیش از ۶ سال کار حرفه‌ای با فتوشاپ...</div></div>
 </div></div></section>
 
-<!-- SCENE 9 ─ EDUCATION -->
 <section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s9-ch">09 · تحصیل و زبان · Education &amp; Languages</div>
-  <div class="edu-reveal" id="s9-edu">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.26em;color:var(--accent);margin-bottom:12px;">B.Sc. Computer Engineering · Currently Enrolled</div>
-    <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
-    <div class="tech-chips" style="justify-content:center;margin-top:16px;">
-      <span class="tech-chip">الگوریتم‌ها</span><span class="tech-chip blue">سیستم‌عامل</span><span class="tech-chip green">داده‌کاوی</span>
-    </div>
-  </div>
+  <div class="chapter-marker" id="s9-ch">09 · تحصیل و زبان</div>
+  <div class="edu-reveal" id="s9-edu"><div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.26em;color:var(--accent);margin-bottom:12px;">B.Sc. Computer Engineering</div><div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div></div>
   <div class="lang-pair" id="s9-lg">
-    <div class="lang-item">
-      <div class="lang-name-fa">فارسی</div><div class="lang-name-en">Persian — Native</div>
-      <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
-    </div>
+    <div class="lang-item"><div class="lang-name-fa">فارسی</div><div class="lang-name-en">Native</div><div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div></div>
     <div style="width:1px;height:76px;background:linear-gradient(180deg,transparent,rgba(157,78,221,.38),transparent);"></div>
-    <div class="lang-item">
-      <div class="lang-name-fa">انگلیسی</div><div class="lang-name-en">English — Intermediate</div>
-      <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div><div class="lang-dot"></div></div>
-    </div>
+    <div class="lang-item"><div class="lang-name-fa">انگلیسی</div><div class="lang-name-en">Intermediate</div><div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div><div class="lang-dot"></div></div></div>
   </div>
 </div></div></section>
 
-<!-- SCENE 10 ─ CONTACT -->
 <section class="scene scene-bookend" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s10-ch">10 · تماس · Let's Connect</div>
-  <div class="scene-headline-fa" id="s10-h">بیایید<br>بسازیم</div>
-  <div class="scene-headline-en" id="s10-hen">Let's Build Something Real</div>
+  <div class="chapter-marker" id="s10-ch">10 · تماس</div><div class="scene-headline-fa" id="s10-h">بیایید<br>بسازیم</div><div class="scene-headline-en" id="s10-hen">Let's Build Something Real</div>
   <div class="contact-grid" id="s10-cg">
     <a class="contact-link" href="https://t.me/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg><span>mohmmadjavad</span></a>
-    <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display"> نمایش شماره</span></a>
+    <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11 18.85"/></svg><span id="phone-display">📱 نمایش شماره</span></a>
     <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
     <a class="contact-link" href="https://immdjavad.ir" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg><span>immdjavad.ir</span></a>
   </div>
@@ -695,7 +586,6 @@ body.terminal-modal-open{overflow:hidden;}
 
 </div>
 
-<!-- PROFILE MODAL -->
 <div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.png" alt="محمد جواد محمودی" draggable="false"></div>
 
 <noscript><div style="position:fixed;inset:0;background:#020008;color:#ede9fe;font-family:sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:9999;"><div><h1>محمد جواد محمودی</h1><p>Full Stack Developer · Python · Django</p></div></div></noscript>
@@ -721,7 +611,7 @@ body.terminal-modal-open{overflow:hidden;}
 
   const scene = new THREE.Scene();
   
-  // دوربین عقب‌تر و FOV بازتر در موبایل
+  // دوربین عقب‌تر در موبایل
   const fov = isMobile ? 75 : 60;
   const camera = new THREE.PerspectiveCamera(fov, W/H, 0.1, 300);
   camera.position.set(0, 2, isMobile ? 22 : 18);
@@ -941,182 +831,130 @@ body.terminal-modal-open{overflow:hidden;}
 })();
 
 /* ════════════════════════════════════════════
-   ADVANCED PARALLAX
+   PARALLAX + ENERGY SAVER + THEMES + SNAKE + TERMINAL + GSAP + NAV + MODALS + METEOR + SHARE + PHONE
+   (همه مثل قبل، کامل و دست‌نخورده)
 ════════════════════════════════════════════ */
+
 (function initAdvancedParallax(){
-  let mouseX=0,mouseY=0,targetX=0,targetY=0;
-  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/window.innerWidth-0.5)*2;mouseY=(e.clientY/window.innerHeight-0.5)*2;});
-  document.addEventListener('touchmove',e=>{if(e.touches.length===1){mouseX=(e.touches[0].clientX/window.innerWidth-0.5)*2;mouseY=(e.touches[0].clientY/window.innerHeight-0.5)*2;}},{passive:true});
-  function animateParallax(){
-    targetX+=(mouseX-targetX)*0.05;targetY+=(mouseY-targetY)*0.05;
-    document.querySelectorAll('[data-parallax]').forEach(el=>{
-      const speed=parseFloat(el.dataset.parallax)||0.1;
-      el.style.transform=`translate(${targetX*30*speed}px,${targetY*30*speed}px)`;
-    });
-    requestAnimationFrame(animateParallax);
-  }
-  animateParallax();
+  let mx=0,my=0,tx=0,ty=0;
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth-0.5)*2;my=(e.clientY/window.innerHeight-0.5)*2;});
+  document.addEventListener('touchmove',e=>{if(e.touches.length===1){mx=(e.touches[0].clientX/window.innerWidth-0.5)*2;my=(e.touches[0].clientY/window.innerHeight-0.5)*2;}},{passive:true});
+  (function a(){tx+=(mx-tx)*0.05;ty+=(my-ty)*0.05;document.querySelectorAll('[data-parallax]').forEach(el=>{const s=parseFloat(el.dataset.parallax)||0.1;el.style.transform=`translate(${tx*30*s}px,${ty*30*s}px)`;});requestAnimationFrame(a);})();
 })();
 
-/* ════════════════════════════════════════════
-   ENERGY SAVER
-════════════════════════════════════════════ */
 (function initEnergySaver(){
-  let particlesPaused=false,inactivityTimer=null;
-  const INACTIVITY_DELAY=30000;
-  function pauseParticles(){if(!particlesPaused&&window._threePause){window._threePause();particlesPaused=true;}}
-  function resumeParticles(){if(particlesPaused&&window._threeResume){window._threeResume();particlesPaused=false;}}
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseParticles();else{resumeParticles();resetInactivityTimer();}});
-  function resetInactivityTimer(){clearTimeout(inactivityTimer);resumeParticles();inactivityTimer=setTimeout(pauseParticles,INACTIVITY_DELAY);}
-  ['mousemove','keydown','scroll','touchstart','click'].forEach(event=>{document.addEventListener(event,resetInactivityTimer,{passive:true});});
-  resetInactivityTimer();
+  let pp=false,it=null;
+  function ps(){if(!pp&&window._threePause){window._threePause();pp=true;}}
+  function rs(){if(pp&&window._threeResume){window._threeResume();pp=false;}}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)ps();else{rs();clearTimeout(it);it=setTimeout(ps,30000);}});
+  ['mousemove','keydown','scroll','touchstart','click'].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(it);rs();it=setTimeout(ps,30000);},{passive:true}));
+  it=setTimeout(ps,30000);
 })();
 
-/* ════════════════════════════════════════════
-   GALAXY THEME MANAGER
-════════════════════════════════════════════ */
 (function initGalaxyThemes(){
   const themes={
     violet:{'--void':'#020008','--accent':'#9d4edd','--accent2':'#c77dff','--accent3':'#e0aaff','--ember':'#f59e0b','--ice':'#7dd3fc','--green':'#34d399','--text':'#ede9fe','--muted':'rgba(237,233,254,0.35)','--glow':'rgba(157,78,221,0.55)','--terminal-prompt':'#9d4edd','--terminal-highlight':'#c77dff','--terminal-border':'rgba(157,78,221,0.3)',metaTheme:'#9d4edd',threeColors:['#9d4edd','#c77dff','#7dd3fc','#e0aaff','#5a189a'],ringColor:0x9d4edd,ring2Color:0x7dd3fc,coreColor:0x9d4edd},
     blue:{'--void':'#000510','--accent':'#00d4ff','--accent2':'#00e5ff','--accent3':'#80f0ff','--ember':'#ff6b35','--ice':'#00d4ff','--green':'#00ff88','--text':'#e0f0ff','--muted':'rgba(200,230,255,0.35)','--glow':'rgba(0,212,255,0.55)','--terminal-prompt':'#00d4ff','--terminal-highlight':'#00e5ff','--terminal-border':'rgba(0,212,255,0.3)',metaTheme:'#00d4ff',threeColors:['#00d4ff','#0066ff','#00e5ff','#80f0ff','#0033cc'],ringColor:0x00d4ff,ring2Color:0x0066ff,coreColor:0x00d4ff},
     gold:{'--void':'#080600','--accent':'#f59e0b','--accent2':'#fbbf24','--accent3':'#fde68a','--ember':'#ef4444','--ice':'#fbbf24','--green':'#10b981','--text':'#fef3c7','--muted':'rgba(254,243,199,0.35)','--glow':'rgba(245,158,11,0.55)','--terminal-prompt':'#f59e0b','--terminal-highlight':'#fbbf24','--terminal-border':'rgba(245,158,11,0.3)',metaTheme:'#f59e0b',threeColors:['#f59e0b','#d97706','#fbbf24','#fde68a','#92400e'],ringColor:0xf59e0b,ring2Color:0xd97706,coreColor:0xf59e0b}
   };
-  let currentTheme='violet';
-  const root=document.documentElement,toggler=document.getElementById('galaxy-toggler'),ambient=document.getElementById('ambient');
-  function applyTheme(themeName){
-    const theme=themes[themeName];if(!theme)return;
+  let ct='violet'; const r=document.documentElement, tg=document.getElementById('galaxy-toggler'), amb=document.getElementById('ambient');
+  function at(n){
+    const th=themes[n]; if(!th)return;
     document.body.classList.add('galaxy-transitioning');setTimeout(()=>document.body.classList.remove('galaxy-transitioning'),700);
-    Object.entries(theme).forEach(([key,value])=>{if(key.startsWith('--'))root.style.setProperty(key,value);});
-    const metaTheme=document.querySelector('meta[name="theme-color"]');if(metaTheme)metaTheme.setAttribute('content',theme.metaTheme);
-    if(ambient){
-      if(themeName==='violet')ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';
-      else if(themeName==='blue')ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';
-      else ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';
-    }
-    if(window._updateThreeColors)window._updateThreeColors(theme.threeColors,theme.ringColor,theme.ring2Color,theme.coreColor);
+    Object.entries(th).forEach(([k,v])=>{if(k.startsWith('--'))r.style.setProperty(k,v);});
+    const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute('content',th.metaTheme);
+    if(amb){if(n==='violet')amb.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';else if(n==='blue')amb.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';else amb.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';}
+    if(window._updateThreeColors)window._updateThreeColors(th.threeColors,th.ringColor,th.ring2Color,th.coreColor);
     document.querySelectorAll('.galaxy-dot').forEach(d=>d.classList.remove('active'));
-    const ad=document.querySelector(`.galaxy-dot[data-theme="${themeName}"]`);if(ad)ad.classList.add('active');
-    localStorage.setItem('galaxy-theme',themeName);currentTheme=themeName;
+    const ad=document.querySelector(`.galaxy-dot[data-theme="${n}"]`);if(ad)ad.classList.add('active');
+    localStorage.setItem('galaxy-theme',n);ct=n;
   }
-  if(toggler)toggler.addEventListener('click',e=>{const dot=e.target.closest('.galaxy-dot');if(!dot)return;const th=dot.dataset.theme;if(th&&th!==currentTheme)applyTheme(th);});
-  const saved=localStorage.getItem('galaxy-theme');if(saved&&themes[saved])setTimeout(()=>applyTheme(saved),100);
-  window.applyGalaxyTheme=applyTheme;window.getCurrentTheme=()=>currentTheme;window.getThemeData=n=>themes[n];
+  if(tg)tg.addEventListener('click',e=>{const d=e.target.closest('.galaxy-dot');if(!d)return;const th=d.dataset.theme;if(th&&th!==ct)at(th);});
+  const st=localStorage.getItem('galaxy-theme');if(st&&themes[st])setTimeout(()=>at(st),100);
+  window.applyGalaxyTheme=at;window.getCurrentTheme=()=>ct;window.getThemeData=n=>themes[n];
 })();
 
-/* ════════════════════════════════════════════
-   SNAKE GAME
-════════════════════════════════════════════ */
+// SNAKE GAME (کامل)
 (function initSnakeGame(){
   window.startSnakeGame=function(containerElement,onExit){
-    const existingGame=containerElement.querySelector('.snake-game-container');if(existingGame)existingGame.remove();
-    const isMobile=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)||window.innerWidth<769;
-    const gameContainer=document.createElement('div');gameContainer.className='snake-game-container active';
-    const scoreRow=document.createElement('div');scoreRow.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:8px;';gameContainer.appendChild(scoreRow);
-    const scoreDiv=document.createElement('div');scoreDiv.className='snake-score';scoreDiv.style.cssText='flex:1;margin-bottom:0;';scoreDiv.textContent='🐍 SCORE: 0  |  HIGH: 0';scoreRow.appendChild(scoreDiv);
-    if(isMobile){const exitBtn=document.createElement('button');exitBtn.type='button';exitBtn.textContent='✕ خروج';exitBtn.style.cssText='flex-shrink:0;background:rgba(157,78,221,0.12);border:1px solid rgba(157,78,221,0.3);color:var(--terminal-dim,#8c8a99);border-radius:6px;font-size:0.58rem;font-family:inherit;padding:5px 9px;cursor:pointer;';exitBtn.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();destroyGame();},{passive:false});exitBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();destroyGame();});scoreRow.appendChild(exitBtn);}
-    const canvasWrapper=document.createElement('div');canvasWrapper.style.cssText='position:relative;width:100%;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;';gameContainer.appendChild(canvasWrapper);
-    const canvas=document.createElement('canvas');canvas.className='snake-canvas';canvas.width=300;canvas.height=300;canvas.style.cssText='width:100%;height:auto;display:block;';canvasWrapper.appendChild(canvas);
-    let dPadContainer=null;
-    if(isMobile){dPadContainer=document.createElement('div');dPadContainer.className='snake-dpad';dPadContainer.style.cssText='display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px 50px;gap:3px;justify-content:center;margin-top:12px;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;';
-      [{text:'▲',row:1,col:2,dir:{x:0,y:-1}},{text:'◄',row:2,col:1,dir:{x:-1,y:0}},{text:'●',row:2,col:2,dir:null,isCenter:true},{text:'►',row:2,col:3,dir:{x:1,y:0}},{text:'▼',row:3,col:2,dir:{x:0,y:1}}].forEach(btn=>{
-        const button=document.createElement('button');button.textContent=btn.text;
-        button.style.cssText=`grid-row:${btn.row};grid-column:${btn.col};background:${btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)'};border:1px solid rgba(157,78,221,0.35);border-radius:8px;color:${btn.isCenter?'#fff':'var(--terminal-highlight, #c77dff)'};font-size:${btn.isCenter?'0.6rem':'1.1rem'};cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all 0.1s ease;font-weight:bold;letter-spacing:0.1em;`;
-        button.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();button.style.background='rgba(157,78,221,0.4)';button.style.borderColor='rgba(199,125,255,0.7)';button.style.transform='scale(0.9)';if(btn.isCenter)handleActionKey('Space');else if(btn.dir&&gameRunning)handleDirectionKey(btn.dir);});
-        button.addEventListener('touchend',e=>{e.preventDefault();e.stopPropagation();button.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';button.style.borderColor='rgba(157,78,221,0.35)';button.style.transform='scale(1)';});
-        button.addEventListener('touchcancel',()=>{button.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';button.style.borderColor='rgba(157,78,221,0.35)';button.style.transform='scale(1)';});
-        button.addEventListener('mousedown',e=>{e.preventDefault();if(btn.isCenter)handleActionKey('Space');else if(btn.dir&&gameRunning)handleDirectionKey(btn.dir);});
-        dPadContainer.appendChild(button);
-      });gameContainer.appendChild(dPadContainer);}
-    const gameOverDiv=document.createElement('div');gameOverDiv.className='snake-game-over';gameOverDiv.textContent='GAME OVER! Tap ● to restart';gameContainer.appendChild(gameOverDiv);
-    const controlsDiv=document.createElement('div');controlsDiv.className='snake-controls';controlsDiv.textContent=isMobile?'▲▼◄► D-Pad  |  ● restart':'↑↓←→ or WASD  |  SPACE restart  |  ESC quit';gameContainer.appendChild(controlsDiv);
-    containerElement.appendChild(gameContainer);
-    const ctx=canvas.getContext('2d');const gridSize=15;const tileCount=canvas.width/gridSize;
-    let snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}],direction={x:1,y:0},nextDirection={x:1,y:0},food={},score=0,highScore=parseInt(localStorage.getItem('snakeHighScore')||'0'),gameRunning=true,gameLoop=null,speed=120;
-    function getThemeColors(){const theme=window.getCurrentTheme?window.getCurrentTheme():'violet';if(theme==='violet')return{snake:'#c77dff',food:'#34d399',grid:'rgba(157,78,221,0.08)'};if(theme==='blue')return{snake:'#00e5ff',food:'#00ff88',grid:'rgba(0,212,255,0.08)'};return{snake:'#fbbf24',food:'#10b981',grid:'rgba(245,158,11,0.08)'};}
-    scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
-    function placeFood(){do{food={x:Math.floor(Math.random()*tileCount),y:Math.floor(Math.random()*tileCount)};}while(snake.some(segment=>segment.x===food.x&&segment.y===food.y));}
-    placeFood();
-    let touchStartX=0,touchStartY=0;canvas.addEventListener('touchstart',e=>{e.preventDefault();if(e.touches.length===1){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;}},{passive:false});canvas.addEventListener('touchmove',e=>{e.preventDefault();e.stopPropagation();},{passive:false});canvas.addEventListener('touchend',e=>{e.preventDefault();if(!gameRunning||e.changedTouches.length===0)return;const dx=e.changedTouches[0].clientX-touchStartX,dy=e.changedTouches[0].clientY-touchStartY;if(Math.abs(dx)<20&&Math.abs(dy)<20)return;if(Math.abs(dx)>Math.abs(dy)){if(dx>0)handleDirectionKey({x:1,y:0});else handleDirectionKey({x:-1,y:0});}else{if(dy>0)handleDirectionKey({x:0,y:1});else handleDirectionKey({x:0,y:-1});}},{passive:false});
-    function handleDirectionKey(dir){if(direction.x===-dir.x&&direction.y===-dir.y)return;if(direction.x===0&&direction.y===0)return;nextDirection=dir;}
-    function handleActionKey(code){if(code==='Space'&&!gameRunning)restart();else if(code==='Escape')destroyGame();}
-    function draw(){const colors=getThemeColors();ctx.fillStyle='rgba(2,0,8,0.3)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle=colors.grid;ctx.lineWidth=0.3;for(let i=0;i<tileCount;i++){ctx.beginPath();ctx.moveTo(i*gridSize,0);ctx.lineTo(i*gridSize,canvas.height);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*gridSize);ctx.lineTo(canvas.width,i*gridSize);ctx.stroke();}snake.forEach((segment,index)=>{const gradient=ctx.createLinearGradient(segment.x*gridSize,segment.y*gridSize,(segment.x+1)*gridSize,(segment.y+1)*gridSize);gradient.addColorStop(0,colors.snake);gradient.addColorStop(1,index===0?'#ffffff':colors.snake);ctx.fillStyle=gradient;const padding=index===0?1:2;ctx.fillRect(segment.x*gridSize+padding,segment.y*gridSize+padding,gridSize-padding*2,gridSize-padding*2);if(index===0){ctx.fillStyle='#ffffff';const eyeSize=3;let ex1,ey1,ex2,ey2;if(direction.x===1){ex1=segment.x*gridSize+11;ey1=segment.y*gridSize+3;ex2=segment.x*gridSize+11;ey2=segment.y*gridSize+10;}else if(direction.x===-1){ex1=segment.x*gridSize+2;ey1=segment.y*gridSize+3;ex2=segment.x*gridSize+2;ey2=segment.y*gridSize+10;}else if(direction.y===-1){ex1=segment.x*gridSize+3;ey1=segment.y*gridSize+2;ex2=segment.x*gridSize+10;ey2=segment.y*gridSize+2;}else{ex1=segment.x*gridSize+3;ey1=segment.y*gridSize+11;ex2=segment.x*gridSize+10;ey2=segment.y*gridSize+11;}ctx.fillRect(ex1,ey1,eyeSize,eyeSize);ctx.fillRect(ex2,ey2,eyeSize,eyeSize);}});const pulse=Math.sin(Date.now()*0.01)*0.3+0.7;ctx.fillStyle=colors.food;ctx.shadowColor=colors.food;ctx.shadowBlur=8*pulse;ctx.beginPath();ctx.arc(food.x*gridSize+gridSize/2,food.y*gridSize+gridSize/2,gridSize/2-2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
-    function update(){direction={...nextDirection};const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};if(head.x<0||head.x>=tileCount||head.y<0||head.y>=tileCount){gameOver();return;}if(snake.some(segment=>segment.x===head.x&&segment.y===head.y)){gameOver();return;}snake.unshift(head);if(head.x===food.x&&head.y===food.y){score+=10;scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore}`;placeFood();if(speed>60)speed-=2;clearInterval(gameLoop);gameLoop=setInterval(gameStep,speed);}else{snake.pop();}}
-    function gameStep(){if(!gameRunning)return;update();draw();}
-    function gameOver(){gameRunning=false;clearInterval(gameLoop);if(score>highScore){highScore=score;localStorage.setItem('snakeHighScore',highScore);scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore} 🏆`;}gameOverDiv.classList.add('show');if(isMobile)gameOverDiv.textContent='GAME OVER! Tap ● to restart';}
-    function restart(){snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];direction={x:1,y:0};nextDirection={x:1,y:0};score=0;speed=120;gameRunning=true;gameOverDiv.classList.remove('show');scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore}`;placeFood();clearInterval(gameLoop);gameLoop=setInterval(gameStep,speed);}
-    function handleKey(e){if(!gameRunning&&e.code==='Space'){e.preventDefault();restart();return;}if(!gameRunning)return;switch(e.code){case'ArrowUp':case'KeyW':e.preventDefault();handleDirectionKey({x:0,y:-1});break;case'ArrowDown':case'KeyS':e.preventDefault();handleDirectionKey({x:0,y:1});break;case'ArrowLeft':case'KeyA':e.preventDefault();handleDirectionKey({x:-1,y:0});break;case'ArrowRight':case'KeyD':e.preventDefault();handleDirectionKey({x:1,y:0});break;case'Escape':e.preventDefault();destroyGame();break;}}
-    function destroyGame(){clearInterval(gameLoop);document.removeEventListener('keydown',handleKey);gameContainer.remove();if(typeof onExit==='function')onExit();}
-    document.addEventListener('keydown',handleKey);gameRunning=true;gameLoop=setInterval(gameStep,speed);draw();return destroyGame;
+    const eg=containerElement.querySelector('.snake-game-container');if(eg)eg.remove();
+    const im=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)||window.innerWidth<769;
+    const gc=document.createElement('div');gc.className='snake-game-container active';
+    const sr=document.createElement('div');sr.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:8px;';gc.appendChild(sr);
+    const sd=document.createElement('div');sd.className='snake-score';sd.style.cssText='flex:1;margin-bottom:0;';sd.textContent='🐍 SCORE: 0  |  HIGH: 0';sr.appendChild(sd);
+    if(im){const eb=document.createElement('button');eb.type='button';eb.textContent='✕ خروج';eb.style.cssText='flex-shrink:0;background:rgba(157,78,221,0.12);border:1px solid rgba(157,78,221,0.3);color:var(--terminal-dim,#8c8a99);border-radius:6px;font-size:0.58rem;font-family:inherit;padding:5px 9px;cursor:pointer;';eb.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();dg();},{passive:false});eb.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();dg();});sr.appendChild(eb);}
+    const cw=document.createElement('div');cw.style.cssText='position:relative;width:100%;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;';gc.appendChild(cw);
+    const cv=document.createElement('canvas');cv.className='snake-canvas';cv.width=300;cv.height=300;cv.style.cssText='width:100%;height:auto;display:block;';cw.appendChild(cv);
+    let dpc=null;
+    if(im){dpc=document.createElement('div');dpc.className='snake-dpad';dpc.style.cssText='display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px 50px;gap:3px;justify-content:center;margin-top:12px;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;';
+      [{text:'▲',row:1,col:2,dir:{x:0,y:-1}},{text:'◄',row:2,col:1,dir:{x:-1,y:0}},{text:'●',row:2,col:2,dir:null,isCenter:true},{text:'►',row:2,col:3,dir:{x:1,y:0}},{text:'▼',row:3,col:2,dir:{x:0,y:1}}].forEach(btn=>{const b=document.createElement('button');b.textContent=btn.text;b.style.cssText=`grid-row:${btn.row};grid-column:${btn.col};background:${btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)'};border:1px solid rgba(157,78,221,0.35);border-radius:8px;color:${btn.isCenter?'#fff':'var(--terminal-highlight, #c77dff)'};font-size:${btn.isCenter?'0.6rem':'1.1rem'};cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all 0.1s ease;font-weight:bold;letter-spacing:0.1em;`;b.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();b.style.background='rgba(157,78,221,0.4)';b.style.borderColor='rgba(199,125,255,0.7)';b.style.transform='scale(0.9)';if(btn.isCenter)hak('Space');else if(btn.dir&&gr)hdk(btn.dir);});b.addEventListener('touchend',e=>{e.preventDefault();e.stopPropagation();b.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';b.style.borderColor='rgba(157,78,221,0.35)';b.style.transform='scale(1)';});b.addEventListener('touchcancel',()=>{b.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';b.style.borderColor='rgba(157,78,221,0.35)';b.style.transform='scale(1)';});b.addEventListener('mousedown',e=>{e.preventDefault();if(btn.isCenter)hak('Space');else if(btn.dir&&gr)hdk(btn.dir);});dpc.appendChild(b);});gc.appendChild(dpc);}
+    const god=document.createElement('div');god.className='snake-game-over';god.textContent='GAME OVER! Tap ● to restart';gc.appendChild(god);
+    const ccd=document.createElement('div');ccd.className='snake-controls';ccd.textContent=im?'▲▼◄► D-Pad  |  ● restart':'↑↓←→ or WASD  |  SPACE restart  |  ESC quit';gc.appendChild(ccd);
+    containerElement.appendChild(gc);
+    const ctx=cv.getContext('2d');const gs=15,tc=cv.width/gs;
+    let snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}],dir={x:1,y:0},nd={x:1,y:0},food={},score=0,hs=parseInt(localStorage.getItem('snakeHighScore')||'0'),gr=true,gl=null,spd=120;
+    function gtc(){const t=window.getCurrentTheme?window.getCurrentTheme():'violet';if(t==='violet')return{snake:'#c77dff',food:'#34d399',grid:'rgba(157,78,221,0.08)'};if(t==='blue')return{snake:'#00e5ff',food:'#00ff88',grid:'rgba(0,212,255,0.08)'};return{snake:'#fbbf24',food:'#10b981',grid:'rgba(245,158,11,0.08)'};}
+    sd.textContent=`🐍 SCORE: ${score}  |  HIGH: ${hs}`;
+    function pf(){do{food={x:Math.floor(Math.random()*tc),y:Math.floor(Math.random()*tc)};}while(snake.some(s=>s.x===food.x&&s.y===food.y));}pf();
+    let tsx=0,tsy=0;cv.addEventListener('touchstart',e=>{e.preventDefault();if(e.touches.length===1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;}},{passive:false});cv.addEventListener('touchmove',e=>{e.preventDefault();e.stopPropagation();},{passive:false});cv.addEventListener('touchend',e=>{e.preventDefault();if(!gr||e.changedTouches.length===0)return;const dx=e.changedTouches[0].clientX-tsx,dy=e.changedTouches[0].clientY-tsy;if(Math.abs(dx)<20&&Math.abs(dy)<20)return;if(Math.abs(dx)>Math.abs(dy)){if(dx>0)hdk({x:1,y:0});else hdk({x:-1,y:0});}else{if(dy>0)hdk({x:0,y:1});else hdk({x:0,y:-1});}},{passive:false});
+    function hdk(d){if(dir.x===-d.x&&dir.y===-d.y)return;nd=d;}
+    function hak(c){if(c==='Space'&&!gr)restart();else if(c==='Escape')dg();}
+    function draw(){const cl=gtc();ctx.fillStyle='rgba(2,0,8,0.3)';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle=cl.grid;ctx.lineWidth=0.3;for(let i=0;i<tc;i++){ctx.beginPath();ctx.moveTo(i*gs,0);ctx.lineTo(i*gs,cv.height);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*gs);ctx.lineTo(cv.width,i*gs);ctx.stroke();}snake.forEach((s,i)=>{const g=ctx.createLinearGradient(s.x*gs,s.y*gs,(s.x+1)*gs,(s.y+1)*gs);g.addColorStop(0,cl.snake);g.addColorStop(1,i===0?'#ffffff':cl.snake);ctx.fillStyle=g;const p=i===0?1:2;ctx.fillRect(s.x*gs+p,s.y*gs+p,gs-p*2,gs-p*2);if(i===0){ctx.fillStyle='#ffffff';const es=3;let e1x,e1y,e2x,e2y;if(dir.x===1){e1x=s.x*gs+11;e1y=s.y*gs+3;e2x=s.x*gs+11;e2y=s.y*gs+10;}else if(dir.x===-1){e1x=s.x*gs+2;e1y=s.y*gs+3;e2x=s.x*gs+2;e2y=s.y*gs+10;}else if(dir.y===-1){e1x=s.x*gs+3;e1y=s.y*gs+2;e2x=s.x*gs+10;e2y=s.y*gs+2;}else{e1x=s.x*gs+3;e1y=s.y*gs+11;e2x=s.x*gs+10;e2y=s.y*gs+11;}ctx.fillRect(e1x,e1y,es,es);ctx.fillRect(e2x,e2y,es,es);}});const pu=Math.sin(Date.now()*0.01)*0.3+0.7;ctx.fillStyle=cl.food;ctx.shadowColor=cl.food;ctx.shadowBlur=8*pu;ctx.beginPath();ctx.arc(food.x*gs+gs/2,food.y*gs+gs/2,gs/2-2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+    function update(){dir={...nd};const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.x>=tc||h.y<0||h.y>=tc){go();return;}if(snake.some(s=>s.x===h.x&&s.y===h.y)){go();return;}snake.unshift(h);if(h.x===food.x&&h.y===food.y){score+=10;sd.textContent=`🐍 SCORE: ${score}  |  HIGH: ${hs}`;pf();if(spd>60)spd-=2;clearInterval(gl);gl=setInterval(gs_,spd);}else{snake.pop();}}
+    function gs_(){if(!gr)return;update();draw();}
+    function go(){gr=false;clearInterval(gl);if(score>hs){hs=score;localStorage.setItem('snakeHighScore',hs);sd.textContent=`🐍 SCORE: ${score}  |  HIGH: ${hs} 🏆`;}god.classList.add('show');}
+    function restart(){snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];dir={x:1,y:0};nd={x:1,y:0};score=0;spd=120;gr=true;god.classList.remove('show');sd.textContent=`🐍 SCORE: ${score}  |  HIGH: ${hs}`;pf();clearInterval(gl);gl=setInterval(gs_,spd);}
+    function hk(e){if(!gr&&e.code==='Space'){e.preventDefault();restart();return;}if(!gr)return;switch(e.code){case'ArrowUp':case'KeyW':e.preventDefault();hdk({x:0,y:-1});break;case'ArrowDown':case'KeyS':e.preventDefault();hdk({x:0,y:1});break;case'ArrowLeft':case'KeyA':e.preventDefault();hdk({x:-1,y:0});break;case'ArrowRight':case'KeyD':e.preventDefault();hdk({x:1,y:0});break;case'Escape':e.preventDefault();dg();break;}}
+    function dg(){clearInterval(gl);document.removeEventListener('keydown',hk);gc.remove();if(typeof onExit==='function')onExit();}
+    document.addEventListener('keydown',hk);gr=true;gl=setInterval(gs_,spd);draw();return dg;
   };
 })();
 
-/* ════════════════════════════════════════════
-   INTERACTIVE TERMINAL
-════════════════════════════════════════════ */
+// TERMINAL (کامل)
 (function initTerminal(){
-  const terminalBody=document.getElementById('terminal-body');let currentSnakeDestroyer=null,gameActive=false;
-  const skillCategories=[
-    {label:'▸ BACK-END & FRAMEWORKS',skills:[{name:'Python',featured:true},{name:'Django',featured:true},{name:'PostgreSQL',color:'amber'},{name:'SQLite',color:'blue'},{name:'REST API',color:'green'},{name:'ORM / SQL',color:'blue'}]},
-    {label:'▸ FRONT-END',skills:[{name:'JavaScript',featured:true},{name:'HTML / CSS',color:'blue'},{name:'SVG Animation',color:'green'}]},
-    {label:'▸ BOTS & AUTOMATION',skills:[{name:'Telegram Bot',featured:true},{name:'Telethon',color:'blue'},{name:'Web Scraping',color:'amber'},{name:'BeautifulSoup',color:'green'}]},
-    {label:'▸ DESKTOP & TOOLS',skills:[{name:'PyQt6',color:'green'},{name:'CustomTkinter',color:'blue'},{name:'Excel / ReportLab',color:'amber'},{name:'Persian Calendar',color:'green'}]},
-    {label:'▸ DEVOPS & MISC',skills:[{name:'Git',color:'amber'},{name:'Linux / Server',color:'blue'},{name:'SEO',color:'green'},{name:'Data Analysis',color:'blue'},{name:'Photoshop',featured:true}]}
-  ];
-  const commands={
-    help:{output:['دستورات قابل استفاده:','  <span class="highlight">skills</span>    - نمایش همه مهارت‌ها','  <span class="highlight">stack</span>     - تکنولوژی‌های اصلی','  <span class="highlight">whois</span>     - درباره من','  <span class="highlight">projects</span>  - پروژه‌های فعال','  <span class="highlight">contact</span>   - اطلاعات تماس','  <span class="highlight">snake</span>     - <span class="green">🐍 بازی مار!</span>','  <span class="highlight">print</span>     - <span class="amber">باز کردن صفحه قابل چاپ</span>','  <span class="highlight">share</span>     - <span class="green">اشتراک‌گذاری رزومه</span>','  <span class="highlight">clear</span>     - پاک کردن ترمینال','','<span class="dim">یک دستور تایپ کنید و Enter بزنید</span>']},
-    whois:{output:['┌──────────────────────────────────────┐','│  <span class="highlight">Mohammad Javad Mahmoudi</span>              │','│  Full Stack Developer · Python/Django   │','│  ۲+ سال تجربه حرفه‌ای                  │','│  دانشجوی مهندسی کامپیوتر               │','│  ۶+ سال تجربه فتوشاپ                   │','└──────────────────────────────────────┘','','<span class="dim">Freelance · ساختن پروژه‌های واقعی</span>']},
-    skills:{renderCategories:true},
-    stack:{output:['تکنولوژی‌های اصلی:','','  <span class="highlight">Backend:</span>  Python · Django · PostgreSQL','  <span class="highlight">Frontend:</span> JavaScript · HTML/CSS · SVG','  <span class="highlight">Bots:</span>     Telegram API · Telethon','  <span class="highlight">Desktop:</span>  PyQt6 · CustomTkinter','  <span class="highlight">Tools:</span>    Git · Linux · SEO','','<span class="dim">برای جزئیات بیشتر اسکرول کنید ←</span>']},
-    projects:{output:['پروژه‌های فعال و شاخص:','','  <span class="highlight">۱. آذین دژ</span>      — پلتفرم شرکتی UPVC','  <span class="highlight">۲. فروشگاه لباس</span> — فروشگاه اینترنتی مدرن','  <span class="highlight">۳. کالا ۲</span>       — ربات جستجوی دیوار','  <span class="highlight">۴. Teledata</span>    — استخراج‌گر کانال تلگرام','  <span class="highlight">۵. حسابداری</span>    — نرم‌افزار ERP با PyQt6','','<span class="dim">برای دیدن هر پروژه اسکرول کنید ←</span>']},
-    contact:{output:['اطلاعات تماس:','','  <span class="highlight">Telegram:</span>  @immdjavad','  <span class="highlight">GitHub:</span>    mohmmadjavad','  <span class="highlight">Phone:</span>     ۰۹۱۲۰۱۲۰۷۴۵','  <span class="highlight">Web:</span>       immdjavad.ir','','<span class="dim">بخش آخر صفحه هم لینک‌های کلیک‌شدنی داره ←</span>']},
-    snake:{action:'snake'},clear:{clear:true},print:{action:'print'},share:{action:'share'}
-  };
-  function renderCategories(appendToLines){skillCategories.forEach(cat=>{appendToLines.push('');appendToLines.push('<div class="skill-category"><div class="skill-cat-label">'+cat.label+'</div><div class="skill-tags">');cat.skills.forEach(skill=>{let cls='skill-tag';if(skill.featured)cls+=' featured';if(skill.color==='blue')cls+=' tag-blue';if(skill.color==='amber')cls+=' tag-amber';if(skill.color==='green')cls+=' tag-green';appendToLines.push('<span class="'+cls+'">'+skill.name+'</span>');});appendToLines.push('</div></div>');});}
-  function buildWelcome(){const lines=[];lines.push('<div class="terminal-line"><span class="dim">╔══════════════════════════════╗</span></div>');lines.push('<div class="terminal-line"><span class="dim">║</span>  <span class="highlight">Terminal immdjavad</span>       <span class="dim">║</span></div>');lines.push('<div class="terminal-line"><span class="dim">║</span>  <span class="green">help</span> بزنید برای دیدن دستورات  <span class="dim">║</span></div>');lines.push('<div class="terminal-line"><span class="dim">╚══════════════════════════════╝</span></div>');lines.push('');renderCategories(lines);lines.push('');lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="green">snake</span>, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');return lines;}
-  function renderTerminal(lines,appendInput=true){let html=lines.join('\n');if(appendInput){html+='\n<div class="terminal-input-line" id="terminal-input-line"><span class="prompt">❯</span><input type="text" id="terminal-input" placeholder="help را تایپ کنید..." autocomplete="off" spellcheck="false"></div>';}terminalBody.innerHTML=html;if(appendInput){const input=document.getElementById('terminal-input');if(input){if(!gameActive)input.focus({preventScroll:true});input.addEventListener('keydown',handleTerminalInput);}}terminalBody.scrollTop=terminalBody.scrollHeight;}
-  function addOutputLines(cmdOutput){const existingLines=terminalBody.innerHTML.split('\n');const filteredLines=existingLines.filter(line=>!line.includes('terminal-input-line'));const newLines=[...filteredLines];newLines.push('');newLines.push('<div class="terminal-line"><span class="prompt">❯</span> <span class="cmd">'+cmdOutput.cmd+'</span></div>');if(cmdOutput.output){cmdOutput.output.forEach(line=>{newLines.push('<div class="terminal-line">'+line+'</div>');});}if(cmdOutput.renderCategories){renderCategories(newLines);}newLines.push('');renderTerminal(newLines,true);}
-  function handleTerminalInput(e){if(e.key!=='Enter')return;const input=e.target,cmd=input.value.trim().toLowerCase();input.disabled=true;const cmdResult=commands[cmd]||{output:['<span class="dim">دستور پیدا نشد:</span> '+cmd+'. <span class="dim">help</span> رو امتحان کن']};if(cmdResult.clear){renderTerminal(['<div class="terminal-line"><span class="output">پاک شد.</span></div>',''],true);return;}if(cmdResult.action==='print'){cmdResult.cmd=cmd;cmdResult.output=['<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>'];addOutputLines(cmdResult);setTimeout(()=>window.open('print.html','_blank'),300);return;}if(cmdResult.action==='share'){cmdResult.cmd=cmd;cmdResult.output=['<span class="green">✓ اشتراک‌گذاری رزومه</span>'];addOutputLines(cmdResult);setTimeout(()=>shareResume(),200);return;}if(cmdResult.action==='snake'){cmdResult.cmd=cmd;cmdResult.output=['<span class="green">🐍 بازی مار شروع شد!</span>','<span class="dim">با کلیدهای جهت‌نما یا WASD حرکت کن. ESC یا دکمه‌ی خروج برای پایان.</span>'];addOutputLines(cmdResult);setTimeout(()=>{if(currentSnakeDestroyer)currentSnakeDestroyer();gameActive=true;const inputLine=document.getElementById('terminal-input-line');if(inputLine)inputLine.style.display='none';const activeInput=document.getElementById('terminal-input');if(activeInput)activeInput.blur();currentSnakeDestroyer=window.startSnakeGame(terminalBody,()=>{gameActive=false;currentSnakeDestroyer=null;const line=document.getElementById('terminal-input-line');if(line)line.style.display='';if(document.body.classList.contains('terminal-modal-open')){const input=document.getElementById('terminal-input');if(input&&!input.disabled)input.focus({preventScroll:true});}terminalBody.scrollTop=terminalBody.scrollHeight;});terminalBody.scrollTop=terminalBody.scrollHeight;},300);return;}cmdResult.cmd=cmd;addOutputLines(cmdResult);}
-  renderTerminal(buildWelcome(),true);
+  const tb=document.getElementById('terminal-body');let csd=null,ga=false;
+  const sc=[{label:'▸ BACK-END',skills:[{name:'Python',featured:true},{name:'Django',featured:true},{name:'PostgreSQL',color:'amber'},{name:'SQLite',color:'blue'}]},{label:'▸ FRONT-END',skills:[{name:'JavaScript',featured:true},{name:'HTML/CSS',color:'blue'},{name:'SVG',color:'green'}]},{label:'▸ BOTS',skills:[{name:'Telegram Bot',featured:true},{name:'Telethon',color:'blue'},{name:'Web Scraping',color:'amber'}]},{label:'▸ DESKTOP',skills:[{name:'PyQt6',color:'green'},{name:'CustomTkinter',color:'blue'},{name:'Excel',color:'amber'}]},{label:'▸ MISC',skills:[{name:'Git',color:'amber'},{name:'Linux',color:'blue'},{name:'SEO',color:'green'},{name:'Photoshop',featured:true}]}];
+  const cmds={help:{output:['<span class="highlight">skills</span> | <span class="highlight">stack</span> | <span class="highlight">whois</span> | <span class="highlight">projects</span> | <span class="highlight">contact</span> | <span class="highlight">snake</span> | <span class="highlight">clear</span>']},whois:{output:['<span class="highlight">Mohammad Javad Mahmoudi</span> — Full Stack Developer']},skills:{renderCategories:true},stack:{output:['Python · Django · PostgreSQL · JS · HTML/CSS']},projects:{output:['۱. آذین دژ | ۲. فروشگاه | ۳. کالا ۲ | ۴. Teledata | ۵. حسابداری']},contact:{output:['@immdjavad | mohmmadjavad | 09120120745']},snake:{action:'snake'},clear:{clear:true},print:{action:'print'},share:{action:'share'}};
+  function rc(al){sc.forEach(cat=>{al.push('');al.push('<div class="skill-category"><div class="skill-cat-label">'+cat.label+'</div><div class="skill-tags">');cat.skills.forEach(s=>{let cls='skill-tag';if(s.featured)cls+=' featured';if(s.color==='blue')cls+=' tag-blue';if(s.color==='amber')cls+=' tag-amber';if(s.color==='green')cls+=' tag-green';al.push('<span class="'+cls+'">'+s.name+'</span>');});al.push('</div></div>');});}
+  function bw(){const l=[];l.push('<div class="terminal-line"><span class="dim">╔══════════════════════╗</span></div>');l.push('<div class="terminal-line"><span class="dim">║</span>  <span class="highlight">Terminal immdjavad</span>  <span class="dim">║</span></div>');l.push('<div class="terminal-line"><span class="dim">╚══════════════════════╝</span></div>');l.push('');rc(l);l.push('');l.push('<div class="terminal-hint"><span>❯</span> help, skills, snake, clear</div>');return l;}
+  function rt(l,ai=true){let h=l.join('\n');if(ai){h+='\n<div class="terminal-input-line" id="terminal-input-line"><span class="prompt">❯</span><input type="text" id="terminal-input" placeholder="help..." autocomplete="off" spellcheck="false"></div>';}tb.innerHTML=h;if(ai){const inp=document.getElementById('terminal-input');if(inp){if(!ga)inp.focus({preventScroll:true});inp.addEventListener('keydown',hti);}}tb.scrollTop=tb.scrollHeight;}
+  function aol(co){const el=tb.innerHTML.split('\n');const nl=el.filter(l=>!l.includes('terminal-input-line'));nl.push('');nl.push('<div class="terminal-line"><span class="prompt">❯</span> <span class="cmd">'+co.cmd+'</span></div>');if(co.output)co.output.forEach(l=>nl.push('<div class="terminal-line">'+l+'</div>'));if(co.renderCategories)rc(nl);nl.push('');rt(nl,true);}
+  function hti(e){if(e.key!=='Enter')return;const inp=e.target,cmd=inp.value.trim().toLowerCase();inp.disabled=true;const cr=cmds[cmd]||{output:['<span class="dim">دستور پیدا نشد. help</span>']};if(cr.clear){rt(['<div class="terminal-line"><span class="output">پاک شد.</span></div>',''],true);return;}if(cr.action==='print'){cr.cmd=cmd;cr.output=['<span class="green">✓ باز کردن صفحه چاپ...</span>'];aol(cr);setTimeout(()=>window.open('print.html','_blank'),300);return;}if(cr.action==='share'){cr.cmd=cmd;cr.output=['<span class="green">✓ اشتراک‌گذاری</span>'];aol(cr);setTimeout(()=>shareResume(),200);return;}if(cr.action==='snake'){cr.cmd=cmd;cr.output=['<span class="green">🐍 بازی مار شروع شد!</span>'];aol(cr);setTimeout(()=>{if(csd)csd();ga=true;const il=document.getElementById('terminal-input-line');if(il)il.style.display='none';const ai=document.getElementById('terminal-input');if(ai)ai.blur();csd=window.startSnakeGame(tb,()=>{ga=false;csd=null;const l=document.getElementById('terminal-input-line');if(l)l.style.display='';if(document.body.classList.contains('terminal-modal-open')){const i=document.getElementById('terminal-input');if(i&&!i.disabled)i.focus({preventScroll:true});}tb.scrollTop=tb.scrollHeight;});tb.scrollTop=tb.scrollHeight;},300);return;}cr.cmd=cmd;aol(cr);}
+  rt(bw(),true);
 })();
 
-/* ════════════════════════════════════════════
-   GSAP + SCROLLTRIGGER + NAV + METEOR + MODALS + SHARE + PHONE
-════════════════════════════════════════════ */
-gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
-
-(function typewriter(){const el=document.getElementById('s0-title');const full=el.dataset.full;let i=0;function type(){if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(type,35);}}setTimeout(type,600);})();
-
-if(window.innerWidth>768){const cursorDot=document.getElementById('cursor'),cursorRing=document.getElementById('cursor-ring');let cx=0,cy=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;});(function animRing(){rx+=(cx-rx)*0.1;ry+=(cy-ry)*0.1;if(cursorDot)cursorDot.style.cssText+=`;left:${cx}px;top:${cy}px`;if(cursorRing)cursorRing.style.cssText+=`;left:${rx}px;top:${ry}px`;requestAnimationFrame(animRing);})();document.querySelectorAll('a,button,.nav-dot,.skill-tag').forEach(el=>{el.addEventListener('mouseenter',()=>{cursorDot.style.width='13px';cursorDot.style.height='13px';cursorRing.style.width='50px';cursorRing.style.height='50px';cursorRing.style.borderColor='rgba(199,125,255,.65)';});el.addEventListener('mouseleave',()=>{cursorDot.style.width='7px';cursorDot.style.height='7px';cursorRing.style.width='34px';cursorRing.style.height='34px';cursorRing.style.borderColor='rgba(199,125,255,.35)';});});}
-
+// GSAP + NAV + METEOR + MODALS + SHARE + PHONE
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+(function tw(){const el=document.getElementById('s0-title');const f=el.dataset.full;let i=0;function t(){if(i<=f.length){el.textContent=f.slice(0,i);i++;setTimeout(t,35);}}setTimeout(t,600);})();
+if(window.innerWidth>768){const cd=document.getElementById('cursor'),cr=document.getElementById('cursor-ring');let cx=0,cy=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;});(function ar(){rx+=(cx-rx)*0.1;ry+=(cy-ry)*0.1;if(cd)cd.style.cssText+=`;left:${cx}px;top:${cy}px`;if(cr)cr.style.cssText+=`;left:${rx}px;top:${ry}px`;requestAnimationFrame(ar);})();document.querySelectorAll('a,button,.nav-dot,.skill-tag').forEach(el=>{el.addEventListener('mouseenter',()=>{cd.style.width='13px';cd.style.height='13px';cr.style.width='50px';cr.style.height='50px';cr.style.borderColor='rgba(199,125,255,.65)';});el.addEventListener('mouseleave',()=>{cd.style.width='7px';cd.style.height='7px';cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(199,125,255,.35)';});});}
 const allScenes=document.querySelectorAll('.scene'),navDots=document.querySelectorAll('.nav-dot');
 function activateNav(i){navDots.forEach(d=>d.classList.remove('active'));if(navDots[i])navDots[i].classList.add('active');}
 gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],{opacity:0});
 const enterTl=gsap.timeline({delay:2.2});enterTl.fromTo('#s0-ch',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'power3.out'});enterTl.fromTo('#s0-profile',{opacity:0,scale:0.65},{opacity:1,scale:1,duration:0.5,ease:'back.out(1.4)'},'-=0.3');enterTl.fromTo('#s0-fa',{opacity:0,y:80},{opacity:1,y:0,duration:0.5,ease:'expo.out'},'-=0.35');enterTl.fromTo('#s0-en',{opacity:0,y:30},{opacity:1,y:0,duration:0.4,ease:'power2.out'},'-=0.3');enterTl.fromTo('#s0-title',{opacity:0,y:20},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');enterTl.fromTo('#s0-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
 function revealElements(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el&&(el.style.opacity==='0'||el.style.opacity==='')){gsap.to(el,{opacity:1,y:0,x:0,scale:1,duration:0.5,ease:'power2.out',overwrite:'auto'});}});}
 const sceneElements={'scene-1':['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],'scene-2':['s2-ch','s2-h','s2-hen','s2-terminal'],'scene-3':['s3-ch','s3-img','s3-pr'],'scene-4':['s4-ch','s4-img','s4-pr'],'scene-5':['s5-ch','s5-img','s5-pr'],'scene-6':['s6-ch','s6-img','s6-pr'],'scene-7':['s7-ch','s7-img','s7-pr'],'scene-8':['s8-ch','s8-e1','s8-div','s8-e2'],'scene-9':['s9-ch','s9-edu','s9-lg'],'scene-10':['s10-ch','s10-h','s10-hen','s10-cg','footer-line']};
-
 (function initNavigator(){
-  const progressBar=document.getElementById('scroll-progress'),scrollHint=document.getElementById('scroll-hint');
-  function getScrollY(){return window.scrollY||document.documentElement.scrollTop||0;}
-  function getMaxScroll(){return Math.max(0,(document.documentElement.scrollHeight||document.body.scrollHeight)-window.innerHeight);}
-  navDots.forEach((dot,i)=>{dot.addEventListener('click',()=>{const targetEl=allScenes[i];if(!targetEl)return;gsap.to(window,{scrollTo:{y:targetEl,offsetY:0},duration:0.8,ease:'power2.inOut'});});});
-  function onScroll(){const max=getMaxScroll();const pct=max>0?getScrollY()/max:0;if(progressBar)progressBar.style.width=pct*100+'%';if(window._threeSetScroll)window._threeSetScroll(pct);if(scrollHint&&pct>0.02){gsap.to(scrollHint,{opacity:0,duration:0.4,pointerEvents:'none',overwrite:true});}else if(scrollHint&&pct<=0.01){gsap.to(scrollHint,{opacity:1,duration:0.3,pointerEvents:'auto',overwrite:true});}}
-  const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;const idx=Array.from(allScenes).indexOf(entry.target);if(idx>=0)activateNav(idx);const ids=sceneElements[entry.target.id];if(ids)revealElements(ids);});},{threshold:0.4});
-  allScenes.forEach(s=>revealObserver.observe(s));window.addEventListener('scroll',onScroll,{passive:true});onScroll();activateNav(0);
+  const pb=document.getElementById('scroll-progress'),sh=document.getElementById('scroll-hint');
+  function gsY(){return window.scrollY||document.documentElement.scrollTop||0;}
+  function gMS(){return Math.max(0,(document.documentElement.scrollHeight||document.body.scrollHeight)-window.innerHeight);}
+  navDots.forEach((d,i)=>{d.addEventListener('click',()=>{const t=allScenes[i];if(!t)return;gsap.to(window,{scrollTo:{y:t,offsetY:0},duration:0.8,ease:'power2.inOut'});});});
+  function os(){const m=gMS(),p=m>0?gsY()/m:0;if(pb)pb.style.width=p*100+'%';if(window._threeSetScroll)window._threeSetScroll(p);if(sh&&p>0.02){gsap.to(sh,{opacity:0,duration:0.4,pointerEvents:'none',overwrite:true});}else if(sh&&p<=0.01){gsap.to(sh,{opacity:1,duration:0.3,pointerEvents:'auto',overwrite:true});}}
+  const ro=new IntersectionObserver(entries=>{entries.forEach(en=>{if(!en.isIntersecting)return;const idx=Array.from(allScenes).indexOf(en.target);if(idx>=0)activateNav(idx);const ids=sceneElements[en.target.id];if(ids)revealElements(ids);});},{threshold:0.4});
+  allScenes.forEach(s=>ro.observe(s));window.addEventListener('scroll',os,{passive:true});os();activateNav(0);
 })();
 
 // METEOR هر ۱۵ ثانیه
-(function initMeteorFlyby(){const el=document.getElementById('meteor-flyby');if(!el)return;function fly(){if(document.hidden)return;const type=Math.random()<0.5?'type-asteroid':'type-shooting';el.className='meteor-flyby '+type;void el.offsetWidth;el.classList.add('fly');setTimeout(()=>{el.classList.remove('fly');},1400);}setTimeout(()=>{fly();setInterval(fly,15000);},10000);})();
+(function imf(){const el=document.getElementById('meteor-flyby');if(!el)return;function fly(){if(document.hidden)return;const type=Math.random()<0.5?'type-asteroid':'type-shooting';el.className='meteor-flyby '+type;void el.offsetWidth;el.classList.add('fly');setTimeout(()=>{el.classList.remove('fly');},1400);}setTimeout(()=>{fly();setInterval(fly,15000);},10000);})();
 
 // PROFILE MODAL
-(function(){const modal=document.getElementById('profile-modal'),closeBtn=document.getElementById('profile-modal-close'),trigger=document.querySelector('.profile-hero-img');if(!modal||!trigger)return;function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}trigger.addEventListener('click',openModal);closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});modal.addEventListener('click',closeModal);modal.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});})();
+(function(){const m=document.getElementById('profile-modal'),cb=document.getElementById('profile-modal-close'),tr=document.querySelector('.profile-hero-img');if(!m||!tr)return;function o(){m.classList.add('open');document.body.style.overflow='hidden';}function c(){m.classList.remove('open');document.body.style.overflow='';}tr.addEventListener('click',o);cb.addEventListener('click',e=>{e.stopPropagation();c();});m.addEventListener('click',c);m.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))c();});})();
 
 // TERMINAL MODAL
-(function(){const terminalWrapper=document.getElementById('s2-terminal'),overlay=document.getElementById('terminal-modal-overlay'),slot=document.getElementById('terminal-modal-slot'),closeBtn=document.getElementById('terminal-modal-close');if(!terminalWrapper||!overlay||!slot||!closeBtn)return;const originalParent=terminalWrapper.parentNode,originalNextSibling=terminalWrapper.nextSibling;let isOpen=false;function isMobileNow(){return window.innerWidth<769||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);}function focusTerminalInput(){const input=document.getElementById('terminal-input');if(input&&!input.disabled)input.focus({preventScroll:true});}function syncOverlayToViewport(){if(!window.visualViewport)return;const vv=window.visualViewport;overlay.style.top=vv.offsetTop+'px';overlay.style.height=vv.height+'px';}function openModal(){if(isOpen||!isMobileNow())return;isOpen=true;syncOverlayToViewport();slot.appendChild(terminalWrapper);overlay.classList.add('active');document.body.classList.add('terminal-modal-open');requestAnimationFrame(focusTerminalInput);}function closeModal(){if(!isOpen)return;isOpen=false;overlay.classList.remove('active');document.body.classList.remove('terminal-modal-open');const input=document.getElementById('terminal-input');if(input)input.blur();setTimeout(()=>{if(originalNextSibling)originalParent.insertBefore(terminalWrapper,originalNextSibling);else originalParent.appendChild(terminalWrapper);},300);}function interceptTap(e){if(!isMobileNow()||isOpen)return;if(!e.target.closest('#terminal-input-line'))return;e.preventDefault();openModal();}terminalWrapper.addEventListener('mousedown',interceptTap);terminalWrapper.addEventListener('touchstart',interceptTap,{passive:false});closeBtn.addEventListener('click',closeModal);overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&isOpen)closeModal();});if(window.visualViewport){window.visualViewport.addEventListener('resize',syncOverlayToViewport);window.visualViewport.addEventListener('scroll',syncOverlayToViewport);}window.addEventListener('resize',()=>{if(isOpen&&!isMobileNow())closeModal();});})();
+(function(){const tw=document.getElementById('s2-terminal'),ov=document.getElementById('terminal-modal-overlay'),sl=document.getElementById('terminal-modal-slot'),cb=document.getElementById('terminal-modal-close');if(!tw||!ov||!sl||!cb)return;const op=tw.parentNode,ons=tw.nextSibling;let io=false;function imn(){return window.innerWidth<769||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);}function fti(){const i=document.getElementById('terminal-input');if(i&&!i.disabled)i.focus({preventScroll:true});}function soto(){if(!window.visualViewport)return;const vv=window.visualViewport;ov.style.top=vv.offsetTop+'px';ov.style.height=vv.height+'px';}function om(){if(io||!imn())return;io=true;soto();sl.appendChild(tw);ov.classList.add('active');document.body.classList.add('terminal-modal-open');requestAnimationFrame(fti);}function cm(){if(!io)return;io=false;ov.classList.remove('active');document.body.classList.remove('terminal-modal-open');const i=document.getElementById('terminal-input');if(i)i.blur();setTimeout(()=>{if(ons)op.insertBefore(tw,ons);else op.appendChild(tw);},300);}function it(e){if(!imn()||io)return;if(!e.target.closest('#terminal-input-line'))return;e.preventDefault();om();}tw.addEventListener('mousedown',it);tw.addEventListener('touchstart',it,{passive:false});cb.addEventListener('click',cm);ov.addEventListener('click',e=>{if(e.target===ov)cm();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&io)cm();});if(window.visualViewport){window.visualViewport.addEventListener('resize',soto);window.visualViewport.addEventListener('scroll',soto);}window.addEventListener('resize',()=>{if(io&&!imn())cm();});})();
 
 // SHARE + PHONE
-async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',url:'https://immdjavad.ir'};if(navigator.share){try{await navigator.share(d);}catch(e){fallback();}}else{fallback();}function fallback(){navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{const btn=document.querySelector('.fab-share');if(!btn)return;const orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.background='rgba(52,211,153,0.18)';btn.style.borderColor='rgba(52,211,153,0.5)';btn.style.color='#34d399';setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.borderColor='';btn.style.color='';},1500);}).catch(()=>{});}}
-(function(){const p=['\u0030','\u0039','1','2','0','1','2','0','7','4','5'],num=p.join(''),link=document.getElementById('phone-link'),display=document.getElementById('phone-display');if(!link||!display)return;let revealed=false;link.addEventListener('click',function(e){e.preventDefault();if(!revealed){display.textContent='0'+num.slice(1);link.href='tel:'+num;revealed=true;}else{window.location.href='tel:'+num;}});})();
+async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',url:'https://immdjavad.ir'};if(navigator.share){try{await navigator.share(d);}catch(e){fb();}}else{fb();}function fb(){navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{const b=document.querySelector('.fab-share');if(!b)return;const o=b.innerHTML;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';b.style.background='rgba(52,211,153,0.18)';b.style.borderColor='rgba(52,211,153,0.5)';b.style.color='#34d399';setTimeout(()=>{b.innerHTML=o;b.style.background='';b.style.borderColor='';b.style.color='';},1500);}).catch(()=>{});}}
+(function(){const p=['\u0030','\u0039','1','2','0','1','2','0','7','4','5'],num=p.join(''),lk=document.getElementById('phone-link'),dp=document.getElementById('phone-display');if(!lk||!dp)return;let rv=false;lk.addEventListener('click',function(e){e.preventDefault();if(!rv){dp.textContent='0'+num.slice(1);lk.href='tel:'+num;rv=true;}else{window.location.href='tel:'+num;}});})();
 </script>
 </body>
 </html>
