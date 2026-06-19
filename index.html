@@ -549,6 +549,10 @@ body::after{
   visibility:visible;
   pointer-events:auto;
 }
+body:not(.journey-active) #scroll-container > .scene:not(.scene-bookend){
+  opacity:0;
+  visibility:hidden;
+}
 .scene-sticky{
   position:relative;top:0;height:100%;width:100%;
   display:flex;align-items:center;justify-content:center;
@@ -2976,6 +2980,7 @@ const sceneElements = {
     if(locked) return;
     locked = true;
     mode = 'intro';
+    document.body.classList.remove('journey-active');
     lockScroll();
     window.scrollTo(0, 0);
     tweenProgressTo(0);
@@ -2987,6 +2992,9 @@ const sceneElements = {
     locked = true;
     toggleScrollHint(false);
     triggerBurst();
+    document.body.classList.add('journey-active');
+    const ids1 = sceneElements['scene-1'];
+    if(ids1) revealElements(ids1);
     animateBookendOut(introEl, () => {
       unlockScroll();
       window.scrollTo(0, 0);
@@ -3000,6 +3008,7 @@ const sceneElements = {
     if(locked) return;
     locked = true;
     mode = 'outro';
+    document.body.classList.remove('journey-active');
     lockScroll();
     tweenProgressTo(1);
     triggerBurst();
@@ -3013,6 +3022,9 @@ const sceneElements = {
   function exitOutro(){
     if(locked) return;
     locked = true;
+    document.body.classList.add('journey-active');
+    const idsLast = sceneElements[allScenes[total - 2].id];
+    if(idsLast) revealElements(idsLast);
     animateBookendOut(outroEl, () => {
       unlockScroll();
       mode = 'journey';
@@ -3034,9 +3046,15 @@ const sceneElements = {
     if(mode === 'intro'){
       locked = true;
       toggleScrollHint(false);
+      document.body.classList.add('journey-active');
+      const ids = sceneElements[targetEl.id];
+      if(ids) revealElements(ids);
       animateBookendOut(introEl, () => { mode = 'journey'; locked = false; doScroll(); });
     } else if(mode === 'outro'){
       locked = true;
+      document.body.classList.add('journey-active');
+      const ids = sceneElements[targetEl.id];
+      if(ids) revealElements(ids);
       animateBookendOut(outroEl, () => { mode = 'journey'; locked = false; doScroll(); });
     } else {
       doScroll();
