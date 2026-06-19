@@ -210,14 +210,12 @@ body{
   color:var(--text);
   font-family:'Vazirmatn',sans-serif;
   overflow-x:hidden;
-  overscroll-behavior-y:none;
 }
-
 
 body::before{
   content:'';
   position:fixed;inset:0;
-  background:radial-gradient(ellipse at center, transparent 40%, rgba(2,0,8,0.85) 100%);
+  background:radial-gradient(ellipse at center, transparent 30%, rgba(2,0,8,0.92) 100%);
   pointer-events:none;z-index:5;
 }
 
@@ -241,6 +239,25 @@ body::after{
     radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%);
   pointer-events:none;
   transition:background 0.8s ease;
+}
+
+#ambient::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(157,78,221,0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientPulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes ambientPulse {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .scanline{
@@ -524,8 +541,7 @@ body::after{
 @keyframes scrollDown{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(9px);opacity:0;}}
 
 /* ══════════════════════════════
-   SCENE SYSTEM — صحنه‌های میانی آزاد و روان اسکرول می‌شوند،
-   فقط ابتدا (intro) و انتها (outro) به‌صورت صحنه‌ی ثابت تمام‌صفحه رفتار می‌کنند
+   SCENE SYSTEM — اسکرول طبیعی
 ══════════════════════════════ */
 .scene{
   position:relative;
@@ -534,24 +550,10 @@ body::after{
   z-index:1;
 }
 .scene-bookend{
-  position:fixed;
-  inset:0;
+  position:relative;
   height:100vh;
   width:100%;
   z-index:10;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  will-change:opacity, transform, filter;
-}
-.scene-bookend.scene-active{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
-body:not(.journey-active) #scroll-container > .scene:not(.scene-bookend){
-  opacity:0;
-  visibility:hidden;
 }
 .scene-sticky{
   position:relative;top:0;height:100%;width:100%;
@@ -565,7 +567,7 @@ body:not(.journey-active) #scroll-container > .scene:not(.scene-bookend){
   text-align:center;padding:48px 40px;
   z-index:10;
   overflow:hidden;
-  will-change: transform; /* Optimize for parallax */
+  will-change: transform;
 }
 
 .space-warp-overlay {
@@ -1024,7 +1026,6 @@ body.terminal-modal-open{overflow:hidden;}
 
 /* ══════════════════════════════
    MOBILE OVERRIDES — placed last on purpose
-   (same-specificity rules earlier in the file would otherwise win)
 ══════════════════════════════ */
 @media(max-width:768px){
   #galaxy-toggler {
@@ -1103,12 +1104,25 @@ body.terminal-modal-open{overflow:hidden;}
   .terminal-input-line input{font-size:0.56rem;}
 }
 
-/* اگر ارتفاع صفحه کوتاه باشد (مثل گوشی‌های قدیمی یا حالت افقی) باز هم جا باز می‌کنیم */
 @media(max-height:680px){
   .scene-inner{padding-top:8px;padding-bottom:8px;}
   .project-image-wrap{max-height:16vh;margin-bottom:8px;}
   .chapter-marker{margin-bottom:8px;}
   .project-desc-en{margin-bottom:5px;}
+}
+
+@media(max-width:768px) or (max-height:680px){
+  #bg-canvas {
+    opacity: 0.7;
+  }
+  .scene-inner::before {
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(2,0,8,0.7) 0%, transparent 70%);
+  }
+  #ambient::before {
+    width: 80vmax;
+    height: 80vmax;
+    animation-duration: 16s;
+  }
 }
 </style>
 </head>
@@ -1160,7 +1174,7 @@ body.terminal-modal-open{overflow:hidden;}
   <button class="galaxy-dot galaxy-gold" data-theme="gold" title="کهکشان طلایی"></button>
 </div>
 
-<!-- TERMINAL MODAL (mobile typing experience) -->
+<!-- TERMINAL MODAL -->
 <div class="terminal-modal-overlay" id="terminal-modal-overlay">
   <div class="terminal-modal-panel" id="terminal-modal-panel">
     <div class="terminal-modal-header">
@@ -1177,8 +1191,7 @@ body.terminal-modal-open{overflow:hidden;}
 <div id="scroll-container">
 
 <!-- SCENE 0 ─ HERO -->
-
-<section class="scene scene-bookend scene-active" id="scene-0">
+<section class="scene scene-bookend" id="scene-0">
   <div class="scene-sticky">
     <div class="scene-inner" data-parallax="0.15">
       <div class="chapter-marker" id="s0-ch">خوش آمدید · Welcome</div>
@@ -1488,40 +1501,226 @@ body.terminal-modal-open{overflow:hidden;}
 <script src="vendor/js/gsap.min.js"></script>
 <script src="vendor/js/ScrollTrigger.min.js"></script>
 <script src="vendor/js/ScrollToPlugin.min.js"></script>
-<!-- Lenis Smooth Scroll -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 <script>
 /* ════════════════════════════════════════════
-   LENIS SMOOTH SCROLL
+   DEEP SPACE DIVE — سفر کامل سه‌فازی به عمق کهکشان
 ════════════════════════════════════════════ */
-window.initLenis = function(){
-  const lenis = new Lenis({
-    duration: 1.6,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    smoothTouch: false,
-    touchMultiplier: 2,
-  });
+(function initThree(){
+  const canvas = document.getElementById('bg-canvas');
+  const W = window.innerWidth, H = window.innerHeight;
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 769;
 
-  function raf(time){
-    lenis.raf(time);
-    requestAnimationFrame(raf);
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.5));
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, W/H, 0.1, 300);
+  camera.position.set(0, 2, 18);
+  camera.lookAt(0, 0, -5);
+
+  // ─── PALETTE ─────────────────────────────
+  const initTheme = window.getThemeData ? window.getThemeData('violet') : null;
+  const colCore  = new THREE.Color(initTheme?.threeColors[0] || '#c77dff');
+  const colMid   = new THREE.Color(initTheme?.threeColors[2] || '#7dd3fc');
+  const colOuter = new THREE.Color(initTheme?.threeColors[3] || '#5a189a');
+  let palette = { core: colCore, mid: colMid, outer: colOuter };
+
+  // ─── GALAXY SPIRAL ────────────────────────
+  const GALAXY_COUNT = isMobile ? 2000 : 4500;
+  const galaxyGeo = new THREE.BufferGeometry();
+  const gPos = new Float32Array(GALAXY_COUNT * 3);
+  const gCol = new Float32Array(GALAXY_COUNT * 3);
+  const arms = 3, coreR = 2, outerR = 28;
+
+  for(let i = 0; i < GALAXY_COUNT; i++){
+    const arm = Math.floor(Math.random() * arms);
+    const armAngle = (arm / arms) * Math.PI * 2;
+    const r = coreR + Math.pow(Math.random(), 1.5) * (outerR - coreR);
+    const spiralAngle = r * 0.45 + armAngle;
+    const width = (1 - r / outerR) * 2.2 + 0.25;
+    const angle = spiralAngle + (Math.random() - 0.5) * width;
+    const y = (Math.random() - 0.5) * (r / outerR) * 3.5;
+    gPos[i*3] = Math.cos(angle) * r;
+    gPos[i*3+1] = y;
+    gPos[i*3+2] = Math.sin(angle) * r - 4;
+    const t = (r - coreR) / (outerR - coreR);
+    const c = t < 0.35 ? palette.core.clone().lerp(palette.mid, t/0.35) : palette.mid.clone().lerp(palette.outer, (t-0.35)/0.65);
+    c.multiplyScalar(0.55 + Math.random() * 0.9);
+    gCol[i*3]=c.r; gCol[i*3+1]=c.g; gCol[i*3+2]=c.b;
   }
-  requestAnimationFrame(raf);
+  galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
+  galaxyGeo.setAttribute('color', new THREE.BufferAttribute(gCol, 3));
 
-  // Connect GSAP ScrollTrigger with Lenis
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
+  const starTex = (()=>{ const c=document.createElement('canvas');c.width=c.height=isMobile?8:16;const x=c.getContext('2d');const g=x.createRadialGradient(c.width/2,c.height/2,0,c.width/2,c.height/2,c.width/2);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(0.15,'rgba(255,255,255,0.85)');g.addColorStop(0.5,'rgba(200,170,255,0.3)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);return new THREE.CanvasTexture(c);})();
 
-  // Store for later use
-  window.__lenis = lenis;
-};
+  const galaxy = new THREE.Points(galaxyGeo, new THREE.PointsMaterial({
+    size: isMobile ? 0.1 : 0.14, map: starTex, vertexColors: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.9, sizeAttenuation: true
+  }));
+  scene.add(galaxy);
+
+  // ─── STARS BACKGROUND ────────────────────
+  const STARS_COUNT = isMobile ? 800 : 2000;
+  const starsGeo = new THREE.BufferGeometry();
+  const sPos = new Float32Array(STARS_COUNT * 3);
+  for(let i=0;i<STARS_COUNT;i++){
+    const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1), rad=30+Math.random()*60;
+    sPos[i*3]=Math.sin(phi)*Math.cos(theta)*rad; sPos[i*3+1]=Math.sin(phi)*Math.sin(theta)*rad*0.5; sPos[i*3+2]=Math.cos(phi)*rad*0.6;
+  }
+  starsGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  const smallStarTex = (()=>{const c=document.createElement('canvas');c.width=c.height=isMobile?4:8;const x=c.getContext('2d');const g=x.createRadialGradient(c.width/2,c.height/2,0,c.width/2,c.height/2,c.width/2);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(0.4,'rgba(255,255,255,0.4)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);return new THREE.CanvasTexture(c);})();
+  const stars = new THREE.Points(starsGeo, new THREE.PointsMaterial({
+    size: isMobile?0.22:0.3, map: smallStarTex, color: 0xccccff,
+    blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.75, sizeAttenuation: true
+  }));
+  scene.add(stars);
+
+  // ─── DUST (غبار بین ستاره‌ای) ─────────────
+  const DUST_COUNT = isMobile ? 300 : 800;
+  const dustGeo = new THREE.BufferGeometry();
+  const dPos = new Float32Array(DUST_COUNT * 3);
+  for(let i=0;i<DUST_COUNT;i++){
+    const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1), rad=8+Math.random()*35;
+    dPos[i*3]=Math.sin(phi)*Math.cos(theta)*rad; dPos[i*3+1]=Math.sin(phi)*Math.sin(theta)*rad*0.3; dPos[i*3+2]=Math.cos(phi)*rad*0.5-4;
+  }
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
+  const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+    size: isMobile?0.05:0.07, map: starTex, color: 0x9988cc,
+    blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.25, sizeAttenuation: true
+  }));
+  scene.add(dust);
+
+  // ─── CORE GLOW ───────────────────────────
+  const coreGlow = new THREE.Mesh(
+    new THREE.SphereGeometry(1.6, isMobile?16:32, isMobile?16:32),
+    new THREE.ShaderMaterial({
+      uniforms: { uColor: { value: palette.core }, uTime: { value: 0 } },
+      vertexShader: `varying vec3 vN;varying vec3 vP;void main(){vec4 w=modelMatrix*vec4(position,1.);vP=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+      fragmentShader: `varying vec3 vN;varying vec3 vP;uniform vec3 uColor;uniform float uTime;void main(){vec3 v=normalize(cameraPosition-vP);float f=1.-abs(dot(v,vN));f=pow(f,3.5);gl_FragColor=vec4(uColor,f*0.8);}`,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+    })
+  );
+  coreGlow.position.set(0,0,-4); scene.add(coreGlow);
+
+  // ─── RINGS ──────────────────────────────
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(5.5,0.025,isMobile?8:16,isMobile?80:140),
+    new THREE.MeshBasicMaterial({color:palette.mid,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending,depthWrite:false}));
+  ring1.position.z=-4; ring1.rotation.x=Math.PI*0.35; ring1.rotation.y=Math.PI*0.15; scene.add(ring1);
+
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(8,0.018,isMobile?6:10,isMobile?60:110),
+    new THREE.MeshBasicMaterial({color:palette.outer,transparent:true,opacity:0.22,blending:THREE.AdditiveBlending,depthWrite:false}));
+  ring2.position.z=-4; ring2.rotation.x=-Math.PI*0.3; ring2.rotation.y=-Math.PI*0.2; scene.add(ring2);
+
+  // ─── SPEED LINES ────────────────────────
+  const speedLines = [];
+  for(let i=0;i<40;i++){
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,0,0,-(1.5+Math.random()*5)]),3));
+    const l=new THREE.Line(g,new THREE.LineBasicMaterial({color:new THREE.Color().setHSL(0.7+Math.random()*0.2,0.8,0.6),transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));
+    l.position.set((Math.random()-0.5)*20,(Math.random()-0.5)*12,-6-Math.random()*15);
+    l.rotation.x=(Math.random()-0.5)*0.5; l.rotation.y=(Math.random()-0.5)*0.5;
+    scene.add(l); speedLines.push({line:l,baseZ:l.position.z,speed:0.04+Math.random()*0.2});
+  }
+
+  // ─── STATE ──────────────────────────────
+  let mx=0,my=0, scrollP=0, t=0, gyroX=0,gyroY=0,rawGx=0,rawGy=0,gyroOn=false, paused=false, animId=null;
+
+  function attachGyro(){window.addEventListener('deviceorientation',e=>{if(e.gamma===null)return;gyroOn=true;rawGx=Math.max(-1,Math.min(1,(e.gamma||0)/25));rawGy=Math.max(-1,Math.min(1,-(e.beta||0)/25));},true);}
+  if(isMobile&&!/(iPhone|iPad)/i.test(navigator.userAgent))attachGyro();
+  let ga=false;window.addEventListener('touchstart',()=>{if(ga)return;ga=true;if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')attachGyro();}).catch(()=>{});},{once:true});
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth-0.5)*2;my=-(e.clientY/window.innerHeight-0.5)*2;});
+
+  // ─── UPDATE COLORS ──────────────────────
+  window._updateThreeColors = function(colors, rc, r2c, cc){
+    palette.core=new THREE.Color(colors[0]||'#c77dff'); palette.mid=new THREE.Color(colors[2]||'#7dd3fc'); palette.outer=new THREE.Color(colors[3]||'#5a189a');
+    coreGlow.material.uniforms.uColor.value=palette.core;
+    ring1.material.color.setHex(rc); ring2.material.color.setHex(r2c);
+    for(let i=0;i<GALAXY_COUNT;i++){const r=Math.sqrt(gPos[i*3]**2+(gPos[i*3+2]+4)**2);const t=Math.max(0,Math.min(1,(r-coreR)/(outerR-coreR)));const c=t<0.35?palette.core.clone().lerp(palette.mid,t/0.35):palette.mid.clone().lerp(palette.outer,(t-0.35)/0.65);c.multiplyScalar(0.55+Math.random()*0.9);gCol[i*3]=c.r;gCol[i*3+1]=c.g;gCol[i*3+2]=c.b;}
+    galaxyGeo.attributes.color.needsUpdate=true;
+  };
+
+  // ─── MAIN LOOP ──────────────────────────
+  function tick(){
+    if(paused){animId=requestAnimationFrame(tick);renderer.render(scene,camera);return;}
+    animId=requestAnimationFrame(tick);
+    t+=0.003;
+    if(gyroOn){gyroX+=(rawGx-gyroX)*0.06;gyroY+=(rawGy-gyroY)*0.06;}
+    const px=gyroOn?gyroX:mx, py=gyroOn?gyroY:my;
+    const p = scrollP;
+
+    const approach = Math.max(0, Math.min(1, p / 0.15));
+    const dive = Math.max(0, Math.min(1, (p - 0.15) / 0.55));
+    const orbit = Math.max(0, Math.min(1, (p - 0.70) / 0.30));
+
+    const camZ_start = 18, camZ_mid = -2;
+    let camZ, camX, camY, lookZ, rotY;
+
+    if(p < 0.15){
+      camZ = camZ_start + (camZ_mid - camZ_start) * approach;
+      camX = px * 1.5 * (1 - approach);
+      camY = 2 + py * 1.2 * (1 - approach);
+      lookZ = -5 + approach * 3;
+      rotY = 0;
+    } else if(p < 0.70){
+      const d = dive;
+      camZ = camZ_mid + Math.sin(d * Math.PI) * 3;
+      camX = Math.sin(d * Math.PI * 2) * 4 + px * 2;
+      camY = Math.cos(d * Math.PI * 1.5) * 2 + py * 1.5;
+      lookZ = -5 + d * 8;
+      rotY = d * Math.PI * 0.5;
+    } else {
+      const o = orbit;
+      const fullCircle = o * Math.PI * 2;
+      camZ = -2 + Math.sin(o * Math.PI) * 8;
+      camX = Math.cos(fullCircle) * 9;
+      camY = Math.sin(fullCircle * 0.7) * 3 + py * 0.8;
+      lookZ = -4 + o * 6;
+      rotY = fullCircle;
+    }
+
+    camera.position.x += (camX - camera.position.x) * 0.04;
+    camera.position.y += (camY - camera.position.y) * 0.04;
+    camera.position.z += (camZ - camera.position.z) * 0.04;
+    camera.lookAt(0, 0, lookZ);
+
+    galaxy.rotation.y = t * 0.03 + rotY * 0.5;
+    galaxy.rotation.x = py * 0.03;
+    stars.rotation.y = -t * 0.008 + px * 0.02;
+    stars.rotation.x = py * 0.015;
+    dust.rotation.y = t * 0.015 + rotY * 0.3;
+    dust.rotation.x = py * 0.02;
+
+    ring1.rotation.z += 0.0015;
+    ring2.rotation.z -= 0.001;
+    ring1.scale.setScalar(1 + dive * 0.8);
+    ring2.scale.setScalar(1 + dive * 0.6);
+    coreGlow.scale.setScalar(1 + Math.sin(t*3)*0.06 + dive*0.5);
+    coreGlow.material.uniforms.uTime.value = t;
+
+    speedLines.forEach(sl=>{
+      sl.line.position.z += sl.speed * (dive * 3 + orbit * 1.5);
+      if(sl.line.position.z > 4) sl.line.position.z = sl.baseZ;
+      sl.line.material.opacity = (dive * 0.7 + orbit * 0.5) * (1 - Math.abs(sl.line.position.z)/14);
+    });
+
+    galaxy.material.opacity = 0.9 - dive * 0.2;
+    stars.material.opacity = 0.75 + orbit * 0.25;
+    dust.material.opacity = 0.25 + dive * 0.4;
+
+    const warp = document.getElementById('space-warp');
+    if(warp){ if(dive>0.1&&!warp.classList.contains('active'))warp.classList.add('active'); else if(dive<=0.1&&warp.classList.contains('active'))warp.classList.remove('active'); }
+
+    renderer.render(scene, camera);
+  }
+  tick();
+
+  window._threePause = ()=>{paused=true;galaxy.material.opacity=0.2;stars.material.opacity=0.15;};
+  window._threeResume = ()=>{paused=false;galaxy.material.opacity=0.9;stars.material.opacity=0.75;};
+  window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+  window._threeSetScroll = p => { scrollP = p; };
+})();
 
 /* ════════════════════════════════════════════
    ADVANCED PARALLAX ON MOUSE MOVE
@@ -1535,7 +1734,6 @@ window.initLenis = function(){
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  // Touch support
   document.addEventListener('touchmove', (e) => {
     if(e.touches.length === 1){
       mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
@@ -1554,12 +1752,6 @@ window.initLenis = function(){
       el.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    // Also move particles canvas slightly
-    const canvas = document.getElementById('bg-canvas');
-    if(canvas){
-      canvas.style.transform = `translate(${targetX * 15}px, ${targetY * 15}px)`;
-    }
-
     requestAnimationFrame(animateParallax);
   }
   animateParallax();
@@ -1571,13 +1763,12 @@ window.initLenis = function(){
 (function initEnergySaver(){
   let particlesPaused = false;
   let inactivityTimer = null;
-  const INACTIVITY_DELAY = 30000; // 30 seconds
+  const INACTIVITY_DELAY = 30000;
 
   function pauseParticles(){
     if(!particlesPaused && window._threePause){
       window._threePause();
       particlesPaused = true;
-      console.log('🔋 Particles paused to save energy');
     }
   }
 
@@ -1585,11 +1776,9 @@ window.initLenis = function(){
     if(particlesPaused && window._threeResume){
       window._threeResume();
       particlesPaused = false;
-      console.log('⚡ Particles resumed');
     }
   }
 
-  // Handle page visibility
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       pauseParticles();
@@ -1599,7 +1788,6 @@ window.initLenis = function(){
     }
   });
 
-  // Handle user inactivity
   function resetInactivityTimer(){
     clearTimeout(inactivityTimer);
     resumeParticles();
@@ -1619,67 +1807,28 @@ window.initLenis = function(){
 (function initGalaxyThemes(){
   const themes = {
     violet: {
-      '--void': '#020008',
-      '--accent': '#9d4edd',
-      '--accent2': '#c77dff',
-      '--accent3': '#e0aaff',
-      '--ember': '#f59e0b',
-      '--ice': '#7dd3fc',
-      '--green': '#34d399',
-      '--text': '#ede9fe',
-      '--muted': 'rgba(237,233,254,0.35)',
-      '--glow': 'rgba(157,78,221,0.55)',
-      '--terminal-prompt': '#9d4edd',
-      '--terminal-highlight': '#c77dff',
-      '--terminal-border': 'rgba(157,78,221,0.3)',
-      metaTheme: '#9d4edd',
-      threeColors: ['#9d4edd', '#c77dff', '#7dd3fc', '#e0aaff', '#5a189a'],
-      ringColor: 0x9d4edd,
-      ring2Color: 0x7dd3fc,
-      coreColor: 0x9d4edd,
-      shapeColors: [0x7dd3fc, 0xe0aaff, 0xc77dff]
+      '--void': '#020008', '--accent': '#9d4edd', '--accent2': '#c77dff', '--accent3': '#e0aaff',
+      '--ember': '#f59e0b', '--ice': '#7dd3fc', '--green': '#34d399', '--text': '#ede9fe',
+      '--muted': 'rgba(237,233,254,0.35)', '--glow': 'rgba(157,78,221,0.55)',
+      '--terminal-prompt': '#9d4edd', '--terminal-highlight': '#c77dff', '--terminal-border': 'rgba(157,78,221,0.3)',
+      metaTheme: '#9d4edd', threeColors: ['#9d4edd','#c77dff','#7dd3fc','#e0aaff','#5a189a'],
+      ringColor: 0x9d4edd, ring2Color: 0x7dd3fc, coreColor: 0x9d4edd, shapeColors: [0x7dd3fc,0xe0aaff,0xc77dff]
     },
     blue: {
-      '--void': '#000510',
-      '--accent': '#00d4ff',
-      '--accent2': '#00e5ff',
-      '--accent3': '#80f0ff',
-      '--ember': '#ff6b35',
-      '--ice': '#00d4ff',
-      '--green': '#00ff88',
-      '--text': '#e0f0ff',
-      '--muted': 'rgba(200,230,255,0.35)',
-      '--glow': 'rgba(0,212,255,0.55)',
-      '--terminal-prompt': '#00d4ff',
-      '--terminal-highlight': '#00e5ff',
-      '--terminal-border': 'rgba(0,212,255,0.3)',
-      metaTheme: '#00d4ff',
-      threeColors: ['#00d4ff', '#0066ff', '#00e5ff', '#80f0ff', '#0033cc'],
-      ringColor: 0x00d4ff,
-      ring2Color: 0x0066ff,
-      coreColor: 0x00d4ff,
-      shapeColors: [0x0066ff, 0x80f0ff, 0x00e5ff]
+      '--void': '#000510', '--accent': '#00d4ff', '--accent2': '#00e5ff', '--accent3': '#80f0ff',
+      '--ember': '#ff6b35', '--ice': '#00d4ff', '--green': '#00ff88', '--text': '#e0f0ff',
+      '--muted': 'rgba(200,230,255,0.35)', '--glow': 'rgba(0,212,255,0.55)',
+      '--terminal-prompt': '#00d4ff', '--terminal-highlight': '#00e5ff', '--terminal-border': 'rgba(0,212,255,0.3)',
+      metaTheme: '#00d4ff', threeColors: ['#00d4ff','#0066ff','#00e5ff','#80f0ff','#0033cc'],
+      ringColor: 0x00d4ff, ring2Color: 0x0066ff, coreColor: 0x00d4ff, shapeColors: [0x0066ff,0x80f0ff,0x00e5ff]
     },
     gold: {
-      '--void': '#080600',
-      '--accent': '#f59e0b',
-      '--accent2': '#fbbf24',
-      '--accent3': '#fde68a',
-      '--ember': '#ef4444',
-      '--ice': '#fbbf24',
-      '--green': '#10b981',
-      '--text': '#fef3c7',
-      '--muted': 'rgba(254,243,199,0.35)',
-      '--glow': 'rgba(245,158,11,0.55)',
-      '--terminal-prompt': '#f59e0b',
-      '--terminal-highlight': '#fbbf24',
-      '--terminal-border': 'rgba(245,158,11,0.3)',
-      metaTheme: '#f59e0b',
-      threeColors: ['#f59e0b', '#d97706', '#fbbf24', '#fde68a', '#92400e'],
-      ringColor: 0xf59e0b,
-      ring2Color: 0xd97706,
-      coreColor: 0xf59e0b,
-      shapeColors: [0xd97706, 0xfde68a, 0xfbbf24]
+      '--void': '#080600', '--accent': '#f59e0b', '--accent2': '#fbbf24', '--accent3': '#fde68a',
+      '--ember': '#ef4444', '--ice': '#fbbf24', '--green': '#10b981', '--text': '#fef3c7',
+      '--muted': 'rgba(254,243,199,0.35)', '--glow': 'rgba(245,158,11,0.55)',
+      '--terminal-prompt': '#f59e0b', '--terminal-highlight': '#fbbf24', '--terminal-border': 'rgba(245,158,11,0.3)',
+      metaTheme: '#f59e0b', threeColors: ['#f59e0b','#d97706','#fbbf24','#fde68a','#92400e'],
+      ringColor: 0xf59e0b, ring2Color: 0xd97706, coreColor: 0xf59e0b, shapeColors: [0xd97706,0xfde68a,0xfbbf24]
     }
   };
 
@@ -1691,1661 +1840,143 @@ window.initLenis = function(){
   function applyTheme(themeName){
     const theme = themes[themeName];
     if(!theme) return;
-    
     document.body.classList.add('galaxy-transitioning');
     setTimeout(() => document.body.classList.remove('galaxy-transitioning'), 700);
-
-    Object.entries(theme).forEach(([key, value]) => {
-      if(key.startsWith('--')) {
-        root.style.setProperty(key, value);
-      }
-    });
-
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    if(metaTheme) metaTheme.setAttribute('content', theme.metaTheme);
-
-    if(ambient && themeName === 'violet'){
-      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';
-    } else if(ambient && themeName === 'blue'){
-      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';
-    } else if(ambient && themeName === 'gold'){
-      ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';
+    Object.entries(theme).forEach(([key, value]) => { if(key.startsWith('--')) root.style.setProperty(key, value); });
+    const metaTheme = document.querySelector('meta[name="theme-color"]'); if(metaTheme) metaTheme.setAttribute('content', theme.metaTheme);
+    if(ambient){
+      if(themeName === 'violet') ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';
+      else if(themeName === 'blue') ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';
+      else ambient.style.background = 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';
     }
-
-    const scanline = document.querySelector('.scanline');
-    if(scanline){
-      if(themeName === 'violet') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(157,78,221,0.1),transparent)';
-      else if(themeName === 'blue') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(0,212,255,0.1),transparent)';
-      else if(themeName === 'gold') scanline.style.background = 'linear-gradient(90deg,transparent,rgba(245,158,11,0.1),transparent)';
-    }
-
-    if(window._updateThreeColors && theme.threeColors){
-      window._updateThreeColors(theme.threeColors, theme.ringColor, theme.ring2Color, theme.coreColor, theme.shapeColors);
-    }
-
-    window._currentTheme = theme;
-
-    document.querySelectorAll('.galaxy-dot').forEach(dot => dot.classList.remove('active'));
-    const activeDot = document.querySelector(`.galaxy-dot[data-theme="${themeName}"]`);
-    if(activeDot) activeDot.classList.add('active');
-
-    localStorage.setItem('galaxy-theme', themeName);
-    currentTheme = themeName;
+    if(window._updateThreeColors) window._updateThreeColors(theme.threeColors, theme.ringColor, theme.ring2Color, theme.coreColor);
+    document.querySelectorAll('.galaxy-dot').forEach(d => d.classList.remove('active'));
+    const ad = document.querySelector(`.galaxy-dot[data-theme="${themeName}"]`); if(ad) ad.classList.add('active');
+    localStorage.setItem('galaxy-theme', themeName); currentTheme = themeName;
   }
 
-  if(toggler){
-    toggler.addEventListener('click', (e) => {
-      const dot = e.target.closest('.galaxy-dot');
-      if(!dot) return;
-      const theme = dot.dataset.theme;
-      if(theme && theme !== currentTheme){
-        applyTheme(theme);
-      }
-    });
-  }
-
-  const savedTheme = localStorage.getItem('galaxy-theme');
-  if(savedTheme && themes[savedTheme]){
-    setTimeout(() => applyTheme(savedTheme), 100);
-  }
-
-  window.applyGalaxyTheme = applyTheme;
-  window.getCurrentTheme = () => currentTheme;
-  window.getThemeData = (name) => themes[name];
+  if(toggler) toggler.addEventListener('click', e => { const dot = e.target.closest('.galaxy-dot'); if(!dot) return; const th = dot.dataset.theme; if(th && th !== currentTheme) applyTheme(th); });
+  const saved = localStorage.getItem('galaxy-theme'); if(saved && themes[saved]) setTimeout(() => applyTheme(saved), 100);
+  window.applyGalaxyTheme = applyTheme; window.getCurrentTheme = () => currentTheme; window.getThemeData = n => themes[n];
 })();
 
 /* ════════════════════════════════════════════
-   THREE.JS — PIXEL COSMIC SPACE DIVE
-   (Updated with pause/resume for energy saving)
-════════════════════════════════════════════ */
-(function initThree(){
-  const canvas = document.getElementById('bg-canvas');
-  const W = window.innerWidth, H = window.innerHeight;
-
-  const renderer = new THREE.WebGLRenderer({
-    canvas, alpha:true,
-    antialias: false,
-    powerPreference: 'high-performance'
-  });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(W, H);
-  renderer.setClearColor(0x000000, 0);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(65, W/H, 0.1, 200);
-  camera.position.z = 8;
-
-  const PARTICLE_COUNT = 1200;
-  const posArray = new Float32Array(PARTICLE_COUNT * 3);
-  const colArray = new Float32Array(PARTICLE_COUNT * 3);
-  const velArray = new Float32Array(PARTICLE_COUNT * 3);
-
-  const initTheme = window.getThemeData ? window.getThemeData('violet') : null;
-  const initColors = initTheme ? initTheme.threeColors : ['#9d4edd', '#c77dff', '#7dd3fc', '#e0aaff', '#5a189a'];
-  
-  let palette = initColors.map(c => new THREE.Color(c));
-
-  function rebuildPalette(colors){
-    palette = colors.map(c => new THREE.Color(c));
-    for(let i = 0; i < PARTICLE_COUNT; i++){
-      const c = palette[Math.floor(Math.random() * palette.length)];
-      colArray[i*3] = c.r; colArray[i*3+1] = c.g; colArray[i*3+2] = c.b;
-    }
-    if(particleGeo) particleGeo.attributes.color.needsUpdate = true;
-  }
-
-  for(let i = 0; i < PARTICLE_COUNT; i++){
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    const r = 3 + Math.pow(Math.random(), 0.7) * 20;
-
-    posArray[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-    posArray[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.4;
-    posArray[i*3+2] = r * Math.cos(phi) * 0.6;
-
-    velArray[i*3]   = (Math.random() - 0.5) * 0.002;
-    velArray[i*3+1] = (Math.random() - 0.5) * 0.001;
-    velArray[i*3+2] = (Math.random() - 0.5) * 0.0015;
-
-    const c = palette[Math.floor(Math.random() * palette.length)];
-    colArray[i*3] = c.r; colArray[i*3+1] = c.g; colArray[i*3+2] = c.b;
-  }
-
-  const particleGeo = new THREE.BufferGeometry();
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-  particleGeo.setAttribute('color', new THREE.BufferAttribute(colArray, 3));
-
-  const canvas2d = document.createElement('canvas');
-  canvas2d.width = 4;
-  canvas2d.height = 4;
-  const ctx = canvas2d.getContext('2d');
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, 4, 4);
-
-  const pixelTexture = new THREE.CanvasTexture(canvas2d);
-  pixelTexture.needsUpdate = true;
-
-  const particleMat = new THREE.PointsMaterial({
-    size: 0.06,
-    map: pixelTexture,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.7,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    sizeAttenuation: true
-  });
-
-  const particles = new THREE.Points(particleGeo, particleMat);
-  particles.rotation.x = Math.PI * 0.12;
-  scene.add(particles);
-
-  const initRingColor = initTheme ? initTheme.ringColor : 0x9d4edd;
-  const initRing2Color = initTheme ? initTheme.ring2Color : 0x7dd3fc;
-  const initCoreColor = initTheme ? initTheme.coreColor : 0x9d4edd;
-  const initShapeColors = initTheme ? initTheme.shapeColors : [0x7dd3fc, 0xe0aaff, 0xc77dff];
-
-  const ringGeo = new THREE.TorusGeometry(3.2, 0.015, 8, 120);
-  const ringMat = new THREE.MeshBasicMaterial({
-    color: initRingColor,
-    transparent: true,
-    opacity: 0.4,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const ring = new THREE.Mesh(ringGeo, ringMat);
-  ring.rotation.x = 0.3;
-  ring.rotation.z = 0.2;
-  scene.add(ring);
-
-  const ring2Geo = new THREE.TorusGeometry(4.5, 0.008, 6, 100);
-  const ring2Mat = new THREE.MeshBasicMaterial({
-    color: initRing2Color,
-    transparent: true,
-    opacity: 0.2,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-  ring2.rotation.x = -0.5;
-  ring2.rotation.z = 0.7;
-  scene.add(ring2);
-
-  const coreGeo = new THREE.IcosahedronGeometry(1.8, 1);
-  const coreMat = new THREE.MeshBasicMaterial({
-    color: initCoreColor,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.25,
-    blending: THREE.AdditiveBlending
-  });
-  const core = new THREE.Mesh(coreGeo, coreMat);
-  core.position.set(0, 0, -1.5);
-  scene.add(core);
-
-  const shapes = [];
-  for(let i = 0; i < 3; i++){
-    const geo = new THREE.OctahedronGeometry(0.6 + i * 0.2, 0);
-    const mat = new THREE.MeshBasicMaterial({
-      color: initShapeColors[i],
-      wireframe: true,
-      transparent: true,
-      opacity: 0.3 - i * 0.05,
-      blending: THREE.AdditiveBlending
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(
-      (Math.random() - 0.5) * 6,
-      (Math.random() - 0.5) * 4,
-      -2 - Math.random() * 3
-    );
-    scene.add(mesh);
-    shapes.push({ mesh, speed: 0.3 + Math.random() * 0.5, offset: Math.random() * Math.PI * 2 });
-  }
-
-  const warpRingGeo = new THREE.TorusGeometry(6, 0.02, 8, 80);
-  const warpRingMat = new THREE.MeshBasicMaterial({
-    color: 0xc77dff,
-    transparent: true,
-    opacity: 0,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const warpRing = new THREE.Mesh(warpRingGeo, warpRingMat);
-  warpRing.position.z = -8;
-  scene.add(warpRing);
-
-  const speedLines = [];
-  for(let i = 0; i < 30; i++){
-    const lineGeo = new THREE.BufferGeometry();
-    const length = 1 + Math.random() * 3;
-    const verts = new Float32Array([
-      0, 0, 0,
-      0, 0, -length
-    ]);
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
-    const lineMat = new THREE.LineBasicMaterial({
-      color: new THREE.Color().setHSL(0.75 + Math.random() * 0.15, 0.8, 0.6),
-      transparent: true,
-      opacity: 0,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    });
-    const line = new THREE.Line(lineGeo, lineMat);
-    line.position.set(
-      (Math.random() - 0.5) * 14,
-      (Math.random() - 0.5) * 8,
-      -3 - Math.random() * 10
-    );
-    line.rotation.x = (Math.random() - 0.5) * 0.5;
-    line.rotation.y = (Math.random() - 0.5) * 0.5;
-    scene.add(line);
-    speedLines.push({ line, mat: lineMat, baseZ: line.position.z, speed: 0.05 + Math.random() * 0.15 });
-  }
-
-  window._updateThreeColors = function(colors, ringColor, ring2Color, coreColor, shapeColors){
-    rebuildPalette(colors);
-    ringMat.color.setHex(ringColor);
-    ring2Mat.color.setHex(ring2Color);
-    coreMat.color.setHex(coreColor);
-    shapes.forEach((s, i) => {
-      if(shapeColors[i]) s.mesh.material.color.setHex(shapeColors[i]);
-    });
-  };
-
-  let mx = 0, my = 0, scrollP = 0, t = 0;
-  let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0, gyroEnabled = false;
-  let prevScrollP = 0, scrollVel = 0, spaceIntensity = 0, finalBurst = 0;
-  const finalBurstEl = document.getElementById('final-burst');
-  let animationPaused = false;
-  let animationId = null;
-
-  function attachGyro(){
-    window.addEventListener('deviceorientation', e => {
-      if(e.gamma === null) return;
-      gyroEnabled = true;
-      rawGyroX = Math.max(-1, Math.min(1, (e.gamma || 0) / 25));
-      rawGyroY = Math.max(-1, Math.min(1, -(e.beta || 0) / 25));
-    }, true);
-  }
-  if(/Mobi|Android/i.test(navigator.userAgent) && !/(iPhone|iPad)/i.test(navigator.userAgent)){
-    attachGyro();
-  }
-  let gyroAsked = false;
-  window.addEventListener('touchstart', () => {
-    if(gyroAsked) return;
-    gyroAsked = true;
-    if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
-      DeviceOrientationEvent.requestPermission().then(r => { if(r === 'granted') attachGyro(); }).catch(()=>{});
-    }
-  }, { once: true });
-
-  document.addEventListener('mousemove', e => {
-    mx = (e.clientX / window.innerWidth - 0.5) * 2;
-    my = -(e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  function tick(){
-    if(animationPaused) {
-      animationId = requestAnimationFrame(tick);
-      renderer.render(scene, camera);
-      return;
-    }
-    
-    animationId = requestAnimationFrame(tick);
-    t += 0.005;
-
-    if(gyroEnabled){
-      gyroX += (rawGyroX - gyroX) * 0.06;
-      gyroY += (rawGyroY - gyroY) * 0.06;
-    }
-    const ptrX = gyroEnabled ? gyroX : mx;
-    const ptrY = gyroEnabled ? gyroY : my;
-
-    const rawVel = scrollP - prevScrollP;
-    scrollVel += (rawVel - scrollVel) * 0.15;
-    prevScrollP = scrollP;
-
-    const targetIntensity = scrollP > 0.27 ? Math.min(1, (scrollP - 0.27) * 2.2) : 0;
-    spaceIntensity += (targetIntensity - spaceIntensity) * 0.04;
-
-    const targetBurst = scrollP > 0.88 ? Math.min(1, (scrollP - 0.88) * 8) : 0;
-    finalBurst += (targetBurst - finalBurst) * 0.06;
-
-    if(finalBurstEl){
-      if(finalBurst > 0.15 && !finalBurstEl.classList.contains('active')){
-        finalBurstEl.classList.add('active');
-        setTimeout(() => finalBurstEl.classList.remove('active'), 800);
-      }
-    }
-
-    particles.rotation.y = t * 0.015 + ptrX * 0.05 + scrollVel * 8;
-    particles.rotation.x = Math.PI * 0.12 + ptrY * 0.03 + scrollVel * 4;
-    particles.rotation.z = t * 0.003 + scrollP * 0.4;
-
-    const pPos = particleGeo.attributes.position.array;
-    for(let i = 0; i < PARTICLE_COUNT; i++){
-      pPos[i*3]   += velArray[i*3];
-      pPos[i*3+1] += velArray[i*3+1];
-      pPos[i*3+2] += velArray[i*3+2];
-
-      if(spaceIntensity > 0.1){
-        pPos[i*3+2] -= spaceIntensity * 0.008;
-        if(pPos[i*3+2] < -15) pPos[i*3+2] = 15;
-      }
-
-      if(finalBurst > 0.1){
-        const dx = pPos[i*3], dy = pPos[i*3+1], dz = pPos[i*3+2];
-        const dist = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
-        pPos[i*3]   += dx/dist * finalBurst * 0.2;
-        pPos[i*3+1] += dy/dist * finalBurst * 0.2;
-        pPos[i*3+2] += dz/dist * finalBurst * 0.2;
-        if(dist > 28){
-          pPos[i*3] *= 0.3; pPos[i*3+1] *= 0.3; pPos[i*3+2] *= 0.3;
-        }
-      }
-
-      const d = Math.sqrt(pPos[i*3]**2 + pPos[i*3+1]**2 + pPos[i*3+2]**2);
-      if(d > 22 || d < 2.5){
-        velArray[i*3] *= -1; velArray[i*3+1] *= -1; velArray[i*3+2] *= -1;
-      }
-    }
-    particleGeo.attributes.position.needsUpdate = true;
-    particles.material.opacity = 0.7 - finalBurst * 0.4;
-
-    const baseZ = 8;
-    const diveZ = 5.5 * spaceIntensity;
-    const burstZ = finalBurst * 25;
-    camera.position.z = baseZ - scrollP * 1.8 - diveZ + burstZ;
-    camera.position.x = ptrX * 0.35 * (1 - finalBurst);
-    camera.position.y = ptrY * 0.22 * (1 - finalBurst);
-
-    ring.rotation.z = t * 0.08 + ptrX * 0.04;
-    ring.rotation.x = 0.3 + ptrY * 0.03;
-    ring.scale.setScalar(1 + spaceIntensity * 0.5 + finalBurst * 4);
-    ring.material.opacity = 0.4 - finalBurst * 0.35;
-
-    ring2.rotation.z = t * 0.05 - ptrX * 0.03;
-    ring2.rotation.x = -0.5 + ptrY * 0.02;
-    ring2.scale.setScalar(1 + spaceIntensity * 0.7 + finalBurst * 5);
-    ring2.material.opacity = 0.2 - finalBurst * 0.18;
-
-    core.rotation.x = t * 0.25;
-    core.rotation.y = t * 0.35;
-    core.scale.setScalar(1 + spaceIntensity * 0.3 + finalBurst * 3);
-    coreMat.opacity = 0.25 + spaceIntensity * 0.2 - finalBurst * 0.25;
-
-    shapes.forEach((s, i) => {
-      s.mesh.rotation.x = t * s.speed;
-      s.mesh.rotation.y = t * s.speed * 1.3;
-      s.mesh.position.z = -2 - (i + 1) * spaceIntensity * 2 + finalBurst * 4;
-      s.mesh.material.opacity = 0.3 + spaceIntensity * 0.15 - finalBurst * 0.3;
-    });
-
-    warpRing.position.z = -8 + spaceIntensity * 6 - finalBurst * 5;
-    warpRingMat.opacity = spaceIntensity * 0.4 - finalBurst * 0.35;
-    warpRing.rotation.z = t * 0.5;
-    warpRing.scale.setScalar(1 - spaceIntensity * 0.3 + finalBurst * 6);
-
-    speedLines.forEach(sl => {
-      sl.line.position.z += sl.speed * (spaceIntensity + finalBurst);
-      if(sl.line.position.z > 3) sl.line.position.z = sl.baseZ;
-      sl.mat.opacity = (spaceIntensity * 0.5 + finalBurst * 0.9) * (1 - Math.abs(sl.line.position.z) / 12);
-    });
-
-    const warpOverlay = document.getElementById('space-warp');
-    if(warpOverlay){
-      if(spaceIntensity > 0.05 && !warpOverlay.classList.contains('active')){
-        warpOverlay.classList.add('active');
-      } else if(spaceIntensity <= 0.05 && warpOverlay.classList.contains('active')){
-        warpOverlay.classList.remove('active');
-      }
-    }
-
-    renderer.render(scene, camera);
-  }
-  tick();
-
-  // Pause/Resume functions for energy saving
-  window._threePause = function(){
-    animationPaused = true;
-    particleMat.opacity = 0.2;
-    ringMat.opacity = 0.1;
-    ring2Mat.opacity = 0.05;
-  };
-  window._threeResume = function(){
-    animationPaused = false;
-    particleMat.opacity = 0.7;
-    ringMat.opacity = 0.4;
-    ring2Mat.opacity = 0.2;
-  };
-
-  window.addEventListener('resize', () => {
-    const w = window.innerWidth, h = window.innerHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-  });
-
-  window._threeSetScroll = p => { scrollP = p; };
-})();
-
-/* ════════════════════════════════════════════
-   SNAKE GAME
+   SNAKE GAME (کامل)
 ════════════════════════════════════════════ */
 (function initSnakeGame(){
-  
   window.startSnakeGame = function(containerElement, onExit){
     const existingGame = containerElement.querySelector('.snake-game-container');
     if(existingGame) existingGame.remove();
-    
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 769;
-
-    const gameContainer = document.createElement('div');
-    gameContainer.className = 'snake-game-container active';
-
-    const scoreRow = document.createElement('div');
-    scoreRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:8px;';
-    gameContainer.appendChild(scoreRow);
-
-    const scoreDiv = document.createElement('div');
-    scoreDiv.className = 'snake-score';
-    scoreDiv.style.cssText = 'flex:1;margin-bottom:0;';
-    scoreDiv.textContent = '🐍 SCORE: 0  |  HIGH: 0';
-    scoreRow.appendChild(scoreDiv);
-
-    if(isMobile){
-      const exitBtn = document.createElement('button');
-      exitBtn.type = 'button';
-      exitBtn.textContent = '✕ خروج';
-      exitBtn.setAttribute('aria-label', 'خروج از بازی مار');
-      exitBtn.style.cssText = 'flex-shrink:0;background:rgba(157,78,221,0.12);border:1px solid rgba(157,78,221,0.3);color:var(--terminal-dim,#8c8a99);border-radius:6px;font-size:0.58rem;font-family:inherit;padding:5px 9px;cursor:pointer;';
-      exitBtn.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); destroyGame(); }, { passive:false });
-      exitBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); destroyGame(); });
-      scoreRow.appendChild(exitBtn);
-    }
-    
-    const canvasWrapper = document.createElement('div');
-    canvasWrapper.style.cssText = 'position:relative; width:100%; touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;';
-    gameContainer.appendChild(canvasWrapper);
-    
-    const canvas = document.createElement('canvas');
-    canvas.className = 'snake-canvas';
-    canvas.width = 300;
-    canvas.height = 300;
-    canvas.style.cssText = 'width:100%; height:auto; display:block;';
-    canvasWrapper.appendChild(canvas);
-    
+    const gameContainer = document.createElement('div'); gameContainer.className = 'snake-game-container active';
+    const scoreRow = document.createElement('div'); scoreRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:8px;'; gameContainer.appendChild(scoreRow);
+    const scoreDiv = document.createElement('div'); scoreDiv.className = 'snake-score'; scoreDiv.style.cssText = 'flex:1;margin-bottom:0;'; scoreDiv.textContent = '🐍 SCORE: 0  |  HIGH: 0'; scoreRow.appendChild(scoreDiv);
+    if(isMobile){ const eb=document.createElement('button');eb.type='button';eb.textContent='✕ خروج';eb.style.cssText='flex-shrink:0;background:rgba(157,78,221,0.12);border:1px solid rgba(157,78,221,0.3);color:var(--terminal-dim,#8c8a99);border-radius:6px;font-size:0.58rem;font-family:inherit;padding:5px 9px;cursor:pointer;';eb.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();dg();},{passive:false});eb.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();dg();});scoreRow.appendChild(eb); }
+    const canvasWrapper = document.createElement('div'); canvasWrapper.style.cssText = 'position:relative; width:100%; touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;'; gameContainer.appendChild(canvasWrapper);
+    const canvas = document.createElement('canvas'); canvas.className = 'snake-canvas'; canvas.width = 300; canvas.height = 300; canvas.style.cssText = 'width:100%; height:auto; display:block;'; canvasWrapper.appendChild(canvas);
     let dPadContainer = null;
-    if(isMobile){
-      dPadContainer = document.createElement('div');
-      dPadContainer.className = 'snake-dpad';
-      dPadContainer.style.cssText = `
-        display: grid;
-        grid-template-columns: 50px 50px 50px;
-        grid-template-rows: 50px 50px 50px;
-        gap: 3px;
-        justify-content: center;
-        margin-top: 12px;
-        touch-action: none;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-      `;
-      
-      const buttons = [
-        { text: '▲', row: 1, col: 2, dir: {x:0, y:-1}, code: 'ArrowUp' },
-        { text: '◄', row: 2, col: 1, dir: {x:-1, y:0}, code: 'ArrowLeft' },
-        { text: '●', row: 2, col: 2, dir: null, code: 'Space', isCenter: true },
-        { text: '►', row: 2, col: 3, dir: {x:1, y:0}, code: 'ArrowRight' },
-        { text: '▼', row: 3, col: 2, dir: {x:0, y:1}, code: 'ArrowDown' },
-      ];
-      
-      buttons.forEach(btn => {
-        const button = document.createElement('button');
-        button.textContent = btn.text;
-        button.style.cssText = `
-          grid-row: ${btn.row};
-          grid-column: ${btn.col};
-          background: ${btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)'};
-          border: 1px solid rgba(157,78,221,0.35);
-          border-radius: 8px;
-          color: ${btn.isCenter ? '#fff' : 'var(--terminal-highlight, #c77dff)'};
-          font-size: ${btn.isCenter ? '0.6rem' : '1.1rem'};
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          touch-action: manipulation;
-          -webkit-tap-highlight-color: transparent;
-          transition: all 0.1s ease;
-          font-weight: bold;
-          letter-spacing: 0.1em;
-        `;
-        
-        button.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          button.style.background = 'rgba(157,78,221,0.4)';
-          button.style.borderColor = 'rgba(199,125,255,0.7)';
-          button.style.transform = 'scale(0.9)';
-          
-          if(btn.isCenter){
-            handleActionKey('Space');
-          } else if(btn.dir && gameRunning) {
-            handleDirectionKey(btn.dir);
-          }
-        });
-        
-        button.addEventListener('touchend', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          button.style.background = btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)';
-          button.style.borderColor = 'rgba(157,78,221,0.35)';
-          button.style.transform = 'scale(1)';
-        });
-        
-        button.addEventListener('touchcancel', (e) => {
-          button.style.background = btn.isCenter ? 'rgba(157,78,221,0.2)' : 'rgba(157,78,221,0.15)';
-          button.style.borderColor = 'rgba(157,78,221,0.35)';
-          button.style.transform = 'scale(1)';
-        });
-        
-        button.addEventListener('mousedown', (e) => {
-          e.preventDefault();
-          if(btn.isCenter){
-            handleActionKey('Space');
-          } else if(btn.dir && gameRunning) {
-            handleDirectionKey(btn.dir);
-          }
-        });
-        
-        dPadContainer.appendChild(button);
-      });
-      
-      gameContainer.appendChild(dPadContainer);
-    }
-    
-    const gameOverDiv = document.createElement('div');
-    gameOverDiv.className = 'snake-game-over';
-    gameOverDiv.textContent = 'GAME OVER! Tap ● to restart';
-    gameContainer.appendChild(gameOverDiv);
-    
-    const controlsDiv = document.createElement('div');
-    controlsDiv.className = 'snake-controls';
-    controlsDiv.textContent = isMobile ? '▲▼◄► D-Pad  |  ● restart' : '↑↓←→ or WASD  |  SPACE restart  |  ESC quit';
-    gameContainer.appendChild(controlsDiv);
-    
+    if(isMobile){ dPadContainer=document.createElement('div');dPadContainer.className='snake-dpad';dPadContainer.style.cssText='display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px 50px;gap:3px;justify-content:center;margin-top:12px;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;';
+      [{text:'▲',row:1,col:2,dir:{x:0,y:-1}},{text:'◄',row:2,col:1,dir:{x:-1,y:0}},{text:'●',row:2,col:2,dir:null,isCenter:true},{text:'►',row:2,col:3,dir:{x:1,y:0}},{text:'▼',row:3,col:2,dir:{x:0,y:1}}].forEach(btn=>{const b=document.createElement('button');b.textContent=btn.text;b.style.cssText=`grid-row:${btn.row};grid-column:${btn.col};background:${btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)'};border:1px solid rgba(157,78,221,0.35);border-radius:8px;color:${btn.isCenter?'#fff':'var(--terminal-highlight, #c77dff)'};font-size:${btn.isCenter?'0.6rem':'1.1rem'};cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all 0.1s ease;font-weight:bold;letter-spacing:0.1em;`;b.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();b.style.background='rgba(157,78,221,0.4)';b.style.borderColor='rgba(199,125,255,0.7)';b.style.transform='scale(0.9)';if(btn.isCenter)hak('Space');else if(btn.dir&&gr)hdk(btn.dir);});b.addEventListener('touchend',e=>{e.preventDefault();e.stopPropagation();b.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';b.style.borderColor='rgba(157,78,221,0.35)';b.style.transform='scale(1)';});b.addEventListener('touchcancel',()=>{b.style.background=btn.isCenter?'rgba(157,78,221,0.2)':'rgba(157,78,221,0.15)';b.style.borderColor='rgba(157,78,221,0.35)';b.style.transform='scale(1)';});b.addEventListener('mousedown',e=>{e.preventDefault();if(btn.isCenter)hak('Space');else if(btn.dir&&gr)hdk(btn.dir);});dPadContainer.appendChild(b);});gameContainer.appendChild(dPadContainer); }
+    const gameOverDiv = document.createElement('div'); gameOverDiv.className = 'snake-game-over'; gameOverDiv.textContent = 'GAME OVER! Tap ● to restart'; gameContainer.appendChild(gameOverDiv);
+    const controlsDiv = document.createElement('div'); controlsDiv.className = 'snake-controls'; controlsDiv.textContent = isMobile ? '▲▼◄► D-Pad  |  ● restart' : '↑↓←→ or WASD  |  SPACE restart  |  ESC quit'; gameContainer.appendChild(controlsDiv);
     containerElement.appendChild(gameContainer);
-    
-    const ctx = canvas.getContext('2d');
-    const gridSize = 15;
-    const tileCount = canvas.width / gridSize;
-    
-    let snake = [
-      {x: 10, y: 10},
-      {x: 9, y: 10},
-      {x: 8, y: 10}
-    ];
-    let direction = {x: 1, y: 0};
-    let nextDirection = {x: 1, y: 0};
-    let food = {};
-    let score = 0;
-    let highScore = parseInt(localStorage.getItem('snakeHighScore') || '0');
-    let gameRunning = true;
-    let gameLoop = null;
-    let speed = 120;
-    
-    function getThemeColors(){
-      const theme = window.getCurrentTheme ? window.getCurrentTheme() : 'violet';
-      if(theme === 'violet') return { snake: '#c77dff', food: '#34d399', grid: 'rgba(157,78,221,0.08)' };
-      if(theme === 'blue') return { snake: '#00e5ff', food: '#00ff88', grid: 'rgba(0,212,255,0.08)' };
-      if(theme === 'gold') return { snake: '#fbbf24', food: '#10b981', grid: 'rgba(245,158,11,0.08)' };
-      return { snake: '#c77dff', food: '#34d399', grid: 'rgba(157,78,221,0.08)' };
-    }
-    
+    const ctx = canvas.getContext('2d'); const gridSize = 15; const tileCount = canvas.width / gridSize;
+    let snake = [{x:10,y:10},{x:9,y:10},{x:8,y:10}], direction = {x:1,y:0}, nextDirection = {x:1,y:0}, food = {}, score = 0, highScore = parseInt(localStorage.getItem('snakeHighScore')||'0'), gameRunning = true, gameLoop = null, speed = 120;
+    function getThemeColors(){const t=window.getCurrentTheme?window.getCurrentTheme():'violet';if(t==='violet')return{snake:'#c77dff',food:'#34d399',grid:'rgba(157,78,221,0.08)'};if(t==='blue')return{snake:'#00e5ff',food:'#00ff88',grid:'rgba(0,212,255,0.08)'};return{snake:'#fbbf24',food:'#10b981',grid:'rgba(245,158,11,0.08)'};}
     scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
-    
-    function placeFood(){
-      do {
-        food = {
-          x: Math.floor(Math.random() * tileCount),
-          y: Math.floor(Math.random() * tileCount)
-        };
-      } while(snake.some(segment => segment.x === food.x && segment.y === food.y));
-    }
-    
+    function placeFood(){do{food={x:Math.floor(Math.random()*tileCount),y:Math.floor(Math.random()*tileCount)};}while(snake.some(s=>s.x===food.x&&s.y===food.y));}
     placeFood();
-    
-    let touchStartX = 0, touchStartY = 0;
-    const SWIPE_THRESHOLD = 20;
-    
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      if(e.touches.length === 1){
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    }, { passive: false });
-    
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }, { passive: false });
-    
-    canvas.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      if(!gameRunning || e.changedTouches.length === 0) return;
-      
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      const dy = e.changedTouches[0].clientY - touchStartY;
-      
-      if(Math.abs(dx) < SWIPE_THRESHOLD && Math.abs(dy) < SWIPE_THRESHOLD) return;
-      
-      if(Math.abs(dx) > Math.abs(dy)){
-        if(dx > 0) handleDirectionKey({x: 1, y: 0});
-        else handleDirectionKey({x: -1, y: 0});
-      } else {
-        if(dy > 0) handleDirectionKey({x: 0, y: 1});
-        else handleDirectionKey({x: 0, y: -1});
-      }
-    }, { passive: false });
-    
-    canvas.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      handleActionKey('Space');
-    });
-    
-    function handleDirectionKey(dir){
-      if(direction.x === -dir.x && direction.y === -dir.y) return;
-      if(direction.x === 0 && direction.y === 0) return;
-      nextDirection = dir;
-    }
-    
-    function handleActionKey(code){
-      if(code === 'Space' && !gameRunning){
-        restart();
-      } else if(code === 'Escape'){
-        destroyGame();
-      }
-    }
-    
-    function draw(){
-      const colors = getThemeColors();
-      
-      ctx.fillStyle = 'rgba(2,0,8,0.3)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.strokeStyle = colors.grid;
-      ctx.lineWidth = 0.3;
-      for(let i = 0; i < tileCount; i++){
-        ctx.beginPath();
-        ctx.moveTo(i * gridSize, 0);
-        ctx.lineTo(i * gridSize, canvas.height);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(0, i * gridSize);
-        ctx.lineTo(canvas.width, i * gridSize);
-        ctx.stroke();
-      }
-      
-      snake.forEach((segment, index) => {
-        const gradient = ctx.createLinearGradient(
-          segment.x * gridSize, segment.y * gridSize,
-          (segment.x + 1) * gridSize, (segment.y + 1) * gridSize
-        );
-        gradient.addColorStop(0, colors.snake);
-        gradient.addColorStop(1, index === 0 ? '#ffffff' : colors.snake);
-        ctx.fillStyle = gradient;
-        
-        const padding = index === 0 ? 1 : 2;
-        ctx.fillRect(
-          segment.x * gridSize + padding,
-          segment.y * gridSize + padding,
-          gridSize - padding * 2,
-          gridSize - padding * 2
-        );
-        
-        if(index === 0){
-          ctx.fillStyle = '#ffffff';
-          const eyeSize = 3;
-          let ex1, ey1, ex2, ey2;
-          if(direction.x === 1) { ex1 = segment.x * gridSize + 11; ey1 = segment.y * gridSize + 3; ex2 = segment.x * gridSize + 11; ey2 = segment.y * gridSize + 10; }
-          else if(direction.x === -1) { ex1 = segment.x * gridSize + 2; ey1 = segment.y * gridSize + 3; ex2 = segment.x * gridSize + 2; ey2 = segment.y * gridSize + 10; }
-          else if(direction.y === -1) { ex1 = segment.x * gridSize + 3; ey1 = segment.y * gridSize + 2; ex2 = segment.x * gridSize + 10; ey2 = segment.y * gridSize + 2; }
-          else { ex1 = segment.x * gridSize + 3; ey1 = segment.y * gridSize + 11; ex2 = segment.x * gridSize + 10; ey2 = segment.y * gridSize + 11; }
-          ctx.fillRect(ex1, ey1, eyeSize, eyeSize);
-          ctx.fillRect(ex2, ey2, eyeSize, eyeSize);
-        }
-      });
-      
-      const pulse = Math.sin(Date.now() * 0.01) * 0.3 + 0.7;
-      ctx.fillStyle = colors.food;
-      ctx.shadowColor = colors.food;
-      ctx.shadowBlur = 8 * pulse;
-      ctx.beginPath();
-      ctx.arc(
-        food.x * gridSize + gridSize / 2,
-        food.y * gridSize + gridSize / 2,
-        gridSize / 2 - 2,
-        0, Math.PI * 2
-      );
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-    
-    function update(){
-      direction = {...nextDirection};
-      
-      const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
-      
-      if(head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount){
-        gameOver();
-        return;
-      }
-      
-      if(snake.some(segment => segment.x === head.x && segment.y === head.y)){
-        gameOver();
-        return;
-      }
-      
-      snake.unshift(head);
-      
-      if(head.x === food.x && head.y === food.y){
-        score += 10;
-        scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
-        placeFood();
-        if(speed > 60) speed -= 2;
-        clearInterval(gameLoop);
-        gameLoop = setInterval(gameStep, speed);
-      } else {
-        snake.pop();
-      }
-    }
-    
-    function gameStep(){
-      if(!gameRunning) return;
-      update();
-      draw();
-    }
-    
-    function gameOver(){
-      gameRunning = false;
-      clearInterval(gameLoop);
-      if(score > highScore){
-        highScore = score;
-        localStorage.setItem('snakeHighScore', highScore);
-        scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore} 🏆`;
-      }
-      gameOverDiv.classList.add('show');
-      if(isMobile) gameOverDiv.textContent = 'GAME OVER! Tap ● to restart';
-    }
-    
-    function restart(){
-      snake = [
-        {x: 10, y: 10},
-        {x: 9, y: 10},
-        {x: 8, y: 10}
-      ];
-      direction = {x: 1, y: 0};
-      nextDirection = {x: 1, y: 0};
-      score = 0;
-      speed = 120;
-      gameRunning = true;
-      gameOverDiv.classList.remove('show');
-      scoreDiv.textContent = `🐍 SCORE: ${score}  |  HIGH: ${highScore}`;
-      placeFood();
-      clearInterval(gameLoop);
-      gameLoop = setInterval(gameStep, speed);
-    }
-    
-    function handleKey(e){
-      if(!gameRunning && e.code === 'Space'){
-        e.preventDefault();
-        restart();
-        return;
-      }
-      if(!gameRunning) return;
-      
-      switch(e.code){
-        case 'ArrowUp': case 'KeyW':
-          e.preventDefault();
-          handleDirectionKey({x: 0, y: -1});
-          break;
-        case 'ArrowDown': case 'KeyS':
-          e.preventDefault();
-          handleDirectionKey({x: 0, y: 1});
-          break;
-        case 'ArrowLeft': case 'KeyA':
-          e.preventDefault();
-          handleDirectionKey({x: -1, y: 0});
-          break;
-        case 'ArrowRight': case 'KeyD':
-          e.preventDefault();
-          handleDirectionKey({x: 1, y: 0});
-          break;
-        case 'Escape':
-          e.preventDefault();
-          destroyGame();
-          break;
-      }
-    }
-    
-    function destroyGame(){
-      clearInterval(gameLoop);
-      document.removeEventListener('keydown', handleKey);
-      gameContainer.remove();
-      if(typeof onExit === 'function') onExit();
-    }
-    
-    document.addEventListener('keydown', handleKey);
-    
-    gameRunning = true;
-    gameLoop = setInterval(gameStep, speed);
-    draw();
-    
-    return destroyGame;
+    let touchStartX=0,touchStartY=0;canvas.addEventListener('touchstart',e=>{e.preventDefault();if(e.touches.length===1){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;}},{passive:false});canvas.addEventListener('touchmove',e=>{e.preventDefault();e.stopPropagation();},{passive:false});canvas.addEventListener('touchend',e=>{e.preventDefault();if(!gameRunning||e.changedTouches.length===0)return;const dx=e.changedTouches[0].clientX-touchStartX,dy=e.changedTouches[0].clientY-touchStartY;if(Math.abs(dx)<20&&Math.abs(dy)<20)return;if(Math.abs(dx)>Math.abs(dy)){if(dx>0)hdk({x:1,y:0});else hdk({x:-1,y:0});}else{if(dy>0)hdk({x:0,y:1});else hdk({x:0,y:-1});}},{passive:false});
+    function hdk(dir){if(direction.x===-dir.x&&direction.y===-dir.y)return;if(direction.x===0&&direction.y===0)return;nextDirection=dir;}
+    function hak(code){if(code==='Space'&&!gameRunning)restart();else if(code==='Escape')dg();}
+    function draw(){const c=getThemeColors();ctx.fillStyle='rgba(2,0,8,0.3)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle=c.grid;ctx.lineWidth=0.3;for(let i=0;i<tileCount;i++){ctx.beginPath();ctx.moveTo(i*gridSize,0);ctx.lineTo(i*gridSize,canvas.height);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*gridSize);ctx.lineTo(canvas.width,i*gridSize);ctx.stroke();}snake.forEach((s,i)=>{const g=ctx.createLinearGradient(s.x*gridSize,s.y*gridSize,(s.x+1)*gridSize,(s.y+1)*gridSize);g.addColorStop(0,c.snake);g.addColorStop(1,i===0?'#ffffff':c.snake);ctx.fillStyle=g;const p=i===0?1:2;ctx.fillRect(s.x*gridSize+p,s.y*gridSize+p,gridSize-p*2,gridSize-p*2);if(i===0){ctx.fillStyle='#ffffff';const es=3;let e1x,e1y,e2x,e2y;if(direction.x===1){e1x=s.x*gridSize+11;e1y=s.y*gridSize+3;e2x=s.x*gridSize+11;e2y=s.y*gridSize+10;}else if(direction.x===-1){e1x=s.x*gridSize+2;e1y=s.y*gridSize+3;e2x=s.x*gridSize+2;e2y=s.y*gridSize+10;}else if(direction.y===-1){e1x=s.x*gridSize+3;e1y=s.y*gridSize+2;e2x=s.x*gridSize+10;e2y=s.y*gridSize+2;}else{e1x=s.x*gridSize+3;e1y=s.y*gridSize+11;e2x=s.x*gridSize+10;e2y=s.y*gridSize+11;}ctx.fillRect(e1x,e1y,es,es);ctx.fillRect(e2x,e2y,es,es);}});const pu=Math.sin(Date.now()*0.01)*0.3+0.7;ctx.fillStyle=c.food;ctx.shadowColor=c.food;ctx.shadowBlur=8*pu;ctx.beginPath();ctx.arc(food.x*gridSize+gridSize/2,food.y*gridSize+gridSize/2,gridSize/2-2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+    function update(){direction={...nextDirection};const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};if(head.x<0||head.x>=tileCount||head.y<0||head.y>=tileCount){gameOver();return;}if(snake.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return;}snake.unshift(head);if(head.x===food.x&&head.y===food.y){score+=10;scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore}`;placeFood();if(speed>60)speed-=2;clearInterval(gameLoop);gameLoop=setInterval(gameStep,speed);}else{snake.pop();}}
+    function gameStep(){if(!gameRunning)return;update();draw();}
+    function gameOver(){gameRunning=false;clearInterval(gameLoop);if(score>highScore){highScore=score;localStorage.setItem('snakeHighScore',highScore);scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore} 🏆`;}gameOverDiv.classList.add('show');if(isMobile)gameOverDiv.textContent='GAME OVER! Tap ● to restart';}
+    function restart(){snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];direction={x:1,y:0};nextDirection={x:1,y:0};score=0;speed=120;gameRunning=true;gameOverDiv.classList.remove('show');scoreDiv.textContent=`🐍 SCORE: ${score}  |  HIGH: ${highScore}`;placeFood();clearInterval(gameLoop);gameLoop=setInterval(gameStep,speed);}
+    function handleKey(e){if(!gameRunning&&e.code==='Space'){e.preventDefault();restart();return;}if(!gameRunning)return;switch(e.code){case'ArrowUp':case'KeyW':e.preventDefault();hdk({x:0,y:-1});break;case'ArrowDown':case'KeyS':e.preventDefault();hdk({x:0,y:1});break;case'ArrowLeft':case'KeyA':e.preventDefault();hdk({x:-1,y:0});break;case'ArrowRight':case'KeyD':e.preventDefault();hdk({x:1,y:0});break;case'Escape':e.preventDefault();dg();break;}}
+    function dg(){clearInterval(gameLoop);document.removeEventListener('keydown',handleKey);gameContainer.remove();if(typeof onExit==='function')onExit();}
+    document.addEventListener('keydown',handleKey);gameRunning=true;gameLoop=setInterval(gameStep,speed);draw();return dg;
   };
 })();
 
 /* ════════════════════════════════════════════
-   INTERACTIVE TERMINAL
+   INTERACTIVE TERMINAL (کامل)
 ════════════════════════════════════════════ */
 (function initTerminal(){
   const terminalBody = document.getElementById('terminal-body');
-  let currentSnakeDestroyer = null;
-  let gameActive = false;
-
+  let currentSnakeDestroyer = null, gameActive = false;
   const skillCategories = [
-    {
-      label: '▸ BACK-END & FRAMEWORKS',
-      skills: [
-        { name: 'Python', featured: true }, { name: 'Django', featured: true },
-        { name: 'PostgreSQL', color: 'amber' }, { name: 'SQLite', color: 'blue' },
-        { name: 'REST API', color: 'green' }, { name: 'ORM / SQL', color: 'blue' },
-      ]
-    },
-    {
-      label: '▸ FRONT-END',
-      skills: [
-        { name: 'JavaScript', featured: true }, { name: 'HTML / CSS', color: 'blue' },
-        { name: 'SVG Animation', color: 'green' },
-      ]
-    },
-    {
-      label: '▸ BOTS & AUTOMATION',
-      skills: [
-        { name: 'Telegram Bot', featured: true }, { name: 'Telethon', color: 'blue' },
-        { name: 'Web Scraping', color: 'amber' }, { name: 'BeautifulSoup', color: 'green' },
-      ]
-    },
-    {
-      label: '▸ DESKTOP & TOOLS',
-      skills: [
-        { name: 'PyQt6', color: 'green' }, { name: 'CustomTkinter', color: 'blue' },
-        { name: 'Excel / ReportLab', color: 'amber' }, { name: 'Persian Calendar', color: 'green' },
-      ]
-    },
-    {
-      label: '▸ DEVOPS & MISC',
-      skills: [
-        { name: 'Git', color: 'amber' }, { name: 'Linux / Server', color: 'blue' },
-        { name: 'SEO', color: 'green' }, { name: 'Data Analysis', color: 'blue' },
-        { name: 'Photoshop', featured: true },
-      ]
-    }
+    {label:'▸ BACK-END & FRAMEWORKS',skills:[{name:'Python',featured:true},{name:'Django',featured:true},{name:'PostgreSQL',color:'amber'},{name:'SQLite',color:'blue'},{name:'REST API',color:'green'},{name:'ORM / SQL',color:'blue'}]},
+    {label:'▸ FRONT-END',skills:[{name:'JavaScript',featured:true},{name:'HTML / CSS',color:'blue'},{name:'SVG Animation',color:'green'}]},
+    {label:'▸ BOTS & AUTOMATION',skills:[{name:'Telegram Bot',featured:true},{name:'Telethon',color:'blue'},{name:'Web Scraping',color:'amber'},{name:'BeautifulSoup',color:'green'}]},
+    {label:'▸ DESKTOP & TOOLS',skills:[{name:'PyQt6',color:'green'},{name:'CustomTkinter',color:'blue'},{name:'Excel / ReportLab',color:'amber'},{name:'Persian Calendar',color:'green'}]},
+    {label:'▸ DEVOPS & MISC',skills:[{name:'Git',color:'amber'},{name:'Linux / Server',color:'blue'},{name:'SEO',color:'green'},{name:'Data Analysis',color:'blue'},{name:'Photoshop',featured:true}]}
   ];
-
   const commands = {
-    'help': {
-      output: [
-        'دستورات قابل استفاده:',
-        '  <span class="highlight">skills</span>    - نمایش همه مهارت‌ها',
-        '  <span class="highlight">stack</span>     - تکنولوژی‌های اصلی',
-        '  <span class="highlight">whois</span>     - درباره من',
-        '  <span class="highlight">projects</span>  - پروژه‌های فعال',
-        '  <span class="highlight">contact</span>   - اطلاعات تماس',
-        '  <span class="highlight">snake</span>     - <span class="green">🐍 بازی مار!</span>',
-        '  <span class="highlight">print</span>     - <span class="amber">باز کردن صفحه قابل چاپ</span>',
-        '  <span class="highlight">share</span>     - <span class="green">اشتراک‌گذاری رزومه</span>',
-        '  <span class="highlight">clear</span>     - پاک کردن ترمینال',
-        '',
-        '<span class="dim">یک دستور تایپ کنید و Enter بزنید</span>'
-      ]
-    },
-    'whois': {
-      output: [
-        '┌──────────────────────────────────────┐',
-        '│  <span class="highlight">Mohammad Javad Mahmoudi</span>              │',
-        '│  Full Stack Developer · Python/Django   │',
-        '│  ۲+ سال تجربه حرفه‌ای                  │',
-        '│  دانشجوی مهندسی کامپیوتر               │',
-        '│  ۶+ سال تجربه فتوشاپ                   │',
-        '└──────────────────────────────────────┘',
-        '',
-        '<span class="dim">Freelance · ساختن پروژه‌های واقعی</span>'
-      ]
-    },
-    'skills': { renderCategories: true },
-    'stack': {
-      output: [
-        'تکنولوژی‌های اصلی:',
-        '',
-        '  <span class="highlight">Backend:</span>  Python · Django · PostgreSQL',
-        '  <span class="highlight">Frontend:</span> JavaScript · HTML/CSS · SVG',
-        '  <span class="highlight">Bots:</span>     Telegram API · Telethon',
-        '  <span class="highlight">Desktop:</span>  PyQt6 · CustomTkinter',
-        '  <span class="highlight">Tools:</span>    Git · Linux · SEO',
-        '',
-        '<span class="dim">برای جزئیات بیشتر اسکرول کنید ←</span>'
-      ]
-    },
-    'projects': {
-      output: [
-        'پروژه‌های فعال و شاخص:',
-        '',
-        '  <span class="highlight">۱. آذین دژ</span>      — پلتفرم شرکتی UPVC',
-        '  <span class="highlight">۲. فروشگاه لباس</span> — فروشگاه اینترنتی مدرن',
-        '  <span class="highlight">۳. کالا ۲</span>       — ربات جستجوی دیوار',
-        '  <span class="highlight">۴. Teledata</span>    — استخراج‌گر کانال تلگرام',
-        '  <span class="highlight">۵. حسابداری</span>    — نرم‌افزار ERP با PyQt6',
-        '',
-        '<span class="dim">برای دیدن هر پروژه اسکرول کنید ←</span>'
-      ]
-    },
-    'contact': {
-      output: [
-        'اطلاعات تماس:',
-        '',
-        '  <span class="highlight">Telegram:</span>  @immdjavad',
-        '  <span class="highlight">GitHub:</span>    mohmmadjavad',
-        '  <span class="highlight">Phone:</span>     ۰۹۱۲۰۱۲۰۷۴۵',
-        '  <span class="highlight">Web:</span>       immdjavad.ir',
-        '',
-        '<span class="dim">بخش آخر صفحه هم لینک‌های کلیک‌شدنی داره ←</span>'
-      ]
-    },
-    'snake': { action: 'snake' },
-    'clear': { clear: true },
-    'print': { action: 'print' },
-    'share': { action: 'share' }
+    help:{output:['دستورات:','  <span class="highlight">skills</span>    - نمایش مهارت‌ها','  <span class="highlight">stack</span>     - تکنولوژی‌های اصلی','  <span class="highlight">whois</span>     - درباره من','  <span class="highlight">projects</span>  - پروژه‌های فعال','  <span class="highlight">contact</span>   - اطلاعات تماس','  <span class="highlight">snake</span>     - <span class="green">🐍 بازی مار!</span>','  <span class="highlight">print</span>     - <span class="amber">صفحه قابل چاپ</span>','  <span class="highlight">share</span>     - <span class="green">اشتراک‌گذاری</span>','  <span class="highlight">clear</span>     - پاک کردن','','<span class="dim">یک دستور تایپ کنید و Enter بزنید</span>']},
+    whois:{output:['<span class="highlight">Mohammad Javad Mahmoudi</span>','Full Stack Developer · Python/Django','۲+ سال تجربه · دانشجوی کامپیوتر','۶+ سال تجربه فتوشاپ']},
+    skills:{renderCategories:true},
+    stack:{output:['<span class="highlight">Backend:</span> Python · Django · PostgreSQL','<span class="highlight">Frontend:</span> JavaScript · HTML/CSS · SVG','<span class="highlight">Bots:</span> Telegram API · Telethon','<span class="highlight">Desktop:</span> PyQt6 · CustomTkinter','<span class="highlight">Tools:</span> Git · Linux · SEO']},
+    projects:{output:['<span class="highlight">۱. آذین دژ</span> — پلتفرم UPVC','<span class="highlight">۲. فروشگاه لباس</span> — فروشگاه مدرن','<span class="highlight">۳. کالا ۲</span> — ربات دیوار','<span class="highlight">۴. Teledata</span> — استخراج‌گر تلگرام','<span class="highlight">۵. حسابداری</span> — ERP با PyQt6']},
+    contact:{output:['<span class="highlight">Telegram:</span> @immdjavad','<span class="highlight">GitHub:</span> mohmmadjavad','<span class="highlight">Phone:</span> ۰۹۱۲۰۱۲۰۷۴۵','<span class="highlight">Web:</span> immdjavad.ir']},
+    snake:{action:'snake'},clear:{clear:true},print:{action:'print'},share:{action:'share'}
   };
-
-  function renderCategories(appendToLines){
-    skillCategories.forEach(cat => {
-      appendToLines.push('');
-      appendToLines.push('<div class="skill-category">');
-      appendToLines.push('<div class="skill-cat-label">' + cat.label + '</div>');
-      appendToLines.push('<div class="skill-tags">');
-      cat.skills.forEach(skill => {
-        let cls = 'skill-tag';
-        if(skill.featured) cls += ' featured';
-        if(skill.color === 'blue') cls += ' tag-blue';
-        if(skill.color === 'amber') cls += ' tag-amber';
-        if(skill.color === 'green') cls += ' tag-green';
-        appendToLines.push('<span class="' + cls + '">' + skill.name + '</span>');
-      });
-      appendToLines.push('</div>');
-      appendToLines.push('</div>');
-    });
-  }
-
-  function buildWelcome(){
-    const lines = [];
-    lines.push('<div class="terminal-line"><span class="dim">╔══════════════════════════════╗</span></div>');
-    lines.push('<div class="terminal-line"><span class="dim">║</span>  <span class="highlight">Terminal immdjavad</span>       <span class="dim">║</span></div>');
-    lines.push('<div class="terminal-line"><span class="dim">║</span>  <span class="green">help</span> بزنید برای دیدن دستورات  <span class="dim">║</span></div>');
-    lines.push('<div class="terminal-line"><span class="dim">╚══════════════════════════════╝</span></div>');
-    lines.push('');
-    renderCategories(lines);
-    lines.push('');
-    lines.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="green">snake</span>, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');
-    return lines;
-  }
-
-  function renderTerminal(lines, appendInput = true){
-    let html = lines.join('\n');
-    if(appendInput){
-      html += '\n<div class="terminal-input-line" id="terminal-input-line">';
-      html += '<span class="prompt">❯</span>';
-      html += '<input type="text" id="terminal-input" placeholder="help را تایپ کنید..." autocomplete="off" spellcheck="false">';
-      html += '</div>';
-    }
-    terminalBody.innerHTML = html;
-    if(appendInput){
-      const input = document.getElementById('terminal-input');
-      if(input){
-        if(!gameActive) input.focus({ preventScroll: true });
-        input.addEventListener('keydown', handleTerminalInput);
-      }
-    }
-    terminalBody.scrollTop = terminalBody.scrollHeight;
-  }
-
-  function addOutputLines(cmdOutput){
-    const existingLines = terminalBody.innerHTML.split('\n');
-    const filteredLines = existingLines.filter(line => !line.includes('terminal-input-line'));
-    const newLines = [...filteredLines];
-    newLines.push('');
-    newLines.push('<div class="terminal-line"><span class="prompt">❯</span> <span class="cmd">' + cmdOutput.cmd + '</span></div>');
-    if(cmdOutput.output){
-      cmdOutput.output.forEach(line => {
-        newLines.push('<div class="terminal-line">' + line + '</div>');
-      });
-    }
-    if(cmdOutput.renderCategories){
-      renderCategories(newLines);
-    }
-    newLines.push('');
-    renderTerminal(newLines, true);
-  }
-
-  function handleTerminalInput(e){
-    if(e.key !== 'Enter') return;
-    const input = e.target;
-    const cmd = input.value.trim().toLowerCase();
-    input.disabled = true;
-
-    const cmdResult = commands[cmd] || {
-      output: ['<span class="dim">دستور پیدا نشد:</span> ' + cmd + '. <span class="dim">help</span> رو امتحان کن']
-    };
-
-    if(cmdResult.clear){
-      const lines = ['<div class="terminal-line"><span class="output">پاک شد.</span></div>', ''];
-      renderTerminal(lines, true);
-      return;
-    }
-
-    if(cmdResult.action === 'print'){
-      cmdResult.cmd = cmd;
-      cmdResult.output = ['<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>'];
-      addOutputLines(cmdResult);
-      setTimeout(() => window.open('print.html','_blank'), 300);
-      return;
-    }
-
-    if(cmdResult.action === 'share'){
-      cmdResult.cmd = cmd;
-      cmdResult.output = ['<span class="green">✓ اشتراک‌گذاری رزومه</span>'];
-      addOutputLines(cmdResult);
-      setTimeout(() => shareResume(), 200);
-      return;
-    }
-
-    if(cmdResult.action === 'snake'){
-      cmdResult.cmd = cmd;
-      cmdResult.output = [
-        '<span class="green">🐍 بازی مار شروع شد!</span>',
-        '<span class="dim">با کلیدهای جهت‌نما یا WASD حرکت کن. ESC یا دکمه‌ی خروج برای پایان.</span>'
-      ];
-      addOutputLines(cmdResult);
-
-      setTimeout(() => {
-        if(currentSnakeDestroyer) currentSnakeDestroyer();
-        gameActive = true;
-        const inputLine = document.getElementById('terminal-input-line');
-        if(inputLine) inputLine.style.display = 'none';
-        const activeInput = document.getElementById('terminal-input');
-        if(activeInput) activeInput.blur();
-
-        currentSnakeDestroyer = window.startSnakeGame(terminalBody, () => {
-          // وقتی بازی واقعاً تموم شد (ESC، دکمه‌ی خروج، یا باز شدن دوباره) اجرا می‌شود
-          gameActive = false;
-          currentSnakeDestroyer = null;
-          const line = document.getElementById('terminal-input-line');
-          if(line) line.style.display = '';
-          if(document.body.classList.contains('terminal-modal-open')){
-            const input = document.getElementById('terminal-input');
-            if(input && !input.disabled) input.focus({ preventScroll: true });
-          }
-          terminalBody.scrollTop = terminalBody.scrollHeight;
-        });
-
-        terminalBody.scrollTop = terminalBody.scrollHeight;
-      }, 300);
-      return;
-    }
-
-    cmdResult.cmd = cmd;
-    addOutputLines(cmdResult);
-  }
-
-  renderTerminal(buildWelcome(), true);
+  function renderCategories(al){skillCategories.forEach(cat=>{al.push('');al.push('<div class="skill-category"><div class="skill-cat-label">'+cat.label+'</div><div class="skill-tags">');cat.skills.forEach(s=>{let cls='skill-tag';if(s.featured)cls+=' featured';if(s.color==='blue')cls+=' tag-blue';if(s.color==='amber')cls+=' tag-amber';if(s.color==='green')cls+=' tag-green';al.push('<span class="'+cls+'">'+s.name+'</span>');});al.push('</div></div>');});}
+  function buildWelcome(){const l=[];l.push('<div class="terminal-line"><span class="dim">╔══════════════════════════════╗</span></div>');l.push('<div class="terminal-line"><span class="dim">║</span>  <span class="highlight">Terminal immdjavad</span>       <span class="dim">║</span></div>');l.push('<div class="terminal-line"><span class="dim">║</span>  <span class="green">help</span> بزنید برای دیدن دستورات  <span class="dim">║</span></div>');l.push('<div class="terminal-line"><span class="dim">╚══════════════════════════════╝</span></div>');l.push('');renderCategories(l);l.push('');l.push('<div class="terminal-hint"><span>❯</span> help, skills, stack, whois, projects, contact, <span class="green">snake</span>, <span class="amber">print</span>, <span class="green">share</span>, clear</div>');return l;}
+  function renderTerminal(lines,ai=true){let h=lines.join('\n');if(ai){h+='\n<div class="terminal-input-line" id="terminal-input-line"><span class="prompt">❯</span><input type="text" id="terminal-input" placeholder="help را تایپ کنید..." autocomplete="off" spellcheck="false"></div>';}terminalBody.innerHTML=h;if(ai){const inp=document.getElementById('terminal-input');if(inp){if(!gameActive)inp.focus({preventScroll:true});inp.addEventListener('keydown',hti);}}terminalBody.scrollTop=terminalBody.scrollHeight;}
+  function addOutputLines(co){const el=terminalBody.innerHTML.split('\n');const nl=el.filter(l=>!l.includes('terminal-input-line'));nl.push('');nl.push('<div class="terminal-line"><span class="prompt">❯</span> <span class="cmd">'+co.cmd+'</span></div>');if(co.output)co.output.forEach(l=>nl.push('<div class="terminal-line">'+l+'</div>'));if(co.renderCategories)renderCategories(nl);nl.push('');renderTerminal(nl,true);}
+  function hti(e){if(e.key!=='Enter')return;const inp=e.target,cmd=inp.value.trim().toLowerCase();inp.disabled=true;const cr=commands[cmd]||{output:['<span class="dim">دستور پیدا نشد:</span> '+cmd+'. <span class="dim">help</span> رو امتحان کن']};if(cr.clear){renderTerminal(['<div class="terminal-line"><span class="output">پاک شد.</span></div>',''],true);return;}if(cr.action==='print'){cr.cmd=cmd;cr.output=['<span class="green">✓ در حال باز کردن صفحه قابل چاپ...</span>'];addOutputLines(cr);setTimeout(()=>window.open('print.html','_blank'),300);return;}if(cr.action==='share'){cr.cmd=cmd;cr.output=['<span class="green">✓ اشتراک‌گذاری رزومه</span>'];addOutputLines(cr);setTimeout(()=>shareResume(),200);return;}if(cr.action==='snake'){cr.cmd=cmd;cr.output=['<span class="green">🐍 بازی مار شروع شد!</span>','<span class="dim">کلیدهای جهت‌نما/WASD. ESC یا دکمه خروج برای پایان.</span>'];addOutputLines(cr);setTimeout(()=>{if(currentSnakeDestroyer)currentSnakeDestroyer();gameActive=true;const il=document.getElementById('terminal-input-line');if(il)il.style.display='none';const ai=document.getElementById('terminal-input');if(ai)ai.blur();currentSnakeDestroyer=window.startSnakeGame(terminalBody,()=>{gameActive=false;currentSnakeDestroyer=null;const l=document.getElementById('terminal-input-line');if(l)l.style.display='';if(document.body.classList.contains('terminal-modal-open')){const i=document.getElementById('terminal-input');if(i&&!i.disabled)i.focus({preventScroll:true});}terminalBody.scrollTop=terminalBody.scrollHeight;});terminalBody.scrollTop=terminalBody.scrollHeight;},300);return;}cr.cmd=cmd;addOutputLines(cr);}
+  renderTerminal(buildWelcome(),true);
 })();
 
 /* ════════════════════════════════════════════
-   GSAP + SCROLLTRIGGER
+   GSAP + SCROLLTRIGGER + NAV + METEOR + MODALS + SHARE + PHONE
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-(function typewriter(){
-  const el = document.getElementById('s0-title');
-  const full = el.dataset.full;
-  let i = 0;
-  function type(){
-    if(i <= full.length){
-      el.textContent = full.slice(0, i);
-      i++;
-      setTimeout(type, 35);
-    }
-  }
-  setTimeout(type, 600);
-})();
+(function typewriter(){const el=document.getElementById('s0-title');const full=el.dataset.full;let i=0;function type(){if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(type,35);}}setTimeout(type,600);})();
 
-if(window.innerWidth > 768){
-  const cursorDot = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursor-ring');
-  let cx=0, cy=0, rx=0, ry=0;
-  document.addEventListener('mousemove', e=>{ cx=e.clientX; cy=e.clientY; });
-  (function animRing(){
-    rx += (cx-rx)*0.1;
-    ry += (cy-ry)*0.1;
-    if(cursorDot) cursorDot.style.cssText += `;left:${cx}px;top:${cy}px`;
-    if(cursorRing) cursorRing.style.cssText += `;left:${rx}px;top:${ry}px`;
-    requestAnimationFrame(animRing);
-  })();
-  document.querySelectorAll('a,button,.nav-dot,.skill-tag').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{
-      cursorDot.style.width='13px'; cursorDot.style.height='13px';
-      cursorRing.style.width='50px'; cursorRing.style.height='50px';
-      cursorRing.style.borderColor='rgba(199,125,255,.65)';
-    });
-    el.addEventListener('mouseleave',()=>{
-      cursorDot.style.width='7px'; cursorDot.style.height='7px';
-      cursorRing.style.width='34px'; cursorRing.style.height='34px';
-      cursorRing.style.borderColor='rgba(199,125,255,.35)';
-    });
-  });
-}
+if(window.innerWidth > 768){const cd=document.getElementById('cursor'),cr=document.getElementById('cursor-ring');let cx=0,cy=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;});(function ar(){rx+=(cx-rx)*0.1;ry+=(cy-ry)*0.1;if(cd)cd.style.cssText+=`;left:${cx}px;top:${cy}px`;if(cr)cr.style.cssText+=`;left:${rx}px;top:${ry}px`;requestAnimationFrame(ar);})();document.querySelectorAll('a,button,.nav-dot,.skill-tag').forEach(el=>{el.addEventListener('mouseenter',()=>{cd.style.width='13px';cd.style.height='13px';cr.style.width='50px';cr.style.height='50px';cr.style.borderColor='rgba(199,125,255,.65)';});el.addEventListener('mouseleave',()=>{cd.style.width='7px';cd.style.height='7px';cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(199,125,255,.35)';});});}
 
-const allScenes = document.querySelectorAll('.scene');
-const navDots = document.querySelectorAll('.nav-dot');
+const allScenes = document.querySelectorAll('.scene'), navDots = document.querySelectorAll('.nav-dot');
+function activateNav(i){navDots.forEach(d=>d.classList.remove('active'));if(navDots[i])navDots[i].classList.add('active');}
 
-function activateNav(i){
-  navDots.forEach(d => d.classList.remove('active'));
-  if(navDots[i]) navDots[i].classList.add('active');
-}
+gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],{opacity:0});
+const enterTl = gsap.timeline({delay:2.2});
+enterTl.fromTo('#s0-ch',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'power3.out'});
+enterTl.fromTo('#s0-profile',{opacity:0,scale:0.65},{opacity:1,scale:1,duration:0.5,ease:'back.out(1.4)'},'-=0.3');
+enterTl.fromTo('#s0-fa',{opacity:0,y:80},{opacity:1,y:0,duration:0.5,ease:'expo.out'},'-=0.35');
+enterTl.fromTo('#s0-en',{opacity:0,y:30},{opacity:1,y:0,duration:0.4,ease:'power2.out'},'-=0.3');
+enterTl.fromTo('#s0-title',{opacity:0,y:20},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
+enterTl.fromTo('#s0-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
 
-gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'], {opacity:0});
-const enterTl = gsap.timeline({ delay: 2.2 }); // Wait for warp loader
-enterTl.fromTo('#s0-ch', {opacity:0, y:40}, {opacity:1, y:0, duration:0.4, ease:'power3.out'});
-enterTl.fromTo('#s0-profile', {opacity:0, scale:0.65}, {opacity:1, scale:1, duration:0.5, ease:'back.out(1.4)'}, '-=0.3');
-enterTl.fromTo('#s0-fa', {opacity:0, y:80}, {opacity:1, y:0, duration:0.5, ease:'expo.out'}, '-=0.35');
-enterTl.fromTo('#s0-en', {opacity:0, y:30}, {opacity:1, y:0, duration:0.4, ease:'power2.out'}, '-=0.3');
-enterTl.fromTo('#s0-title', {opacity:0, y:20}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
-enterTl.fromTo('#s0-tagline', {opacity:0, y:14}, {opacity:1, y:0, duration:0.35, ease:'power2.out'}, '-=0.25');
+function revealElements(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el&&(el.style.opacity==='0'||el.style.opacity==='')){gsap.to(el,{opacity:1,y:0,x:0,scale:1,duration:0.5,ease:'power2.out',overwrite:'auto'});}});}
 
-function revealElements(ids){
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if(el && (el.style.opacity === '0' || el.style.opacity === '')){
-      gsap.to(el, {opacity:1, y:0, x:0, scale:1, duration:0.5, ease:'power2.out', overwrite:'auto'});
-    }
-  });
-}
+const sceneElements={'scene-1':['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],'scene-2':['s2-ch','s2-h','s2-hen','s2-terminal'],'scene-3':['s3-ch','s3-img','s3-pr'],'scene-4':['s4-ch','s4-img','s4-pr'],'scene-5':['s5-ch','s5-img','s5-pr'],'scene-6':['s6-ch','s6-img','s6-pr'],'scene-7':['s7-ch','s7-img','s7-pr'],'scene-8':['s8-ch','s8-e1','s8-div','s8-e2'],'scene-9':['s9-ch','s9-edu','s9-lg'],'scene-10':['s10-ch','s10-h','s10-hen','s10-cg','footer-line']};
 
-const sceneElements = {
-  'scene-1': ['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],
-  'scene-2': ['s2-ch','s2-h','s2-hen','s2-terminal'],
-  'scene-3': ['s3-ch','s3-img','s3-pr'],
-  'scene-4': ['s4-ch','s4-img','s4-pr'],
-  'scene-5': ['s5-ch','s5-img','s5-pr'],
-  'scene-6': ['s6-ch','s6-img','s6-pr'],
-  'scene-7': ['s7-ch','s7-img','s7-pr'],
-  'scene-8': ['s8-ch','s8-e1','s8-div','s8-e2'],
-  'scene-9': ['s9-ch','s9-edu','s9-lg'],
-  'scene-10': ['s10-ch','s10-h','s10-hen','s10-cg','footer-line'],
-};
-
-/* ════════════════════════════════════════════
-   NAVIGATOR — ابتدا/انتها صحنه‌ی ثابت با گذار جذاب،
-   صحنه‌های میانی اسکرول کاملاً آزاد و روان
-════════════════════════════════════════════ */
 (function initNavigator(){
-  const total = allScenes.length;
-  const introEl = allScenes[0];
-  const outroEl = allScenes[total - 1];
-  let mode = 'intro';
-  let locked = false;
-
-  const progressBar = document.getElementById('scroll-progress');
-  const scrollHint = document.getElementById('scroll-hint');
-  const burstEl = document.getElementById('final-burst');
-  const warpOverlayEl = document.getElementById('space-warp');
-  const progObj = { v: 0 };
-
-  function getScrollY(){ return window.scrollY || document.documentElement.scrollTop || 0; }
-  function getMaxScroll(){
-    return Math.max(0, (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight);
-  }
-
-  function setProgressPct(pct){ if(progressBar) progressBar.style.width = pct + '%'; }
-
-  function tweenProgressTo(target){
-    gsap.to(progObj, {
-      v: target, duration: 0.5, ease: 'power2.inOut', overwrite: true,
-      onUpdate(){
-        setProgressPct(progObj.v * 100);
-        if(window._threeSetScroll) window._threeSetScroll(progObj.v);
-      }
-    });
-  }
-
-  function toggleScrollHint(show){
-    if(!scrollHint) return;
-    gsap.to(scrollHint, { opacity: show ? 1 : 0, duration: show ? 0.2 : 0.3, pointerEvents: show ? 'auto' : 'none', overwrite: true });
-  }
-
-  // درخشش لحظه‌ای برای ورودهای مهم (شروع سفر / رسیدن به پایان)
-  function triggerBurst(){
-    if(!burstEl) return;
-    burstEl.classList.remove('active');
-    void burstEl.offsetWidth;
-    burstEl.classList.add('active');
-    if(warpOverlayEl){
-      warpOverlayEl.classList.add('active');
-      setTimeout(() => warpOverlayEl.classList.remove('active'), 700);
-    }
-    setTimeout(() => burstEl.classList.remove('active'), 820);
-  }
-
-  // مدت‌زمان و حالت ورود/خروج صحنه‌های ابتدا/انتها — جذاب و با کمی پرشِ نرم
-  function animateBookendOut(el, cb){
-    gsap.to(el, {
-      opacity: 0, scale: 1.08, filter: 'blur(10px)',
-      duration: 0.55, ease: 'power3.in', overwrite: 'auto',
-      onComplete(){
-        el.classList.remove('scene-active');
-        gsap.set(el, { clearProps: 'filter,scale' });
-        cb && cb();
-      }
-    });
-  }
-  function animateBookendIn(el, cb){
-    el.classList.add('scene-active');
-    gsap.fromTo(el,
-      { opacity: 0, scale: 0.85, filter: 'blur(14px)' },
-      {
-        opacity: 1, scale: 1, filter: 'blur(0px)',
-        duration: 0.7, ease: 'back.out(1.4)', overwrite: 'auto',
-        onComplete(){ gsap.set(el, { clearProps: 'filter,scale' }); cb && cb(); }
-      }
-    );
-  }
-
-  function lockScroll(){ document.body.style.overflow = 'hidden'; }
-  function unlockScroll(){ document.body.style.overflow = ''; }
-
-  function enterIntro(){
-    if(locked) return;
-    locked = true;
-    mode = 'intro';
-    document.body.classList.remove('journey-active');
-    lockScroll();
-    window.scrollTo(0, 0);
-    tweenProgressTo(0);
-    toggleScrollHint(true);
-    animateBookendIn(introEl, () => { locked = false; activateNav(0); });
-  }
-  function exitIntro(){
-    if(locked) return;
-    locked = true;
-    toggleScrollHint(false);
-    triggerBurst();
-    document.body.classList.add('journey-active');
-    const ids1 = sceneElements['scene-1'];
-    if(ids1) revealElements(ids1);
-    animateBookendOut(introEl, () => {
-      unlockScroll();
-      window.scrollTo(0, 0);
-      mode = 'journey';
-      locked = false;
-      activateNav(1);
-      onScroll();
-    });
-  }
-  function enterOutro(){
-    if(locked) return;
-    locked = true;
-    mode = 'outro';
-    document.body.classList.remove('journey-active');
-    lockScroll();
-    tweenProgressTo(1);
-    triggerBurst();
-    const ids = sceneElements[outroEl.id];
-    animateBookendIn(outroEl, () => {
-      locked = false;
-      activateNav(total - 1);
-      if(ids) revealElements(ids);
-    });
-  }
-  function exitOutro(){
-    if(locked) return;
-    locked = true;
-    document.body.classList.add('journey-active');
-    const idsLast = sceneElements[allScenes[total - 2].id];
-    if(idsLast) revealElements(idsLast);
-    animateBookendOut(outroEl, () => {
-      unlockScroll();
-      mode = 'journey';
-      locked = false;
-      activateNav(total - 2);
-      onScroll();
-    });
-  }
-
-  function jumpToMiddle(i){
-    const targetEl = allScenes[i];
-    function doScroll(){
-      const top = targetEl.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({ top, behavior: 'smooth' });
-      activateNav(i);
-      const ids = sceneElements[targetEl.id];
-      if(ids) revealElements(ids);
-    }
-    if(mode === 'intro'){
-      locked = true;
-      toggleScrollHint(false);
-      document.body.classList.add('journey-active');
-      const ids = sceneElements[targetEl.id];
-      if(ids) revealElements(ids);
-      animateBookendOut(introEl, () => { mode = 'journey'; locked = false; doScroll(); });
-    } else if(mode === 'outro'){
-      locked = true;
-      document.body.classList.add('journey-active');
-      const ids = sceneElements[targetEl.id];
-      if(ids) revealElements(ids);
-      animateBookendOut(outroEl, () => { mode = 'journey'; locked = false; doScroll(); });
-    } else {
-      doScroll();
-    }
-  }
-
-  function jumpTo(i){
-    if(locked) return;
-    if(i === 0){
-      if(mode === 'journey') enterIntro();
-      else if(mode === 'outro'){
-        locked = true;
-        animateBookendOut(outroEl, () => { window.scrollTo(0, 0); mode = 'journey'; locked = false; enterIntro(); });
-      }
-    } else if(i === total - 1){
-      if(mode === 'journey') enterOutro();
-      else if(mode === 'intro'){
-        locked = true;
-        animateBookendOut(introEl, () => { window.scrollTo(0, getMaxScroll()); mode = 'journey'; locked = false; enterOutro(); });
-      }
-    } else {
-      jumpToMiddle(i);
-    }
-  }
-  window._jumpTo = jumpTo;
-
-  // ─── المان‌هایی که نباید ژست‌های لمسی/ویل‌شان توسط ناوبری گرفته شود ───
-  function isExemptTarget(target){
-    return !!(target && target.closest && target.closest(
-      '.snake-game-container, .terminal-body, .terminal-modal-overlay, input, textarea, button, a, .nav-dot'
-    ));
-  }
-
-  // ─── ویل (موس/تِرک‌پد) ───
-  function onWheel(e){
-    if(isExemptTarget(e.target)) return;
-
-    if(mode === 'intro'){
-      e.preventDefault();
-      if(!locked && e.deltaY > 4) exitIntro();
-      return;
-    }
-    if(mode === 'outro'){
-      e.preventDefault();
-      if(!locked && e.deltaY < -4) exitOutro();
-      return;
-    }
-    // journey: فقط دقیقاً روی مرز بالا/پایین مداخله می‌کنیم، در غیر این صورت اسکرول طبیعی و آزاد است
-    if(locked) return;
-    if(getScrollY() <= 1 && e.deltaY < -4){ e.preventDefault(); enterIntro(); }
-    else if(getScrollY() >= getMaxScroll() - 1 && e.deltaY > 4){ e.preventDefault(); enterOutro(); }
-  }
-  window.addEventListener('wheel', onWheel, { passive: false });
-
-  // ─── لمسی (موبایل) ───
-  let touchStartY = null, touchExempt = false;
-  function onTouchStart(e){
-    
-    touchExempt = isExemptTarget(e.target);
-    touchStartY = touchExempt ? null : e.touches[0].clientY;
-  }
-  function onTouchMove(e){
-    if(touchExempt || touchStartY === null || locked) return;
-    const dy = touchStartY - e.touches[0].clientY; // مثبت = انگشت رو به بالا کشیده شده
-
-    if(mode === 'intro'){
-      if(Math.abs(dy) < 30) return;
-      e.preventDefault();
-      if(dy > 0) exitIntro();
-      touchStartY = null;
-      return;
-    }
-    if(mode === 'outro'){
-      if(Math.abs(dy) < 30) return;
-      e.preventDefault();
-      if(dy < 0) exitOutro();
-      touchStartY = null;
-      return;
-    }
-    if(Math.abs(dy) < 30) return;
-    if(getScrollY() <= 1 && dy < 0){ e.preventDefault(); enterIntro(); touchStartY = null; }
-    else if(getScrollY() >= getMaxScroll() - 1 && dy > 0){ e.preventDefault(); enterOutro(); touchStartY = null; }
-  }
-  function onTouchEnd(){ touchStartY = null; touchExempt = false; }
-  window.addEventListener('touchstart', onTouchStart, { passive: true });
-  window.addEventListener('touchmove', onTouchMove, { passive: false });
-  window.addEventListener('touchend', onTouchEnd, { passive: true });
-
-  // ─── کیبورد ───
-  function onKeydown(e){
-    if(e.defaultPrevented) return;
-    const tag = (document.activeElement && document.activeElement.tagName) || '';
-    if(tag === 'INPUT' || tag === 'TEXTAREA') return;
-
-    if(mode === 'intro'){
-      if(locked) return;
-      if(e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){ e.preventDefault(); exitIntro(); }
-      return;
-    }
-    if(mode === 'outro'){
-      if(locked) return;
-      if(e.key === 'ArrowUp' || e.key === 'PageUp'){ e.preventDefault(); exitOutro(); }
-      return;
-    }
-    // journey: کلیدهای جهت‌نما را به مرورگر می‌سپاریم تا اسکرول طبیعی انجام شود
-  }
-  window.addEventListener('keydown', onKeydown);
-
-  // ─── کلیک روی نقاط ناوبری ───
-  navDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => jumpTo(i));
-  });
-
-  // ─── به‌روزرسانی پیوسته‌ی نوار پیشرفت/پس‌زمینه‌ی سه‌بعدی و فعال‌سازی نقطه‌ی ناوبری حین اسکرول آزاد ───
-  function onScroll(){
-    if(mode !== 'journey') return;
-    const max = getMaxScroll();
-    const jp = max > 0 ? getScrollY() / max : 0; // پیشرفت در محدوده‌ی صحنه‌های میانی
-    const overall = total > 2 ? (1 + jp * (total - 2)) / (total - 1) : jp;
-    setProgressPct(overall * 100);
-    if(window._threeSetScroll) window._threeSetScroll(overall);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // فعال‌سازی نقطه‌ی ناوبری + رؤیت تدریجی محتوای هر صحنه‌ی میانی هنگام عبور از وسط دید
-  const middleScenes = Array.from(allScenes).slice(1, total - 1);
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(!entry.isIntersecting) return;
-      const idx = Array.from(allScenes).indexOf(entry.target);
-      if(mode === 'journey') activateNav(idx);
-      const ids = sceneElements[entry.target.id];
-      if(ids) revealElements(ids);
-    });
-  }, { threshold: 0.5 });
-  middleScenes.forEach(s => revealObserver.observe(s));
-
-  toggleScrollHint(true);
-  activateNav(0);
-  lockScroll(); // intro is showing — body scroll locked until user swipes past it
+  const progressBar=document.getElementById('scroll-progress'),scrollHint=document.getElementById('scroll-hint');
+  function getScrollY(){return window.scrollY||document.documentElement.scrollTop||0;}
+  function getMaxScroll(){return Math.max(0,(document.documentElement.scrollHeight||document.body.scrollHeight)-window.innerHeight);}
+  navDots.forEach((dot,i)=>{dot.addEventListener('click',()=>{const targetEl=allScenes[i];if(!targetEl)return;gsap.to(window,{scrollTo:{y:targetEl,offsetY:0},duration:0.8,ease:'power2.inOut'});});});
+  function onScroll(){const max=getMaxScroll();const pct=max>0?getScrollY()/max:0;if(progressBar)progressBar.style.width=pct*100+'%';if(window._threeSetScroll)window._threeSetScroll(pct);if(scrollHint&&pct>0.02){gsap.to(scrollHint,{opacity:0,duration:0.4,pointerEvents:'none',overwrite:true});}else if(scrollHint&&pct<=0.01){gsap.to(scrollHint,{opacity:1,duration:0.3,pointerEvents:'auto',overwrite:true});}}
+  const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;const idx=Array.from(allScenes).indexOf(entry.target);if(idx>=0)activateNav(idx);const ids=sceneElements[entry.target.id];if(ids)revealElements(ids);});},{threshold:0.4});
+  allScenes.forEach(s=>revealObserver.observe(s));window.addEventListener('scroll',onScroll,{passive:true});onScroll();activateNav(0);
 })();
 
-// Meteor / Asteroid Flyby — هر چند ثانیه یک عبور لحظه‌ای از فاصله‌ی نزدیک
-(function initMeteorFlyby(){
-  const el = document.getElementById('meteor-flyby');
-  if(!el) return;
+// METEOR هر ۱۵ ثانیه
+(function imf(){const el=document.getElementById('meteor-flyby');if(!el)return;function fly(){if(document.hidden)return;const type=Math.random()<0.5?'type-asteroid':'type-shooting';el.className='meteor-flyby '+type;void el.offsetWidth;el.classList.add('fly');setTimeout(()=>{el.classList.remove('fly');},1400);}setTimeout(()=>{fly();setInterval(fly,15000);},10000);})();
 
-  function fly(){
-    if(document.hidden) return;
-    const type = Math.random() < 0.5 ? 'type-asteroid' : 'type-shooting';
-    el.className = 'meteor-flyby ' + type;
-    void el.offsetWidth;
-    el.classList.add('fly');
-    setTimeout(() => { el.classList.remove('fly'); }, 1400);
-  }
+// PROFILE MODAL
+(function(){const m=document.getElementById('profile-modal'),cb=document.getElementById('profile-modal-close'),tr=document.querySelector('.profile-hero-img');if(!m||!tr)return;function o(){m.classList.add('open');document.body.style.overflow='hidden';}function c(){m.classList.remove('open');document.body.style.overflow='';}tr.addEventListener('click',o);cb.addEventListener('click',e=>{e.stopPropagation();c();});m.addEventListener('click',c);m.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))c();});})();
 
-  setTimeout(() => { fly(); setInterval(fly, 30000); }, 10000);
-})();
+// TERMINAL MODAL
+(function(){const tw=document.getElementById('s2-terminal'),ov=document.getElementById('terminal-modal-overlay'),sl=document.getElementById('terminal-modal-slot'),cb=document.getElementById('terminal-modal-close');if(!tw||!ov||!sl||!cb)return;const op=tw.parentNode,ons=tw.nextSibling;let io=false;function imn(){return window.innerWidth<769||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);}function fti(){const i=document.getElementById('terminal-input');if(i&&!i.disabled)i.focus({preventScroll:true});}function soto(){if(!window.visualViewport)return;const vv=window.visualViewport;ov.style.top=vv.offsetTop+'px';ov.style.height=vv.height+'px';}function om(){if(io||!imn())return;io=true;soto();sl.appendChild(tw);ov.classList.add('active');document.body.classList.add('terminal-modal-open');requestAnimationFrame(fti);}function cm(){if(!io)return;io=false;ov.classList.remove('active');document.body.classList.remove('terminal-modal-open');const i=document.getElementById('terminal-input');if(i)i.blur();setTimeout(()=>{if(ons)op.insertBefore(tw,ons);else op.appendChild(tw);},300);}function it(e){if(!imn()||io)return;if(!e.target.closest('#terminal-input-line'))return;e.preventDefault();om();}tw.addEventListener('mousedown',it);tw.addEventListener('touchstart',it,{passive:false});cb.addEventListener('click',cm);ov.addEventListener('click',e=>{if(e.target===ov)cm();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&io)cm();});if(window.visualViewport){window.visualViewport.addEventListener('resize',soto);window.visualViewport.addEventListener('scroll',soto);}window.addEventListener('resize',()=>{if(io&&!imn())cm();});})();
 
-// Profile Modal
-(function(){
-  const modal = document.getElementById('profile-modal');
-  const closeBtn = document.getElementById('profile-modal-close');
-  const trigger = document.querySelector('.profile-hero-img');
-  if(!modal || !trigger) return;
-  function openModal(){ modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow = ''; }
-  trigger.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
-  modal.addEventListener('click', closeModal);
-  modal.querySelector('img').addEventListener('click', e => e.stopPropagation());
-  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-})();
-
-// Terminal Modal — تجربه‌ی تایپ در موبایل
-(function(){
-  const terminalWrapper = document.getElementById('s2-terminal');
-  const overlay = document.getElementById('terminal-modal-overlay');
-  const panel = document.getElementById('terminal-modal-panel');
-  const slot = document.getElementById('terminal-modal-slot');
-  const closeBtn = document.getElementById('terminal-modal-close');
-  if(!terminalWrapper || !overlay || !panel || !slot || !closeBtn) return;
-
-  const originalParent = terminalWrapper.parentNode;
-  const originalNextSibling = terminalWrapper.nextSibling;
-  let isOpen = false;
-
-  function isMobileNow(){
-    return window.innerWidth < 769 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-  }
-
-  function focusTerminalInput(){
-    const input = document.getElementById('terminal-input');
-    if(input && !input.disabled) input.focus({ preventScroll: true });
-  }
-
-  function syncOverlayToViewport(){
-    if(!window.visualViewport) return;
-    const vv = window.visualViewport;
-    overlay.style.top = vv.offsetTop + 'px';
-    overlay.style.height = vv.height + 'px';
-  }
-
-  function openModal(){
-    if(isOpen || !isMobileNow()) return;
-    isOpen = true;
-    syncOverlayToViewport();
-    slot.appendChild(terminalWrapper);
-    overlay.classList.add('active');
-    document.body.classList.add('terminal-modal-open');
-    requestAnimationFrame(focusTerminalInput);
-  }
-
-  function closeModal(){
-    if(!isOpen) return;
-    isOpen = false;
-    overlay.classList.remove('active');
-    document.body.classList.remove('terminal-modal-open');
-    const input = document.getElementById('terminal-input');
-    if(input) input.blur();
-    setTimeout(() => {
-      if(originalNextSibling) originalParent.insertBefore(terminalWrapper, originalNextSibling);
-      else originalParent.appendChild(terminalWrapper);
-    }, 300);
-  }
-
-  // تپ روی ردیف تایپ ترمینال در موبایل → مودال باز شود (به‌جای فوکوس مستقیم روی اینپوت کوچک)
-  function interceptTap(e){
-    if(!isMobileNow() || isOpen) return;
-    if(!e.target.closest('#terminal-input-line')) return;
-    e.preventDefault();
-    openModal();
-  }
-  terminalWrapper.addEventListener('mousedown', interceptTap);
-  terminalWrapper.addEventListener('touchstart', interceptTap, { passive: false });
-
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e => { if(e.key === 'Escape' && isOpen) closeModal(); });
-
-  // هماهنگی با کیبورد موبایل: کادر مودال را دقیقاً هم‌اندازه‌ی ناحیه‌ی قابل‌دید (بالای کیبورد) می‌کنیم
-  if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', syncOverlayToViewport);
-    window.visualViewport.addEventListener('scroll', syncOverlayToViewport);
-  }
-
-  window.addEventListener('resize', () => { if(isOpen && !isMobileNow()) closeModal(); });
-})();
-
-async function shareResume(){
-  const d = {
-    title: 'Mohammad Javad Mahmoudi — Full Stack Developer',
-    text: 'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',
-    url: 'https://immdjavad.ir'
-  };
-  if(navigator.share){
-    try { await navigator.share(d); } catch(e) { fallback(); }
-  } else { fallback(); }
-  function fallback(){
-    navigator.clipboard.writeText('https://immdjavad.ir').then(() => {
-      const btn = document.querySelector('.fab-share');
-      if(!btn) return;
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';
-      btn.style.background = 'rgba(52,211,153,0.18)';
-      btn.style.borderColor = 'rgba(52,211,153,0.5)';
-      btn.style.color = '#34d399';
-      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
-    }).catch(()=>{});
-  }
-}
-
-// Phone reveal
-(function(){
-  const p = ['\u0030','\u0039','1','2','0','1','2','0','7','4','5'];
-  const num = p.join('');
-  const link = document.getElementById('phone-link');
-  const display = document.getElementById('phone-display');
-  if(!link || !display) return;
-  let revealed = false;
-  link.addEventListener('click', function(e){
-    e.preventDefault();
-    if(!revealed){
-      display.textContent = '0' + num.slice(1);
-      link.href = 'tel:' + num;
-      revealed = true;
-    } else {
-      window.location.href = 'tel:' + num;
-    }
-  });
-})();
+// SHARE + PHONE
+async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',url:'https://immdjavad.ir'};if(navigator.share){try{await navigator.share(d);}catch(e){fb();}}else{fb();}function fb(){navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{const b=document.querySelector('.fab-share');if(!b)return;const o=b.innerHTML;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';b.style.background='rgba(52,211,153,0.18)';b.style.borderColor='rgba(52,211,153,0.5)';b.style.color='#34d399';setTimeout(()=>{b.innerHTML=o;b.style.background='';b.style.borderColor='';b.style.color='';},1500);}).catch(()=>{});}}
+(function(){const p=['\u0030','\u0039','1','2','0','1','2','0','7','4','5'],num=p.join(''),lk=document.getElementById('phone-link'),dp=document.getElementById('phone-display');if(!lk||!dp)return;let rv=false;lk.addEventListener('click',function(e){e.preventDefault();if(!rv){dp.textContent='0'+num.slice(1);lk.href='tel:'+num;rv=true;}else{window.location.href='tel:'+num;}});})();
 </script>
 </body>
 </html>
