@@ -26,7 +26,7 @@
   --ice:#7dd3fc;
   --green:#34d399;
   --text:#ede9fe;
-  --muted:rgba(237,233,254,0.35);
+  --muted:rgba(237,233,254,0.7);
   --glow:rgba(157,78,221,0.55);
   --terminal-bg:rgba(4,2,16,0.94);
   --terminal-border:rgba(157,78,221,0.3);
@@ -65,7 +65,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .galaxy-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,0.4);}
 
 #chapter-nav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:11px;}
-.nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(237,233,254,0.18);cursor:pointer;transition:all .25s ease;position:relative;}
+.nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(237,233,254,0.38);cursor:pointer;transition:all .25s ease;position:relative;}
 .nav-dot.active{background:var(--accent2);box-shadow:0 0 12px var(--glow);transform:scale(1.5);}
 .nav-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;color:var(--accent2);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;text-shadow:0 0 20px var(--glow);}
 .nav-dot:hover::after{opacity:1;}
@@ -84,10 +84,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @keyframes scrollDown{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(9px);opacity:0;}}
 
 /* SCENE SYSTEM */
-.scene{position:relative;height:100vh;width:100%;z-index:1;}
-.scene-bookend{position:relative;height:100vh;width:100%;z-index:10;}
-.scene-sticky{position:relative;top:0;height:100%;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.scene-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 40px;z-index:10;overflow:hidden;will-change:transform;}
+.scene{position:relative;min-height:100vh;width:100%;z-index:1;}
+.scene-bookend{position:relative;min-height:100vh;width:100%;z-index:10;}
+.scene-sticky{position:relative;top:0;min-height:100%;width:100%;display:flex;align-items:center;justify-content:center;overflow:visible;padding:40px 0;}
+.scene-inner{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 40px;z-index:10;overflow:visible;will-change:transform;}
 
 /* ════════ OPTIMIZED ULTIMATE BIG BANG ════════ */
 #big-bang-layer {
@@ -283,6 +283,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 .project-image-wrap{opacity:0;margin-bottom:18px;border-radius:8px;overflow:hidden;border:1px solid rgba(157,78,221,0.25);max-width:450px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,0.5);background:rgba(10,4,22,0.6);flex-shrink:0;}
 .project-image-wrap img{width:100%;height:auto;display:block;transition:transform 0.4s ease;}
+.project-image-wrap video{width:100%;height:auto;display:block;}
+
+.pd-section{margin:14px 0;text-align:right;background:rgba(8,3,20,0.82);padding:16px 20px;border-radius:12px;border:1px solid rgba(237,233,254,0.08);}
+.pd-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;color:var(--accent2);text-transform:uppercase;margin-bottom:7px;font-weight:700;}
+.pd-text{font-size:.92rem;line-height:1.95;color:#fff;font-weight:600;}
+.pd-text ul{margin:6px 0 0;padding-right:20px;}
+.pd-text li{margin-bottom:6px;}
 
 .hero-name-fa{font-size:clamp(3.2rem,9.5vw,9.5rem);font-weight:900;line-height:.88;background:linear-gradient(155deg,#fff 0%,var(--accent2) 38%,var(--accent3) 70%,rgba(255,255,255,.25) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;letter-spacing:-.02em;position:relative;}
 .hero-name-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.3rem,3.8vw,3.8rem);letter-spacing:.28em;color:var(--muted);opacity:0;margin-top:8px;}
@@ -292,8 +299,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 .scene-headline-fa{font-size:clamp(2.2rem,6.5vw,7rem);font-weight:900;line-height:.95;opacity:0;letter-spacing:-.01em;background:linear-gradient(130deg,#fff 0%,var(--accent2) 55%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;max-width:860px;}
 .scene-headline-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,2.8vw,2.4rem);letter-spacing:.22em;color:var(--muted);opacity:0;margin-top:10px;}
-.scene-body{font-size:clamp(.88rem,1.4vw,1.1rem);line-height:2.1;max-width:640px;opacity:0;color:rgba(237,233,254,.72);margin-top:26px;font-weight:300;}
-.scene-body-en{font-family:'JetBrains Mono',monospace;font-size:clamp(.68rem,.95vw,.82rem);line-height:1.9;max-width:580px;opacity:0;color:var(--muted);margin-top:12px;direction:ltr;text-align:center;}
+.scene-body{font-size:clamp(.88rem,1.4vw,1.1rem);line-height:2.1;max-width:640px;opacity:0;color:#fff;margin-top:26px;font-weight:600;background:rgba(8,3,20,0.82);padding:16px 24px;border-radius:14px;border:1px solid rgba(237,233,254,0.08);}
+.scene-body-en{font-family:'JetBrains Mono',monospace;font-size:clamp(.68rem,.95vw,.82rem);line-height:1.9;max-width:580px;opacity:0;color:#fff;font-weight:700;margin-top:12px;direction:ltr;text-align:center;background:rgba(8,3,20,0.8);padding:10px 18px;border-radius:10px;border:1px solid rgba(237,233,254,0.08);}
 
 .terminal-wrapper{opacity:0;width:100%;max-width:660px;margin:12px auto 0;}
 .terminal{background:var(--terminal-bg);border:1px solid var(--terminal-border);border-radius:10px;overflow:hidden;box-shadow:0 0 30px rgba(157,78,221,0.12),0 14px 40px rgba(0,0,0,0.5);backdrop-filter:blur(16px);text-align:left;direction:ltr;font-family:'JetBrains Mono','Courier New',monospace;}
@@ -341,22 +348,22 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .project-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
 .project-title-fa{font-size:clamp(1.8rem,5vw,4.2rem);font-weight:900;line-height:1;background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
 .project-title-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.9rem,2.2vw,1.7rem);letter-spacing:.2em;color:var(--muted);margin-bottom:16px;}
-.project-desc-text{font-size:.92rem;line-height:2;color:rgba(237,233,254,.7);font-weight:300;margin-bottom:10px;}
-.project-desc-en{font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.8;color:var(--muted);direction:ltr;text-align:left;margin-bottom:18px;}
+.project-desc-text{font-size:.95rem;line-height:1.95;color:#fff;font-weight:700;margin-bottom:10px;background:rgba(8,3,20,0.82);padding:16px 20px;border-radius:12px;border:1px solid rgba(237,233,254,0.08);}
+.project-desc-en{font-family:'JetBrains Mono',monospace;font-size:.75rem;line-height:1.8;color:#fff;font-weight:600;direction:ltr;text-align:left;margin-bottom:18px;background:rgba(8,3,20,0.8);padding:12px 18px;border-radius:10px;border:1px solid rgba(237,233,254,0.08);}
 .tech-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
 .tech-chip{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:5px 11px;border:1px solid rgba(157,78,221,.28);border-radius:2px;color:var(--accent3);letter-spacing:.08em;background:rgba(157,78,221,.04);}
 .tech-chip.blue{border-color:rgba(125,211,252,.3);color:var(--ice);background:rgba(125,211,252,.04);}
 .tech-chip.ember{border-color:rgba(245,158,11,.3);color:var(--ember);background:rgba(245,158,11,.04);}
 .tech-chip.green{border-color:rgba(52,211,153,.3);color:var(--green);background:rgba(52,211,153,.04);}
 
-.project-link-btn{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(199,125,255,.3);padding-bottom:2px;transition:border-color .3s,color .3s;}
-.project-link-btn:hover{color:#fff;border-color:#fff;}
+.project-link-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Vazirmatn',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.01em;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:11px 24px;border-radius:8px;box-shadow:0 4px 18px var(--glow);transition:transform .25s ease,box-shadow .25s ease;}
+.project-link-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px var(--glow);color:#fff;}
 
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
 .exp-period{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;color:var(--accent);margin-bottom:10px;}
 .exp-role-fa{font-size:clamp(1.5rem,4vw,3.2rem);font-weight:900;line-height:1.05;background:linear-gradient(130deg,#fff 0%,var(--accent2) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
 .exp-role-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.85rem,1.9vw,1.45rem);letter-spacing:.2em;color:var(--muted);margin-bottom:16px;}
-.exp-desc-text{font-size:.9rem;line-height:2.05;color:rgba(237,233,254,.68);font-weight:300;}
+.exp-desc-text{font-size:.93rem;line-height:2;color:#fff;font-weight:700;background:rgba(8,3,20,0.82);padding:16px 20px;border-radius:12px;border:1px solid rgba(237,233,254,0.08);}
 
 .edu-reveal{opacity:0;max-width:580px;text-align:center;}
 .edu-degree-fa{font-size:clamp(1.8rem,5vw,4rem);font-weight:900;line-height:1.1;background:linear-gradient(130deg,#fff 0%,var(--accent2) 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
@@ -386,7 +393,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   #galaxy-toggler{top:16px;right:12px;gap:8px;padding:6px 10px;}
   .galaxy-dot{width:18px;height:18px;}
   #chapter-nav{right:6px;gap:7px;}
-  .nav-dot{width:4px;height:4px;}
+  .nav-dot{width:7px;height:7px;}
   .nav-dot::after{display:none;}
   .lang-pair{gap:16px;}
   .scene-inner{padding:14px 10px;}
@@ -396,10 +403,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .profile-hero-img{width:160px;height:160px;}
   .project-image-wrap{max-width:80%;max-height:22vh;margin-bottom:10px;}
   .terminal-wrapper{max-width:100%;margin:6px auto 0;}
-  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.6rem;line-height:1.5;}
-  .terminal-input-line input{font-size:0.6rem;}
-  .skill-tag{font-size:0.46rem;padding:2px 5px;}
-  .terminal-hint{font-size:0.48rem;margin-top:7px;padding-top:6px;}
+  .terminal-body{padding:10px;min-height:160px;max-height:55vh;font-size:0.76rem;line-height:1.7;}
+  .terminal-input-line input{font-size:0.76rem;}
+  .skill-tag{font-size:0.72rem;padding:4px 9px;}
+  .terminal-hint{font-size:0.62rem;margin-top:7px;padding-top:6px;}
+  #galaxy-toggler,.terminal{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
 }
 
 @media(max-width:400px){
@@ -407,9 +415,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .galaxy-dot{width:16px;height:16px;}
   .scene-inner{padding:10px 8px;}
   .project-image-wrap{max-height:18vh;margin-bottom:8px;}
-  .terminal-body{min-height:140px;max-height:52vh;font-size:0.56rem;padding:8px;}
-  .skill-tag{font-size:0.4rem;padding:1px 4px;}
-  .terminal-input-line input{font-size:0.56rem;}
+  .terminal-body{min-height:140px;max-height:52vh;font-size:0.72rem;padding:8px;}
+  .skill-tag{font-size:0.68rem;padding:3px 7px;}
+  .terminal-input-line input{font-size:0.72rem;}
 }
 </style>
 </head>
@@ -485,11 +493,19 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.png" alt="آذین دژ" loading="lazy"></div>
     <div class="project-title-fa">آذین دژ</div>
     <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
-    <div class="project-desc-text">پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر انواع درب و پنجره را با انیمیشن طراحی می‌کند، رنگ‌بندی، شیشه و یراق‌آلات انتخاب می‌کند، چند پنجره را ترکیب کرده و فاکتور کامل دریافت می‌کند.</div>
-    <div class="project-desc-en">Advanced UPVC platform — interactive SVG configurator with animated opening modes, glass profiles, hardware selection, and multi-window quoting.</div>
+    <div class="project-desc-text">رقبا فقط پنجره‌ی مستطیلی قیمت می‌دادن، چون قیمت‌گذاری واقعی پنجره خیلی پیچیده‌تره؛ برای همین آذین‌دژ رو ساختم: سیستم تخمین قیمت مهندسی‌شده با کانفیگوریتور SVG برای هر شکل هندسی، ۷ نوع بازشو با انیمیشن سه‌بعدی، و امکان ترکیب چند مدل در یک طرح — به‌همراه پنل ادمین کامل و بلاگ تخصصی.</div>
+    <div class="project-desc-en">Competitors only quoted simple rectangular windows. I built an engineered SVG price-configurator supporting any geometric shape, 7 animated opening types, and combinable multi-window designs — with a full custom admin panel.</div>
     <div class="tech-chips">
-      <span class="tech-chip">Django</span><span class="tech-chip">Python</span><span class="tech-chip">SVG Animations</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
+      <span class="tech-chip">Django</span><span class="tech-chip">Python</span><span class="tech-chip">SVG Configurator</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">3D Animation</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
     </div>
+    <div class="pd-section"><div class="pd-label">مشکل</div><div class="pd-text">مشتری‌ها فقط می‌پرسیدن «قیمت پنجره چنده؟» در حالی که قیمت واقعی پنجره UPVC به شکل هندسی، تعداد و نوع بازشو، پروفیل، شیشه، رنگ و یراق‌آلات بستگی داره. رقبا هم فقط سایت‌های ساده‌ای داشتن که صرفاً پنجره‌ی مستطیلی رو قیمت می‌دادن.</div></div>
+    <div class="pd-section"><div class="pd-label">ویژگی‌های کلیدی</div><div class="pd-text"><ul>
+      <li><b>سایت شرکتی:</b> صفحه اصلی، درباره‌ما/تماس، بلاگ آموزشی-تخصصی، و صفحه پروژه‌ها با بیش از ۲۰۰ تصویر/فایل — با دو حالت نمایش: «گالری پویا» (شبیه اکسپلور اینستاگرام) و نمایش طبقه‌بندی‌شده پست‌به‌پست.</li>
+      <li><b>سیستم تخمین قیمت:</b> انتخاب دسته‌ی ابعاد → انتخاب شکل هندسی با SVG پیشرفته → تقسیم شکل به سلول با درگ‌ودراپ → انتخاب نوع بازشو برای هر سلول از بین ۷ مدل (لولایی، کشویی، دوحالته، فرانسوی، فولکس‌واگنی، پیوت، کلنگی، ثابت) با انیمیشن سه‌بعدی → انتخاب پروفیل، شیشه، آپشن، رنگ و یراق‌آلات → قیمت نهایی و صدور فاکتور.</li>
+      <li><b>ساخت پنجره دلخواه:</b> امکان ترکیب چند مدل درب/پنجره در یک طرح واحد.</li>
+      <li><b>پنل ادمین سفارشی:</b> مدیریت مقالات با SEO کامل، قیمت متریال، مدیریت انواع محصول، پیام‌ها، تیکت‌ها، کاربران و فاکتورشان، گالری پروژه، تنظیمات سایت، و بخش همکاران/بازاریاب‌ها.</li>
+    </ul></div></div>
+    <div class="pd-section"><div class="pd-label">نتیجه</div><div class="pd-text">تنها پلتفرمی در این حوزه که قیمت‌گذاری واقعی و پیچیده‌ی پنجره رو به‌صورت آنلاین و دقیق در اختیار مشتری می‌گذاره، به‌جای اینکه منتظر تماس و مذاکره بمونه.</div></div>
     <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">azindejwin.ir →</a>
   </div>
 </div></div></section>
@@ -499,14 +515,19 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="chapter-marker" id="s4-ch">04 · فروشگاه · E-Commerce</div>
   <div class="project-reveal" id="s4-pr">
     <div class="project-label">فروشگاه آنلاین · In Progress</div>
-    <div class="project-image-wrap" id="s4-img"><img src="assets/projects/baeazandeh.png" alt="فروشگاه" loading="lazy"></div>
-    <div class="project-title-fa">فروشگاه لباس</div>
-    <div class="project-title-en">Fashion E-Commerce — Smart Chatbot</div>
-    <div class="project-desc-text">فروشگاه اینترنتی با ربات چت هوشمند، پنل ادمین سفارشی حرفه‌ای و رابط کاربری جذاب.</div>
-    <div class="project-desc-en">Visually stunning fashion store · AI chatbot · custom admin panel · modern UI/UX design.</div>
+    <div class="project-image-wrap" id="s4-img"><img src="assets/projects/baeazandeh.png" alt="برازنده" loading="lazy"></div>
+    <div class="project-title-fa">برازنده</div>
+    <div class="project-title-en">Barazandeh — Fashion E-Commerce</div>
+    <div class="project-desc-text">فروشگاه لباس مدرن و مینیمال با پرو مجازی AR (کاربر عکس خودش رو انتخاب می‌کنه و لباس روی تنش قرار می‌گیره)، ربات همراه تعاملی eilik که وقتی محصول یا سبد خرید رو باز کنی چشم‌هاش قلبی می‌شه و با کلیک، چت‌بات باز می‌کنه، و یک پنل ادمین بسیار کامل شامل آمار و نمودار، مقاله با SEO حرفه‌ای، انبار، مرجوعی، کد تخفیف و ابزارهای مارکتینگ.</div>
+    <div class="project-desc-en">Modern fashion store with AR virtual try-on, an interactive "eilik" companion robot linked to a chatbot, and a full admin suite — analytics, inventory, returns, discounts, and marketing tools.</div>
     <div class="tech-chips">
-      <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">PyQt6</span>
+      <span class="tech-chip">Django</span><span class="tech-chip blue">AR Try-On</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">Analytics Dashboard</span>
     </div>
+    <div class="pd-section"><div class="pd-label">ویژگی‌های کلیدی</div><div class="pd-text"><ul>
+      <li><b>پرو مجازی (AR):</b> کاربر عکس خودش رو انتخاب می‌کنه و لباس به‌صورت واقعی روی تصویرش قرار می‌گیره.</li>
+      <li><b>ربات همراه eilik:</b> همیشه گوشه‌ی صفحه حاضره و به محتوای صفحه سرک می‌کشه؛ با باز کردن محصول یا سبد خرید چشم‌هاش قلبی می‌شه، و با کلیک روی ربات، مودال چت‌بات باز می‌شه.</li>
+      <li><b>پنل ادمین:</b> آمار و نمودار، مقاله با SEO حرفه‌ای، دسته‌بندی، تیکت، مرجوعی، انبار، کد تخفیف، بنر، مودال اطلاع‌رسانی، هشدار عدم موجودی، و هشدار موجودی فیک برای ترغیب خرید.</li>
+    </ul></div></div>
     <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ember);">🚀 به زودی آنلاین · Launching Soon</span>
   </div>
 </div></div></section>
@@ -553,10 +574,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="project-image-wrap" id="s7-img"><img src="assets/projects/Accounting.png" alt="حسابداری" loading="lazy"></div>
     <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
     <div class="project-title-en">Accounting &amp; Warehouse Management</div>
-    <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel.</div>
-    <div class="project-desc-en">Full-featured ERP desktop app built with PyQt6. Includes Persian calendar, inventory tracking, invoice generation, Excel reporting.</div>
+    <div class="project-desc-text">سیستم جامع حسابداری، انبار و فاکتور، مناسب کسب‌وکارهای معمولی، با تقویم شمسی، بک‌آپ خودکار و گزارش‌گیری پیشرفته Excel. یک بخش اختصاصی هم به نام «دفتر خیاط و برش» برای تولیدی‌های پوشاک دارد.</div>
+    <div class="project-desc-en">Full-featured ERP desktop app built with PyQt6 — Persian calendar, automatic backups, Excel reporting, invoicing, and a dedicated tailoring/cutting ledger module for garment manufacturers.</div>
     <div class="tech-chips">
-      <span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span><span class="tech-chip ember">Persian Calendar</span><span class="tech-chip">Excel</span><span class="tech-chip green">ReportLab</span>
+      <span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span><span class="tech-chip ember">Persian Calendar</span><span class="tech-chip">Excel</span><span class="tech-chip green">ReportLab</span><span class="tech-chip green">Auto Backup</span>
     </div>
     <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">GitHub →</a>
   </div>
@@ -634,7 +655,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   const isMobile = W < 769;
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 2 : 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.6));
   renderer.setSize(W, H);
   renderer.setClearColor(0x000000, 0);
 
@@ -644,9 +665,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   camera.position.set(0, 2, isMobile ? 20 : 18);
   camera.lookAt(0, 0, -5);
 
-  const GALAXY_COUNT = isMobile ? 2000 : 3500;
-  const STARS_COUNT  = isMobile ? 800 : 1500;
-  const DUST_COUNT   = isMobile ? 300 : 600;
+  const GALAXY_COUNT = isMobile ? 900 : 3500;
+  const STARS_COUNT  = isMobile ? 350 : 1500;
+  const DUST_COUNT   = isMobile ? 0   : 600;
 
   const initTheme = window.getThemeData ? window.getThemeData('violet') : null;
   const colCore  = new THREE.Color(initTheme?.threeColors[0] || '#c77dff');
@@ -973,6 +994,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
 
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){ paused = true; }
+    else { paused = false; }
+  });
+
   window.addEventListener('resize', () => {
     const w = window.innerWidth, h = window.innerHeight;
     camera.aspect = w / h;
@@ -1006,9 +1032,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 ════════════════════════════════════════════ */
 (function initGalaxyThemes(){
   const themes={
-    violet:{'--void':'#020008','--accent':'#9d4edd','--accent2':'#c77dff','--accent3':'#e0aaff','--ember':'#f59e0b','--ice':'#7dd3fc','--green':'#34d399','--text':'#ede9fe','--muted':'rgba(237,233,254,0.35)','--glow':'rgba(157,78,221,0.55)','--terminal-prompt':'#9d4edd','--terminal-highlight':'#c77dff','--terminal-border':'rgba(157,78,221,0.3)',metaTheme:'#9d4edd',threeColors:['#9d4edd','#c77dff','#7dd3fc','#e0aaff','#5a189a'],ringColor:0x9d4edd,ring2Color:0x7dd3fc,coreColor:0x9d4edd},
-    blue:{'--void':'#000510','--accent':'#00d4ff','--accent2':'#00e5ff','--accent3':'#80f0ff','--ember':'#ff6b35','--ice':'#00d4ff','--green':'#00ff88','--text':'#e0f0ff','--muted':'rgba(200,230,255,0.35)','--glow':'rgba(0,212,255,0.55)','--terminal-prompt':'#00d4ff','--terminal-highlight':'#00e5ff','--terminal-border':'rgba(0,212,255,0.3)',metaTheme:'#00d4ff',threeColors:['#00d4ff','#0066ff','#00e5ff','#80f0ff','#0033cc'],ringColor:0x00d4ff,ring2Color:0x0066ff,coreColor:0x00d4ff},
-    gold:{'--void':'#080600','--accent':'#f59e0b','--accent2':'#fbbf24','--accent3':'#fde68a','--ember':'#ef4444','--ice':'#fbbf24','--green':'#10b981','--text':'#fef3c7','--muted':'rgba(254,243,199,0.35)','--glow':'rgba(245,158,11,0.55)','--terminal-prompt':'#f59e0b','--terminal-highlight':'#fbbf24','--terminal-border':'rgba(245,158,11,0.3)',metaTheme:'#f59e0b',threeColors:['#f59e0b','#d97706','#fbbf24','#fde68a','#92400e'],ringColor:0xf59e0b,ring2Color:0xd97706,coreColor:0xf59e0b}
+    violet:{'--void':'#020008','--accent':'#9d4edd','--accent2':'#c77dff','--accent3':'#e0aaff','--ember':'#f59e0b','--ice':'#7dd3fc','--green':'#34d399','--text':'#ede9fe','--muted':'rgba(237,233,254,0.7)','--glow':'rgba(157,78,221,0.55)','--terminal-prompt':'#9d4edd','--terminal-highlight':'#c77dff','--terminal-border':'rgba(157,78,221,0.3)',metaTheme:'#9d4edd',threeColors:['#9d4edd','#c77dff','#7dd3fc','#e0aaff','#5a189a'],ringColor:0x9d4edd,ring2Color:0x7dd3fc,coreColor:0x9d4edd},
+    blue:{'--void':'#000510','--accent':'#00d4ff','--accent2':'#00e5ff','--accent3':'#80f0ff','--ember':'#ff6b35','--ice':'#00d4ff','--green':'#00ff88','--text':'#e0f0ff','--muted':'rgba(200,230,255,0.7)','--glow':'rgba(0,212,255,0.55)','--terminal-prompt':'#00d4ff','--terminal-highlight':'#00e5ff','--terminal-border':'rgba(0,212,255,0.3)',metaTheme:'#00d4ff',threeColors:['#00d4ff','#0066ff','#00e5ff','#80f0ff','#0033cc'],ringColor:0x00d4ff,ring2Color:0x0066ff,coreColor:0x00d4ff},
+    gold:{'--void':'#080600','--accent':'#f59e0b','--accent2':'#fbbf24','--accent3':'#fde68a','--ember':'#ef4444','--ice':'#fbbf24','--green':'#10b981','--text':'#fef3c7','--muted':'rgba(254,243,199,0.7)','--glow':'rgba(245,158,11,0.55)','--terminal-prompt':'#f59e0b','--terminal-highlight':'#fbbf24','--terminal-border':'rgba(245,158,11,0.3)',metaTheme:'#f59e0b',threeColors:['#f59e0b','#d97706','#fbbf24','#fde68a','#92400e'],ringColor:0xf59e0b,ring2Color:0xd97706,coreColor:0xf59e0b}
   };
   let currentTheme='violet';
   const root=document.documentElement,toggler=document.getElementById('galaxy-toggler'),ambient=document.getElementById('ambient');
@@ -1093,10 +1119,6 @@ async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full St
 // PHONE
 (function(){const p=['\u0030','\u0039','1','2','0','1','2','0','7','4','5'],num=p.join(''),link=document.getElementById('phone-link'),display=document.getElementById('phone-display');if(!link||!display)return;let revealed=false;link.addEventListener('click',function(e){e.preventDefault();if(!revealed){display.textContent='0'+num.slice(1);link.href='tel:'+num;revealed=true;}else{window.location.href='tel:'+num;}});})();
 
-/* ════════════════════════════════════════════
-   OPTIMIZED ULTIMATE BIG BANG - بدون لگ
-   زمان مخفی شدن void کاهش یافته به 2.5 ثانیه
-════════════════════════════════════════════ */
 (function initOptimizedBigBang(){
   const bigBangLayer = document.getElementById('big-bang-layer');
   const scene10 = document.getElementById('scene-10');

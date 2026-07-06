@@ -270,6 +270,8 @@
   .project-title-fa { font-size:1.05rem; font-weight:700; margin-bottom:3px; }
   .project-title-en { font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--muted); margin-bottom:12px; }
   .project-desc { font-size:0.81rem; line-height:1.9; opacity:0.78; margin-bottom:14px; }
+  .project-desc ul { margin:8px 0 4px; padding-right:18px; }
+  .project-desc li { margin-bottom:5px; }
   .project-tech { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
   .tech-tag {
     font-family:'JetBrains Mono',monospace; font-size:0.63rem; padding:3px 9px;
@@ -711,8 +713,14 @@
           <div class="project-title-fa">آذین دژ</div>
           <div class="project-title-en">Azin Dej — UPVC Door & Window Platform</div>
           <div class="project-desc">
-            پلتفرم شرکتی پیشرفته تولید درب و پنجره UPVC با قابلیت تخمین قیمت آنلاین کاملاً تعاملی. کاربر می‌تواند با SVG داینامیک انواع درب و پنجره با اشکال هندسی متنوع طراحی کند، نوع بازشو را با انیمیشن تغییر دهد، رنگ‌بندی، پروفیل شیشه و یراق‌آلات انتخاب کند، چند پنجره را ترکیب نماید و فاکتور دریافت کند. پنل ادمین کاملاً سفارشی، گالری پروژه، مقالات و سیستم ارتباط با مشتری نیز دارد.
-            <br><br><span style="font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--muted);">Advanced UPVC platform with fully interactive SVG configurator. Users design door/window types geometrically with animated opening modes, glass profiles, hardware, colors — combine them into complex shapes and receive detailed quotes. Custom admin panel, project gallery, and blog included.</span>
+            رقبا فقط پنجره‌ی مستطیلی قیمت می‌دادن، چون قیمت‌گذاری واقعی پنجره UPVC (شکل هندسی، نوع بازشو، پروفیل، شیشه، رنگ و یراق‌آلات) خیلی پیچیده‌تر از یک عدد ثابته. برای همین آذین‌دژ رو ساختم: یک سیستم تخمین قیمت مهندسی‌شده.
+            <ul>
+              <li><b>کانفیگوریتور SVG:</b> انتخاب شکل هندسی → تقسیم به سلول با درگ‌ودراپ → انتخاب نوع بازشو برای هر سلول از بین ۷ مدل (لولایی، کشویی، دوحالته، فرانسوی، فولکس‌واگنی، پیوت، کلنگی، ثابت) با انیمیشن سه‌بعدی برای هر مدل.</li>
+              <li><b>ساخت پنجره دلخواه:</b> ترکیب چند مدل درب/پنجره در یک طرح واحد برای حالت‌های خاص و پیچیده.</li>
+              <li><b>سایت شرکتی کامل:</b> بلاگ تخصصی، صفحه پروژه‌ها با بیش از ۲۰۰ تصویر (نمایش «گالری پویا» شبیه اکسپلور اینستاگرام یا طبقه‌بندی‌شده پست‌به‌پست).</li>
+              <li><b>پنل ادمین سفارشی:</b> مدیریت مقالات با SEO کامل، قیمت متریال، انواع محصول، تیکت‌ها، کاربران و فاکتورهاشون، و بخش همکاران/بازاریاب‌ها.</li>
+            </ul>
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--muted);">Competitors only quoted simple rectangular windows. I built an engineered SVG price-configurator supporting any geometric shape, 7 animated opening types, combinable multi-window designs, plus a full custom admin panel and blog.</span>
           </div>
           <div class="project-tech">
             <span class="tech-tag">Django</span>
@@ -761,16 +769,21 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12H3a9 9 0 0 0 18 0h-2"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2"/><circle cx="12" cy="12" r="4"/></svg>
             AR Virtual Try-On · پرو مجازی
           </div>
-          <div class="project-title-fa">فروشگاه لباس</div>
-          <div class="project-title-en">Fashion E-Commerce Store</div>
+          <div class="project-title-fa">برازنده</div>
+          <div class="project-title-en">Barazandeh — Fashion E-Commerce</div>
           <div class="project-desc">
-            فروشگاه اینترنتی لباس با طراحی گرافیکی فوق‌العاده مدرن، ربات چت هوشمند Eilik، پنل ادمین حرفه‌ای سفارشی و انیمیشن‌های روان. قابلیت پرو مجازی AR با تکنولوژی MediaPipe — کاربر می‌تواند لباس را روی تصویر واقعی خود ببیند.
-            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Visually stunning fashion store with Eilik AI chatbot, custom admin, and AR virtual try-on powered by MediaPipe — users see clothing overlaid on their real-time image. Launching soon.</span>
+            فروشگاه لباس مدرن و مینیمال با هدف تجربه‌ی خرید متفاوت، نه فقط خریدوفروش ساده.
+            <ul>
+              <li><b>پرو مجازی (AR):</b> کاربر عکس خودش رو انتخاب می‌کنه و لباس روی تصویرش قرار می‌گیره.</li>
+              <li><b>ربات همراه eilik:</b> همیشه گوشه‌ی صفحه حاضره و سرک می‌کشه؛ با باز کردن محصول/سبد خرید چشم‌هاش قلبی می‌شه و با کلیک، مودال چت‌بات باز می‌کنه.</li>
+              <li><b>پنل ادمین بسیار کامل:</b> آمار و نمودار، مقاله با SEO حرفه‌ای، تیکت، مرجوعی، انبار، کد تخفیف، بنر، و هشدار موجودی فیک برای ترغیب خرید.</li>
+            </ul>
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Modern fashion store with AR virtual try-on, an interactive "eilik" companion robot linked to a chatbot, and a full admin suite — analytics, inventory, returns, discounts, marketing tools. Launching soon.</span>
           </div>
           <div class="project-tech">
             <span class="tech-tag">Django</span>
             <span class="tech-tag blue">AI Chatbot</span>
-            <span class="tech-tag pink">AR / MediaPipe</span>
+            <span class="tech-tag pink">AR Try-On</span>
             <span class="tech-tag blue">Custom Admin</span>
           </div>
           <div class="project-actions">
@@ -874,12 +887,18 @@
           <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
           <div class="project-title-en">Accounting & Inventory Management</div>
           <div class="project-desc">
-            سیستم جامع مدیریت حسابداری و انبار با امکانات کامل برای کسب‌وکارهای کوچک و متوسط.
-            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Full-featured accounting and inventory desktop application for SMBs.</span>
+            سیستم جامع حسابداری، انبار و فاکتور، مناسب کسب‌وکارهای معمولی، با تقویم شمسی و گزارش‌گیری پیشرفته Excel.
+            <ul>
+              <li><b>بک‌آپ خودکار:</b> جلوگیری از هدررفت اطلاعات کسب‌وکار بدون دخالت کاربر.</li>
+              <li><b>دفتر خیاط و برش:</b> بخش اختصاصی مناسب تولیدی‌های پوشاک.</li>
+            </ul>
+            <br><span style="font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--muted);">Full-featured ERP desktop app — Persian calendar, automatic backups, Excel reporting, invoicing, and a dedicated tailoring/cutting ledger module for garment manufacturers.</span>
           </div>
           <div class="project-tech">
-            <span class="tech-tag">Python</span>
+            <span class="tech-tag">PyQt6</span>
             <span class="tech-tag blue">SQLite</span>
+            <span class="tech-tag">Excel</span>
+            <span class="tech-tag blue">Auto Backup</span>
           </div>
           <div class="project-actions">
             <a class="view-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank">

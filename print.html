@@ -523,7 +523,7 @@
           </div>
           <div class="pc-title-fa">آذین دژ — پلتفرم درب و پنجره UPVC</div>
           <div class="pc-title-en">Azin Dej — UPVC Door & Window Platform</div>
-          <div class="pc-desc">پلتفرم شرکتی با تخمین قیمت آنلاین تعاملی. طراحی SVG داینامیک درب و پنجره با انیمیشن بازشو، انتخاب رنگ، شیشه، یراق‌آلات، فاکتور. پنل ادمین سفارشی، گالری پروژه و مقالات.</div>
+          <div class="pc-desc">رقبا فقط پنجره‌ی مستطیلی قیمت می‌دادن؛ ساختم یک سیستم تخمین قیمت مهندسی‌شده با کانفیگوریتور SVG برای هر شکل هندسی، ۷ نوع بازشو با انیمیشن سه‌بعدی، ترکیب چند مدل در یک طرح (ساخت پنجره دلخواه)، به‌همراه پنل ادمین کامل و بلاگ تخصصی.</div>
           <div class="pc-tech">
             <span class="ptag">Django</span><span class="ptag">Python</span>
             <span class="ptag b">JavaScript</span><span class="ptag b">SVG Animations</span>
@@ -532,18 +532,18 @@
           <a class="pc-link" href="https://azindejwin.ir">🌐 azindejwin.ir →</a>
         </div>
 
-        <!-- فروشگاه لباس -->
+        <!-- برازنده -->
         <div class="pc">
-          <div class="ar-tag">AR Virtual Try-On · پرو مجازی با MediaPipe</div>
+          <div class="ar-tag">AR Virtual Try-On · پرو مجازی</div>
           <div class="pc-label-row">
             <div class="pc-tag">فروشگاه آنلاین · In Progress</div>
           </div>
-          <div class="pc-title-fa">فروشگاه لباس</div>
-          <div class="pc-title-en">Fashion E-Commerce Store</div>
-          <div class="pc-desc">فروشگاه مدرن با ربات چت هوشمند Eilik، پنل ادمین سفارشی، انیمیشن‌های روان و پرو مجازی AR.</div>
+          <div class="pc-title-fa">برازنده</div>
+          <div class="pc-title-en">Barazandeh — Fashion E-Commerce</div>
+          <div class="pc-desc">فروشگاه لباس مدرن با پرو مجازی AR، ربات همراه تعاملی eilik که با چت‌بات وصل می‌شه، و پنل ادمین کامل شامل آمار، انبار، تیکت، مرجوعی و ابزارهای مارکتینگ.</div>
           <div class="pc-tech">
             <span class="ptag">Django</span><span class="ptag b">AI Chatbot</span>
-            <span class="ptag p">AR / MediaPipe</span><span class="ptag b">Custom Admin</span>
+            <span class="ptag p">AR Try-On</span><span class="ptag b">Custom Admin</span>
           </div>
         </div>
 
@@ -571,8 +571,8 @@
             <div class="pc-tag">نرم‌افزار دسکتاپ · Desktop App</div>
             <div class="pc-title-fa">نرم‌افزار حسابداری و انبارداری</div>
             <div class="pc-title-en">Accounting & Inventory Management</div>
-            <div class="pc-desc">سیستم جامع حسابداری و مدیریت انبار برای کسب‌وکارهای کوچک و متوسط.</div>
-            <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">SQLite</span></div>
+            <div class="pc-desc">حسابداری، انبار و فاکتور با تقویم شمسی، بک‌آپ خودکار، گزارش‌گیری Excel، و بخش «دفتر خیاط و برش» برای تولیدی‌های پوشاک.</div>
+            <div class="pc-tech"><span class="ptag">PyQt6</span><span class="ptag b">SQLite</span><span class="ptag">Excel</span></div>
           </div>
           <div class="pc">
             <div class="pc-tag">پروژه دانشگاهی · Academic</div>
@@ -598,5 +598,30 @@
   </div>
 
 </div>
+
+<!-- ══ PRINT BUTTON (hidden on actual print output) ══ -->
+<button class="print-fab" onclick="window.print()" title="چاپ رزومه">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  <span>چاپ</span>
+</button>
+
+<style>
+  .print-fab {
+    position: fixed; bottom: 18px; left: 18px; z-index: 999;
+    display: flex; align-items: center; gap: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    color: #fff; border: none; border-radius: 999px;
+    padding: 11px 18px; font-family: 'Vazirmatn', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .print-fab:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(124,58,237,0.5); }
+  .print-fab svg { width: 16px; height: 16px; flex-shrink: 0; }
+  @media print {
+    .print-fab { display: none !important; }
+  }
+</style>
+
 </body>
 </html>
