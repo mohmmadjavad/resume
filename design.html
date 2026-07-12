@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>طراحی گرافیک | محمد جواد محمودی | Graphic Design</title>
+<meta name="description" content="نمونه کارهای طراحی گرافیک، لوگو و هویت بصری - محمد جواد محمودی">
+<meta name="author" content="Mohammad Javad Mahmoudi">
+<meta name="theme-color" content="#f59e0b">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
+<link rel="preload" href="vendor/fonts/fonts.css" as="style">
+<link rel="preload" href="assets/profile.png" as="image">
+<link href="vendor/fonts/fonts.css" rel="stylesheet">
+
+<style>
+/* ════ RESET & ROOT ════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --void:#080600;
+  --accent:#f59e0b;
+  --accent2:#fbbf24;
+  --accent3:#fde68a;
+  --ember:#ef4444;
+  --ice:#fbbf24;
+  --green:#10b981;
+  --text:#ffffff; /* روشن‌تر کردن متن اصلی برای خوانایی بهتر */
+  --text-secondary:#fef3c7;
+  --muted:rgba(254,243,199,0.7); /* افزایش opacity برای خوانایی */
+  --glow:rgba(245,158,11,0.8);
+  --card-bg:rgba(10, 5, 0, 0.85); /* پس‌زمینه تیره‌تر برای کارت‌ها */
+  --card-border:rgba(245,158,11,0.5); /* حاشیه پررنگ‌تر */
+  --btn-bg:rgba(245, 158, 11, 0.15);
+  --btn-border:rgba(245, 158, 11, 0.5);
+  --btn-hover-bg:rgba(245, 158, 11, 0.35);
+  --btn-text:#fbbf24;
+}
+html{scroll-behavior:auto;scrollbar-width:none;overflow-x:hidden;}
+html::-webkit-scrollbar{display:none;}
+body{background:var(--void);color:var(--text);font-family:'Vazirmatn',sans-serif;overflow-x:hidden;}
+
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center, transparent 30%, rgba(8,6,0,0.92) 100%);pointer-events:none;z-index:5;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.028;pointer-events:none;z-index:6;}
+
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+#ambient{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%),radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%);pointer-events:none;transition:background 0.8s ease;}
+
+.scanline{position:fixed;top:-100%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.1),transparent);z-index:7;pointer-events:none;animation:scan 12s linear infinite;}
+@keyframes scan{0%{top:-3px;}100%{top:100%;}}
+
+#scroll-progress{position:fixed;top:0;left:0;height:1px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent3),var(--ember));z-index:100;box-shadow:0 0 12px var(--glow);transition:width 0.5s cubic-bezier(.4,0,.2,1);}
+
+/* GALAXY MODE TOGGLER */
+#galaxy-toggler{position:fixed;top:28px;right:28px;z-index:52;display:flex;gap:10px;padding:8px 12px;background:rgba(20,15,5,0.9);border-radius:30px;border:1px solid rgba(245,158,11,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,0.6);}
+.galaxy-dot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.5);transition:all 0.4s cubic-bezier(0.4,0,0.2,1);background:transparent;outline:none;}
+.galaxy-dot:hover{transform:scale(1.4);border-color:rgba(255,255,255,0.9);}
+.galaxy-dot.active{border-color:#fff;box-shadow:0 0 20px currentColor,0 0 40px currentColor;transform:scale(1.25);}
+.galaxy-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,0.4);}
+.galaxy-blue{background:linear-gradient(135deg,#00d4ff,#0066ff);color:#00d4ff;box-shadow:0 0 12px rgba(0,212,255,0.4);}
+.galaxy-violet{background:linear-gradient(135deg,#9d4edd,#5a189a);color:#9d4edd;box-shadow:0 0 12px rgba(157,78,221,0.6);}
+
+#chapter-nav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:11px;}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(254,243,199,0.4);cursor:pointer;transition:all .25s ease;position:relative;}
+.nav-dot.active{background:var(--accent2);box-shadow:0 0 12px var(--glow);transform:scale(1.5);}
+.nav-dot::after{content:attr(data-label);position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;color:var(--accent2);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;text-shadow:0 0 20px var(--glow);}
+.nav-dot:hover::after{opacity:1;}
+
+#fab-group{position:fixed;bottom:28px;left:28px;z-index:50;display:flex;flex-direction:column;gap:10px;}
+.fab-btn{width:46px;height:46px;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s ease;}
+.fab-btn svg{width:18px;height:18px;}
+.fab-code{background:linear-gradient(135deg,var(--accent),var(--accent3));box-shadow:0 0 20px var(--glow),0 4px 14px rgba(0,0,0,0.4);color:#fff;}
+.fab-share{background:rgba(20,15,5,0.9);border:1px solid rgba(245,158,11,0.5);box-shadow:0 4px 14px rgba(0,0,0,0.35);color:var(--accent2);backdrop-filter:blur(12px);}
+.fab-btn:hover{transform:translateY(-3px) scale(1.07);}
+
+#scroll-hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;z-index:50;opacity:1;transition:opacity .4s;}
+#scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.28em;color:var(--muted);text-transform:uppercase;}
+.scroll-mouse{width:20px;height:34px;border:1px solid rgba(245,158,11,0.7);border-radius:10px;display:flex;justify-content:center;padding-top:5px;}
+.scroll-mouse::before{content:'';width:3px;height:6px;background:var(--accent2);border-radius:2px;animation:scrollDown 2s ease-in-out infinite;}
+@keyframes scrollDown{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(9px);opacity:0;}}
+
+/* SCENE SYSTEM */
+.scene{position:relative;min-height:100vh;height:auto;width:100%;z-index:1;display:flex;flex-direction:column;}
+.scene-bookend{position:relative;height:100vh;width:100%;z-index:10;}
+.scene-sticky{position:relative;top:0;height:100%;min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:visible;}
+.scene-inner{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px;z-index:10;overflow:visible;will-change:transform;}
+
+/* ════════ BIG BANG ════════ */
+#big-bang-layer{position:fixed;inset:0;z-index:90;pointer-events:none;overflow:visible;contain:layout style paint;}
+.cosmic-void-overlay{position:fixed;inset:0;z-index:94;background:radial-gradient(ellipse at center,rgba(0,0,0,1) 0%,rgba(8,6,0,0.98) 40%,rgba(15,10,5,0.95) 80%,rgba(8,6,0,1) 100%);opacity:0;pointer-events:none;transition:opacity 1s cubic-bezier(0.4,0,0.2,1);will-change:opacity;}
+.cosmic-void-overlay.active{opacity:1;}
+.primordial-flash{position:fixed;inset:0;z-index:92;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,1) 0%,rgba(255,248,240,0.95) 10%,rgba(255,220,180,0.8) 25%,rgba(255,200,100,0.4) 50%,transparent 100%);opacity:0;pointer-events:none;will-change:opacity;}
+.primordial-flash.active{opacity:1;transition:opacity 1s cubic-bezier(0.1,0.7,0.2,1);}
+.star-particle{position:absolute;border-radius:50%;pointer-events:none;will-change:transform,opacity;animation:starExplosion var(--duration,2.5s) cubic-bezier(0.15,0.85,0.2,1) forwards;transform:translate3d(0,0,0) scale(0.1);backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+@keyframes starExplosion{0%{transform:translate3d(0,0,0) scale(0.1);opacity:0;}10%{opacity:1;transform:translate3d(0,0,0) scale(1.2);}100%{opacity:0;transform:translate3d(var(--tx),var(--ty),0) scale(0.01);}}
+.shockwave-ring{position:fixed;top:50%;left:50%;width:30px;height:30px;margin-left:-15px;margin-top:-15px;border-radius:50%;pointer-events:none;will-change:transform,opacity;animation:shockwaveExpand var(--wave-duration,2s) cubic-bezier(0.1,0.7,0.2,1) forwards;backface-visibility:hidden;}
+@keyframes shockwaveExpand{0%{transform:scale(0);opacity:1;}100%{opacity:0;transform:scale(var(--wave-scale,18));}}
+.energy-beam{position:fixed;top:50%;left:50%;width:2px;height:0;margin-left:-1px;background:linear-gradient(to top,transparent,rgba(255,255,255,0.8),rgba(255,200,100,0.4),transparent);transform-origin:bottom center;pointer-events:none;will-change:transform,opacity;animation:beamShoot var(--beam-duration,1.5s) cubic-bezier(0.1,0.8,0.2,1) forwards;backface-visibility:hidden;}
+@keyframes beamShoot{0%{height:0;opacity:0;}15%{opacity:1;height:var(--beam-height,200px);}100%{opacity:0;height:var(--beam-height,200px);}}
+.quantum-core{position:fixed;top:50%;left:50%;width:20px;height:20px;margin-left:-10px;margin-top:-10px;background:radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(255,240,220,0.9) 20%,rgba(255,200,100,0.6) 50%,transparent 70%);border-radius:50%;pointer-events:none;z-index:93;will-change:transform,opacity;animation:corePulse 2s cubic-bezier(0.1,0.7,0.2,1) forwards;backface-visibility:hidden;}
+@keyframes corePulse{0%{transform:scale(0);opacity:0;box-shadow:0 0 0px rgba(255,255,255,0);}15%{opacity:1;transform:scale(10);box-shadow:0 0 80px 50px rgba(255,255,255,0.8),0 0 150px 80px rgba(255,200,100,0.4);}100%{transform:scale(35);opacity:0;box-shadow:0 0 200px 100px rgba(255,255,255,0),0 0 400px 200px rgba(255,200,100,0);}}
+
+.chapter-marker{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.38em;color:var(--accent2);text-transform:uppercase;opacity:0;margin-bottom:30px;display:flex;align-items:center;gap:16px;flex-shrink:0;text-shadow: 0 0 15px var(--glow);}
+.chapter-marker::before,.chapter-marker::after{content:'';width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--accent));}
+.chapter-marker::after{background:linear-gradient(90deg,var(--accent),transparent);}
+
+.profile-hero-wrap{opacity:0;margin-bottom:24px;position:relative;flex-shrink:0;}
+.profile-hero-img{width:260px;height:260px;border-radius:50%;object-fit:cover;border:3px solid rgba(251,191,36,0.7);box-shadow:0 0 50px rgba(245,158,11,0.4);background:#15100a;display:block;margin:0 auto;cursor:pointer;transition:transform 0.3s ease,box-shadow 0.3s ease,border-color 0.3s ease;}
+.profile-hero-img:hover{transform:scale(1.04);box-shadow:0 0 70px rgba(245,158,11,0.6);border-color:rgba(251,191,36,0.9);}
+
+#profile-modal{position:fixed;inset:0;z-index:10000;background:rgba(8,6,0,0);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 0.35s ease,background 0.35s ease;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);}
+#profile-modal.open{opacity:1;pointer-events:auto;background:rgba(8,6,0,0.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
+#profile-modal img{width:min(90vw,90vh);height:min(90vw,90vh);border-radius:50%;object-fit:cover;border:3px solid rgba(251,191,36,0.7);box-shadow:0 0 80px rgba(245,158,11,0.5),0 0 160px rgba(245,158,11,0.2);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;}
+#profile-modal.open img{transform:scale(1);}
+#profile-modal-close{position:absolute;top:24px;right:28px;width:44px;height:44px;border:2px solid rgba(251,191,36,0.7);border-radius:50%;background:rgba(10,5,0,0.9);color:var(--accent2);font-size:1.3rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight: bold;}
+#profile-modal-close:hover{background:rgba(245,158,11,0.3);border-color:var(--accent2);transform:scale(1.1);color: #fff;}
+
+.hero-name-fa{font-size:clamp(3.2rem,9.5vw,9.5rem);font-weight:900;line-height:.88;background:linear-gradient(155deg,#ffffff 0%,#ffd700 38%,#ffaa00 70%,#ffffff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;letter-spacing:-.02em;position:relative;filter: drop-shadow(0 0 20px rgba(245,158,11,0.6));}
+.hero-name-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.3rem,3.8vw,3.8rem);letter-spacing:.28em;color:var(--muted);opacity:0;margin-top:8px;}
+.hero-title{font-family:'JetBrains Mono',monospace;font-size:clamp(.8rem,1.3vw,.92rem);color:var(--accent2);letter-spacing:.2em;opacity:0;margin-top:18px;background: rgba(0,0,0,0.5); padding: 6px 18px; border-radius: 20px; display: inline-block;}
+
+.scene-headline-fa{font-size:clamp(2.2rem,6.5vw,7rem);font-weight:900;line-height:.95;opacity:0;letter-spacing:-.01em;background:linear-gradient(130deg,#fff 0%,var(--accent2) 55%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;max-width:860px;filter: drop-shadow(0 0 15px rgba(245,158,11,0.5));}
+.scene-headline-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,2.8vw,2.4rem);letter-spacing:.22em;color:var(--muted);opacity:0;margin-top:10px;}
+.scene-body{font-size:clamp(0.95rem,1.4vw,1.15rem);line-height:2.2;max-width:640px;opacity:0;color:rgba(255, 255, 255, 0.85);margin-top:26px;font-weight:300;text-shadow: 0 0 8px rgba(0,0,0,0.8);}
+
+/* ════════ SKILLS CARDS ════════ */
+.skills-cards-grid{opacity:0;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:860px;width:100%;margin-top:20px;}
+.skill-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:24px 26px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all 0.3s ease;cursor:default;box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+.skill-card:hover{border-color:rgba(251,191,36,0.8);background:rgba(20, 10, 2, 0.95);transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.7),0 0 30px rgba(245,158,11,0.2);}
+.skill-card-icon{font-size:1.8rem;margin-bottom:12px;display:block;}
+.skill-card-name{font-size:1.1rem;font-weight:800;color:#ffffff;margin-bottom:8px;letter-spacing:-0.01em;text-shadow: 0 0 10px rgba(0,0,0,0.6);}
+.skill-card-desc{font-size:0.82rem;line-height:1.9;color:rgba(255, 255, 255, 0.8);margin-bottom:18px;}
+.skill-card-btn{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--btn-text);text-decoration:none;border:1px solid var(--btn-border);padding:8px 16px;border-radius:6px;background:var(--btn-bg);transition:all 0.25s ease;font-weight: bold; box-shadow: 0 0 10px rgba(0,0,0,0.4);}
+.skill-card-btn:hover{background:var(--btn-hover-bg);border-color:var(--accent);color:#ffffff;transform:translateY(-2px);box-shadow: 0 0 20px rgba(245,158,11,0.5);}
+.skill-card-btn svg{width:13px;height:13px;flex-shrink:0;}
+
+.scene-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(8,6,0,0.7) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.scene-inner>*{position:relative;z-index:1;}
+
+/* ════════ PROJECT SECTION ════════ */
+.project-reveal{opacity:0;max-width:860px;width:100%;text-align:right;display:flex;flex-direction:column;align-items:center;}
+.project-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.3em;color:var(--accent2);text-transform:uppercase;margin-bottom:10px;background: rgba(0,0,0,0.6); padding: 4px 14px; border-radius: 4px; display: inline-block;}
+.project-title-fa{font-size:clamp(2rem,5.5vw,5rem);font-weight:900;line-height:1;background:linear-gradient(130deg,#ffffff 0%,#fbbf24 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;filter: drop-shadow(0 0 15px rgba(245,158,11,0.5));}
+.project-title-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.9rem,2.2vw,1.7rem);letter-spacing:.2em;color:var(--muted);margin-bottom:25px;}
+.project-image-container{width:100%;max-width:650px;margin-bottom:20px;display:flex;flex-direction:column;gap:16px;}
+.project-image-wrap{border-radius:12px;overflow:hidden;border:2px solid rgba(245,158,11,0.5);box-shadow:0 10px 30px rgba(0,0,0,0.7);background:rgba(10,5,0,0.8);cursor:pointer;transition:all 0.3s ease;position:relative;}
+.project-image-wrap:hover{border-color:rgba(251,191,36,0.9);box-shadow:0 15px 40px rgba(0,0,0,0.8),0 0 40px rgba(245,158,11,0.3);}
+.project-image-wrap img{width:100%;height:auto;display:block;object-fit:contain;padding:24px;background:rgba(15, 10, 2, 0.6);transition:transform 0.4s ease;}
+.project-image-wrap:hover img{transform:scale(1.04);}
+.project-image-wrap .zoom-hint{position:absolute;bottom:12px;right:16px;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:rgba(255,255,255,0.8);background:rgba(0,0,0,0.8);padding:6px 14px;border-radius:4px;pointer-events:none;transition:opacity 0.3s;border: 1px solid rgba(255,255,255,0.2);}
+.project-image-wrap:hover .zoom-hint{opacity:0;}
+.project-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+.project-action-btn{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:var(--btn-text);text-decoration:none;border:1px solid var(--btn-border);padding:12px 24px;border-radius:6px;background:var(--btn-bg);transition:all 0.3s ease;cursor:pointer;font-weight: bold; backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0,0,0,0.4);}
+.project-action-btn:hover{background:var(--btn-hover-bg);border-color:var(--accent);color:#ffffff;transform:translateY(-3px);box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 25px rgba(245,158,11,0.5);}
+.project-action-btn svg{width:15px;height:15px;flex-shrink:0;}
+
+.exp-reveal{opacity:0;max-width:720px;width:100%;}
+.exp-period{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;color:var(--accent2);margin-bottom:12px;background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 4px; display: inline-block;}
+.exp-role-fa{font-size:clamp(1.5rem,4vw,3.2rem);font-weight:900;line-height:1.05;background:linear-gradient(130deg,#ffffff 0%,#fbbf24 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));}
+.exp-role-en{font-family:'Bebas Neue',sans-serif;font-size:clamp(.85rem,1.9vw,1.45rem);letter-spacing:.2em;color:var(--muted);margin-bottom:20px;}
+.exp-desc-text{font-size:.95rem;line-height:2.1;color:rgba(255, 255, 255, 0.85);font-weight:300; text-shadow: 0 0 10px rgba(0,0,0,0.7);}
+
+.edu-reveal{opacity:0;max-width:600px;text-align:center;}
+.edu-degree-fa{font-size:clamp(1.8rem,5vw,4rem);font-weight:900;line-height:1.1;background:linear-gradient(130deg,#ffffff 0%,#fbbf24 65%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;filter: drop-shadow(0 0 10px rgba(0,0,0,0.6));}
+
+.scene-divider{width:80px;max-width:200px;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.8),transparent);opacity:0;margin:30px auto;}
+
+.contact-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;opacity:0;margin-top:30px;}
+.contact-link{display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.1em;color:#ffffff;text-decoration:none;padding:14px 26px;border:2px solid rgba(245,158,11,.6);border-radius:8px;background:rgba(10, 5, 0, 0.8);transition:all .25s ease;position:relative;overflow:hidden;backdrop-filter: blur(8px); font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+.contact-link::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent3));opacity:0;transition:opacity .25s;}
+.contact-link:hover::before{opacity:.15;}
+.contact-link:hover{border-color:var(--accent);color:#ffffff;transform:translateY(-3px);box-shadow: 0 8px 25px rgba(0,0,0,0.7), 0 0 20px rgba(245,158,11,0.4);}
+.contact-link svg,.contact-link span{position:relative;z-index:1;}
+.contact-link svg{width:16px;height:16px;flex-shrink:0;}
+
+#footer-line{opacity:0;margin-top:60px;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.18em;color:rgba(255,255,255,0.7);text-align:center;padding-top:25px;border-top:2px solid rgba(245,158,11,.4);max-width:500px;margin-left:auto;margin-right:auto;}
+
+/* ════════ FULLSCREEN IMAGE VIEWER ════════ */
+#image-viewer{position:fixed;inset:0;z-index:99999;background:rgba(0, 0, 0, 0.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s ease;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);}
+#image-viewer.open{opacity:1;pointer-events:auto;}
+#image-viewer .viewer-close{position:absolute;top:24px;right:28px;width:44px;height:44px;border:2px solid rgba(245,158,11,0.7);border-radius:50%;background:rgba(10,5,0,0.9);color:var(--accent2);font-size:1.3rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:100001;font-weight: bold;}
+#image-viewer .viewer-close:hover{background:rgba(245,158,11,0.3);border-color:var(--accent2);transform:scale(1.1);color: #fff;}
+#image-viewer .viewer-img-container{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+#image-viewer .viewer-img-container::-webkit-scrollbar{display:none;}
+#image-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;display:block;transition:transform 0.15s ease;transform-origin:center center;}
+
+/* MOBILE */
+@media(max-width:768px){
+  #galaxy-toggler{top:16px;right:12px;gap:8px;padding:6px 10px;}
+  .galaxy-dot{width:20px;height:20px;}
+  #chapter-nav{right:6px;gap:7px;}
+  .nav-dot{width:5px;height:5px;}
+  .nav-dot::after{display:none;}
+  .scene-inner{padding:40px 15px;}
+  #fab-group{bottom:12px;left:12px;gap:7px;}
+  .fab-btn{width:40px;height:40px;border-radius:10px;}
+  .fab-btn svg{width:16px;height:16px;}
+  .profile-hero-img{width:180px;height:180px;}
+  .skills-cards-grid{grid-template-columns:1fr;gap:14px;max-width:100%;}
+  .skill-card{padding:18px 20px;}
+  .project-image-container{max-width:95%;}
+  .project-image-wrap img{padding:16px;}
+  .contact-link{font-size: 0.75rem; padding: 12px 18px;}
+}
+
+@media(max-width:400px){
+  #galaxy-toggler{top:10px;right:6px;gap:6px;padding:5px 8px;}
+  .galaxy-dot{width:18px;height:18px;}
+  .scene-inner{padding:30px 10px;}
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="scanline"></div>
+<div id="ambient"></div>
+<div id="big-bang-layer"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div id="scroll-hint"><div class="scroll-mouse"></div><span>اسکرول</span></div>
+
+<nav id="chapter-nav" class="chapter-nav"></nav>
+
+<div id="fab-group">
+  <button class="fab-btn fab-share" title="Share" onclick="shareResume()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+  <button class="fab-btn fab-code" title="رفتن به صفحه کدنویسی" onclick="window.open('https://immdjavad.ir/','_blank')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></button>
+</div>
+
+<div id="galaxy-toggler">
+  <button class="galaxy-dot galaxy-gold active" data-theme="gold" title="کهکشان طلایی"></button>
+  <button class="galaxy-dot galaxy-blue" data-theme="blue" title="کهکشان ماتریسی"></button>
+  <button class="galaxy-dot galaxy-violet" data-theme="violet" title="کهکشان بنفش"></button>
+</div>
+
+<div id="scroll-container"></div>
+
+<!-- PROFILE MODAL -->
+<div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.png" alt="محمد جواد محمودی" draggable="false"></div>
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+<div id="image-viewer">
+  <button class="viewer-close" id="viewer-close">✕</button>
+  <div class="viewer-img-container" id="viewer-img-container"><img src="" alt="" id="viewer-image"></div>
+</div>
+
+<script src="vendor/js/three.min.js"></script>
+<script src="vendor/js/gsap.min.js"></script>
+<script src="vendor/js/ScrollTrigger.min.js"></script>
+<script src="vendor/js/ScrollToPlugin.min.js"></script>
+
+<script>
+/* ════════════════════════════════════════════
+   PROJECTS DATA
+════════════════════════════════════════════ */
+const projectsData = [
+  { name:'Barazandeh Tan', type:'لوگو و برندبوک', images:['assets/Design/barazandeh/1.webp','assets/Design/barazandeh/2.webp'], brandbook:'assets/Design/barazandeh/1.pdf', link:null },
+  { name:'آذین دژ', type:'وب‌سایت شرکتی', images:['assets/Design/azindej/1.webp'], brandbook:null, link:'https://azindejwin.ir' },
+  { name:'Avener', type:'لوگو', images:['assets/Design/avener/1.webp'], brandbook:null, link:null },
+  { name:'Luxira', type:'لوگو', images:['assets/Design/luxira/1.webp'], brandbook:null, link:null },
+  { name:'Nilora', type:'لوگو', images:['assets/Design/nilora/1.webp'], brandbook:null, link:null },
+  { name:'Nivarah', type:'لوگو', images:['assets/Design/nivarah/1.webp'], brandbook:null, link:null },
+  { name:'Shirinsaz', type:'لوگو', images:['assets/Design/shirinsaz/1.webp'], brandbook:null, link:null },
+  { name:'Nivora', type:'لوگو', images:['assets/Design/nivora/1.webp'], brandbook:null, link:null },
+  { name:'Vanence', type:'لوگو', images:['assets/Design/vanence/1.webp'], brandbook:null, link:null },
+  { name:'Novana', type:'لوگو', images:['assets/Design/novana/1.webp'], brandbook:null, link:null },
+  { name:'Zarinah', type:'لوگو', images:['assets/Design/zarinah/1.webp'], brandbook:null, link:null }
+];
+
+/* ════════════════════════════════════════════
+   BUILD HTML DYNAMICALLY
+════════════════════════════════════════════ */
+(function buildHTML(){
+  const container = document.getElementById('scroll-container');
+  const chapterNav = document.getElementById('chapter-nav');
+  
+  let navDotsHTML = '';
+  let scenesHTML = '';
+  
+  // Scene 0 - Hero
+  scenesHTML += `
+    <section class="scene scene-bookend" id="scene-0"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.15">
+      <div class="chapter-marker" id="s0-ch">طراحی گرافیک · Graphic Design</div>
+      <div class="profile-hero-wrap" id="s0-profile"><img class="profile-hero-img" src="assets/profile.png" alt="محمد جواد محمودی" loading="eager"></div>
+      <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
+      <h2 class="hero-name-en" id="s0-en" style="font-size:inherit;font-weight:inherit;margin:0;">Graphic Designer · Logo & Brand Identity</h2>
+      <div class="hero-title" id="s0-title">طراح گرافیک · لوگو · ست اداری · هویت بصری</div>
+      <div id="s0-tagline" style="opacity:0;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.22em;color:rgba(254,243,199,0.6);text-transform:uppercase; background: rgba(0,0,0,0.5); padding: 6px 18px; border-radius: 20px;">ایده + طراحی + اجرا — هر سه با هم</div>
+    </div></div></section>`;
+  navDotsHTML += '<div class="nav-dot active" data-index="0" data-label="ورود"></div>';
+  
+  // Scene 1 - Process
+  scenesHTML += `
+    <section class="scene" id="scene-1"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
+      <div class="chapter-marker" id="s1-ch">01 · فرآیند · Process</div>
+      <div class="scene-headline-fa" id="s1-h">آنجا که ایده<br>به طراحی تبدیل می‌شود</div>
+      <div class="scene-headline-en" id="s1-hen">Where Ideas Become Design.</div>
+      <div class="scene-body" id="s1-body">هر پروژه از یک ایده شروع می‌شود. با درک نیاز شما، تحقیق و ایده‌پردازی، طرح اولیه شکل می‌گیرد و در نهایت به یک هویت بصری منحصربه‌فرد تبدیل می‌شود.</div>
+    </div></div></section>`;
+  navDotsHTML += '<div class="nav-dot" data-index="1" data-label="فرآیند"></div>';
+  
+  // Scene 2 - Skills
+  scenesHTML += `
+    <section class="scene" id="scene-2"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
+      <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
+      <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
+      <div class="scene-headline-en" id="s2-hen">What I Bring to the Canvas</div>
+      <div class="skills-cards-grid" id="s2-skills">
+        <div class="skill-card"><span class="skill-card-icon">🎨</span><div class="skill-card-name">طراحی لوگو و ست اداری</div><div class="skill-card-desc">طراحی لوگوی تخصصی، کارت ویزیت، سربرگ، پاکت نامه و سایر اقلام ست اداری با هویت بصری یکپارچه و ماندگار.</div><a class="skill-card-btn" href="https://immdjavad.ir/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>دیدن رزومه</a></div>
+        <div class="skill-card"><span class="skill-card-icon">💻</span><div class="skill-card-name">طراحی وبسایت</div><div class="skill-card-desc">طراحی رابط کاربری (UI) و تجربه کاربری (UX) برای وبسایت‌های مدرن، ریسپانسیو و جذاب با رعایت اصول طراحی.</div><a class="skill-card-btn" href="https://immdjavad.ir/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>دیدن رزومه</a></div>
+        <div class="skill-card"><span class="skill-card-icon">🖥️</span><div class="skill-card-name">اپلیکیشن تحت دسکتاپ</div><div class="skill-card-desc">طراحی و توسعه نرم‌افزارهای دسکتاپ با رابط کاربری حرفه‌ای و کاربرپسند با استفاده از فریم‌ورک‌های مدرن.</div><a class="skill-card-btn" href="https://immdjavad.ir/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>دیدن رزومه</a></div>
+        <div class="skill-card"><span class="skill-card-icon">🤖</span><div class="skill-card-name">ربات‌های تلگرامی</div><div class="skill-card-desc">طراحی و توسعه ربات‌های هوشمند تلگرام با قابلیت‌های متنوع؛ از ربات‌های جستجو تا مدیریت و اتوماسیون.</div><a class="skill-card-btn" href="https://immdjavad.ir/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>دیدن رزومه</a></div>
+      </div>
+    </div></div></section>`;
+  navDotsHTML += '<div class="nav-dot" data-index="2" data-label="مهارت‌ها"></div>';
+  
+  // Scene 3 onwards - Each project is a separate scene
+  projectsData.forEach((project, idx) => {
+    const sceneNum = 3 + idx;
+    const projectNum = idx + 1;
+    const totalProjects = projectsData.length;
+    
+    scenesHTML += `
+      <section class="scene" id="scene-${sceneNum}"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+        <div class="chapter-marker" id="s${sceneNum}-ch">0${sceneNum} · پروژه ${projectNum} از ${totalProjects} · Portfolio</div>
+        <div class="project-reveal" id="s${sceneNum}-pr">
+          <div class="project-label">${project.type}</div>
+          <div class="project-image-container" id="s${sceneNum}-images">
+            ${project.images.map((img, imgIdx) => `
+              <div class="project-image-wrap" data-project-idx="${idx}" data-image-idx="${imgIdx}">
+                <img src="${img}" alt="${project.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color:#ffffff;font-size:0.8rem;padding:40px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);\\'>تصویر در دسترس نیست</div>';">
+                <span class="zoom-hint">🔍 کلیک کنید</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="project-title-fa">${project.name}</div>
+          <div class="project-title-en">Project ${projectNum} — ${project.type}</div>
+          <div class="project-actions">
+            ${project.images.length > 1 ? `<button class="project-action-btn view-gallery-btn" data-project-idx="${idx}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>مشاهده گالری</button>` : ''}
+            ${project.brandbook ? `<a class="project-action-btn" href="${project.brandbook}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>دانلود برندبوک PDF</a>` : ''}
+            ${project.link ? `<a class="project-action-btn" href="${project.link}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>مشاهده وبسایت</a>` : ''}
+          </div>
+        </div>
+      </div></div></section>`;
+    navDotsHTML += `<div class="nav-dot" data-index="${sceneNum}" data-label="${project.name}"></div>`;
+  });
+  
+  // Experience Scene
+  const expSceneNum = 3 + projectsData.length;
+  scenesHTML += `
+    <section class="scene" id="scene-${expSceneNum}"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
+      <div class="chapter-marker" id="s${expSceneNum}-ch">0${expSceneNum} · تجربه کاری · Experience</div>
+      <div class="exp-reveal" id="s${expSceneNum}-e1"><div class="exp-period">2022 — اکنون · Present</div><div class="exp-role-fa">توسعه‌دهنده فریلنسر</div><div class="exp-role-en">Freelance Full Stack Developer</div><div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div></div>
+      <div class="scene-divider" id="s${expSceneNum}-div"></div>
+      <div class="exp-reveal" id="s${expSceneNum}-e2"><div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div><div class="exp-role-fa" style="background:linear-gradient(130deg,#fff 0%,var(--ember) 75%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div><div class="exp-role-en">Freelance Photo Editor & Graphic Designer</div><div class="exp-desc-text">بیش از ۶ سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی و پروژه‌های شخصی — این تجربه دیدگاه بصری خاصی در طراحی UI/UX و هویت بصری می‌دهد.</div></div>
+    </div></div></section>`;
+  navDotsHTML += `<div class="nav-dot" data-index="${expSceneNum}" data-label="تجربه"></div>`;
+  
+  // Education Scene
+  const eduSceneNum = expSceneNum + 1;
+  scenesHTML += `
+    <section class="scene" id="scene-${eduSceneNum}"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
+      <div class="chapter-marker" id="s${eduSceneNum}-ch">0${eduSceneNum} · تحصیلات · Education</div>
+      <div class="edu-reveal" id="s${eduSceneNum}-edu"><div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:15px; background: rgba(0,0,0,0.5); padding: 4px 14px; border-radius: 4px; display: inline-block;">B.Sc. Computer Engineering · Currently Enrolled</div><div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div><div class="scene-body" style="margin-top:20px;opacity:1;">دانشجوی مهندسی کامپیوتر — تلفیق دانش آکادمیک با تجربه عملی در طراحی و توسعه</div></div>
+    </div></div></section>`;
+  navDotsHTML += `<div class="nav-dot" data-index="${eduSceneNum}" data-label="تحصیل"></div>`;
+  
+  // Contact Scene (BIG BANG)
+  const contactSceneNum = eduSceneNum + 1;
+  scenesHTML += `
+    <section class="scene scene-bookend" id="scene-${contactSceneNum}"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
+      <div class="chapter-marker" id="s${contactSceneNum}-ch">0${contactSceneNum} · تماس · Let's Connect</div>
+      <div class="scene-headline-fa" id="s${contactSceneNum}-h">بیایید<br>بسازیم</div>
+      <div class="scene-headline-en" id="s${contactSceneNum}-hen">Let's Build Something Beautiful</div>
+      <div class="contact-grid" id="s${contactSceneNum}-cg">
+        <a class="contact-link" href="https://t.me/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg><span>@immdjavad</span></a>
+        <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span>@immdjavad</span></a>
+        <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg><span>mohmmadjavad</span></a>
+        <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display">📱 نمایش شماره</span></a>
+        <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
+      </div>
+      <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، طراحی‌اش کنیم.</div>
+    </div></div></section>`;
+  navDotsHTML += `<div class="nav-dot" data-index="${contactSceneNum}" data-label="تماس"></div>`;
+  
+  container.innerHTML = scenesHTML;
+  chapterNav.innerHTML = navDotsHTML;
+  
+  // Store the contact scene number for big bang
+  window._contactSceneNum = contactSceneNum;
+})();
+
+/* ════════════════════════════════════════════
+   FULLSCREEN IMAGE VIEWER WITH ZOOM
+════════════════════════════════════════════ */
+(function initImageViewer(){
+  const viewer = document.getElementById('image-viewer');
+  const viewerImg = document.getElementById('viewer-image');
+  const viewerClose = document.getElementById('viewer-close');
+  const imgContainer = document.getElementById('viewer-img-container');
+  
+  let currentProjectIdx = 0;
+  let currentImageIdx = 0;
+  let currentZoom = 1;
+  let isZoomed = false;
+  
+  function closeViewer(){
+    viewer.classList.remove('open');
+    document.body.style.overflow = '';
+    currentZoom = 1;
+    isZoomed = false;
+    viewerImg.style.transform = 'scale(1)';
+    imgContainer.style.overflow = 'auto';
+  }
+  
+  viewerClose.addEventListener('click', closeViewer);
+  viewer.addEventListener('click', (e) => {
+    if(e.target === viewer) closeViewer();
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if(!viewer.classList.contains('open')) return;
+    if(e.key === 'Escape') closeViewer();
+    if(e.key === 'ArrowRight') navigateImage(1);
+    if(e.key === 'ArrowLeft') navigateImage(-1);
+    if(e.key === '+' || e.key === '=') { e.preventDefault(); zoomIn(); }
+    if(e.key === '-') { e.preventDefault(); zoomOut(); }
+    if(e.key === '0') { e.preventDefault(); resetZoom(); }
+  });
+  
+  imgContainer.addEventListener('wheel', (e) => {
+    if(!viewer.classList.contains('open')) return;
+    if(e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      if(e.deltaY < 0) zoomIn();
+      else zoomOut();
+    }
+  }, { passive: false });
+  
+  viewerImg.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    if(isZoomed) { resetZoom(); }
+    else { currentZoom = 2.5; isZoomed = true; viewerImg.style.transform = `scale(${currentZoom})`; imgContainer.style.overflow = 'auto'; }
+  });
+  
+  viewerImg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if(isZoomed) { resetZoom(); }
+  });
+  
+  function zoomIn(){
+    currentZoom = Math.min(currentZoom + 0.5, 5);
+    isZoomed = currentZoom > 1;
+    viewerImg.style.transform = `scale(${currentZoom})`;
+    imgContainer.style.overflow = 'auto';
+  }
+  
+  function zoomOut(){
+    currentZoom = Math.max(currentZoom - 0.5, 1);
+    isZoomed = currentZoom > 1;
+    viewerImg.style.transform = `scale(${currentZoom})`;
+    if(!isZoomed) imgContainer.style.overflow = 'auto';
+  }
+  
+  function resetZoom(){
+    currentZoom = 1;
+    isZoomed = false;
+    viewerImg.style.transform = 'scale(1)';
+    imgContainer.style.overflow = 'auto';
+  }
+  
+  function navigateImage(direction){
+    const project = projectsData[currentProjectIdx];
+    if(!project) return;
+    const totalImages = project.images.length;
+    currentImageIdx = (currentImageIdx + direction + totalImages) % totalImages;
+    updateViewerImage();
+    resetZoom();
+  }
+  
+  function updateViewerImage(){
+    const project = projectsData[currentProjectIdx];
+    if(!project || !project.images[currentImageIdx]) return;
+    viewerImg.src = project.images[currentImageIdx];
+    viewerImg.alt = project.name;
+    viewerImg.style.transform = 'scale(1)';
+    currentZoom = 1;
+    isZoomed = false;
+    imgContainer.scrollTop = 0;
+    imgContainer.scrollLeft = 0;
+    imgContainer.style.overflow = 'auto';
+  }
+  
+  window.openImageViewer = function(projectIdx, imageIdx = 0){
+    currentProjectIdx = projectIdx;
+    currentImageIdx = imageIdx;
+    updateViewerImage();
+    viewer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  
+  // Pinch zoom for touch devices
+  let initialDistance = 0;
+  let initialZoom = 1;
+  viewerImg.addEventListener('touchstart', (e) => {
+    if(e.touches.length === 2) {
+      initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      initialZoom = currentZoom;
+    }
+  });
+  viewerImg.addEventListener('touchmove', (e) => {
+    if(e.touches.length === 2) {
+      e.preventDefault();
+      const distance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      const scale = distance / initialDistance;
+      currentZoom = Math.min(Math.max(initialZoom * scale, 1), 5);
+      isZoomed = currentZoom > 1;
+      viewerImg.style.transform = `scale(${currentZoom})`;
+      imgContainer.style.overflow = 'auto';
+    }
+  }, { passive: false });
+})();
+
+/* ════════════════════════════════════════════
+   ATTACH CLICK HANDLERS (delegation)
+════════════════════════════════════════════ */
+document.addEventListener('click', (e) => {
+  // Image click → open viewer
+  const imgWrap = e.target.closest('.project-image-wrap');
+  if(imgWrap) {
+    const projectIdx = parseInt(imgWrap.getAttribute('data-project-idx'));
+    const imageIdx = parseInt(imgWrap.getAttribute('data-image-idx'));
+    if(!isNaN(projectIdx) && !isNaN(imageIdx)) {
+      window.openImageViewer(projectIdx, imageIdx);
+    }
+  }
+  
+  // Gallery button
+  const galleryBtn = e.target.closest('.view-gallery-btn');
+  if(galleryBtn) {
+    const projectIdx = parseInt(galleryBtn.getAttribute('data-project-idx'));
+    if(!isNaN(projectIdx)) {
+      window.openImageViewer(projectIdx, 0);
+    }
+  }
+});
+
+/* ════════════════════════════════════════════
+   THREE.JS — کهکشان مارپیچی + مکعب چندضلعی
+════════════════════════════════════════════ */
+(function initThree(){
+  const canvas = document.getElementById('bg-canvas');
+  const W = window.innerWidth, H = window.innerHeight;
+  const isMobile = W < 769;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 2 : 1.5));
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const fov = isMobile ? 70 : 60;
+  const camera = new THREE.PerspectiveCamera(fov, W/H, 0.1, 300);
+  camera.position.set(0, 2, isMobile ? 20 : 18);
+  camera.lookAt(0, 0, -5);
+
+  const GALAXY_COUNT = isMobile ? 2000 : 3500;
+  const STARS_COUNT  = isMobile ? 800 : 1500;
+  const DUST_COUNT   = isMobile ? 300 : 600;
+
+  const initTheme = window.getThemeData ? window.getThemeData('gold') : null;
+  const colCore  = new THREE.Color(initTheme?.threeColors[0] || '#fbbf24');
+  const colMid   = new THREE.Color(initTheme?.threeColors[2] || '#fde68a');
+  const colOuter = new THREE.Color(initTheme?.threeColors[3] || '#d97706');
+  let palette = { core: colCore, mid: colMid, outer: colOuter };
+
+  const galaxyGeo = new THREE.BufferGeometry();
+  const gPos = new Float32Array(GALAXY_COUNT * 3);
+  const gCol = new Float32Array(GALAXY_COUNT * 3);
+  const arms = 3, coreR = 2, outerR = 28;
+  for(let i = 0; i < GALAXY_COUNT; i++){
+    const arm = Math.floor(Math.random() * arms), armAngle = (arm / arms) * Math.PI * 2;
+    const r = coreR + Math.pow(Math.random(), 1.5) * (outerR - coreR);
+    const angle = r * 0.45 + armAngle + (Math.random() - 0.5) * ((1 - r / outerR) * 2.2 + 0.25);
+    const y = (Math.random() - 0.5) * (r / outerR) * 3.5;
+    gPos[i*3] = Math.cos(angle) * r; gPos[i*3+1] = y; gPos[i*3+2] = Math.sin(angle) * r - 4;
+    const t = (r - coreR) / (outerR - coreR);
+    const c = t < 0.35 ? palette.core.clone().lerp(palette.mid, t/0.35) : palette.mid.clone().lerp(palette.outer, (t-0.35)/0.65);
+    c.multiplyScalar(0.55 + Math.random() * 0.9);
+    gCol[i*3]=c.r; gCol[i*3+1]=c.g; gCol[i*3+2]=c.b;
+  }
+  galaxyGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
+  galaxyGeo.setAttribute('color', new THREE.BufferAttribute(gCol, 3));
+  
+  const starTex = (()=>{ 
+    const sz = isMobile ? 8 : 12;
+    const c=document.createElement('canvas'); c.width=c.height=sz;
+    const x=c.getContext('2d');
+    const g=x.createRadialGradient(sz/2,sz/2,0,sz/2,sz/2,sz/2);
+    g.addColorStop(0,'rgba(255,255,255,1)');
+    g.addColorStop(0.2,'rgba(255,255,255,0.8)');
+    g.addColorStop(0.6,'rgba(255,220,150,0.2)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=g; x.fillRect(0,0,sz,sz);
+    return new THREE.CanvasTexture(c);
+  })();
+  
+  const galaxy = new THREE.Points(galaxyGeo, new THREE.PointsMaterial({
+    size: isMobile ? 0.12 : 0.14, map: starTex, vertexColors: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.9, sizeAttenuation: true
+  }));
+  scene.add(galaxy);
+
+  const starsGeo = new THREE.BufferGeometry();
+  const sPos = new Float32Array(STARS_COUNT * 3);
+  for(let i=0;i<STARS_COUNT;i++){ const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1), rad=30+Math.random()*60; sPos[i*3]=Math.sin(phi)*Math.cos(theta)*rad; sPos[i*3+1]=Math.sin(phi)*Math.sin(theta)*rad*0.5; sPos[i*3+2]=Math.cos(phi)*rad*0.6; }
+  starsGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  
+  const smallStarTex = (()=>{ const sz=isMobile?4:6; const c=document.createElement('canvas'); c.width=c.height=sz; const x=c.getContext('2d'); const g=x.createRadialGradient(sz/2,sz/2,0,sz/2,sz/2,sz/2); g.addColorStop(0,'rgba(255,255,255,1)'); g.addColorStop(0.5,'rgba(255,255,255,0.3)'); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,sz,sz); return new THREE.CanvasTexture(c); })();
+  
+  const stars = new THREE.Points(starsGeo, new THREE.PointsMaterial({ size:isMobile?0.25:0.3, map:smallStarTex, color:0xffffcc, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true, opacity:0.75, sizeAttenuation:true }));
+  scene.add(stars);
+
+  const dustGeo = new THREE.BufferGeometry();
+  const dPos = new Float32Array(DUST_COUNT * 3);
+  for(let i=0;i<DUST_COUNT;i++){ const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1), rad=8+Math.random()*35; dPos[i*3]=Math.sin(phi)*Math.cos(theta)*rad; dPos[i*3+1]=Math.sin(phi)*Math.sin(theta)*rad*0.3; dPos[i*3+2]=Math.cos(phi)*rad*0.5-4; }
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
+  const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ size:isMobile?0.06:0.07, map:starTex, color:0xccaa88, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true, opacity:0.25, sizeAttenuation:true }));
+  scene.add(dust);
+
+  const icoDetail = 1;
+  const coreIco = new THREE.Mesh(new THREE.IcosahedronGeometry(1.8, icoDetail), new THREE.MeshBasicMaterial({ color:palette.core, wireframe:true, transparent:true, opacity:0.3, blending:THREE.AdditiveBlending, depthWrite:false }));
+  coreIco.position.set(0, 0, -4); scene.add(coreIco);
+  const glowIco = new THREE.Mesh(new THREE.IcosahedronGeometry(2.2, icoDetail), new THREE.MeshBasicMaterial({ color:palette.mid, wireframe:true, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending, depthWrite:false }));
+  glowIco.position.set(0, 0, -4); scene.add(glowIco);
+
+  const ringSegs = isMobile ? 80 : 120;
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(5.5, 0.025, 12, ringSegs), new THREE.MeshBasicMaterial({color:palette.mid, transparent:true, opacity:0.35, blending:THREE.AdditiveBlending, depthWrite:false}));
+  ring1.position.z=-4; ring1.rotation.x=Math.PI*0.35; ring1.rotation.y=Math.PI*0.15; scene.add(ring1);
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(8, 0.018, 8, ringSegs), new THREE.MeshBasicMaterial({color:palette.outer, transparent:true, opacity:0.22, blending:THREE.AdditiveBlending, depthWrite:false}));
+  ring2.position.z=-4; ring2.rotation.x=-Math.PI*0.3; ring2.rotation.y=-Math.PI*0.2; scene.add(ring2);
+
+  const speedLines = [];
+  const lineCount = isMobile ? 15 : 25;
+  for(let i=0;i<lineCount;i++){
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,0,0,-(1.5+Math.random()*5)]),3));
+    const l=new THREE.Line(g, new THREE.LineBasicMaterial({ color:new THREE.Color().setHSL(0.12+Math.random()*0.08,0.9,0.6), transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false }));
+    l.position.set((Math.random()-0.5)*20,(Math.random()-0.5)*12,-6-Math.random()*15); l.rotation.x=(Math.random()-0.5)*0.5; l.rotation.y=(Math.random()-0.5)*0.5;
+    scene.add(l); speedLines.push({line:l, baseZ:l.position.z, speed:0.04+Math.random()*0.2});
+  }
+
+  let mx=0, my=0, scrollP=0, t=0;
+  let paused=false, animId=null;
+  let bigBangMode = false;
+  let bigBangOpacity = 1;
+
+  document.addEventListener('mousemove', e => { mx = (e.clientX / window.innerWidth - 0.5) * 2; my = -(e.clientY / window.innerHeight - 0.5) * 2; });
+
+  window._updateThreeColors = function(colors, rc, r2c, cc){
+    palette.core = new THREE.Color(colors[0] || '#fbbf24'); palette.mid = new THREE.Color(colors[2] || '#fde68a'); palette.outer = new THREE.Color(colors[3] || '#d97706');
+    coreIco.material.color = palette.core; glowIco.material.color = palette.mid;
+    ring1.material.color.setHex(rc); ring2.material.color.setHex(r2c);
+    for(let i = 0; i < GALAXY_COUNT; i++){ const r = Math.sqrt(gPos[i*3]**2 + (gPos[i*3+2] + 4)**2); const t = Math.max(0, Math.min(1, (r - coreR) / (outerR - coreR))); const c = t < 0.35 ? palette.core.clone().lerp(palette.mid, t/0.35) : palette.mid.clone().lerp(palette.outer, (t-0.35)/0.65); c.multiplyScalar(0.55 + Math.random() * 0.9); gCol[i*3] = c.r; gCol[i*3+1] = c.g; gCol[i*3+2] = c.b; }
+    galaxyGeo.attributes.color.needsUpdate = true;
+  };
+
+  window._triggerBigBangMode = function() { bigBangMode = true; bigBangOpacity = 1; };
+
+  function tick(){
+    animId = requestAnimationFrame(tick);
+    if(paused && !bigBangMode){ renderer.render(scene, camera); return; }
+    t += 0.003;
+    const px = mx; const py = my; const p = scrollP;
+    const dive = Math.max(0, Math.min(1, (p - 0.15) / 0.55));
+    const orbit = Math.max(0, Math.min(1, (p - 0.70) / 0.30));
+
+    if(bigBangMode) {
+      bigBangOpacity = Math.max(0, bigBangOpacity - 0.012);
+      galaxy.material.opacity = 0.9 * bigBangOpacity; stars.material.opacity = 0.75 * bigBangOpacity; dust.material.opacity = 0.25 * bigBangOpacity;
+      coreIco.material.opacity = 0.3 * bigBangOpacity; glowIco.material.opacity = 0.12 * bigBangOpacity;
+      ring1.material.opacity = 0.35 * bigBangOpacity; ring2.material.opacity = 0.22 * bigBangOpacity;
+      speedLines.forEach(sl => { sl.line.material.opacity = 0; });
+      galaxy.rotation.y += 0.025; galaxy.rotation.x += 0.012; stars.rotation.y += 0.012; dust.rotation.y += 0.025;
+      coreIco.scale.setScalar(coreIco.scale.x + 0.05); glowIco.scale.setScalar(glowIco.scale.x + 0.04);
+      ring1.scale.setScalar(ring1.scale.x + 0.03); ring2.scale.setScalar(ring2.scale.x + 0.02);
+      camera.position.z += (14 - camera.position.z) * 0.025; camera.lookAt(0, 0, -4);
+      renderer.render(scene, camera); return;
+    }
+
+    const mobileZOffset = isMobile ? 3 : 0;
+    const camZ_start = 18 + mobileZOffset; const camZ_mid = -2 + mobileZOffset * 0.3;
+    let camZ, camX, camY, lookZ, rotY;
+    if(p < 0.15){ const approach = Math.max(0, Math.min(1, p / 0.15)); camZ = camZ_start + (camZ_mid - camZ_start) * approach; camX = px * 1.5 * (1 - approach); camY = 2 + py * 1.2 * (1 - approach); lookZ = -5 + approach * 3; rotY = 0; }
+    else if(p < 0.70){ const d = dive; camZ = camZ_mid + Math.sin(d * Math.PI) * 3; camX = Math.sin(d * Math.PI * 2) * 4 + px * 2; camY = Math.cos(d * Math.PI * 1.5) * 2 + py * 1.5; lookZ = -5 + d * 8; rotY = d * Math.PI * 0.5; }
+    else { const o = orbit; const fullCircle = o * Math.PI * 2; camZ = -2 + Math.sin(o * Math.PI) * 8 + mobileZOffset * 0.5; camX = Math.cos(fullCircle) * 9; camY = Math.sin(fullCircle * 0.7) * 3 + py * 0.8; lookZ = -4 + o * 6; rotY = fullCircle; }
+
+    camera.position.x += (camX - camera.position.x) * 0.04; camera.position.y += (camY - camera.position.y) * 0.04; camera.position.z += (camZ - camera.position.z) * 0.04; camera.lookAt(0, 0, lookZ);
+    galaxy.rotation.y = t * 0.03 + rotY * 0.5; galaxy.rotation.x = py * 0.03;
+    stars.rotation.y = -t * 0.008 + px * 0.02; stars.rotation.x = py * 0.015;
+    dust.rotation.y = t * 0.015 + rotY * 0.3; dust.rotation.x = py * 0.02;
+    coreIco.rotation.x = t * 0.25; coreIco.rotation.y = t * 0.35; coreIco.scale.setScalar(1 + Math.sin(t * 3) * 0.06 + dive * 0.5);
+    glowIco.rotation.x = -t * 0.2; glowIco.rotation.y = -t * 0.3; glowIco.scale.setScalar(1 + Math.sin(t * 2.5) * 0.08 + dive * 0.4);
+    ring1.rotation.z += 0.0015; ring2.rotation.z -= 0.001; ring1.scale.setScalar(1 + dive * 0.8); ring2.scale.setScalar(1 + dive * 0.6);
+    speedLines.forEach(sl => { sl.line.position.z += sl.speed * (dive * 3 + orbit * 1.5); if(sl.line.position.z > 4) sl.line.position.z = sl.baseZ; sl.line.material.opacity = (dive * 0.7 + orbit * 0.5) * (1 - Math.abs(sl.line.position.z) / 14); });
+    galaxy.material.opacity = 0.9 - dive * 0.2; stars.material.opacity = 0.75 + orbit * 0.25; dust.material.opacity = 0.25 + dive * 0.4;
+    coreIco.material.opacity = 0.3 + dive * 0.2; glowIco.material.opacity = 0.12 + dive * 0.15;
+    renderer.render(scene, camera);
+  }
+  tick();
+  window._threePause = () => { paused = true; }; window._threeResume = () => { paused = false; };
+  window.addEventListener('resize', () => { const w = window.innerWidth, h = window.innerHeight; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); });
+  window._threeSetScroll = p => { scrollP = p; };
+})();
+
+/* ════════════════════════════════════════════
+   ADVANCED PARALLAX
+════════════════════════════════════════════ */
+(function initAdvancedParallax(){
+  let mouseX=0,mouseY=0,targetX=0,targetY=0;
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/window.innerWidth-0.5)*2;mouseY=(e.clientY/window.innerHeight-0.5)*2;});
+  document.addEventListener('touchmove',e=>{if(e.touches.length===1){mouseX=(e.touches[0].clientX/window.innerWidth-0.5)*2;mouseY=(e.touches[0].clientY/window.innerHeight-0.5)*2;}},{passive:true});
+  function animateParallax(){targetX+=(mouseX-targetX)*0.05;targetY+=(mouseY-targetY)*0.05;document.querySelectorAll('[data-parallax]').forEach(el=>{const speed=parseFloat(el.dataset.parallax)||0.1;el.style.transform=`translate(${targetX*30*speed}px,${targetY*30*speed}px)`;});requestAnimationFrame(animateParallax);}
+  animateParallax();
+})();
+
+/* ════════════════════════════════════════════
+   GALAXY THEME MANAGER
+════════════════════════════════════════════ */
+(function initGalaxyThemes(){
+  const themes={
+    gold:{'--void':'#080600','--accent':'#f59e0b','--accent2':'#fbbf24','--accent3':'#fde68a','--ember':'#ef4444','--ice':'#fbbf24','--green':'#10b981','--text':'#ffffff','--text-secondary':'#fef3c7','--muted':'rgba(254,243,199,0.7)','--glow':'rgba(245,158,11,0.8)',metaTheme:'#f59e0b',threeColors:['#f59e0b','#d97706','#fbbf24','#fde68a','#92400e'],ringColor:0xf59e0b,ring2Color:0xd97706,coreColor:0xf59e0b},
+    blue:{'--void':'#000510','--accent':'#00d4ff','--accent2':'#00e5ff','--accent3':'#80f0ff','--ember':'#ff6b35','--ice':'#00d4ff','--green':'#00ff88','--text':'#ffffff','--text-secondary':'#e0f0ff','--muted':'rgba(200,230,255,0.7)','--glow':'rgba(0,212,255,0.8)',metaTheme:'#00d4ff',threeColors:['#00d4ff','#0066ff','#00e5ff','#80f0ff','#0033cc'],ringColor:0x00d4ff,ring2Color:0x0066ff,coreColor:0x00d4ff},
+    violet:{'--void':'#020008','--accent':'#9d4edd','--accent2':'#c77dff','--accent3':'#e0aaff','--ember':'#f59e0b','--ice':'#7dd3fc','--green':'#34d399','--text':'#ffffff','--text-secondary':'#ede9fe','--muted':'rgba(237,233,254,0.7)','--glow':'rgba(157,78,221,0.8)',metaTheme:'#9d4edd',threeColors:['#9d4edd','#c77dff','#7dd3fc','#e0aaff','#5a189a'],ringColor:0x9d4edd,ring2Color:0x7dd3fc,coreColor:0x9d4edd}
+  };
+  let currentTheme='gold';
+  const root=document.documentElement,toggler=document.getElementById('galaxy-toggler'),ambient=document.getElementById('ambient');
+  function applyTheme(themeName){
+    const theme=themes[themeName];if(!theme)return;
+    Object.entries(theme).forEach(([key,value])=>{if(key.startsWith('--'))root.style.setProperty(key,value);});
+    const metaTheme=document.querySelector('meta[name="theme-color"]');if(metaTheme)metaTheme.setAttribute('content',theme.metaTheme);
+    if(ambient){if(themeName==='violet')ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(157,78,221,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(125,211,252,0.06), transparent 60%)';else if(themeName==='blue')ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,212,255,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(0,102,255,0.06), transparent 60%)';else ambient.style.background='radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.11), transparent 70%), radial-gradient(ellipse 40% 40% at 75% 80%, rgba(217,119,6,0.06), transparent 60%)';}
+    if(window._updateThreeColors)window._updateThreeColors(theme.threeColors,theme.ringColor,theme.ring2Color,theme.coreColor);
+    document.querySelectorAll('.galaxy-dot').forEach(d=>d.classList.remove('active'));
+    const ad=document.querySelector(`.galaxy-dot[data-theme="${themeName}"]`);if(ad)ad.classList.add('active');
+    localStorage.setItem('design-galaxy-theme',themeName);currentTheme=themeName;
+  }
+  if(toggler)toggler.addEventListener('click',e=>{const dot=e.target.closest('.galaxy-dot');if(!dot)return;const th=dot.dataset.theme;if(th&&th!==currentTheme)applyTheme(th);});
+  const saved=localStorage.getItem('design-galaxy-theme');if(saved&&themes[saved])setTimeout(()=>applyTheme(saved),100);
+  window.applyGalaxyTheme=applyTheme;window.getCurrentTheme=()=>currentTheme;window.getThemeData=n=>themes[n];
+})();
+
+/* ════════════════════════════════════════════
+   GSAP + SCROLLTRIGGER + NAV + MODALS + SHARE + PHONE + BIG BANG
+════════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
+
+// Run after a short delay to ensure DOM is fully built
+setTimeout(() => {
+  const allScenes = document.querySelectorAll('.scene');
+  const navDots = document.querySelectorAll('.nav-dot');
+  
+  function activateNav(i){
+    navDots.forEach(d=>d.classList.remove('active'));
+    if(navDots[i]) navDots[i].classList.add('active');
+  }
+  
+  // Initial animations
+  gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],{opacity:0});
+  const enterTl = gsap.timeline({delay:2.2});
+  enterTl.fromTo('#s0-ch',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'power3.out'});
+  enterTl.fromTo('#s0-profile',{opacity:0,scale:0.65},{opacity:1,scale:1,duration:0.5,ease:'back.out(1.4)'},'-=0.3');
+  enterTl.fromTo('#s0-fa',{opacity:0,y:80},{opacity:1,y:0,duration:0.5,ease:'expo.out'},'-=0.35');
+  enterTl.fromTo('#s0-en',{opacity:0,y:30},{opacity:1,y:0,duration:0.4,ease:'power2.out'},'-=0.3');
+  enterTl.fromTo('#s0-title',{opacity:0,y:20},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
+  enterTl.fromTo('#s0-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
+  
+  function revealElements(ids){
+    ids.forEach(id=>{
+      const el = document.getElementById(id);
+      if(el && (el.style.opacity==='0' || el.style.opacity==='' || getComputedStyle(el).opacity==='0')){
+        gsap.to(el,{opacity:1,y:0,x:0,scale:1,duration:0.5,ease:'power2.out',overwrite:'auto'});
+      }
+    });
+  }
+  
+  // Build scene elements map
+  const sceneElements = {};
+  allScenes.forEach((scene, idx) => {
+    const sceneId = scene.id;
+    if(!sceneId) return;
+    const prefix = sceneId.replace('scene-','');
+    
+    if(sceneId === 'scene-0') return; // Already animated
+    if(sceneId === 'scene-1') { sceneElements[sceneId] = ['s1-ch','s1-h','s1-hen','s1-body']; }
+    else if(sceneId === 'scene-2') { sceneElements[sceneId] = ['s2-ch','s2-h','s2-hen','s2-skills']; }
+    else {
+      const els = [];
+      const chEl = document.getElementById(`s${prefix}-ch`);
+      if(chEl) els.push(`s${prefix}-ch`);
+      
+      const prEl = document.getElementById(`s${prefix}-pr`);
+      if(prEl) {
+        els.push(`s${prefix}-pr`);
+        const imgContainer = document.getElementById(`s${prefix}-images`);
+        if(imgContainer) els.push(`s${prefix}-images`);
+      }
+      
+      const e1El = document.getElementById(`s${prefix}-e1`);
+      if(e1El) { els.push(`s${prefix}-e1`); }
+      const divEl = document.getElementById(`s${prefix}-div`);
+      if(divEl) { els.push(`s${prefix}-div`); }
+      const e2El = document.getElementById(`s${prefix}-e2`);
+      if(e2El) { els.push(`s${prefix}-e2`); }
+      
+      const eduEl = document.getElementById(`s${prefix}-edu`);
+      if(eduEl) { els.push(`s${prefix}-edu`); }
+      
+      const hEl = document.getElementById(`s${prefix}-h`);
+      if(hEl) { els.push(`s${prefix}-h`); }
+      const henEl = document.getElementById(`s${prefix}-hen`);
+      if(henEl) { els.push(`s${prefix}-hen`); }
+      const cgEl = document.getElementById(`s${prefix}-cg`);
+      if(cgEl) { els.push(`s${prefix}-cg`); }
+      
+      if(els.length > 0) sceneElements[sceneId] = els;
+    }
+    
+    if(idx === allScenes.length - 1 && document.getElementById('footer-line')) {
+      if(!sceneElements[sceneId]) sceneElements[sceneId] = [];
+      sceneElements[sceneId].push('footer-line');
+    }
+  });
+  
+  // Navigator
+  const progressBar = document.getElementById('scroll-progress');
+  const scrollHint = document.getElementById('scroll-hint');
+  
+  function getScrollY(){ return window.scrollY || document.documentElement.scrollTop || 0; }
+  function getMaxScroll(){ return Math.max(0, (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight); }
+  
+  navDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const targetEl = allScenes[i];
+      if(!targetEl) return;
+      gsap.to(window, { scrollTo: { y: targetEl, offsetY: 0 }, duration: 0.8, ease: 'power2.inOut' });
+    });
+  });
+  
+  function onScroll(){
+    const max = getMaxScroll();
+    const pct = max > 0 ? getScrollY() / max : 0;
+    if(progressBar) progressBar.style.width = pct * 100 + '%';
+    if(window._threeSetScroll) window._threeSetScroll(pct);
+    if(scrollHint && pct > 0.02){
+      gsap.to(scrollHint, { opacity: 0, duration: 0.4, pointerEvents: 'none', overwrite: true });
+    } else if(scrollHint && pct <= 0.01){
+      gsap.to(scrollHint, { opacity: 1, duration: 0.3, pointerEvents: 'auto', overwrite: true });
+    }
+  }
+  
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      const idx = Array.from(allScenes).indexOf(entry.target);
+      if(idx >= 0) activateNav(idx);
+      const ids = sceneElements[entry.target.id];
+      if(ids) revealElements(ids);
+    });
+  }, { threshold: 0.2 }); // Reduced threshold to improve detection on longer elements
+  
+  allScenes.forEach(s => revealObserver.observe(s));
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  activateNav(0);
+}, 100);
+
+// PROFILE MODAL
+(function(){
+  setTimeout(() => {
+    const modal = document.getElementById('profile-modal');
+    const closeBtn = document.getElementById('profile-modal-close');
+    const trigger = document.querySelector('.profile-hero-img');
+    if(!modal || !trigger) return;
+    function openModal(){ modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal(){ modal.classList.remove('open'); document.body.style.overflow = ''; }
+    trigger.addEventListener('click', openModal);
+    if(closeBtn) closeBtn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
+    modal.addEventListener('click', closeModal);
+    const modalImg = modal.querySelector('img');
+    if(modalImg) modalImg.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  }, 200);
+})();
+
+// SHARE
+async function shareResume(){
+  const d = { title:'Graphic Design Portfolio — Mohammad Javad Mahmoudi', text:'نمونه کارهای طراحی گرافیک، لوگو و هویت بصری — Mohammad Javad Mahmoudi\nimmdjavad.ir', url:'https://immdjavad.ir' };
+  if(navigator.share){ try{ await navigator.share(d); } catch(e){ fallback(); } }
+  else { fallback(); }
+  function fallback(){
+    navigator.clipboard.writeText('https://immdjavad.ir').then(() => {
+      const btn = document.querySelector('.fab-share');
+      if(!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';
+      btn.style.background = 'rgba(16,185,129,0.18)'; btn.style.borderColor = 'rgba(16,185,129,0.5)'; btn.style.color = '#10b981';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
+    }).catch(() => {});
+  }
+}
+
+// PHONE NUMBER
+setTimeout(() => {
+  const p = ['\u0030','\u0039','1','2','0','1','2','0','7','4','5'];
+  const num = p.join('');
+  const link = document.getElementById('phone-link');
+  const display = document.getElementById('phone-display');
+  if(!link || !display) return;
+  let revealed = false;
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    if(!revealed){ display.textContent = '0' + num.slice(1); link.href = 'tel:' + num; revealed = true; }
+    else { window.location.href = 'tel:' + num; }
+  });
+}, 200);
+
+/* ════════════════════════════════════════════
+   BIG BANG — در انتهای صفحه (scene-contact)
+════════════════════════════════════════════ */
+(function initOptimizedBigBang(){
+  setTimeout(() => {
+    const bigBangLayer = document.getElementById('big-bang-layer');
+    const contactSceneNum = window._contactSceneNum;
+    if(!contactSceneNum) return;
+    const contactScene = document.getElementById(`scene-${contactSceneNum}`);
+    if(!bigBangLayer || !contactScene) return;
+    
+    let exploded = false;
+    let explosionActive = false;
+    
+    function getThemeColors(){
+      const theme = window.getCurrentTheme ? window.getCurrentTheme() : 'gold';
+      switch(theme){
+        case 'blue': return ['#00e5ff','#80f0ff','#00d4ff','#ffffff','#0066ff'];
+        case 'violet': return ['#c77dff','#e0aaff','#9d4edd','#ffffff','#7dd3fc'];
+        default: return ['#fbbf24','#fde68a','#f59e0b','#ffffff','#d97706'];
+      }
+    }
+    
+    function createOptimizedParticle(cx, cy){
+      const particle = document.createElement('div');
+      particle.className = 'star-particle';
+      const colors = getThemeColors();
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 200 + Math.random() * Math.min(window.innerWidth, window.innerHeight) * 1.2;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+      const size = 2 + Math.random() * 10;
+      const duration = 2 + Math.random() * 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:radial-gradient(circle,rgba(255,255,255,1) 0%,${color} 70%,transparent 100%);--tx:${tx}px;--ty:${ty}px;--duration:${duration}s;margin-left:-${size/2}px;margin-top:-${size/2}px;box-shadow:0 0 ${size*2}px ${color};`;
+      bigBangLayer.appendChild(particle);
+      setTimeout(() => { if(particle.parentNode) particle.remove(); }, duration * 1000 + 300);
+    }
+    
+    function createShockwave(delay, color, scale, duration){
+      setTimeout(() => {
+        const wave = document.createElement('div');
+        wave.className = 'shockwave-ring';
+        wave.style.cssText = `border:2px solid ${color};box-shadow:0 0 30px ${color},inset 0 0 20px ${color};--wave-scale:${scale};--wave-duration:${duration}s;`;
+        bigBangLayer.appendChild(wave);
+        setTimeout(() => { if(wave.parentNode) wave.remove(); }, duration * 1000 + 300);
+      }, delay);
+    }
+    
+    function createEnergyBeams(count){
+      const colors = getThemeColors();
+      for(let i = 0; i < count; i++){
+        const beam = document.createElement('div');
+        beam.className = 'energy-beam';
+        const angle = (i / count) * 360;
+        const height = 150 + Math.random() * 250;
+        beam.style.cssText = `transform:rotate(${angle}deg);--beam-height:${height}px;--beam-duration:${1.5+Math.random()*1.5}s;background:linear-gradient(to top,transparent,${colors[Math.floor(Math.random()*3)]},transparent);`;
+        bigBangLayer.appendChild(beam);
+        setTimeout(() => { if(beam.parentNode) beam.remove(); }, 3000);
+      }
+    }
+    
+    function createQuantumCore(){
+      const core = document.createElement('div');
+      core.className = 'quantum-core';
+      bigBangLayer.appendChild(core);
+      setTimeout(() => { if(core.parentNode) core.remove(); }, 3000);
+    }
+    
+    function createPrimordialFlash(){
+      const flash = document.createElement('div');
+      flash.className = 'primordial-flash';
+      document.body.appendChild(flash);
+      requestAnimationFrame(() => {
+        flash.classList.add('active');
+        setTimeout(() => {
+          flash.classList.remove('active');
+          setTimeout(() => { if(flash.parentNode) flash.remove(); }, 1100);
+        }, 100);
+      });
+    }
+    
+    function createCosmicVoid(){
+      const voidOverlay = document.createElement('div');
+      voidOverlay.className = 'cosmic-void-overlay';
+      document.body.appendChild(voidOverlay);
+      requestAnimationFrame(() => {
+        voidOverlay.classList.add('active');
+        setTimeout(() => { if(voidOverlay.parentNode) voidOverlay.remove(); }, 2500);
+      });
+    }
+    
+    function triggerExplosion(){
+      if(explosionActive) return;
+      explosionActive = true;
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      const isMobile = window.innerWidth < 769;
+      const colors = getThemeColors();
+      createPrimordialFlash();
+      setTimeout(() => createQuantumCore(), 150);
+      setTimeout(() => createCosmicVoid(), 400);
+      createShockwave(200, colors[0], 20, 2.5);
+      createShockwave(500, colors[2], 28, 2);
+      createShockwave(800, '#ffffff', 35, 1.8);
+      setTimeout(() => createEnergyBeams(isMobile ? 6 : 10), 300);
+      const particleCount = isMobile ? 30 : 50;
+      const batchSize = 10;
+      for(let batch = 0; batch < particleCount; batch += batchSize){
+        setTimeout(() => {
+          for(let i = 0; i < batchSize && (batch + i) < particleCount; i++){
+            createOptimizedParticle(cx + (Math.random() - 0.5) * 200, cy + (Math.random() - 0.5) * 200);
+          }
+        }, batch * 25);
+      }
+      setTimeout(() => { if(window._triggerBigBangMode) window._triggerBigBangMode(); }, 500);
+      setTimeout(() => { explosionActive = false; exploded = true; }, 2000);
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !exploded){
+          setTimeout(() => triggerExplosion(), 400);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    observer.observe(contactScene);
+    
+    window.addEventListener('scroll', () => {
+      const rect = contactScene.getBoundingClientRect();
+      if(rect.top > window.innerHeight && exploded){
+        exploded = false;
+      }
+    }, { passive: true });
+  }, 300);
+})();
+</script>
+</body>
+</html>
