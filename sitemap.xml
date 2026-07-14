@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- ═══ صفحه اصلی ═══ -->
   <url>
     <loc>https://immdjavad.ir/</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,9 +19,14 @@
       <image:caption>پروژه سایت آذین دژ — طراحی و توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
     <image:image>
+      <image:loc>https://immdjavad.ir/assets/projects/rasa.webp</image:loc>
+      <image:title>Rasa Corporate Website — Mohammad Javad Mahmoudi</image:title>
+      <image:caption>پروژه سایت شرکتی رسا — طراحی و توسعه توسط محمد جواد محمودی</image:caption>
+    </image:image>
+    <image:image>
       <image:loc>https://immdjavad.ir/assets/projects/baeazandeh.png</image:loc>
       <image:title>Baeazandeh Project — Mohammad Javad Mahmoudi</image:title>
-      <image:caption>پروژه باعزندان — توسعه توسط محمد جواد محمودی</image:caption>
+      <image:caption>پروژه فروشگاه لباس — توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://immdjavad.ir/assets/projects/Accounting.png</image:loc>
@@ -27,10 +34,29 @@
       <image:caption>نرم‌افزار حسابداری — توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
   </url>
+
+  <!-- ═══ صفحه طراحی/گرافیک ═══ -->
+  <url>
+    <loc>https://immdjavad.ir/design</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══ رزومه ساده ═══ -->
   <url>
     <loc>https://immdjavad.ir/simple</loc>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
+  <!-- ═══ رزومه قابل چاپ ═══ -->
+  <url>
+    <loc>https://immdjavad.ir/print</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
 </urlset>
