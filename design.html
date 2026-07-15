@@ -9,7 +9,6 @@
 <meta name="theme-color" content="#f59e0b">
 <!-- Favicon -->
 <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-96x96.png">
-<link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
 <link rel="shortcut icon" href="assets/logo/favicon.ico">
 
 <!-- Apple Touch Icon -->
@@ -20,7 +19,7 @@
 
 <!-- Preload -->
 <link rel="preload" href="vendor/fonts/fonts.css" as="style">
-<link rel="preload" href="assets/profile.png" as="image">
+<link rel="preload" href="assets/profile.webp" as="image">
 
 <!-- Fonts -->
 <link href="vendor/fonts/fonts.css" rel="stylesheet">
@@ -247,7 +246,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div id="scroll-container"></div>
 
 <!-- PROFILE MODAL -->
-<div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.png" alt="محمد جواد محمودی" draggable="false"></div>
+<div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.webp" alt="محمد جواد محمودی" draggable="false"></div>
 
 <!-- FULLSCREEN IMAGE VIEWER -->
 <div id="image-viewer">
@@ -255,12 +254,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="viewer-img-container" id="viewer-img-container"><img src="" alt="" id="viewer-image"></div>
 </div>
 
-<script src="vendor/js/three.min.js"></script>
-<script src="vendor/js/gsap.min.js"></script>
-<script src="vendor/js/ScrollTrigger.min.js"></script>
-<script src="vendor/js/ScrollToPlugin.min.js"></script>
+<script src="vendor/js/three.min.js" defer></script>
+<script src="vendor/js/gsap.min.js" defer></script>
+<script src="vendor/js/ScrollTrigger.min.js" defer></script>
+<script src="vendor/js/ScrollToPlugin.min.js" defer></script>
 
 <script>
+document.addEventListener('DOMContentLoaded', function(){
 /* ════════════════════════════════════════════
    PROJECTS DATA
 ════════════════════════════════════════════ */
@@ -292,7 +292,7 @@ const projectsData = [
   scenesHTML += `
     <section class="scene scene-bookend" id="scene-0"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.15">
       <div class="chapter-marker" id="s0-ch">طراحی گرافیک · Graphic Design</div>
-      <div class="profile-hero-wrap" id="s0-profile"><img class="profile-hero-img" src="assets/profile.png" alt="محمد جواد محمودی" loading="eager"></div>
+      <div class="profile-hero-wrap" id="s0-profile"><img class="profile-hero-img" src="assets/profile.webp" alt="محمد جواد محمودی" loading="eager"></div>
       <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
       <h2 class="hero-name-en" id="s0-en" style="font-size:inherit;font-weight:inherit;margin:0;">Graphic Designer · Logo & Brand Identity</h2>
       <div class="hero-title" id="s0-title">طراح گرافیک · لوگو · ست اداری · هویت بصری</div>
@@ -921,6 +921,7 @@ async function shareResume(){
     }).catch(() => {});
   }
 }
+window.shareResume = shareResume;
 
 // PHONE NUMBER
 setTimeout(() => {
@@ -1074,6 +1075,7 @@ setTimeout(() => {
     }, { passive: true });
   }, 300);
 })();
+});
 </script>
 </body>
 </html>
