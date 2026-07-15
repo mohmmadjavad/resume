@@ -969,7 +969,7 @@ document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.overflow = '';
     setTimeout(function(){ pl.remove(); }, 650);
   }
-  window.addEventListener('load', function(){
+  window.addEventListener('galaxy-ready', function(){
     var elapsed = Date.now() - window.__plStart;
     var wait = Math.max(0, 900 - elapsed);
     setTimeout(hidePreloader, wait);
@@ -1566,6 +1566,10 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   
   tick();
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    window.dispatchEvent(new Event('galaxy-ready'));
+  }));
 
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
