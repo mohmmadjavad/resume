@@ -1,0 +1,27 @@
+{
+  "name": "محمد جواد محمودی | Full Stack Developer",
+  "short_name": "MJ Mahmoudi",
+  "description": "Python · Django Developer — Full Stack Developer Portfolio",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/logo/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/logo/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#9d4edd",
+  "background_color": "#020008",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "fa",
+  "dir": "rtl"
+}

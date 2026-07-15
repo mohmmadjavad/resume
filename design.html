@@ -389,6 +389,7 @@ const projectsData = [
         <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display">📱 نمایش شماره</span></a>
         <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
       </div>
+      <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s${contactSceneNum}-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
       <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، طراحی‌اش کنیم.</div>
     </div></div></section>`;
   navDotsHTML += `<div class="nav-dot" data-index="${contactSceneNum}" data-label="تماس"></div>`;
@@ -831,6 +832,8 @@ setTimeout(() => {
       if(henEl) { els.push(`s${prefix}-hen`); }
       const cgEl = document.getElementById(`s${prefix}-cg`);
       if(cgEl) { els.push(`s${prefix}-cg`); }
+      const logoEl = document.getElementById(`s${prefix}-logo`);
+      if(logoEl) { els.push(`s${prefix}-logo`); }
       
       if(els.length > 0) sceneElements[sceneId] = els;
     }
@@ -905,7 +908,7 @@ setTimeout(() => {
 // SHARE
 async function shareResume(){
   const d = { title:'Graphic Design Portfolio — Mohammad Javad Mahmoudi', text:'نمونه کارهای طراحی گرافیک، لوگو و هویت بصری — Mohammad Javad Mahmoudi\nimmdjavad.ir', url:'https://immdjavad.ir' };
-  if(navigator.share){ try{ await navigator.share(d); } catch(e){ fallback(); } }
+  if(navigator.share){ try{ await navigator.share(d); } catch(e){ if(e && e.name === 'AbortError') return; fallback(); } }
   else { fallback(); }
   function fallback(){
     navigator.clipboard.writeText('https://immdjavad.ir').then(() => {

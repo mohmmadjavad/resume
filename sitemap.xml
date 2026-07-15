@@ -14,7 +14,7 @@
       <image:caption>محمد جواد محمودی — توسعه‌دهنده Full Stack متخصص Python و Django</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://immdjavad.ir/assets/projects/azindej.png</image:loc>
+      <image:loc>https://immdjavad.ir/assets/projects/azindej.webp</image:loc>
       <image:title>Azindej UPVC Windows Project — Mohammad Javad Mahmoudi</image:title>
       <image:caption>پروژه سایت آذین دژ — طراحی و توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
@@ -24,12 +24,12 @@
       <image:caption>پروژه سایت شرکتی رسا — طراحی و توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://immdjavad.ir/assets/projects/baeazandeh.png</image:loc>
+      <image:loc>https://immdjavad.ir/assets/projects/barazandeh.webp</image:loc>
       <image:title>Baeazandeh Project — Mohammad Javad Mahmoudi</image:title>
       <image:caption>پروژه فروشگاه لباس — توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://immdjavad.ir/assets/projects/Accounting.png</image:loc>
+      <image:loc>https://immdjavad.ir/assets/projects/Accounting.webp</image:loc>
       <image:title>Accounting Software — Mohammad Javad Mahmoudi</image:title>
       <image:caption>نرم‌افزار حسابداری — توسعه توسط محمد جواد محمودی</image:caption>
     </image:image>
@@ -41,14 +41,6 @@
     <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-
-  <!-- ═══ رزومه ساده ═══ -->
-  <url>
-    <loc>https://immdjavad.ir/simple</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
 
   <!-- ═══ رزومه قابل چاپ ═══ -->
