@@ -502,6 +502,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .skill-card-tags{display:flex;flex-wrap:wrap;gap:5px;}
 .skill-card-tags span{font-size:.56rem;padding:3px 8px;border-radius:5px;border:1px solid var(--card-border);color:var(--accent3);background:rgba(157,78,221,0.08);letter-spacing:.02em;}
 
+/* scene-2 has extra content (the grid), so shrink the headline block to fit the pinned 100vh scene without clipping */
+#scene-2 .chapter-marker{margin-bottom:14px;}
+#scene-2 .scene-headline-fa{font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.15;}
+#scene-2 .scene-headline-en{margin-top:4px;font-size:clamp(.7rem,1.6vw,1rem);}
+#scene-2 .skills-cards-grid{margin-top:14px;}
+#scene-2 .graphic-resume-btn{margin-top:14px !important;}
+
 .scene-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(2,0,8,0.6) 0%, transparent 70%);pointer-events:none;z-index:0;}
 .scene-inner>*{position:relative;z-index:1;}
 
