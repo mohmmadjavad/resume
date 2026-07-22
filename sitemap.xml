@@ -35,20 +35,4 @@
     </image:image>
   </url>
 
-  <!-- ═══ صفحه طراحی/گرافیک ═══ -->
-  <url>
-    <loc>https://immdjavad.ir/design</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ═══ رزومه قابل چاپ ═══ -->
-  <url>
-    <loc>https://immdjavad.ir/print</loc>
-    <lastmod>2026-07-14</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-
 </urlset>
