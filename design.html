@@ -6,7 +6,7 @@
 <title>طراحی گرافیک | محمد جواد محمودی | Graphic Design</title>
 <meta name="description" content="نمونه‌کارهای طراحی گرافیک، لوگو و هویت بصری — محمد جواد محمودی">
 <meta name="author" content="Mohammad Javad Mahmoudi">
-<meta name="theme-color" content="#1F5F45">
+<meta name="theme-color" content="#2946FF">
 <!-- TODO: عمدی گذاشته شده، بعداً خودم حذف می‌کنم -->
 <meta name="robots" content="noindex, nofollow">
 
@@ -30,9 +30,9 @@
   --ink-faint:rgba(23,20,13,.38);
   --line:rgba(23,20,13,.13);
   --line-strong:rgba(23,20,13,.24);
-  --accent:#1F5F45;
-  --accent-soft:rgba(31,95,69,.1);
-  --accent-mid:rgba(31,95,69,.35);
+  --accent:#2946FF;
+  --accent-soft:rgba(41,70,255,.1);
+  --accent-mid:rgba(41,70,255,.35);
   --radius:2px;
   --wrap:1180px;
   --serif-fa:'Vazirmatn',sans-serif;
@@ -249,20 +249,75 @@ body::before{
 .tl-role-en{font-family:var(--mono);font-size:.66rem;color:var(--ink-faint);letter-spacing:.06em;margin-top:3px;}
 .tl-desc{font-size:.9rem;color:var(--ink-soft);line-height:1.85;margin-top:10px;}
 
-/* ═══════════════════════════ CONTACT ═══════════════════════════ */
-#contact{padding:120px 0 60px;position:relative;overflow:hidden;}
-.contact-inner{text-align:center;}
-.contact-headline{font-size:clamp(2.2rem,6vw,4.6rem);font-weight:900;line-height:1.06;letter-spacing:-.01em;}
-.contact-headline em{font-style:normal;color:var(--accent);}
-.contact-sub{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;color:var(--ink-soft);margin-top:18px;}
-.contact-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:44px;}
-.contact-link{
-  display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.76rem;letter-spacing:.03em;
-  text-decoration:none;color:var(--ink);padding:14px 22px;border:1px solid var(--line-strong);border-radius:var(--radius);
-  transition:all .25s ease;
+/* ═══════════════════════════ CONTACT GRID ═══════════════════════════ */
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
 }
-.contact-link svg{width:15px;height:15px;flex-shrink:0;}
-.contact-link:hover{border-color:var(--accent);color:var(--accent);background:var(--paper-raised);}
+@media (max-width:640px){
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+}
+.contact-link{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--paper-raised);
+  padding:22px 24px;
+  text-decoration:none;
+  color:var(--ink);
+  transition:background .2s;
+  min-width:0;
+  overflow:hidden;
+}
+.contact-link:hover{background:var(--accent-soft);}
+.contact-link svg{
+  width:19px;
+  height:19px;
+  flex-shrink:0;
+  color:var(--accent);
+}
+.contact-link .cl-label{
+  font-family:var(--mono);
+  font-size:.62rem;
+  color:var(--ink-faint);
+  display:block;
+  margin-bottom:3px;
+  letter-spacing:.05em;
+}
+.contact-link .cl-value{
+  font-weight:700;
+  font-size:.9rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.contact-link .cl-text{
+  min-width:0;
+  overflow:hidden;
+}
+.contact-link:last-child{
+  grid-column:1 / -1;
+}
+@media (max-width:640px){
+  .contact-link{
+    padding:18px 16px;
+    gap:10px;
+  }
+  .contact-link:last-child{
+    grid-column:1;
+  }
+  .contact-link .cl-value{
+    font-size:.8rem;
+  }
+}
+
+/* ═══════════════════════════ CONTACT SECTION OVERRIDES ═══════════════════════════ */
+#contact{padding:110px 0 60px;border-top:1px solid var(--line);position:relative;overflow:hidden;}
 
 footer{padding:36px 0 46px;text-align:center;}
 .footer-line{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-faint);}
@@ -323,16 +378,16 @@ footer{padding:36px 0 46px;text-align:center;}
           <a href="#contact" class="btn btn-ghost">شروع یک پروژه</a>
         </div>
         <div class="hero-stats reveal">
-          <div class="hero-stat"><b>۱۵</b><span>پروژهٔ هویت بصری</span></div>
-          <div class="hero-stat"><b>+۶</b><span>سال طراحی گرافیک</span></div>
-          <div class="hero-stat"><b>۲۰۲۲</b><span>فعالیت فریلنس تمام‌وقت</span></div>
+          <div class="hero-stat"><b>15</b><span>پروژهٔ هویت بصری</span></div>
+          <div class="hero-stat"><b>+6</b><span>سال طراحی گرافیک</span></div>
+          <div class="hero-stat"><b>2022</b><span>فعالیت فریلنس تمام‌وقت</span></div>
         </div>
       </div>
       <div class="hero-portrait reveal">
         <div class="hero-portrait-frame" id="portrait-open">
           <img src="assets/profile.webp" alt="محمد جواد محمودی" loading="eager">
         </div>
-        <div class="hero-portrait-tag">MJM — ۲۰۲۶</div>
+        <div class="hero-portrait-tag">MJM — 2026</div>
       </div>
     </div>
   </section>
@@ -348,17 +403,17 @@ footer{padding:36px 0 46px;text-align:center;}
     </div>
     <div class="process-list">
       <div class="process-item reveal">
-        <span class="process-num">۰۱</span>
+        <span class="process-num">01</span>
         <span class="process-name">تحقیق و درک برند</span>
         <span class="process-desc">شناخت کسب‌وکار، مخاطب و رقبا پیش از هر خط طراحی؛ اینجاست که مسیر درست شکل می‌گیرد.</span>
       </div>
       <div class="process-item reveal">
-        <span class="process-num">۰۲</span>
+        <span class="process-num">02</span>
         <span class="process-name">ایده‌پردازی و طراحی</span>
         <span class="process-desc">چند مسیر بصری متفاوت، بررسی و پالایش تا رسیدن به هویتی که هم دقیق است و هم به‌یادماندنی.</span>
       </div>
       <div class="process-item reveal">
-        <span class="process-num">۰۳</span>
+        <span class="process-num">03</span>
         <span class="process-name">اجرا و تحویل نهایی</span>
         <span class="process-desc">فایل‌های نهایی، راهنمای برند و در صورت نیاز پیاده‌سازی روی وب‌سایت — آماده برای استفاده واقعی.</span>
       </div>
@@ -376,9 +431,9 @@ footer{padding:36px 0 46px;text-align:center;}
       <div>
         <span class="eyebrow">نمونه‌کارها</span>
         <h2 class="section-title">پروژه‌های منتخب</h2>
-        <div class="swatch-row"><span class="swatch"></span><span class="swatch-code">رنگ ثابت پروژه — #1F5F45</span></div>
+        <div class="swatch-row"><span class="swatch"></span><span class="swatch-code">رنگ ثابت پروژه — #2946FF</span></div>
       </div>
-      <span class="section-title-en">Selected Work — ۱۵ projects</span>
+      <span class="section-title-en">Selected Work — 15 projects</span>
     </div>
     <div class="filter-tabs reveal" id="filter-tabs">
       <button class="filter-tab active" data-filter="all">همه</button>
@@ -429,13 +484,13 @@ footer{padding:36px 0 46px;text-align:center;}
       <div class="reveal">
         <div class="timeline-col-label">تجربهٔ کاری — Experience</div>
         <div class="tl-item">
-          <div class="tl-period">۲۰۲۲ — اکنون</div>
+          <div class="tl-period">2022 — اکنون</div>
           <div class="tl-role">توسعه‌دهندهٔ فریلنسر</div>
           <div class="tl-role-en">Freelance Full Stack Developer</div>
           <div class="tl-desc">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی، ربات‌های تلگرامی، نرم‌افزار دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
         </div>
         <div class="tl-item">
-          <div class="tl-period">۲۰۱۷ — ۲۰۲۳ · +۶ سال</div>
+          <div class="tl-period">2017 — 2023 · +6 سال</div>
           <div class="tl-role">طراح و ویرایشگر تصویر</div>
           <div class="tl-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
           <div class="tl-desc">بیش از شش سال کار حرفه‌ای با فتوشاپ برای آتلیه‌های عکاسی؛ ریشهٔ نگاه بصری که امروز در طراحی لوگو و رابط کاربری به‌کار می‌گیرم.</div>
@@ -460,32 +515,55 @@ footer{padding:36px 0 46px;text-align:center;}
       <svg class="deco-shape accent" style="width:9px;height:9px;top:20%;right:16%;animation-duration:13s;" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="currentColor"/></svg>
       <svg class="deco-shape" style="width:34px;height:34px;bottom:14%;right:8%;animation:deco-float-alt 18s ease-in-out infinite;" viewBox="0 0 40 40"><path d="M20 4v32M4 20h32" stroke="currentColor" stroke-width="1"/></svg>
     </div>
-    <div class="contact-inner">
-      <span class="eyebrow reveal" style="justify-content:center;">بیایید شروع کنیم</span>
-      <h2 class="contact-headline reveal">ایده‌ای داری که<br>هنوز <em>طراحی</em> نشده؟</h2>
-      <div class="contact-sub reveal">Let's build something worth looking at.</div>
-      <div class="contact-links reveal">
-        <a class="contact-link" href="https://t.me/immdjavad" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg>
-          تلگرام
-        </a>
-        <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
-          اینستاگرام
-        </a>
-        <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-          گیت‌هاب
-        </a>
-        <a class="contact-link" href="#" id="phone-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span id="phone-display">نمایش شماره</span>
-        </a>
-        <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          mohmmadjavad.mahmoodi@gmail.com
-        </a>
+
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">تماس</span>
+        <h2 class="section-title">بیایید بسازیم</h2>
       </div>
+      <span class="section-title-en">Let's connect.</span>
+    </div>
+
+    <div class="contact-grid reveal">
+      <a class="contact-link" href="https://t.me/immdjavad" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg>
+        <div class="cl-text">
+          <span class="cl-label mono">TELEGRAM</span>
+          <span class="cl-value">@immdjavad</span>
+        </div>
+      </a>
+
+      <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
+        <div class="cl-text">
+          <span class="cl-label mono">INSTAGRAM</span>
+          <span class="cl-value">@immdjavad</span>
+        </div>
+      </a>
+
+      <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        <div class="cl-text">
+          <span class="cl-label mono">GITHUB</span>
+          <span class="cl-value">mohmmadjavad</span>
+        </div>
+      </a>
+
+      <a class="contact-link" href="#" id="phone-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div class="cl-text">
+          <span class="cl-label mono">PHONE</span>
+          <span class="cl-value" id="phone-display">نمایش شماره</span>
+        </div>
+      </a>
+
+      <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div class="cl-text">
+          <span class="cl-label mono">EMAIL</span>
+          <span class="cl-value">mohmmadjavad.mahmoodi@gmail.com</span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -526,16 +604,15 @@ document.addEventListener('DOMContentLoaded', function(){
     { name:'آذین دژ', category:'tshirt', categoryLabel:'تیشرت', images:['assets/Design/azindej/Tshert.webp'], brandbook:null, link:null }
   ];
 
-  const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-  function toFa(n){ return String(n).split('').map(d => faDigits[d] ?? d).join(''); }
-
   /* ───────── BUILD WORK GRID ───────── */
   const grid = document.getElementById('work-grid');
-  grid.innerHTML = projectsData.map((p, i) => `
+  grid.innerHTML = projectsData.map((p, i) => {
+    const idx = String(i + 1).padStart(2, '0');
+    return `
     <div class="plate reveal" data-idx="${i}" data-category="${p.category}">
       <span class="plate-corner tl"></span>
       <span class="plate-corner br"></span>
-      <div class="plate-idx">${toFa(String(i+1).padStart(2,'0'))}</div>
+      <div class="plate-idx">${idx}</div>
       <div class="plate-thumb">
         <img src="${p.images[0]}" alt="${p.name}" loading="lazy"
           onerror="this.parentElement.innerHTML='<span style=&quot;font-family:var(--mono);font-size:.62rem;color:var(--ink-faint);&quot;>تصویر در دسترس نیست</span>'">
@@ -549,7 +626,7 @@ document.addEventListener('DOMContentLoaded', function(){
         </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   /* ───────── CATEGORY FILTER ───────── */
   const filterTabs = document.getElementById('filter-tabs');
@@ -580,7 +657,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const p = projectsData[curProject];
     lbImg.src = p.images[curImage];
     lbImg.alt = p.name;
-    lbCaption.textContent = `${p.name} — ${toFa(curImage+1)}/${toFa(p.images.length)}`;
+    lbCaption.textContent = `${p.name} — ${curImage+1}/${p.images.length}`;
     document.getElementById('lb-prev').style.display = p.images.length > 1 ? 'flex' : 'none';
     document.getElementById('lb-next').style.display = p.images.length > 1 ? 'flex' : 'none';
   }
