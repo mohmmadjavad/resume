@@ -16,20 +16,29 @@
 <!-- ════════════════ FONTS ════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ══ DESIGN TOKENS (تغییر پالت به آبی ارگانیک) ══ */
   :root {
-    --accent:   #7c3aed;
-    --accent2:  #4f46e5;
-    --accent3:  #a855f7;
-    --amber:    #d97706;
-    --text:     #1a1a2e;
-    --muted:    #6b7280;
-    --light:    #f5f3ff;
-    --border:   #e5e0f8;
-    --sidebar:  #faf9ff;
+    --paper:         #F4F2ED;
+    --paper-raised:  #FBFAF7;
+    --ink:           #17140D;
+    --ink-soft:      rgba(23, 20, 13, 0.68);
+    --ink-faint:     rgba(23, 20, 13, 0.42);
+    --line:          rgba(23, 20, 13, 0.13);
+    --line-strong:   rgba(23, 20, 13, 0.24);
+    
+    /* آبی مدرن و تمیز */
+    --accent:        #1D4ED8;
+    --accent-soft:   rgba(29, 78, 216, 0.08);
+    --accent-mid:    rgba(29, 78, 216, 0.30);
+    
+    --radius:        2px;
+    --serif-fa:      'Vazirmatn', sans-serif;
+    --mono:          'JetBrains Mono', monospace;
   }
 
   @page { size: A4 portrait; margin: 0; }
@@ -38,10 +47,11 @@
     width: 210mm;
     height: 297mm;
     background: #fff;
-    color: var(--text);
-    font-family: 'Vazirmatn', sans-serif;
+    color: var(--ink);
+    font-family: var(--serif-fa);
     overflow: hidden;
     font-size: 10px;
+    -webkit-font-smoothing: antialiased;
   }
 
   @media screen {
@@ -51,17 +61,17 @@
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
-      background: #52525b;
+      background: #3f3f46;
     }
     .page-shell {
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 16px 0 28px;
+      padding: 20px 0 32px;
       overflow: hidden;
     }
     .page {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
       transform-origin: top center;
       flex-shrink: 0;
     }
@@ -72,121 +82,154 @@
     height: 297mm;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    background: #fff;
+    background: var(--paper);
+    position: relative;
+  }
+
+  /* بافت ارگانیک و ملایم کاغذ */
+  .page::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .03; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   /* ══ HEADER ══ */
   .header {
-    background: var(--text);
-    padding: 7mm 8mm 5mm;
+    padding: 8mm 9mm 7mm;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 8mm;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--paper-raised);
+    z-index: 1;
   }
-  .header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(135deg, rgba(124,58,237,0.25) 0%, transparent 60%),
-      linear-gradient(225deg, rgba(79,70,229,0.2) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  /* نوار رنگی پایین هدر */
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0; left: 0;
-    height: 2.5px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), #e879f9, var(--amber));
-  }
+
   .header-left { position: relative; z-index: 1; }
-  .badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 6px; color: rgba(168,85,247,0.85);
-    letter-spacing: 0.22em; text-transform: uppercase;
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 4px;
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 6.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+    font-weight: 600;
   }
-  .badge::before { content:''; width:18px; height:1px; background:rgba(168,85,247,0.6); display:inline-block; }
+  .eyebrow::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
   .name-fa {
-    font-size: 26px; font-weight: 900; line-height: 1.1;
-    color: #fff; margin-bottom: 2px;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
   }
+  .name-fa em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
   .name-en {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: rgba(255,255,255,0.45);
-    letter-spacing: 0.08em; margin-bottom: 5px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    font-weight: 500;
   }
-  .title-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-  .title-fa { font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.8); }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .title-fa { font-size: 9px; font-weight: 700; color: var(--ink); }
   .title-en {
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    color: var(--accent3); background: rgba(168,85,247,0.15);
-    border: 1px solid rgba(168,85,247,0.35); padding: 1px 7px; border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-mid);
+    padding: 2px 7px;
+    border-radius: var(--radius);
   }
-  .contacts { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .contacts { display: flex; flex-wrap: wrap; gap: 5px; }
   .ci {
     display: flex; align-items: center; gap: 4px;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    padding: 3px 8px; font-family: 'JetBrains Mono', monospace;
-    font-size: 6.5px; color: rgba(255,255,255,0.75); border-radius: 4px;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    padding: 4px 8px;
+    font-family: var(--mono);
+    font-size: 7px;
+    color: var(--ink-soft);
+    border-radius: var(--radius);
     text-decoration: none;
   }
-  .ci svg { width: 8px; height: 8px; flex-shrink: 0; }
+  .ci svg { width: 9px; height: 9px; stroke-width: 2; flex-shrink: 0; }
 
-  /* عکس پروفایل */
+  /* عکس پروفایل بزرگ‌تر */
   .profile-wrap {
     position: relative; z-index: 1;
-    width: 62px; height: 62px; flex-shrink: 0;
+    width: 80px; height: 80px; flex-shrink: 0;
   }
-  .profile-ring {
-    position: absolute; inset: -2px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent3), var(--accent2), #e879f9);
-  }
-  .profile-inner {
-    position: absolute; inset: 2px; border-radius: 50%;
-    background: var(--text); z-index: 1;
+  .profile-frame {
+    width: 100%; height: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    overflow: hidden;
+    position: relative;
   }
   .profile-img-el {
-    position: absolute; inset: 4px;
-    width: calc(100% - 8px); height: calc(100% - 8px);
-    border-radius: 50%; object-fit: cover; z-index: 2; display: block;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.15) contrast(1.02);
   }
   .profile-fallback {
-    position: absolute; inset: 4px;
-    width: calc(100% - 8px); height: calc(100% - 8px);
-    border-radius: 50%; background: rgba(124,58,237,0.2); z-index: 2;
+    position: absolute; inset: 0;
+    background: var(--accent-soft);
     display: none; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    font-weight: 700; color: var(--accent3);
+    font-family: var(--mono); font-size: 13px;
+    font-weight: 700; color: var(--accent);
   }
 
-  /* ══ BODY: دو ستون ══ */
+  /* ══ BODY ══ */
   .body {
     display: grid;
     grid-template-columns: 68mm 1fr;
     gap: 0;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ستون چپ (sidebar) */
+  /* ستون چپ (Sidebar) */
   .col-left {
-    background: var(--sidebar);
-    border-left: 1px solid var(--border);
-    padding: 5mm 5mm 4mm 5mm;
+    background: var(--paper-raised);
+    border-left: 1px solid var(--line);
+    padding: 6mm 6mm 5mm 6mm;
     display: flex;
     flex-direction: column;
-    gap: 5mm;
+    gap: 5.5mm;
     overflow: hidden;
   }
 
   /* ستون راست */
   .col-right {
-    padding: 5mm 6mm 4mm 5mm;
+    padding: 6mm 7mm 5mm 6mm;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -195,171 +238,129 @@
 
   /* ══ SECTION TITLE ══ */
   .stitle {
-    display: flex; align-items: center; gap: 5px;
-    margin-bottom: 4px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
   }
-  .stitle-bar {
-    width: 3px; height: 14px; border-radius: 2px;
-    background: linear-gradient(180deg, var(--accent), var(--accent2));
-    flex-shrink: 0;
-  }
-  .stitle-fa { font-size: 8.5px; font-weight: 700; color: var(--text); }
+  .stitle-fa { font-size: 9.5px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
   .stitle-en {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 6px; color: var(--accent3); letter-spacing: 0.12em;
-    text-transform: uppercase; opacity: 0.85;
-  }
-  .stitle-line {
-    flex: 1; height: 1px;
-    background: linear-gradient(90deg, var(--border), transparent);
+    font-family: var(--mono);
+    font-size: 6px; color: var(--ink-faint); letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   /* ══ SKILLS ══ */
   .skills-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4.5px;
   }
   .sk {
-    background: #fff; border: 1px solid var(--border);
-    padding: 4px 5px; border-radius: 4px;
+    background: var(--paper); border: 1px solid var(--line);
+    padding: 5px 6px; border-radius: var(--radius);
   }
-  .sk-name { font-size: 6.5px; font-weight: 600; color: var(--text); margin-bottom: 1px; }
-  .sk-en { font-family: 'JetBrains Mono', monospace; font-size: 5.5px; color: var(--muted); }
-  .sk-bar { height: 2px; background: var(--border); margin-top: 3px; border-radius: 1px; overflow: hidden; }
-  .sk-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 1px;
-  }
+  .sk-name { font-size: 7px; font-weight: 700; color: var(--ink); margin-bottom: 1px; }
+  .sk-en { font-family: var(--mono); font-size: 5.5px; color: var(--ink-faint); }
+  .sk-bar { height: 2px; background: var(--line); margin-top: 4px; border-radius: 1px; overflow: hidden; }
+  .sk-fill { height: 100%; background: var(--accent); border-radius: 1px; }
 
   /* ══ EXPERIENCE ══ */
   .exp-item {
-    padding-right: 10px; margin-bottom: 5px;
-    position: relative; border-right: 1px solid var(--border);
-  }
-  .exp-dot {
-    position: absolute; right: -4px; top: 4px;
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent); border: 1.5px solid #fff;
-    box-shadow: 0 0 0 1px var(--accent);
+    padding-right: 9px; margin-bottom: 7px;
+    position: relative; border-right: 2px solid var(--accent);
   }
   .exp-period {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 6px; color: var(--accent); margin-bottom: 1px;
+    font-family: var(--mono);
+    font-size: 6.5px; color: var(--accent); margin-bottom: 2px; font-weight: 600;
   }
-  .exp-role-fa { font-size: 7.5px; font-weight: 700; color: var(--text); }
-  .exp-role-en { font-family: 'JetBrains Mono', monospace; font-size: 5.5px; color: var(--muted); margin-bottom: 2px; }
-  .exp-desc { font-size: 6px; line-height: 1.6; color: var(--muted); }
+  .exp-role-fa { font-size: 8px; font-weight: 800; color: var(--ink); }
+  .exp-role-en { font-family: var(--mono); font-size: 6px; color: var(--ink-faint); margin-bottom: 3px; }
+  .exp-desc { font-size: 6.5px; line-height: 1.7; color: var(--ink-soft); }
 
   /* ══ EDU ══ */
   .edu-card {
-    background: #fff; border: 1px solid var(--border);
-    border-right: 3px solid var(--accent2);
-    padding: 5px 7px; border-radius: 4px;
+    background: var(--paper); border: 1px solid var(--line);
+    border-right: 3px solid var(--accent);
+    padding: 6px 8px; border-radius: var(--radius);
   }
-  .edu-deg-fa { font-size: 7.5px; font-weight: 700; color: var(--text); }
-  .edu-deg-en { font-family: 'JetBrains Mono', monospace; font-size: 5.5px; color: var(--accent2); margin-bottom: 2px; }
-  .edu-school { font-size: 6px; color: var(--muted); margin-bottom: 4px; }
-  .etags { display: flex; flex-wrap: wrap; gap: 3px; }
+  .edu-deg-fa { font-size: 8px; font-weight: 800; color: var(--ink); }
+  .edu-deg-en { font-family: var(--mono); font-size: 6px; color: var(--accent); margin-bottom: 3px; }
+  .edu-school { font-size: 6.5px; color: var(--ink-soft); margin-bottom: 5px; }
+  .etags { display: flex; flex-wrap: wrap; gap: 3.5px; }
   .etag {
-    font-family: 'JetBrains Mono', monospace; font-size: 5.5px;
-    background: var(--light); border: 1px solid var(--border);
-    color: var(--accent); padding: 1px 5px; border-radius: 8px;
+    font-family: var(--mono); font-size: 6px;
+    background: var(--paper-raised); border: 1px solid var(--line);
+    color: var(--ink-soft); padding: 1.5px 6px; border-radius: var(--radius);
   }
 
   /* ══ LANGUAGES ══ */
-  .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
   .lang-item {
-    background: #fff; border: 1px solid var(--border);
-    padding: 5px 7px; border-radius: 4px;
+    background: var(--paper); border: 1px solid var(--line);
+    padding: 6px 7px; border-radius: var(--radius);
   }
-  .lang-fa { font-size: 7px; font-weight: 600; color: var(--text); }
-  .lang-en { font-family: 'JetBrains Mono', monospace; font-size: 5.5px; color: var(--muted); margin-bottom: 4px; }
+  .lang-fa { font-size: 7.5px; font-weight: 700; color: var(--ink); }
+  .lang-en { font-family: var(--mono); font-size: 5.5px; color: var(--ink-faint); margin-bottom: 5px; }
   .dots { display: flex; gap: 3px; }
   .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    border: 1.5px solid var(--border); background: #fff;
+    width: 6.5px; height: 6.5px; border-radius: 50%;
+    border: 1px solid var(--line-strong); background: transparent;
   }
   .dot.on { background: var(--accent); border-color: var(--accent); }
 
-  /* ══ PROJECTS ══ */
-  .projects { display: flex; flex-direction: column; gap: 12px; }
+  /* ══ PROJECTS (افزایش ارتفاع و فاصله‌ها جهت پر شدن صفحه) ══ */
+  .projects { display: flex; flex-direction: column; gap: 8px; }
   .pc {
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 6px; padding: 12px 14px; position: relative;
+    background: var(--paper-raised); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 8.5px 11px; position: relative;
   }
   .pc.feat {
-    border-color: var(--accent);
-    border-right: 3px solid var(--accent);
-    background: var(--light);
+    border-color: var(--line-strong);
+    border-right: 3.5px solid var(--accent);
+    background: #fff;
   }
   .pc-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
   .pc-tag {
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;
-    display: flex; align-items: center; gap: 4px;
+    font-family: var(--mono); font-size: 7px;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 600; display: flex; align-items: center; gap: 4px;
   }
-  .pc-tag::before { content: '▸'; color: var(--accent); }
-  .pc-dur {
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    color: var(--amber); background: rgba(217,119,6,0.08);
-    border: 1px solid rgba(217,119,6,0.2); padding: 2px 6px; border-radius: 8px;
-  }
-  .ar-tag {
-    display: inline-flex; align-items: center; gap: 3px;
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    color: #a855f7; background: rgba(168,85,247,0.06);
-    border: 1px solid rgba(168,85,247,0.2); padding: 2px 6px;
-    border-radius: 8px; margin-bottom: 4px;
-  }
-  .pc-title-fa { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .pc-tag::before { content: '■'; font-size: 5.5px; color: var(--accent); }
+  
+  .pc-title-fa { font-size: 10px; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
   .pc-title-en {
-    font-family: 'JetBrains Mono', monospace; font-size: 7.5px;
-    color: var(--muted); margin-bottom: 6px;
+    font-family: var(--mono); font-size: 7px;
+    color: var(--ink-faint); margin-bottom: 5px;
   }
-  .pc-desc { font-size: 8px; line-height: 1.85; color: var(--muted); margin-bottom: 6px; }
-  .pc-tech { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
+  .pc-desc { font-size: 7.2px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 6px; }
+  .pc-tech { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
   .ptag {
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    background: var(--light); border: 1px solid rgba(124,58,237,0.2);
-    color: var(--accent); padding: 2px 8px; border-radius: 8px;
+    font-family: var(--mono); font-size: 6.2px;
+    background: var(--paper); border: 1px solid var(--line);
+    color: var(--ink-soft); padding: 2px 7px; border-radius: var(--radius);
   }
-  .ptag.b { background: rgba(79,70,229,0.06); border-color: rgba(79,70,229,0.2); color: var(--accent2); }
-  .ptag.p { background: rgba(168,85,247,0.06); border-color: rgba(168,85,247,0.2); color: #a855f7; }
-  .pc-link {
-    font-family: 'JetBrains Mono', monospace; font-size: 7px;
-    color: var(--accent); text-decoration: none;
-    border-bottom: 1px solid rgba(124,58,237,0.3);
-  }
+  .ptag.accent { background: var(--accent-soft); border-color: var(--accent-mid); color: var(--accent); font-weight: 600; }
 
-  /* داده‌کاوی: کارت عریض پایینی */
-  .pc.wide {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 10px;
-    align-items: start;
+  .pc-link {
+    font-family: var(--mono); font-size: 7px;
+    color: var(--accent); text-decoration: none; font-weight: 600;
+    border-bottom: 1px solid var(--accent-mid);
   }
-  .pc.wide .pc-right { padding-top: 1px; }
 
   /* ══ FOOTER ══ */
   .footer {
-    background: var(--text);
-    padding: 3mm 8mm;
+    background: var(--paper-raised);
+    border-top: 1px solid var(--line-strong);
+    padding: 3mm 9mm;
     display: flex; align-items: center; justify-content: space-between;
+    z-index: 1;
   }
   .footer-fa {
-    font-family: 'Vazirmatn', sans-serif; font-size: 7px;
-    color: rgba(255,255,255,0.5);
+    font-family: var(--serif-fa); font-size: 7px; font-weight: 600;
+    color: var(--ink-soft);
   }
-  .footer-dots { display: flex; gap: 5px; }
-  .fdot {
-    width: 5px; height: 5px; border-radius: 50%;
-  }
-  .fdot:nth-child(1) { background: var(--accent3); }
-  .fdot:nth-child(2) { background: var(--accent2); }
-  .fdot:nth-child(3) { background: var(--amber); }
   .footer-en {
-    font-family: 'JetBrains Mono', monospace; font-size: 6px;
-    color: rgba(255,255,255,0.3); letter-spacing: 0.1em;
+    font-family: var(--mono); font-size: 6px;
+    color: var(--ink-faint); letter-spacing: 0.1em;
   }
 
   /* Print-specific */
@@ -367,6 +368,7 @@
     @page { size: A4 portrait; margin: 0; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     html, body { background: #fff !important; }
+    .page::before { opacity: 0 !important; }
   }
 </style>
 </head>
@@ -377,8 +379,8 @@
   <!-- ══ HEADER ══ -->
   <div class="header">
     <div class="header-left">
-      <div class="badge">Full Stack Developer · Software Engineer</div>
-      <div class="name-fa">محمد جواد محمودی</div>
+      <div class="eyebrow">Full Stack Developer · Software Engineer</div>
+      <div class="name-fa">محمد جواد <em>مـ</em>حمودی</div>
       <div class="name-en">Mohammad Javad Mahmoudi</div>
       <div class="title-row">
         <span class="title-fa">توسعه‌دهنده وب و نرم‌افزار</span>
@@ -386,7 +388,7 @@
       </div>
       <div class="contacts">
         <a class="ci" href="tel:09120120745" onclick="return confirm('تماس با ۰۹۱۲۰۱۲۰۷۴۵؟')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           09120120745
         </a>
         <a class="ci" href="https://t.me/immdjavad" target="_blank">
@@ -394,7 +396,7 @@
           @immdjavad
         </a>
         <a class="ci" href="https://instagram.com/immdjavad" target="_blank">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           @immdjavad
         </a>
         <a class="ci" href="https://github.com/mohmmadjavad" target="_blank">
@@ -404,11 +406,11 @@
       </div>
     </div>
     <div class="profile-wrap">
-      <div class="profile-ring"></div>
-      <div class="profile-inner"></div>
-      <img class="profile-img-el" src="assets/profile.webp" alt="Mohammad Javad Mahmoudi — Full Stack Developer"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="profile-fallback">MJM</div>
+      <div class="profile-frame">
+        <img class="profile-img-el" src="assets/profile.webp" alt="Mohammad Javad Mahmoudi"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="profile-fallback">MJM</div>
+      </div>
     </div>
   </div>
 
@@ -421,27 +423,19 @@
       <!-- درباره من -->
       <div>
         <div class="stitle">
-          <div class="stitle-bar"></div>
-          <div>
-            <div class="stitle-fa">درباره من</div>
-            <div class="stitle-en">About Me</div>
-          </div>
-          <div class="stitle-line"></div>
+          <span class="stitle-fa">درباره من</span>
+          <span class="stitle-en">About Me</span>
         </div>
-        <p style="font-size:6.5px;line-height:1.8;color:var(--muted);border-right:2px solid var(--border);padding-right:6px;">
-          توسعه‌دهنده Full Stack با تخصص در Python و Django، با بیش از ۲ سال تجربه حرفه‌ای. دانشجوی کارشناسی مهندسی کامپیوتر با رویکرد خلاقانه. بیش از ۶ سال تجربه در فتوشاپ که دیدگاه بصری منحصربه‌فردی در UI/UX می‌دهد.
+        <p style="font-size:7px;line-height:1.85;color:var(--ink-soft);">
+          توسعه‌دهنده Full Stack با تخصص اصلی در Python و Django، با بیش از ۲ سال تجربه حرفه‌ای در پیاده‌سازی سیستم‌های پیچیده وب. دانشجوی کارشناسی مهندسی کامپیوتر با رویکرد حل مسئله. دارای بیش از ۶ سال تجربه تخصصی در طراحی گرافیک و فتوشاپ که موجب خلق رابط‌های کاربرپسند و دقیق در UI/UX گردیده است.
         </p>
       </div>
 
       <!-- مهارت‌ها -->
       <div>
         <div class="stitle">
-          <div class="stitle-bar"></div>
-          <div>
-            <div class="stitle-fa">مهارت‌ها</div>
-            <div class="stitle-en">Technical Skills</div>
-          </div>
-          <div class="stitle-line"></div>
+          <span class="stitle-fa">مهارت‌ها</span>
+          <span class="stitle-en">Technical Skills</span>
         </div>
         <div class="skills-grid">
           <div class="sk"><div class="sk-name">پایتون</div><div class="sk-en">Python</div><div class="sk-bar"><div class="sk-fill" style="width:90%"></div></div></div>
@@ -453,47 +447,37 @@
           <div class="sk"><div class="sk-name">پایگاه داده</div><div class="sk-en">SQL / ORM</div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
           <div class="sk"><div class="sk-name">تحلیل داده</div><div class="sk-en">Data Analysis</div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
           <div class="sk"><div class="sk-name">فتوشاپ</div><div class="sk-en">Photoshop</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
-          <div class="sk"><div class="sk-name">SVG / انیمیشن</div><div class="sk-en">SVG / Animation</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
-          <div class="sk"><div class="sk-name">گیت</div><div class="sk-en">Git</div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
-          <div class="sk"><div class="sk-name">لینوکس / سرور</div><div class="sk-en">Linux / Server</div><div class="sk-bar"><div class="sk-fill" style="width:60%"></div></div></div>
+          <div class="sk"><div class="sk-name">SVG / انیمیشن</div><div class="sk-en">SVG Animation</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
+          <div class="sk"><div class="sk-name">گیت</div><div class="sk-en">Git / GitHub</div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+          <div class="sk"><div class="sk-name">لینوکس / سرور</div><div class="sk-en">Linux Server</div><div class="sk-bar"><div class="sk-fill" style="width:60%"></div></div></div>
         </div>
       </div>
 
       <!-- سابقه کاری -->
       <div>
         <div class="stitle">
-          <div class="stitle-bar"></div>
-          <div>
-            <div class="stitle-fa">سابقه کاری</div>
-            <div class="stitle-en">Experience</div>
-          </div>
-          <div class="stitle-line"></div>
+          <span class="stitle-fa">سابقه کاری</span>
+          <span class="stitle-en">Experience</span>
         </div>
         <div class="exp-item">
-          <div class="exp-dot"></div>
           <div class="exp-period">2022 — اکنون · Present</div>
-          <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
+          <div class="exp-role-fa">توسعه‌دهنده فریلنسر وب</div>
           <div class="exp-role-en">Freelance Full Stack Developer</div>
-          <div class="exp-desc">ساخت پروژه‌های واقعی: وب‌سایت‌های شرکتی، ربات‌های تلگرامی، نرم‌افزار دسکتاپ و ابزارهای داده. تحویل کامل از صفر تا راه‌اندازی.</div>
+          <div class="exp-desc">طراحی و پیاده‌سازی کامل پروژه‌های واقعی شامل پلتفرم‌های شرکتی، ربات‌های هوشمند تلگرام، برنامه‌های کاربردی دسکتاپ و سیستم‌های استخراج و تحلیل داده با رعایت استانداردها.</div>
         </div>
         <div class="exp-item" style="margin-bottom:0">
-          <div class="exp-dot" style="background:var(--amber);box-shadow:0 0 0 1px var(--amber)"></div>
-          <div class="exp-period" style="color:var(--amber)">2017 — 2023 · ۶+ سال</div>
-          <div class="exp-role-fa">طراح و ویرایشگر تصویر</div>
+          <div class="exp-period">2017 — 2023 · ۶+ سال</div>
+          <div class="exp-role-fa">طراح گرافیک و ادیتور تصویر</div>
           <div class="exp-role-en">Freelance Photo Editor & Graphic Designer</div>
-          <div class="exp-desc">بیش از ۶ سال کار با فتوشاپ — دیدگاه بصری منحصربه‌فرد در UI/UX.</div>
+          <div class="exp-desc">فعالیت حرفه‌ای در فتوشاپ و طراحی بصری که زمینه‌ساز دیدگاه دقیق در UI/UX و معماری فرانت‌اند شده است.</div>
         </div>
       </div>
 
-      <!-- تحصیلات و زبان‌ها -->
+      <!-- تحصیلات -->
       <div>
         <div class="stitle">
-          <div class="stitle-bar"></div>
-          <div>
-            <div class="stitle-fa">تحصیلات</div>
-            <div class="stitle-en">Education</div>
-          </div>
-          <div class="stitle-line"></div>
+          <span class="stitle-fa">تحصیلات</span>
+          <span class="stitle-en">Education</span>
         </div>
         <div class="edu-card">
           <div class="edu-deg-fa">کارشناسی مهندسی کامپیوتر</div>
@@ -510,12 +494,8 @@
       <!-- زبان‌ها -->
       <div>
         <div class="stitle">
-          <div class="stitle-bar"></div>
-          <div>
-            <div class="stitle-fa">زبان‌ها</div>
-            <div class="stitle-en">Languages</div>
-          </div>
-          <div class="stitle-line"></div>
+          <span class="stitle-fa">زبان‌ها</span>
+          <span class="stitle-en">Languages</span>
         </div>
         <div class="lang-grid">
           <div class="lang-item">
@@ -539,30 +519,26 @@
 
     <!-- ── ستون راست: پروژه‌ها ── -->
     <div class="col-right">
-      <div class="stitle" style="margin-bottom:5px">
-        <div class="stitle-bar"></div>
-        <div>
-          <div class="stitle-fa">پروژه‌ها</div>
-          <div class="stitle-en">Projects</div>
-        </div>
-        <div class="stitle-line"></div>
+      <div class="stitle" style="margin-bottom:6px">
+        <span class="stitle-fa">پروژه‌های شاخص</span>
+        <span class="stitle-en">Selected Projects</span>
       </div>
       <div class="projects">
 
         <!-- آذین دژ -->
         <div class="pc feat">
           <div class="pc-label-row">
-            <div class="pc-tag">وب‌سایت شرکتی · Featured Project</div>
+            <div class="pc-tag">وب‌سایت تخصصی · Featured Project</div>
           </div>
-          <div class="pc-title-fa">آذین دژ — پلتفرم درب و پنجره UPVC</div>
+          <div class="pc-title-fa">آذین دژ — پلتفرم محاسبه‌گر و محاسبات مهندسی UPVC</div>
           <div class="pc-title-en">Azin Dej — UPVC Door & Window Platform</div>
-          <div class="pc-desc">رقبا فقط پنجره‌ی مستطیلی قیمت می‌دادن؛ ساختم یک سیستم تخمین قیمت مهندسی‌شده با کانفیگوریتور SVG برای هر شکل هندسی، ۷ نوع بازشو با انیمیشن سه‌بعدی، ترکیب چند مدل در یک طرح (ساخت پنجره دلخواه)، به‌همراه پنل ادمین کامل و بلاگ تخصصی.</div>
+          <div class="pc-desc">طراحی و پیاده‌سازی پلتفرم تخصصی صنعت درب و پنجره با قابلیت قیمت‌دهی لحظه‌ای؛ شامل کانفیگوریتور تعاملی SVG برای بیش از ۷ نوع بازشو همراه با انیمیشن سه‌بعدی، ترکیب چند اشکال هندسی در یک طرح سفارشی، پنل ادمین اختصاصی با قابلیت مدلسازی قیمت و وبلاگ مدیریت محتوا.</div>
           <div class="pc-tech">
-            <span class="ptag">Django</span><span class="ptag">Python</span>
-            <span class="ptag b">JavaScript</span><span class="ptag b">SVG Animations</span>
-            <span class="ptag b">Custom Admin</span><span class="ptag p">PostgreSQL</span>
+            <span class="ptag accent">Django</span><span class="ptag accent">Python</span>
+            <span class="ptag">JavaScript</span><span class="ptag">SVG Animations</span>
+            <span class="ptag">Custom Admin</span><span class="ptag">PostgreSQL</span>
           </div>
-          <a class="pc-link" href="https://azindejwin.ir">🌐 azindejwin.ir →</a>
+          <a class="pc-link" href="https://azindejwin.ir" target="_blank">🌐 azindejwin.ir →</a>
         </div>
 
         <!-- رسا -->
@@ -570,64 +546,63 @@
           <div class="pc-label-row">
             <div class="pc-tag">وب‌سایت شرکتی · Corporate Platform</div>
           </div>
-          <div class="pc-title-fa">رسا — پلتفرم هویت شرکتی و CMS</div>
+          <div class="pc-title-fa">رسا — پلتفرم مدیریت هویت شرکتی و CMS اختصاصی</div>
           <div class="pc-title-en">Rasa — Corporate Identity & CMS Platform</div>
-          <div class="pc-desc">پلتفرم تخصصی و چندمنظوره شرکتی با پنل مدیریت اختصاصی، سیستم انتشار مقالات و مدیریت پروژه‌ها؛ تحت توسعه و بهینه‌سازی مستمر.</div>
+          <div class="pc-desc">پلتفرم جامع و چندمنظوره شرکتی با پنل مدیریت اختصاصی جهت مدیریت مقالات، معرفی نمونه کارها و پروژه‌ها، به همراه سیستم ساختاریافته تحلیل مخاطب؛ با بهینه‌سازی مستمر سئو و سرعت بارگذاری.</div>
           <div class="pc-tech">
-            <span class="ptag">Django</span><span class="ptag">Python</span>
-            <span class="ptag b">PHP</span><span class="ptag b">Custom Admin</span><span class="ptag p">CMS</span>
+            <span class="ptag accent">Django</span><span class="ptag accent">Python</span>
+            <span class="ptag">PHP</span><span class="ptag">Custom Admin</span><span class="ptag">CMS</span>
           </div>
-          <a class="pc-link" href="https://mohmmadjavad.github.io/rasa/index.html">🌐 مشاهده پروژه →</a>
+          <a class="pc-link" href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank">🌐 مشاهده پروژه →</a>
         </div>
 
         <!-- برازنده -->
         <div class="pc">
-          <div class="ar-tag">AR Virtual Try-On · پرو مجازی</div>
           <div class="pc-label-row">
-            <div class="pc-tag">فروشگاه آنلاین · In Progress</div>
+            <div class="pc-tag">فروشگاه آنلاین · AR Try-On</div>
           </div>
-          <div class="pc-title-fa">برازنده</div>
-          <div class="pc-title-en">Barazandeh — Fashion E-Commerce</div>
-          <div class="pc-desc">فروشگاه لباس مدرن با پرو مجازی AR، ربات همراه تعاملی eilik که با چت‌بات وصل می‌شه، و پنل ادمین کامل شامل آمار، انبار، تیکت، مرجوعی و ابزارهای مارکتینگ.</div>
+          <div class="pc-title-fa">برازنده — فروشگاه آنلاین پوشاک با پرو مجازی</div>
+          <div class="pc-title-en">Barazandeh — Fashion E-Commerce Platform</div>
+          <div class="pc-desc">فروشگاه پیشرفته پوشاک با قابلیت پرو مجازی واقعیت افزوده (AR)، چت‌بات تعاملی هوشمند eilik، و پنل مدیریت همه‌جانبه شامل انبارداری، مدیریت سفارشات، تیکتینگ، مرجوعی و کمپین‌های مارکتینگ.</div>
           <div class="pc-tech">
-            <span class="ptag">Django</span><span class="ptag b">AI Chatbot</span>
-            <span class="ptag p">AR Try-On</span><span class="ptag b">Custom Admin</span>
+            <span class="ptag accent">Django</span><span class="ptag">AI Chatbot</span>
+            <span class="ptag">AR Try-On</span><span class="ptag">Custom Admin</span>
           </div>
         </div>
 
         <!-- دو کارت کنار هم: کالا۲ + teledata -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
           <div class="pc">
-            <div class="pc-tag">ربات تلگرام · Telegram Bot</div>
+            <div class="pc-tag">ربات تلگرام</div>
             <div class="pc-title-fa">ربات کالا ۲</div>
             <div class="pc-title-en">Kala2 — Used Goods Price Bot</div>
-            <div class="pc-desc">اسکرپ آگهی‌های دیوار — قیمت، متن و تصاویر کالای دست‌دوم از طریق تلگرام.</div>
-            <div class="pc-tech"><span class="ptag">Python</span><span class="ptag">Web Scraping</span><span class="ptag b">Telegram API</span></div>
+            <div class="pc-desc">اسکرپ خودکار آگهی‌های دیوار و استخراج قیمت، مشخصات و تصاویر کالاهای دست‌دوم جهت تحلیل بازار از طریق تلگرام.</div>
+            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Web Scraping</span></div>
           </div>
           <div class="pc">
-            <div class="pc-tag">ابزار داده · Data Tool</div>
+            <div class="pc-tag">ابزار داده</div>
             <div class="pc-title-fa">استخراج‌گر کانال تلگرام</div>
-            <div class="pc-title-en">Telegram Channel Extractor — teledata</div>
-            <div class="pc-desc">استخراج پیام‌ها و رسانه‌های کانال در بازه زمانی — خروجی Excel و پوشه Media.</div>
-            <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">Telethon</span><span class="ptag">Excel Export</span></div>
+            <div class="pc-title-en">Telegram Extractor — teledata</div>
+            <div class="pc-desc">استخراج دقیق داده‌ها، متون و رسانه‌های کانال‌های تلگرام براساس بازه‌های زمانی مشخص با خروجی سازمان‌یافته Excel.</div>
+            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Telethon</span></div>
           </div>
         </div>
 
         <!-- دو کارت کنار هم: حسابداری + داده‌کاوی -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
           <div class="pc">
-            <div class="pc-tag">نرم‌افزار دسکتاپ · Desktop App</div>
-            <div class="pc-title-fa">نرم‌افزار حسابداری و انبارداری</div>
-            <div class="pc-title-en">Accounting & Inventory Management</div>
-            <div class="pc-desc">حسابداری، انبار و فاکتور با تقویم شمسی، بک‌آپ خودکار، گزارش‌گیری Excel، و بخش «دفتر خیاط و برش» برای تولیدی‌های پوشاک.</div>
-            <div class="pc-tech"><span class="ptag">PyQt6</span><span class="ptag b">SQLite</span><span class="ptag">Excel</span></div>
+            <div class="pc-tag">نرم‌افزار دسکتاپ</div>
+            <div class="pc-title-fa">حسابداری و انبارداری</div>
+            <div class="pc-title-en">Accounting & Inventory App</div>
+            <div class="pc-desc">نرم‌افزار مدیریت مالی، انبار و فاکتور ساز با پشتیبانی کامل از تقویم شمسی، بک‌آپ‌گیری خودکار و بخش اختصاصی «دفتر خیاط».</div>
+            <div class="pc-tech"><span class="ptag accent">PyQt6</span><span class="ptag">SQLite</span></div>
           </div>
           <div class="pc">
-            <div class="pc-tag">پروژه دانشگاهی · Academic</div>
+            <div class="pc-tag">پروژه دانشگاهی</div>
             <div class="pc-title-fa">تحلیل داده و داده‌کاوی</div>
             <div class="pc-title-en">Data Analysis & Mining</div>
-            <div class="pc-desc">پیش‌پردازش، مدل‌سازی ML و تجسم داده با پایتون.</div>
-            <div class="pc-tech"><span class="ptag">Python</span><span class="ptag b">Pandas</span><span class="ptag">Matplotlib</span><span class="ptag b">Scikit-learn</span></div>
+            <div class="pc-desc">پروژه‌های پیش‌پردازش، مدل‌سازی یادگیری ماشین (ML) و تجسم‌سازی بصری داده‌ها با استفاده از ابزارهای تخصصی پایتون.</div>
+            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Pandas</span></div>
           </div>
         </div>
 
@@ -639,44 +614,31 @@
   <!-- ══ FOOTER ══ -->
   <div class="footer">
     <div class="footer-fa">محمد جواد محمودی · Mohammad Javad Mahmoudi</div>
-    <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi logo" style="height:4mm;width:auto;opacity:0.92;">
-    <div class="footer-dots">
-      <div class="fdot"></div><div class="fdot"></div><div class="fdot"></div>
-    </div>
-    <div class="footer-en">FULL STACK · PYTHON · DJANGO · CREATIVE · 2025</div>
+    <div class="footer-en">FULL STACK · PYTHON · DJANGO · CREATIVE · 2026</div>
   </div>
 
 </div>
 </div><!-- /page-shell -->
 
-<!-- ══ PRINT BUTTON (hidden on actual print output) ══ -->
+<!-- ══ PRINT BUTTON ══ -->
 <button class="print-fab" onclick="window.print()" title="چاپ رزومه">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-  <span>چاپ</span>
+  <span>چاپ رزومه</span>
 </button>
 
 <style>
   .print-fab {
-    position: fixed; bottom: 18px; left: 18px; z-index: 999;
-    display: flex; align-items: center; gap: 7px;
-    background: linear-gradient(135deg, var(--accent), var(--accent3));
-    color: #fff; border: none; border-radius: 999px;
-    padding: 11px 18px; font-family: 'Vazirmatn', sans-serif;
-    font-size: 12px; font-weight: 600; cursor: pointer;
-    box-shadow: 0 6px 20px rgba(124,58,237,0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: fixed; bottom: 20px; left: 20px; z-index: 999;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--ink);
+    color: var(--paper-raised); border: 1px solid var(--ink); border-radius: var(--radius);
+    padding: 10px 18px; font-family: var(--mono);
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
   }
-  .print-fab:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(124,58,237,0.5); }
-  .print-fab svg { width: 16px; height: 16px; flex-shrink: 0; }
-  @media (max-width: 640px) {
-    .print-fab {
-      bottom: 22px; left: 50%; transform: translateX(-50%);
-      padding: 15px 26px; font-size: 15px; gap: 9px;
-      box-shadow: 0 8px 26px rgba(124,58,237,0.5);
-    }
-    .print-fab:hover { transform: translateX(-50%) translateY(-2px); }
-    .print-fab svg { width: 20px; height: 20px; }
-  }
+  .print-fab:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+  .print-fab svg { width: 14px; height: 14px; flex-shrink: 0; }
   @media print {
     .print-fab { display: none !important; }
   }
@@ -708,9 +670,7 @@
     window.addEventListener('beforeprint', resetForPrint);
     window.addEventListener('afterprint', fit);
     var mql = window.matchMedia('print');
-    function onPrintChange(e){ if(e.matches) resetForPrint(); else fit(); }
-    if(mql.addEventListener) mql.addEventListener('change', onPrintChange);
-    else if(mql.addListener) mql.addListener(onPrintChange);
+    if(mql.addEventListener) mql.addEventListener('change', function(e){ if(e.matches) resetForPrint(); else fit(); });
   })();
 </script>
 
