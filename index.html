@@ -1957,6 +1957,7 @@ function goBackToPortal(){
   }catch(e){}
   if(history.length > 1){ history.back(); }
 }
+window.goBackToPortal = goBackToPortal;
 async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Python/Django\nimmdjavad.ir',url:'https://immdjavad.ir'};if(navigator.share){try{await navigator.share(d);}catch(e){if(e&&e.name==='AbortError')return;fallback();}}else{fallback();}function fallback(){navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{const btn=document.querySelector('.fab-share');if(!btn)return;const orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.background='rgba(52,211,153,0.2)';btn.style.borderColor='rgba(52,211,153,0.6)';btn.style.color='#34d399';setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.borderColor='';btn.style.color='';},1500);}).catch(()=>{});}}
 window.shareResume = shareResume;
 
@@ -2556,11 +2557,11 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
       <button class="icon-btn" title="اشتراک‌گذاری" onclick="shareResume()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       </button>
-      <button class="icon-btn" title="بازگشت به انتخاب" onclick="goBackToPortal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      </button>
       <button class="icon-btn" title="چاپ رزومه" onclick="window.open('print.html','_blank')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </button>
+      <button class="icon-btn" title="بازگشت به انتخاب" onclick="goBackToPortal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
     </div>
   </div>
@@ -2577,7 +2578,7 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
         <h1 class="hero-name">محمد جواد محمودی</h1>
         <div class="hero-name-en">Mohammad Javad Mahmoudi</div>
         <div class="hero-role">Full Stack Developer · Python / Django</div>
-        <p class="hero-tagline">کد، طراحی و محصول را با هم می‌بینم — از پیکربندسازهای تعاملی SVG تا فروشگاه‌های آنلاین، محصولات واقعی می‌سازم که از صفر تا راه‌اندازی پیش می‌روند.</p>
+        <p class="hero-tagline">برام طراحی و کد دو تا مرحله‌ی جدا از هم نیستن؛ از پیکربندساز تعاملی SVG گرفته تا فروشگاه‌های اینترنتی، هر پروژه رو از ایده‌ی اول تا لحظه‌ای که کاربر واقعی ازش استفاده می‌کنه، خودم جلو می‌برم.</p>
         <div class="hero-cta">
           <a class="btn primary" href="#projects">مشاهده پروژه‌ها <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
           <a class="btn" href="mailto:mohmmadjavad.mahmoodi@gmail.com">ارسال ایمیل</a>
@@ -2607,7 +2608,7 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
         <div class="sect-sub mono">Where design becomes code.</div>
       </div>
       <div class="about-grid">
-        <p class="about-text reveal">دانشجوی مهندسی کامپیوتر هستم و بیش از دو سال تجربه حرفه‌ای در توسعه فول‌استک دارم؛ پیش از آن، شش سال با طراحی بصری و ویرایش تصویر سروکار داشتم. این ترکیب باعث شده محصولاتی بسازم که هم از نظر فنی درست کار می‌کنند و هم از نظر بصری قابل اعتماد به‌نظر می‌رسند — از پیکربندساز تعاملی درب و پنجره گرفته تا ربات‌های اتوماسیون و نرم‌افزارهای دسکتاپ.</p>
+        <p class="about-text reveal">مهندسی کامپیوتر می‌خونم، ولی مسیرم از اونجا شروع نشد. قبل از برنامه‌نویسی، حدود شش سال با طراحی بصری و ویرایش عکس سروکار داشتم؛ حالا بیش از دو ساله که به‌صورت حرفه‌ای فول‌استک کار می‌کنم. حاصل این ترکیب، محصولاتی‌ان که هم زیر کاپوت درست کار می‌کنن، هم ظاهرشون دست‌وپا شکسته نیست — از پیکربندساز تعاملی درب و پنجره گرفته تا ربات‌های اتوماسیون و نرم‌افزارهای دسکتاپ.</p>
         <div class="spec-list reveal">
           <div class="spec-row"><span class="spec-key mono">EXPERIENCE</span><span class="spec-val">۲+ سال حرفه‌ای</span></div>
           <div class="spec-row"><span class="spec-key mono">DESIGN BG.</span><span class="spec-val">۶+ سال طراحی بصری</span></div>
