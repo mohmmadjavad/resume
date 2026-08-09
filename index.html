@@ -190,7 +190,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
 }
 @media (min-width:761px){ .mobile-divider{display:none;} }
 
-/* ═══════ BACK-TO-PORTAL CONTROL (shown while a resume view is active) ═══════ */
+/* ═══════ BACKO-PORTAL CONTROL (shown while a resume view is active) ═══════ */
 #backBtn{
   position:fixed;top:20px;left:20px;z-index:60;
   display:none;align-items:center;gap:8px;
@@ -1279,9 +1279,10 @@ document.documentElement.style.overflow = 'hidden';
   <div class="nav-dot" data-index="6" data-label="کالا ۲"></div>
   <div class="nav-dot" data-index="7" data-label="Teledata"></div>
   <div class="nav-dot" data-index="8" data-label="حسابداری"></div>
-  <div class="nav-dot" data-index="9" data-label="تجربه"></div>
-  <div class="nav-dot" data-index="10" data-label="تحصیل"></div>
-  <div class="nav-dot" data-index="11" data-label="تماس"></div>
+  <div class="nav-dot" data-index="9" data-label="کارفهم"></div>
+  <div class="nav-dot" data-index="10" data-label="تجربه"></div>
+  <div class="nav-dot" data-index="11" data-label="تحصیل"></div>
+  <div class="nav-dot" data-index="12" data-label="تماس"></div>
 </nav>
 
 <div id="fab-group">
@@ -1329,6 +1330,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="skill-card"><span class="skill-card-icon">🖥️</span><div class="skill-card-name">نرم‌افزار دسکتاپ</div><div class="skill-card-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div><div class="skill-card-tags"><span>PyQt6</span><span>Excel</span></div></div>
     <div class="skill-card"><span class="skill-card-icon">🖌️</span><div class="skill-card-name">طراحی گرافیک</div><div class="skill-card-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div><div class="skill-card-tags"><span>Photoshop</span><span>UI/UX</span></div></div>
     <div class="skill-card"><span class="skill-card-icon">🛠️</span><div class="skill-card-name">ابزار و زیرساخت</div><div class="skill-card-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div><div class="skill-card-tags"><span>Git</span><span>Linux</span><span>SEO</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">📱</span><div class="skill-card-name">اپلیکیشن موبایل و سخت‌افزار</div><div class="skill-card-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div><div class="skill-card-tags"><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div></div>
   </div>
 </div></div></section>
 
@@ -1370,7 +1372,7 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s5-ch">05 · فروشگاه · E-Commerce</div>
   <div class="project-reveal" id="s5-pr">
-    <div class="project-label">فروشگاه آنلاین · In Progress</div>
+    <div class="project-label">فروشگاه آنلاین · Live</div>
     <div class="project-image-wrap" id="s5-img"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
     <div class="project-title-fa">برازنده تن</div>
     <div class="project-title-en">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
@@ -1379,8 +1381,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Virtual Try-On</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">PyQt6</span>
     </div>
-    <span class="in-progress-badge">🚀 به زودی آنلاین · Launching Soon</span>
-    <a class="project-link-btn" href="https://mohmmadjavad.github.io/barazandeh_tan/index.html" target="_blank" rel="noopener">مشاهده پیش‌نمایش ظاهری ←</a>
+    <a class="project-link-btn" href="https://barazandetan.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
   </div>
 </div></div></section>
 
@@ -1435,17 +1436,34 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 9 ─ EXPERIENCE -->
-<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s9-ch">09 · تجربه کاری · Experience</div>
-  <div class="exp-reveal" id="s9-e1">
+<!-- SCENE 9 ─ KARFAHM -->
+<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s9-ch">09 · اپلیکیشن اندروید · Car Diagnostics</div>
+  <div class="project-reveal" id="s9-pr">
+    <div class="project-label">تشخیص خودرو · Native Android App</div>
+    <div class="project-image-wrap" id="s9-img"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
+    <div class="project-title-fa">کارفهم</div>
+    <div class="project-title-en">Karfahm — OBD-II Car Diagnostics (Persian)</div>
+    <div class="project-desc-text">اپلیکیشن اندرویدی تشخیص خودرو به زبان فارسی که از طریق بلوتوث به دانگل‌های ارزان‌قیمت ELM327 وصل می‌شود و داده‌های زنده موتور و کدهای خطا را می‌خواند و به فارسی روان توضیح می‌دهد. پروتکل OBD-II (دستورات AT، رمزگشایی PID و کدهای خطا طبق استاندارد SAE J2012) کاملاً از پایه پیاده‌سازی شده، بدون وابستگی به هیچ سرور یا سرویس ابری.</div>
+    <div class="project-desc-en">Persian-language Android app for car diagnostics over Bluetooth to low-cost ELM327 dongles — reads live engine data and fault codes and explains them in plain Persian. The full OBD-II protocol (AT commands, PID decoding, SAE J2012 fault codes) is implemented from scratch, fully offline with no server or cloud dependency.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Capacitor</span><span class="tech-chip">JavaScript</span><span class="tech-chip blue">OBD-II Protocol</span><span class="tech-chip blue">ELM327 / Bluetooth SPP</span><span class="tech-chip green">Native Android</span>
+    </div>
+    <a class="project-link-btn" href="https://github.com/mohmmadjavad/karfahm" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+  </div>
+</div></div></section>
+
+<!-- SCENE 10 ─ EXPERIENCE -->
+<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
+  <div class="chapter-marker" id="s10-ch">10 · تجربه کاری · Experience</div>
+  <div class="exp-reveal" id="s10-e1">
     <div class="exp-period">2022 — اکنون · Present</div>
     <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
     <div class="exp-role-en">Freelance Full Stack Developer</div>
     <div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
   </div>
-  <div class="scene-divider" id="s9-div"></div>
-  <div class="exp-reveal" id="s9-e2">
+  <div class="scene-divider" id="s10-div"></div>
+  <div class="exp-reveal" id="s10-e2">
     <div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div>
     <div class="exp-role-fa" style="background:linear-gradient(130deg,#fff 0%,#fcd34d 40%,var(--ember) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div>
     <div class="exp-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
@@ -1454,13 +1472,13 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 10 ─ EDUCATION -->
-<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s10-ch">10 · تحصیل و زبان · Education &amp; Languages</div>
-  <div class="edu-reveal" id="s10-edu">
+<section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
+  <div class="chapter-marker" id="s11-ch">11 · تحصیل و زبان · Education &amp; Languages</div>
+  <div class="edu-reveal" id="s11-edu">
     <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:14px;font-weight:600;">B.Sc. Computer Engineering · Currently Enrolled</div>
     <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
   </div>
-  <div class="lang-pair" id="s10-lg">
+  <div class="lang-pair" id="s11-lg">
     <div class="lang-item">
       <div class="lang-name-fa">فارسی</div><div class="lang-name-en">Persian — Native</div>
       <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
@@ -1473,18 +1491,18 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 11 ─ CONTACT -->
-<section class="scene scene-bookend" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s11-ch">11 · تماس · Let's Connect</div>
-  <div class="scene-headline-fa" id="s11-h">بیایید<br>بسازیم</div>
-  <div class="scene-headline-en" id="s11-hen">Let's Build Something Real</div>
-  <div class="contact-grid" id="s11-cg">
+<section class="scene scene-bookend" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
+  <div class="chapter-marker" id="s12-ch">12 · تماس · Let's Connect</div>
+  <div class="scene-headline-fa" id="s12-h">بیایید<br>بسازیم</div>
+  <div class="scene-headline-en" id="s12-hen">Let's Build Something Real</div>
+  <div class="contact-grid" id="s12-cg">
     <a class="contact-link" href="https://t.me/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg><span>mohmmadjavad</span></a>
     <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display">نمایش شماره</span></a>
     <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
   </div>
-  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s11-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
+  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s12-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
   <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.</div>
 </div></div></section>
 
@@ -1930,9 +1948,10 @@ const sceneElements={
   'scene-6':['s6-ch','s6-img','s6-pr'],
   'scene-7':['s7-ch','s7-img','s7-pr'],
   'scene-8':['s8-ch','s8-img','s8-pr'],
-  'scene-9':['s9-ch','s9-e1','s9-div','s9-e2','s9-graphic-btn'],
-  'scene-10':['s10-ch','s10-edu','s10-lg'],
-  'scene-11':['s11-ch','s11-h','s11-hen','s11-cg','s11-logo','footer-line']
+  'scene-9':['s9-ch','s9-img','s9-pr'],
+  'scene-10':['s10-ch','s10-e1','s10-div','s10-e2','s10-graphic-btn'],
+  'scene-11':['s11-ch','s11-edu','s11-lg'],
+  'scene-12':['s12-ch','s12-h','s12-hen','s12-cg','s12-logo','footer-line']
 };
 
 (function initNavigator(){
@@ -1970,7 +1989,7 @@ window.shareResume = shareResume;
 ════════════════════════════════════════════ */
 (function initOptimizedBigBang(){
   const bigBangLayer = document.getElementById('big-bang-layer');
-  const scene11 = document.getElementById('scene-11');
+  const scene11 = document.getElementById('scene-12');
   if(!bigBangLayer || !scene11) return;
 
   let exploded = false;
@@ -2667,6 +2686,12 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
           <div class="skill-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div>
           <div class="skill-tags"><span>Git</span><span>Linux</span><span>SEO</span></div>
         </div>
+        <div class="skill-card">
+          <span class="skill-idx mono">07 / MOBILE</span>
+          <div class="skill-name">اپلیکیشن موبایل و سخت‌افزار</div>
+          <div class="skill-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div>
+          <div class="skill-tags"><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -2728,14 +2753,14 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
           <div class="project-media-tag mono">FIG.03</div>
         </div>
         <div>
-          <div class="project-label">فروشگاه آنلاین <span class="mono">·</span> پرو مجازی <span class="tag status">به‌زودی</span></div>
+          <div class="project-label">فروشگاه آنلاین <span class="mono">·</span> پرو مجازی <span class="tag status">Live</span></div>
           <h3 class="project-title-fa">برازنده تن</h3>
           <div class="project-title-en mono">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
           <p class="project-desc">فروشگاه اینترنتی پوشاک با پنل ادمین پیشرفته، قابلیت پرو مجازی و ربات چت هوشمند شخصی‌سازی‌شده (شبیه Eilike) در کنار رابط کاربری مدرن.</p>
           <div class="project-tech">
             <span class="tag">Django</span><span class="tag">AI Chatbot</span><span class="tag">Virtual Try-On</span><span class="tag">Custom Admin</span><span class="tag">PyQt6</span>
           </div>
-          <a class="project-link" href="https://mohmmadjavad.github.io/barazandeh_tan/index.html" target="_blank" rel="noopener">مشاهده پیش‌نمایش ظاهری <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+          <a class="project-link" href="https://barazandetan.ir" target="_blank" rel="noopener">مشاهده وب‌سایت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
         </div>
       </article>
 
@@ -2793,6 +2818,25 @@ footer{border-top:1px solid var(--line);padding-block:34px;}
             <span class="tag">PyQt6</span><span class="tag">SQLite</span><span class="tag">Persian Calendar</span><span class="tag">ReportLab</span>
           </div>
           <a class="project-link" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">مشاهده در GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- P7 -->
+      <article class="project reveal">
+        <div class="project-media frame">
+          <span class="fc1"></span><span class="fc2"></span>
+          <img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy">
+          <div class="project-media-tag mono">FIG.07</div>
+        </div>
+        <div>
+          <div class="project-label">اپلیکیشن اندروید <span class="mono">·</span> تشخیص خودرو <span class="tag status">Native</span></div>
+          <h3 class="project-title-fa">کارفهم</h3>
+          <div class="project-title-en mono">Karfahm — OBD-II Car Diagnostics (Persian)</div>
+          <p class="project-desc">اپلیکیشن اندرویدی تشخیص خودرو به فارسی؛ از طریق بلوتوث به دانگل‌های ELM327 وصل می‌شود، داده‌های زنده موتور و کدهای خطا را می‌خواند و به فارسی روان توضیح می‌دهد. پروتکل OBD-II کامل از پایه پیاده‌سازی شده، بدون سرور یا سرویس ابری.</p>
+          <div class="project-tech">
+            <span class="tag">Capacitor</span><span class="tag">JavaScript</span><span class="tag">OBD-II Protocol</span><span class="tag">Bluetooth SPP</span>
+          </div>
+          <a class="project-link" href="https://github.com/mohmmadjavad/karfahm" target="_blank" rel="noopener">مشاهده در GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
         </div>
       </article>
 
