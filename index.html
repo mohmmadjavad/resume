@@ -471,7 +471,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   line-height:.95;
   opacity:0;
   letter-spacing:-.01em;
-  background:linear-gradient(130deg,#ffffff 0%,#eef2ff 30%,var(--accent2) 60%);
+  background:linear-gradient(130deg,var(--grad-a) 0%,var(--grad-b) 30%,var(--accent2) 60%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -696,7 +696,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   font-size:.8rem;
   font-weight:500;
   letter-spacing:.05em;
-  color:#e0d8f0;
+  color:var(--heading);
   text-decoration:none;
   padding:14px 24px;
   border:2px solid rgba(41,70,255,.35);
@@ -718,7 +718,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .contact-link:hover::before{opacity:.12;}
 .contact-link:hover{
   border-color:var(--accent2);
-  color:#fff;
+  color:var(--accent2);
   transform:translateY(-3px);
   box-shadow:0 8px 28px rgba(41,70,255,0.2);
 }
@@ -1411,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', function(){
     my = -(e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  window._updateThreeColors = function(colors, rc, r2c, cc){
+  window._updateThreeColors = function(colors, rc, r2c, cc, isDay){
     palette.core = new THREE.Color(colors[0] || '#5068ff');
     palette.mid = new THREE.Color(colors[2] || '#7dd3fc');
     palette.outer = new THREE.Color(colors[3] || '#1a2a80');
@@ -1420,6 +1420,20 @@ document.addEventListener('DOMContentLoaded', function(){
     glowIco.material.color = palette.mid;
     ring1.material.color.setHex(rc);
     ring2.material.color.setHex(r2c);
+
+    // Additive blending only ever brightens — on a light/day background it just
+    // washes out to white, so the galaxy needs normal blending + dark tones in day mode.
+    const blendMode = isDay ? THREE.NormalBlending : THREE.AdditiveBlending;
+    galaxy.material.blending = blendMode;
+    stars.material.blending = blendMode;
+    dust.material.blending = blendMode;
+    ring1.material.blending = blendMode;
+    ring2.material.blending = blendMode;
+    coreIco.material.blending = blendMode;
+    glowIco.material.blending = blendMode;
+
+    stars.material.color.set(isDay ? 0x15181D : 0xccccff);
+    dust.material.color.set(isDay ? 0x2946ff : 0x9988cc);
     
     for(let i = 0; i < GALAXY_COUNT; i++){
       const r = Math.sqrt(gPos[i*3]**2 + (gPos[i*3+2] + 4)**2);
@@ -1670,16 +1684,18 @@ document.addEventListener('DOMContentLoaded', function(){
       const outerHex=hexLerp(night.threeOuter,day.threeOuter,t);
       const ringHex=hexLerp(night.ring,day.ring,t);
       const ring2Hex=hexLerp(night.ring2,day.ring2,t);
-      window._updateThreeColors([coreHex,null,midHex,outerHex],parseInt(ringHex.slice(1),16),parseInt(ring2Hex.slice(1),16),parseInt(coreHex.slice(1),16));
+      window._updateThreeColors([coreHex,null,midHex,outerHex],parseInt(ringHex.slice(1),16),parseInt(ring2Hex.slice(1),16),parseInt(coreHex.slice(1),16),t>=0.5);
     }
   }
 
+  const TRANSITION_SPEED=2.2; // >1 = finishes over less scroll distance, same midpoint
   function computeT(){
     const rect=zone.getBoundingClientRect();
     const vh=window.innerHeight;
     const start=vh, end=-rect.height; // begins as the scene enters, finishes once it has fully passed
     const raw=(start-rect.top)/(start-end);
-    return Math.max(0,Math.min(1,raw));
+    const sped=0.5+(raw-0.5)*TRANSITION_SPEED;
+    return Math.max(0,Math.min(1,sped));
   }
 
   let ticking=false;
