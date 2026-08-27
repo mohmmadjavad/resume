@@ -77,9 +77,6 @@
   --dot-inactive:rgba(255,255,255,0.25);
   --vignette-outer:rgba(2,2,6,0.92);
   --vignette-inner:rgba(2,2,6,0.6);
-  --tag-blue:#a3e0ff;
-  --tag-ember:#fcd34d;
-  --tag-green:#6ee7b7;
 }
 html{scroll-behavior:auto;scrollbar-width:none;overflow-x:hidden;}
 html::-webkit-scrollbar{display:none;}
@@ -386,34 +383,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .meteor-flyby.type-shooting.fly{animation:meteorPassShooting 0.95s cubic-bezier(.3,.55,.3,1) forwards;}
 @keyframes meteorPassShooting{0%{opacity:0;transform:translate(-115vw,-85vh) scale(0.5) rotate(34deg);}10%{opacity:1;}48%{opacity:1;transform:translate(0,0) scale(1.35) rotate(34deg);}58%{opacity:1;}100%{opacity:0;transform:translate(115vw,85vh) scale(0.5) rotate(34deg);}}
 
-/* FINALE METEOR SHOWER — replaces the old "big bang" explosion */
-#meteor-shower-layer{position:fixed;inset:0;z-index:91;pointer-events:none;overflow:hidden;}
-.shower-star{
-  position:absolute;
-  width:180px;
-  height:2px;
-  border-radius:999px;
-  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(200,215,255,0.9) 70%, #ffffff 100%);
-  box-shadow:0 0 8px 1px rgba(200,220,255,0.7);
-  opacity:0;
-  transform-origin:right center;
-  will-change:transform,opacity;
-  animation:showerFall var(--fall-duration,1.6s) linear forwards;
-  animation-delay:var(--fall-delay,0s);
-}
-@keyframes showerFall{
-  0%{opacity:0;transform:translate(0,0) rotate(var(--fall-angle,18deg)) scaleX(0.3);}
-  6%{opacity:1;}
-  85%{opacity:1;}
-  100%{opacity:0;transform:translate(var(--fall-x,-60vw),var(--fall-y,70vh)) rotate(var(--fall-angle,18deg)) scaleX(1);}
-}
-.shower-glow{
-  position:fixed;inset:0;z-index:90;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 30%, rgba(120,150,255,0.18) 0%, transparent 60%);
-  opacity:0;transition:opacity 1.2s ease;
-}
-.shower-glow.active{opacity:1;}
-
 .chapter-marker{
   font-family:'JetBrains Mono',monospace;
   font-size:0.68rem;
@@ -451,11 +420,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   border:2px solid rgba(41,70,255,0.35);
   max-width:450px;
   width:100%;
-  /* Reserving the box's shape up front (rather than letting it collapse to
-     0 height until the lazy image finishes loading) stops the browser's
-     scroll-anchoring from yanking the page back to where it was a moment
-     ago the instant each image pops in. */
-  aspect-ratio:16/10;
   box-shadow:0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(41,70,255,0.15);
   background:var(--image-bg);
   flex-shrink:0;
@@ -465,7 +429,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   transform: translateY(-4px);
   box-shadow:0 16px 48px rgba(0,0,0,0.7), 0 0 40px rgba(41,70,255,0.25);
 }
-.project-image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
+.project-image-wrap img{width:100%;height:auto;display:block;transition:transform 0.4s ease;}
 
 .hero-name-fa{
   font-size:clamp(3.2rem,9.5vw,9.5rem);
@@ -632,9 +596,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   border-color:var(--accent);
   color:#fff;
 }
-.tech-chip.blue{border-color:rgba(124,143,255,.4);color:var(--tag-blue);background:rgba(124,143,255,.08);}
-.tech-chip.ember{border-color:rgba(245,158,11,.4);color:var(--tag-ember);background:rgba(245,158,11,.08);}
-.tech-chip.green{border-color:rgba(52,211,153,.4);color:var(--tag-green);background:rgba(52,211,153,.08);}
+.tech-chip.blue{border-color:rgba(124,143,255,.4);color:#a3e0ff;background:rgba(124,143,255,.08);}
+.tech-chip.ember{border-color:rgba(245,158,11,.4);color:#fcd34d;background:rgba(245,158,11,.08);}
+.tech-chip.green{border-color:rgba(52,211,153,.4);color:#6ee7b7;background:rgba(52,211,153,.08);}
 
 .project-link-btn{
   display:inline-flex;
@@ -1006,8 +970,6 @@ document.documentElement.style.overflow = 'hidden';
 <div class="scanline"></div>
 <div id="ambient"></div>
 <div id="big-bang-layer"></div>
-<div id="meteor-shower-layer"></div>
-<div class="shower-glow" id="shower-glow"></div>
 <canvas id="bg-canvas"></canvas>
 
 <div id="scroll-hint"><div class="scroll-mouse"></div><span>اسکرول</span></div>
@@ -1472,7 +1434,7 @@ document.addEventListener('DOMContentLoaded', function(){
     glowIco.material.blending = blendMode;
 
     stars.material.color.set(isDay ? 0x15181D : 0xccccff);
-    dust.material.color.set(isDay ? 0x15181D : 0x9988cc);
+    dust.material.color.set(isDay ? 0x2946ff : 0x9988cc);
     
     for(let i = 0; i < GALAXY_COUNT; i++){
       const r = Math.sqrt(gPos[i*3]**2 + (gPos[i*3+2] + 4)**2);
@@ -1553,51 +1515,20 @@ document.addEventListener('DOMContentLoaded', function(){
       lookZ = -5 + approach * 3;
       rotY = 0;
     } else if(p < 0.70){
-      // Same idea as the dive->orbit junction below: ease in from the
-      // approach phase's exact ending values instead of snapping straight
-      // to this phase's own formula (which used to jump lookZ from -2 to -5).
       const d = dive;
-      const dCamX = Math.sin(d * Math.PI * 2) * 4 + px * 2;
-      const dCamY = Math.cos(d * Math.PI * 1.5) * 2 + py * 1.5;
-      const dLookZ = -5 + d * 8;
-      const dRotY = d * Math.PI * 0.5;
-
-      const entryCamX2 = 0;
-      const entryCamY2 = 2;
-      const entryLookZ2 = -2;
-      const entryRotY2 = 0;
-
-      const blend2 = Math.min(1, d / 0.12);
       camZ = camZ_mid + Math.sin(d * Math.PI) * 3;
-      camX = entryCamX2 + (dCamX - entryCamX2) * blend2;
-      camY = entryCamY2 + (dCamY - entryCamY2) * blend2;
-      lookZ = entryLookZ2 + (dLookZ - entryLookZ2) * blend2;
-      rotY = entryRotY2 + (dRotY - entryRotY2) * blend2;
+      camX = Math.sin(d * Math.PI * 2) * 4 + px * 2;
+      camY = Math.cos(d * Math.PI * 1.5) * 2 + py * 1.5;
+      lookZ = -5 + d * 8;
+      rotY = d * Math.PI * 0.5;
     } else {
-      // The orbit phase used to start its own independent formula (camX
-      // jumping from ~0 to 9, lookZ from 3 to -4, rotY snapping back to 0)
-      // which produced a visible camera "jump" the instant scroll crossed
-      // p=0.70. We now blend smoothly from the exact values the dive phase
-      // ended on into the orbit's own motion over the first slice of it,
-      // so the camera eases into the orbit instead of snapping to it.
       const o = orbit;
       const fullCircle = o * Math.PI * 2;
-      const oCamX = Math.cos(fullCircle) * 9;
-      const oCamY = Math.sin(fullCircle * 0.7) * 3 + py * 0.8;
-      const oLookZ = -4 + o * 6;
-      const oRotY = fullCircle;
-
-      const entryCamX = px * 2;                 // dive phase value at d=1
-      const entryCamY = py * 1.5;                // dive phase value at d=1
-      const entryLookZ = 3;                      // dive phase value at d=1
-      const entryRotY = Math.PI * 0.5;           // dive phase value at d=1
-
-      const blend = Math.min(1, o / 0.12);
       camZ = -2 + Math.sin(o * Math.PI) * 8 + mobileZOffset * 0.5;
-      camX = entryCamX + (oCamX - entryCamX) * blend;
-      camY = entryCamY + (oCamY - entryCamY) * blend;
-      lookZ = entryLookZ + (oLookZ - entryLookZ) * blend;
-      rotY = entryRotY + (oRotY - entryRotY) * blend;
+      camX = Math.cos(fullCircle) * 9;
+      camY = Math.sin(fullCircle * 0.7) * 3 + py * 0.8;
+      lookZ = -4 + o * 6;
+      rotY = fullCircle;
     }
 
     camera.position.x += (camX - camera.position.x) * 0.04;
@@ -1693,8 +1624,7 @@ document.addEventListener('DOMContentLoaded', function(){
     chipBorder:[255,255,255,0.18],chipColor:[255,255,255,0.72],chipBg:[255,255,255,0.045],
     imageBg:[6,6,10,0.7],dotInactive:[255,255,255,0.25],
     vignetteOuter:[2,2,6,0.92],vignetteInner:[2,2,6,0.6],
-    threeCore:'#ffffff',threeMid:'#7c8fff',threeOuter:'#1a2a80',ring:'#ffffff',ring2:'#7c8fff',
-    tagBlue:'#a3e0ff',tagEmber:'#fcd34d',tagGreen:'#6ee7b7'
+    threeCore:'#ffffff',threeMid:'#7c8fff',threeOuter:'#1a2a80',ring:'#ffffff',ring2:'#7c8fff'
   };
   const day={
     void:'#F5F6F3',text:'#15181D',heading:'#15181D',gradA:'#15181D',gradB:'#3a4257',monoAccent:'#2946ff',
@@ -1703,8 +1633,7 @@ document.addEventListener('DOMContentLoaded', function(){
     chipBorder:[21,24,29,0.16],chipColor:[21,24,29,0.62],chipBg:[21,24,29,0.035],
     imageBg:[255,255,255,0.7],dotInactive:[21,24,29,0.22],
     vignetteOuter:[0,0,0,0.05],vignetteInner:[0,0,0,0.03],
-    threeCore:'#15181D',threeMid:'#15181D',threeOuter:'#3a3d44',ring:'#15181D',ring2:'#15181D',
-    tagBlue:'#1d3fd6',tagEmber:'#b45309',tagGreen:'#047857'
+    threeCore:'#15181D',threeMid:'#2946ff',threeOuter:'#c7d0ff',ring:'#15181D',ring2:'#2946ff'
   };
   window.getCurrentTheme=()=>'night';
   window.getThemeData=()=>({threeColors:[night.threeCore,null,night.threeMid,night.threeOuter],ringColor:0xffffff,ring2Color:0x7c8fff,coreColor:0xffffff});
@@ -1750,9 +1679,6 @@ document.addEventListener('DOMContentLoaded', function(){
     root.style.setProperty('--dot-inactive',rgbaLerp(night.dotInactive,day.dotInactive,t));
     root.style.setProperty('--vignette-outer',rgbaLerp(night.vignetteOuter,day.vignetteOuter,t));
     root.style.setProperty('--vignette-inner',rgbaLerp(night.vignetteInner,day.vignetteInner,t));
-    root.style.setProperty('--tag-blue',hexLerp(night.tagBlue,day.tagBlue,t));
-    root.style.setProperty('--tag-ember',hexLerp(night.tagEmber,day.tagEmber,t));
-    root.style.setProperty('--tag-green',hexLerp(night.tagGreen,day.tagGreen,t));
     document.body.style.background=voidHex;
     if(window._updateThreeColors){
       const coreHex=hexLerp(night.threeCore,day.threeCore,t);
@@ -1764,59 +1690,25 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  // The day/night switch is now a fixed-length, timer-driven animation
-  // instead of being tied 1:1 to scroll position: once the midpoint scene
-  // is reached, night -> day plays out over DURATION ms on its own,
-  // regardless of whether the person keeps scrolling, pauses, or scrolls
-  // slowly through it. Scrolling back up above the zone reverses it the
-  // same way (day -> night), so the page stays consistent either direction.
-  const DURATION=4200;
-  let current=0;      // the value 'apply' is currently driven to (0=night,1=day)
-  let target=0;
-  let animId=null;
-  let animStart=0;
-  let animFrom=0;
-
-  function easeInOutCubic(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
-
-  function runAnimation(now){
-    const elapsed=now-animStart;
-    const raw=Math.max(0,Math.min(1,elapsed/DURATION));
-    const eased=easeInOutCubic(raw);
-    current=animFrom+(target-animFrom)*eased;
-    apply(current);
-    if(raw<1){
-      animId=requestAnimationFrame(runAnimation);
-    }else{
-      current=target;
-      apply(current);
-      animId=null;
-    }
+  const TRANSITION_SPEED=2.2; // >1 = finishes over less scroll distance, same midpoint
+  function computeT(){
+    const rect=zone.getBoundingClientRect();
+    const vh=window.innerHeight;
+    const start=vh, end=-rect.height; // begins as the scene enters, finishes once it has fully passed
+    const raw=(start-rect.top)/(start-end);
+    const sped=0.5+(raw-0.5)*TRANSITION_SPEED;
+    return Math.max(0,Math.min(1,sped));
   }
 
-  function goTo(value){
-    if(target===value && animId)return;
-    if(target===value && current===value)return;
-    target=value;
-    animFrom=current;
-    animStart=performance.now();
-    if(animId)cancelAnimationFrame(animId);
-    animId=requestAnimationFrame(runAnimation);
+  let ticking=false;
+  function onScrollTick(){
+    apply(computeT());
+    ticking=false;
   }
-
-  const themeObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      const rect=entry.target.getBoundingClientRect();
-      if(entry.isIntersecting){
-        goTo(1); // reached the midpoint scene scrolling down -> become day
-      }else if(rect.top>0){
-        goTo(0); // scrolled back above the zone -> return to night
-      }
-    });
-  },{threshold:0.5});
-  themeObserver.observe(zone);
-
-  apply(0);
+  window.addEventListener('scroll',()=>{
+    if(!ticking){ticking=true;requestAnimationFrame(onScrollTick);}
+  },{passive:true});
+  apply(computeT());
 })();
 /* ════════════════════════════════════════════
    GSAP + SCROLLTRIGGER + NAV + METEOR + MODALS + SHARE + PHONE + BIG BANG
@@ -1866,80 +1758,191 @@ window.shareResume = shareResume;
 (function(){const p=['\u0030','\u0039','1','2','0','1','2','0','7','4','5'],num=p.join(''),link=document.getElementById('phone-link'),display=document.getElementById('phone-display');if(!link||!display)return;let revealed=false;link.addEventListener('click',function(e){e.preventDefault();if(!revealed){display.textContent='0'+num.slice(1);link.href='tel:'+num;revealed=true;}else{window.location.href='tel:'+num;}});})();
 
 /* ════════════════════════════════════════════
-   FINALE METEOR SHOWER — replaces the old "big bang" explosion.
-   A calm, few-second shower of shooting stars drifts across the
-   background behind the closing scene instead of an explosion.
+   OPTIMIZED ULTIMATE BIG BANG
 ════════════════════════════════════════════ */
-(function initMeteorShowerFinale(){
-  const showerLayer = document.getElementById('meteor-shower-layer');
-  const showerGlow = document.getElementById('shower-glow');
-  const finaleScene = document.getElementById('scene-12');
-  if(!showerLayer || !finaleScene) return;
+(function initOptimizedBigBang(){
+  const bigBangLayer = document.getElementById('big-bang-layer');
+  const scene11 = document.getElementById('scene-12');
+  if(!bigBangLayer || !scene11) return;
 
-  let played = false;
-  let running = false;
+  let exploded = false;
+  let explosionActive = false;
 
-  function spawnStar(delay, duration){
-    const star = document.createElement('div');
-    star.className = 'shower-star';
-    const startX = 60 + Math.random() * 40; // vw, right-hand side of the screen
-    const startY = -10 - Math.random() * 30; // vh, above the top edge
-    const travelX = -(70 + Math.random() * 50); // vw, falls toward lower-left
-    const travelY = 80 + Math.random() * 40; // vh
-    const angle = 18 + Math.random() * 10; // deg
-    const width = 100 + Math.random() * 140;
-
-    star.style.left = startX + 'vw';
-    star.style.top = startY + 'vh';
-    star.style.width = width + 'px';
-    star.style.setProperty('--fall-x', travelX + 'vw');
-    star.style.setProperty('--fall-y', travelY + 'vh');
-    star.style.setProperty('--fall-angle', angle + 'deg');
-    star.style.setProperty('--fall-duration', duration + 's');
-    star.style.setProperty('--fall-delay', delay + 's');
-
-    showerLayer.appendChild(star);
-    setTimeout(() => { if(star.parentNode) star.remove(); }, (delay + duration) * 1000 + 200);
+  function getThemeColors(){
+    // scene-12 (the finale) sits after the day transition completes, so these
+    // need to read against the white paper background, not the night sky.
+    return ['#15181D', '#2946ff', '#5068ff', '#0a1240', '#7c8fff'];
   }
 
-  function triggerShower(){
-    if(running) return;
-    running = true;
+  function createOptimizedParticle(cx, cy){
+    const particle = document.createElement('div');
+    particle.className = 'star-particle';
+    const colors = getThemeColors();
+    
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 200 + Math.random() * Math.min(window.innerWidth, window.innerHeight) * 1.2;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    
+    const size = 2 + Math.random() * 10;
+    const duration = 2 + Math.random() * 2;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    
+    particle.style.cssText = `
+      left: ${cx}px;
+      top: ${cy}px;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle, rgba(255,255,255,1) 0%, ${color} 70%, transparent 100%);
+      --tx: ${tx}px;
+      --ty: ${ty}px;
+      --duration: ${duration}s;
+      margin-left: -${size/2}px;
+      margin-top: -${size/2}px;
+      box-shadow: 0 0 ${size * 2}px ${color};
+    `;
 
-    showerGlow.classList.add('active');
+    bigBangLayer.appendChild(particle);
 
-    const STAR_COUNT = 22;
-    const SHOWER_SPAN = 3.2; // seconds over which new stars keep appearing
-    for(let i = 0; i < STAR_COUNT; i++){
-      const delay = Math.random() * SHOWER_SPAN;
-      const duration = 1.3 + Math.random() * 1.1;
-      spawnStar(delay, duration);
+    setTimeout(() => {
+      if(particle.parentNode) particle.remove();
+    }, duration * 1000 + 300);
+  }
+
+  function createShockwave(delay, color, scale, duration){
+    setTimeout(() => {
+      const wave = document.createElement('div');
+      wave.className = 'shockwave-ring';
+      wave.style.cssText = `
+        border: 2px solid ${color};
+        box-shadow: 0 0 30px ${color}, inset 0 0 20px ${color};
+        --wave-scale: ${scale};
+        --wave-duration: ${duration}s;
+      `;
+      bigBangLayer.appendChild(wave);
+
+      setTimeout(() => {
+        if(wave.parentNode) wave.remove();
+      }, duration * 1000 + 300);
+    }, delay);
+  }
+
+  function createEnergyBeams(count){
+    const colors = getThemeColors();
+    for(let i = 0; i < count; i++){
+      const beam = document.createElement('div');
+      beam.className = 'energy-beam';
+      const angle = (i / count) * 360;
+      const height = 150 + Math.random() * 250;
+      beam.style.cssText = `
+        transform: rotate(${angle}deg);
+        --beam-height: ${height}px;
+        --beam-duration: ${1.5 + Math.random() * 1.5}s;
+        background: linear-gradient(to top, transparent, ${colors[Math.floor(Math.random()*3)]}, transparent);
+      `;
+      bigBangLayer.appendChild(beam);
+
+      setTimeout(() => {
+        if(beam.parentNode) beam.remove();
+      }, 3000);
+    }
+  }
+
+  function createQuantumCore(){
+    const core = document.createElement('div');
+    core.className = 'quantum-core';
+    bigBangLayer.appendChild(core);
+    
+    setTimeout(() => {
+      if(core.parentNode) core.remove();
+    }, 3000);
+  }
+
+  function createPrimordialFlash(){
+    const flash = document.createElement('div');
+    flash.className = 'primordial-flash';
+    document.body.appendChild(flash);
+    
+    requestAnimationFrame(() => {
+      flash.classList.add('active');
+      setTimeout(() => {
+        flash.classList.remove('active');
+        setTimeout(() => {
+          if(flash.parentNode) flash.remove();
+        }, 1100);
+      }, 100);
+    });
+  }
+
+  function createCosmicVoid(){
+    const voidOverlay = document.createElement('div');
+    voidOverlay.className = 'cosmic-void-overlay';
+    document.body.appendChild(voidOverlay);
+    
+    requestAnimationFrame(() => {
+      voidOverlay.classList.add('active');
+      setTimeout(() => {
+        if(voidOverlay.parentNode) voidOverlay.remove();
+      }, 2500);
+    });
+  }
+
+  function triggerExplosion(){
+    if(explosionActive) return;
+    explosionActive = true;
+
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const isMobile = window.innerWidth < 769;
+    const colors = getThemeColors();
+
+    createPrimordialFlash();
+    setTimeout(() => createQuantumCore(), 150);
+    setTimeout(() => createCosmicVoid(), 400);
+
+    createShockwave(200, colors[0], 20, 2.5);
+    createShockwave(500, colors[2], 28, 2);
+    createShockwave(800, '#ffffff', 35, 1.8);
+
+    setTimeout(() => createEnergyBeams(isMobile ? 6 : 10), 300);
+
+    const particleCount = isMobile ? 30 : 50;
+    const batchSize = 10;
+    for(let batch = 0; batch < particleCount; batch += batchSize){
+      setTimeout(() => {
+        for(let i = 0; i < batchSize && (batch + i) < particleCount; i++){
+          createOptimizedParticle(
+            cx + (Math.random() - 0.5) * 200,
+            cy + (Math.random() - 0.5) * 200
+          );
+        }
+      }, batch * 25);
     }
 
     setTimeout(() => {
-      showerGlow.classList.remove('active');
-    }, (SHOWER_SPAN + 1.6) * 1000);
+      if(window._triggerBigBangMode) window._triggerBigBangMode();
+    }, 500);
 
     setTimeout(() => {
-      running = false;
-      played = true;
-    }, (SHOWER_SPAN + 2.2) * 1000);
+      explosionActive = false;
+      exploded = true;
+    }, 2000);
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if(entry.isIntersecting && !played && !running){
-        setTimeout(() => triggerShower(), 300);
+      if(entry.isIntersecting && !exploded){
+        setTimeout(() => triggerExplosion(), 400);
       }
     });
   }, { threshold: 0.3 });
 
-  observer.observe(finaleScene);
+  observer.observe(scene11);
 
   window.addEventListener('scroll', () => {
-    const rect = finaleScene.getBoundingClientRect();
-    if(rect.top > window.innerHeight && played){
-      played = false; // scrolled back away — allow it to play again on return
+    const rect = scene11.getBoundingClientRect();
+    if(rect.top > window.innerHeight && exploded){
+      exploded = false;
     }
   }, { passive: true });
 
