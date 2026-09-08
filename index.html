@@ -204,10 +204,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @keyframes scrollDown{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(9px);opacity:0;}}
 
 /* SCENE SYSTEM */
-.scene{position:relative;height:100vh;width:100%;z-index:1;}
-.scene-bookend{position:relative;height:100vh;width:100%;z-index:10;}
-.scene-sticky{position:relative;top:0;height:100%;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.scene-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 40px;z-index:10;overflow:hidden;will-change:transform;}
+.scene{position:relative;min-height:100vh;width:100%;z-index:1;}
+.scene-bookend{position:relative;min-height:100vh;width:100%;z-index:10;}
+.scene-sticky{position:relative;top:0;min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:visible;padding-block:32px;}
+.scene-inner{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 40px;z-index:10;overflow:visible;will-change:transform;width:100%;}
 
 /* ════════ OPTIMIZED ULTIMATE BIG BANG ════════ */
 #big-bang-layer {
@@ -458,6 +458,17 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 #profile-modal-close{position:absolute;top:24px;right:28px;width:48px;height:48px;border:2px solid rgba(80,104,255,0.5);border-radius:50%;background:rgba(6,6,10,0.9);color:var(--accent2);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight:bold;}
 #profile-modal-close:hover{background:rgba(41,70,255,0.3);border-color:var(--accent2);transform:scale(1.1);}
 
+#project-image-modal{position:fixed;inset:0;z-index:10000;background:rgba(2,2,6,0);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 0.35s ease,background 0.35s ease;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);padding:24px;}
+#project-image-modal.open{opacity:1;pointer-events:auto;background:rgba(2,2,6,0.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
+#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;}
+#project-image-modal.open img{transform:scale(1);}
+#project-image-modal-close{position:absolute;top:24px;right:28px;width:48px;height:48px;border:2px solid rgba(80,104,255,0.5);border-radius:50%;background:rgba(6,6,10,0.9);color:var(--accent2);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight:bold;}
+#project-image-modal-close:hover{background:rgba(41,70,255,0.3);border-color:var(--accent2);transform:scale(1.1);}
+@media(max-width:600px){
+  #project-image-modal img{width:92vw;height:auto;max-height:80vh;}
+  #project-image-modal-close{top:14px;right:14px;width:42px;height:42px;}
+}
+
 .project-image-wrap{
   opacity:0;
   margin-bottom:18px;
@@ -470,10 +481,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
      0 height until the lazy image finishes loading) stops the browser's
      scroll-anchoring from yanking the page back to where it was a moment
      ago the instant each image pops in. */
-  aspect-ratio:16/10;
+  aspect-ratio:16/9;
   box-shadow:0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(41,70,255,0.15);
   background:var(--image-bg);
   flex-shrink:0;
+  cursor:pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .project-image-wrap:hover{
@@ -835,7 +847,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .fab-btn svg{width:17px;height:17px;}
   .fab-btn::before{display:none;}
   .profile-hero-img{width:160px;height:160px;}
-  .project-image-wrap{max-width:80%;max-height:22vh;margin-bottom:10px;}
+  .project-image-wrap{max-width:100%;margin-bottom:10px;}
   
   /* اصلاح گرید مهارت‌ها */
   .skills-cards-grid{
@@ -887,7 +899,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @media(max-width:400px){
   .galaxy-dot{width:16px;height:16px;}
   .scene-inner{padding:10px 6px;}
-  .project-image-wrap{max-height:18vh;margin-bottom:8px;}
+  .project-image-wrap{margin-bottom:8px;}
   .fab-btn{width:38px;height:38px;}
   .fab-btn svg{width:15px;height:15px;}
   
@@ -1308,6 +1320,7 @@ document.documentElement.style.overflow = 'hidden';
 
 <!-- PROFILE MODAL -->
 <div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.webp" alt="محمد جواد محمودی" draggable="false"></div>
+<div id="project-image-modal"><button id="project-image-modal-close">✕</button><img src="" alt="" draggable="false"></div>
 
 <script src="vendor/js/three.min.js" defer></script>
 <script src="vendor/js/gsap.min.js" defer></script>
@@ -1939,6 +1952,23 @@ const sceneElements={
 
 // PROFILE MODAL
 (function(){const modal=document.getElementById('profile-modal'),closeBtn=document.getElementById('profile-modal-close'),trigger=document.querySelector('.profile-hero-img');if(!modal||!trigger)return;function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}trigger.addEventListener('click',openModal);closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});modal.addEventListener('click',closeModal);modal.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});})();
+
+// PROJECT IMAGE MODAL (fullscreen)
+(function(){
+  const modal=document.getElementById('project-image-modal');
+  const closeBtn=document.getElementById('project-image-modal-close');
+  if(!modal||!closeBtn)return;
+  const modalImg=modal.querySelector('img');
+  function openModal(src,alt){modalImg.src=src;modalImg.alt=alt||'';modal.classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
+  document.querySelectorAll('.project-image-wrap img').forEach(img=>{
+    img.addEventListener('click',()=>openModal(img.currentSrc||img.src,img.alt));
+  });
+  closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});
+  modal.addEventListener('click',closeModal);
+  modalImg.addEventListener('click',e=>e.stopPropagation());
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+})();
 
 // SHARE
 async function shareResume(){const d={title:'Mohammad Javad Mahmoudi — Full Stack Developer',text:'Mohammad Javad Mahmoudi\nFull Stack Developer · Web/Bots/Desktop\nimmdjavad.ir',url:'https://immdjavad.ir'};if(navigator.share){try{await navigator.share(d);}catch(e){if(e&&e.name==='AbortError')return;fallback();}}else{fallback();}function fallback(){navigator.clipboard.writeText('https://immdjavad.ir').then(()=>{const btn=document.querySelector('.fab-share');if(!btn)return;const orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.background='rgba(52,211,153,0.2)';btn.style.borderColor='rgba(52,211,153,0.6)';btn.style.color='#34d399';setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.borderColor='';btn.style.color='';},1500);}).catch(()=>{});}}
