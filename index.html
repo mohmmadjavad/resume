@@ -85,14 +85,14 @@ html{scroll-behavior:auto;scrollbar-width:none;overflow-x:hidden;}
 html::-webkit-scrollbar{display:none;}
 body{background:var(--void);color:var(--text);font-family:'Vazirmatn',sans-serif;overflow-x:hidden;transition:background .1s linear;}
 
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center, transparent 30%, var(--vignette-outer) 100%);pointer-events:none;z-index:5;transition:opacity .8s ease;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center, transparent 30%, var(--vignette-outer) 100%);pointer-events:none;z-index:5;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.028;pointer-events:none;z-index:6;}
 
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-#ambient{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 60% 50% at 30% 50%, rgba(41,70,255,0.11), transparent 70%),radial-gradient(ellipse 40% 40% at 75% 80%, rgba(124,143,255,0.06), transparent 60%);pointer-events:none;transition:background 0.8s ease, opacity .8s ease;}
+#ambient{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 60% 50% at 30% 50%, rgba(41,70,255,0.11), transparent 70%),radial-gradient(ellipse 40% 40% at 75% 80%, rgba(124,143,255,0.06), transparent 60%);pointer-events:none;transition:background 0.8s ease;}
 
-.scanline{position:fixed;top:-100%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(41,70,255,0.1),transparent);z-index:7;pointer-events:none;animation:scan 12s linear infinite;transition:opacity .8s ease;}
+.scanline{position:fixed;top:-100%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(41,70,255,0.1),transparent);z-index:7;pointer-events:none;animation:scan 12s linear infinite;}
 @keyframes scan{0%{top:-3px;}100%{top:100%;}}
 
 #scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent3),var(--ember));z-index:100;box-shadow:0 0 12px var(--glow);transition:width 0.5s cubic-bezier(.4,0,.2,1);}
@@ -460,7 +460,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 #project-image-modal{position:fixed;inset:0;z-index:10000;background:rgba(2,2,6,0);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 0.35s ease,background 0.35s ease;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);padding:24px;}
 #project-image-modal.open{opacity:1;pointer-events:auto;background:rgba(2,2,6,0.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
-#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:contain;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:zoom-in;touch-action:none;}
+#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;}
 #project-image-modal.open img{transform:scale(1);}
 #project-image-modal-close{position:absolute;top:24px;right:28px;width:48px;height:48px;border:2px solid rgba(80,104,255,0.5);border-radius:50%;background:rgba(6,6,10,0.9);color:var(--accent2);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight:bold;}
 #project-image-modal-close:hover{background:rgba(41,70,255,0.3);border-color:var(--accent2);transform:scale(1.1);}
@@ -574,107 +574,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   font-weight:400;
 }
 
-/* ════ SKILLS — asymmetric "bento" showcase ════
-   Deliberately not a uniform 3-col grid: two featured tiles (Backend,
-   Frontend) run wide, four compact tiles sit in a row, and Mobile/Hardware
-   spans the full width as a closing banner. An animated conic-gradient
-   ring sweeps in on hover (desktop only — touch devices never trigger
-   :hover so mobile just gets the flat card, no wasted animation). */
-@property --angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
-.skills-bento{opacity:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:960px;width:100%;margin:22px auto 0;}
-.skill-tile{position:relative;background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:20px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s ease,box-shadow .3s ease;overflow:hidden;}
-.skill-tile.t-wide{grid-column:span 2;}
-.skill-tile.t-full{grid-column:span 4;display:flex;align-items:center;gap:22px;}
-.skill-tile::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--angle,0deg),transparent 0 65%,var(--tile-color,var(--accent2)) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s ease;pointer-events:none;}
-.skill-tile:hover::before{opacity:1;animation:tileRing 2.6s linear infinite;}
-@keyframes tileRing{to{--angle:360deg;}}
-.skill-tile:hover{transform:translateY(-5px);border-color:var(--tile-color,var(--accent2));box-shadow:0 14px 34px rgba(0,0,0,0.4),0 0 26px color-mix(in srgb, var(--tile-color,var(--accent2)) 35%, transparent);}
-.skill-tile-index{position:absolute;top:16px;left:18px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.16em;}
-.skill-tile-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:color-mix(in srgb, var(--tile-color,var(--accent)) 18%, transparent);margin-bottom:12px;flex-shrink:0;}
-.t-full .skill-tile-icon{margin-bottom:0;}
-.skill-tile-body{min-width:0;}
-.skill-tile-name{font-size:.92rem;font-weight:800;color:var(--heading);margin-bottom:6px;letter-spacing:-0.01em;}
-.skill-tile-desc{font-size:.7rem;line-height:1.75;color:var(--text-body);margin-bottom:10px;}
-.skill-tile-tags{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;}
-.t-full .skill-tile-tags{justify-content:flex-start;}
-.skill-tile-tags span{font-size:.57rem;padding:3px 10px;border-radius:20px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
+.skills-cards-grid{opacity:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:820px;width:100%;margin:20px auto 0;}
+.skill-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px 16px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all 0.3s ease;}
+.skill-card:hover{border-color:rgba(80,104,255,0.55);background:var(--card-hover-bg);transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.5),0 0 24px var(--glow);}
+.skill-card-icon{font-size:1.25rem;margin-bottom:6px;display:block;}
+.skill-card-name{font-size:.82rem;font-weight:700;color:var(--heading);margin-bottom:5px;letter-spacing:-0.01em;}
+.skill-card-desc{font-size:.68rem;line-height:1.6;color:var(--text-body);margin-bottom:8px;}
+.skill-card-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.skill-card-tags span{font-size:.56rem;padding:3px 8px;border-radius:5px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
 
 /* scene-2 has extra content (the grid), so shrink the headline block to fit the pinned 100vh scene without clipping */
 #scene-2 .chapter-marker{margin-bottom:14px;}
 #scene-2 .scene-headline-fa{font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.15;}
 #scene-2 .scene-headline-en{margin-top:4px;font-size:clamp(.7rem,1.6vw,1rem);}
-#scene-2 .skills-bento{margin-top:14px;}
+#scene-2 .skills-cards-grid{margin-top:14px;}
 #scene-2 .graphic-resume-btn{margin-top:14px !important;}
 
 .scene-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, var(--vignette-inner) 0%, transparent 70%);pointer-events:none;z-index:0;}
 .scene-inner>*{position:relative;z-index:1;}
-
-/* ════ PROJECTS (scene-3) — minimal editorial "plate" grid ════
-   Self-contained paper/ink design system (its own local variables), so it
-   always looks like the reference regardless of the scroll-driven
-   night/day crossfade timing elsewhere on the page. */
-#scene-3{
-  --plate-paper:#F4F2ED;--plate-raised:#FBFAF7;--plate-ink:#17140D;
-  --plate-ink-soft:rgba(23,20,13,.62);--plate-ink-faint:rgba(23,20,13,.38);
-  --plate-line:rgba(23,20,13,.13);--plate-line-strong:rgba(23,20,13,.24);
-  --plate-accent:#2946FF;--plate-accent-mid:rgba(41,70,255,.35);
-  background:var(--plate-paper);
-}
-#scene-3 .scene-inner.projects-inner{max-width:1180px;width:100%;text-align:right;padding-top:70px;padding-bottom:50px;}
-#scene-3 .chapter-marker{color:var(--plate-accent);text-shadow:none;justify-content:flex-start;}
-#scene-3 .chapter-marker::before,#scene-3 .chapter-marker::after{background:linear-gradient(90deg,transparent,var(--plate-accent));}
-#scene-3 .chapter-marker::after{background:linear-gradient(90deg,var(--plate-accent),transparent);}
-#scene-3 .scene-headline-fa{background:none;-webkit-text-fill-color:var(--plate-ink);color:var(--plate-ink);filter:none;max-width:100%;text-align:right;font-size:clamp(1.8rem,4.5vw,3.4rem);}
-#scene-3 .scene-headline-en{color:var(--plate-ink-soft);text-align:right;letter-spacing:.12em;}
-
-#scene-3 .proj-filter-tabs{opacity:0;display:flex;flex-wrap:wrap;gap:9px;justify-content:flex-start;margin:30px 0 0;width:100%;}
-#scene-3 .proj-filter-tab{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.05em;padding:8px 16px;border-radius:3px;border:1px solid var(--plate-line-strong);background:transparent;color:var(--plate-ink-soft);cursor:pointer;transition:all .2s ease;}
-#scene-3 .proj-filter-tab:hover{color:var(--plate-ink);border-color:var(--plate-ink-soft);}
-#scene-3 .proj-filter-tab.active{background:var(--plate-ink);color:var(--plate-raised);border-color:var(--plate-ink);}
-
-#scene-3 .proj-grid{opacity:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--plate-line);border:1px solid var(--plate-line);width:100%;margin-top:22px;}
-#scene-3 .plate{background:var(--plate-raised);position:relative;padding:22px 20px 20px;display:flex;flex-direction:column;text-align:right;transition:background .3s ease;}
-#scene-3 .plate.is-hidden{display:none!important;}
-#scene-3 .plate:hover{background:#fff;}
-#scene-3 .plate-corner{position:absolute;width:12px;height:12px;opacity:0;transition:opacity .3s ease;pointer-events:none;}
-#scene-3 .plate-corner.tl{top:8px;right:8px;border-top:1px solid var(--plate-accent);border-right:1px solid var(--plate-accent);}
-#scene-3 .plate-corner.br{bottom:8px;left:8px;border-bottom:1px solid var(--plate-accent);border-left:1px solid var(--plate-accent);}
-#scene-3 .plate:hover .plate-corner{opacity:1;}
-#scene-3 .plate-idx{font-family:'Vazirmatn',sans-serif;font-size:1.4rem;font-weight:300;color:var(--plate-ink-faint);line-height:1;}
-/* platform badge — top-left corner, shows web / android / both / other */
-#scene-3 .plate-badge{position:absolute;top:10px;left:10px;z-index:2;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.04em;padding:4px 10px;border-radius:20px;background:var(--plate-raised);border:1px solid var(--plate-line-strong);color:var(--plate-ink-soft);}
-#scene-3 .plate-badge .badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
-#scene-3 .plate-badge.badge-web{color:#1d3fd6;border-color:rgba(29,63,214,.3);}
-#scene-3 .plate-badge.badge-android{color:#0d8f5a;border-color:rgba(13,143,90,.3);}
-#scene-3 .plate-badge.badge-both{color:var(--plate-accent);border-color:rgba(41,70,255,.3);}
-#scene-3 .plate-badge.badge-bot{color:#a35b00;border-color:rgba(163,91,0,.3);}
-#scene-3 .plate-badge.badge-desktop{color:#5b21b6;border-color:rgba(91,33,182,.3);}
-#scene-3 .plate-thumb{opacity:1;margin:14px 0 0;aspect-ratio:16/9;border-radius:3px;background:var(--plate-paper);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--plate-line);box-shadow:none;max-width:100%;width:100%;cursor:zoom-in;flex-shrink:0;}
-#scene-3 .plate-thumb:hover{transform:none;box-shadow:none;}
-#scene-3 .plate-thumb img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .45s cubic-bezier(.22,.61,.36,1);}
-#scene-3 .plate:hover .plate-thumb img{transform:scale(1.03);}
-#scene-3 .plate-meta{margin-top:14px;}
-#scene-3 .plate-name{font-size:1.18rem;font-weight:800;color:var(--plate-ink);line-height:1.35;}
-#scene-3 .plate-name .plate-name-type{font-weight:600;color:var(--plate-accent);}
-#scene-3 .plate-type{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.07em;color:var(--plate-ink-soft);margin-top:4px;text-transform:uppercase;}
-#scene-3 .plate-desc{font-size:.76rem;line-height:1.75;color:var(--plate-ink-soft);margin-top:10px;}
-#scene-3 .plate-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;justify-content:flex-end;}
-#scene-3 .plate-tags span{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:3px 9px;border-radius:20px;border:1px solid var(--plate-line-strong);color:var(--plate-ink-soft);letter-spacing:.02em;}
-#scene-3 .plate-links{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;justify-content:flex-end;}
-#scene-3 .plate-links a{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.04em;color:var(--plate-ink);text-decoration:none;padding:8px 14px;border-radius:3px;border:1px solid var(--plate-line-strong);background:transparent;transition:all .2s ease;}
-#scene-3 .plate-links a:hover{background:var(--plate-ink);border-color:var(--plate-ink);color:var(--plate-raised);}
-
-@media(max-width:900px){#scene-3 .proj-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:640px){#scene-3 .proj-grid{grid-template-columns:1fr;}}
-@media(max-width:768px){
-  #scene-3 .scene-inner.projects-inner{padding-top:36px;}
-  #scene-3 .plate{padding:16px 14px 14px;}
-  #scene-3 .proj-filter-tabs{gap:6px;}
-  #scene-3 .proj-filter-tab{padding:6px 12px;font-size:.62rem;}
-  #scene-3 .plate-name{font-size:1rem;}
-  #scene-3 .plate-badge{font-size:.52rem;padding:3px 8px;}
-  #scene-3 .plate-links a{padding:7px 12px;font-size:.58rem;}
-}
 
 .project-reveal{opacity:0;max-width:800px;width:100%;text-align:right;}
 .project-label{
@@ -770,60 +687,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   box-shadow:0 0 24px rgba(41,70,255,0.3);
   transform: translateY(-2px);
 }
-
-/* ════ PROJECTS — minimal day mode ════
-   Once scrolled into the projects chapter (html.is-day), the section
-   should read as a clean, paper-white, black-and-blue minimal layout —
-   not just "the same glowing glass UI with lighter colors". So beyond the
-   color variables (already lerped elsewhere), flatten the heavy glass/glow
-   treatment: no blur, no drop-shadow halos, thin flat borders, plain
-   outline buttons instead of gradient-filled ones. */
-html.is-day .project-image-wrap{
-  border:1px solid rgba(41,70,255,0.16);
-  box-shadow:0 10px 28px rgba(21,24,29,0.08);
-  background:#fff;
-}
-html.is-day .project-image-wrap:hover{
-  box-shadow:0 16px 36px rgba(21,24,29,0.12);
-}
-html.is-day .project-title-fa,html.is-day .exp-role-fa,html.is-day .edu-degree-fa{
-  filter:none;
-}
-html.is-day .project-label,html.is-day .exp-period,html.is-day .chapter-marker{
-  text-shadow:none;
-}
-html.is-day .chapter-marker::before,html.is-day .chapter-marker::after{
-  background:linear-gradient(90deg,transparent,rgba(41,70,255,0.35));
-}
-html.is-day .chapter-marker::after{background:linear-gradient(90deg,rgba(41,70,255,0.35),transparent);}
-html.is-day .project-desc-text,html.is-day .exp-desc-text{text-shadow:none;}
-html.is-day .tech-chip{box-shadow:none;background:#fff;}
-html.is-day .tech-chip:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
-html.is-day .tech-chip.blue{background:rgba(29,63,214,.06);}
-html.is-day .tech-chip.ember{background:rgba(180,83,9,.06);}
-html.is-day .tech-chip.green{background:rgba(4,120,87,.06);}
-html.is-day .project-link-btn{
-  background:transparent;
-  border:1.5px solid var(--mono-accent);
-  color:var(--mono-accent);
-  backdrop-filter:none;
-  box-shadow:none;
-}
-html.is-day .project-link-btn:hover{
-  background:var(--mono-accent);
-  border-color:var(--mono-accent);
-  box-shadow:0 10px 22px rgba(41,70,255,0.18);
-}
-html.is-day #chapter-nav .nav-dot.active{box-shadow:none;}
-html.is-day body::after{opacity:0.012;}
-/* Hard cut: once we've crossed into the projects section, the "space"
-   atmosphere should be fully gone — not just faded colors. These fixed
-   decorative layers sit above every section (z-index 5/6/7), so leaving
-   them at even a faint night-tinted opacity is what read as "the galaxy is
-   still running behind the minimal section". Force them off completely. */
-html.is-day #ambient{opacity:0;}
-html.is-day body::before{opacity:0;}
-html.is-day .scanline{opacity:0;}
 
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
 .exp-period{
@@ -951,48 +814,6 @@ html.is-day .scanline{opacity:0;}
   margin-right:auto;
 }
 
-/* ════ FINAL SCENE — a deliberate third look ════
-   Neither the night cosmos nor the paper-white minimal projects chapter:
-   the closing "let's build" scene gets its own signature indigo/violet
-   identity, painted directly on the section (so it reads the same whether
-   the page is still mid-crossfade or fully in day mode by the time you
-   reach it), with its own type treatment and a redesigned, tactile contact
-   grid of glass pill-buttons. */
-#scene-14{
-  background:
-    radial-gradient(ellipse 70% 55% at 22% 15%, rgba(123,47,247,0.32), transparent 60%),
-    radial-gradient(ellipse 60% 55% at 82% 85%, rgba(41,70,255,0.34), transparent 60%),
-    #07051a;
-  isolation:isolate;
-}
-#scene-14 .chapter-marker{color:#c9b8ff;text-shadow:0 0 20px rgba(123,47,247,0.4);}
-#scene-14 .chapter-marker::before,#scene-14 .chapter-marker::after{background:linear-gradient(90deg,transparent,#7b2ff7);}
-#scene-14 .chapter-marker::after{background:linear-gradient(90deg,#7b2ff7,transparent);}
-#scene-14 .scene-headline-fa{
-  background:linear-gradient(120deg,#ffffff 0%,#cdd6ff 35%,#b78bff 70%,#7b2ff7 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 4px 24px rgba(123,47,247,0.35));
-}
-#scene-14 .scene-headline-en{color:#b9aee0;}
-#scene-14 .contact-grid{gap:16px;}
-#scene-14 .contact-link{
-  background:rgba(255,255,255,0.045);
-  border:1px solid rgba(255,255,255,0.14);
-  border-radius:999px;
-  color:#f1edff;
-  backdrop-filter:blur(10px);
-  padding:15px 26px;
-}
-#scene-14 .contact-link::before{background:linear-gradient(135deg,#7b2ff7,#2946ff);}
-#scene-14 .contact-link:hover{
-  border-color:transparent;
-  color:#fff;
-  box-shadow:0 10px 30px rgba(123,47,247,0.35),0 0 24px rgba(41,70,255,0.25);
-}
-#scene-14 .contact-link:hover::before{opacity:1;}
-#scene-14 #footer-line{color:#8f84b8;border-top-color:rgba(123,47,247,0.25);}
-#scene-14 #s14-logo{filter:drop-shadow(0 0 24px rgba(123,47,247,0.3));}
-
 .tagline-text{
   font-family:'JetBrains Mono',monospace;
   font-size:0.65rem;
@@ -1029,41 +850,37 @@ html.is-day .scanline{opacity:0;}
   .project-image-wrap{max-width:100%;margin-bottom:10px;}
   
   /* اصلاح گرید مهارت‌ها */
-  .skills-bento{
+  .skills-cards-grid{
     grid-template-columns: repeat(2, 1fr);
     gap:8px;
     max-width:100%;
     width:100%;
     padding:0 4px;
   }
-  .skill-tile.t-wide,.skill-tile.t-full{grid-column:span 2;}
-  .skill-tile.t-full{flex-direction:column;align-items:flex-start;}
-  .skill-tile{
-    padding:12px 12px;
-    border-radius:12px;
+  .skill-card{
+    padding:10px 10px;
+    border-radius:10px;
   }
-  .skill-tile-icon{
-    width:32px;height:32px;
-    font-size:0.9rem;
+  .skill-card-icon{
+    font-size:1rem;
     margin-bottom:4px;
   }
-  .skill-tile-index{top:10px;left:12px;}
-  .skill-tile-name{
-    font-size:0.72rem;
+  .skill-card-name{
+    font-size:0.7rem;
     margin-bottom:3px;
   }
-  .skill-tile-desc{
+  .skill-card-desc{
     font-size:0.6rem;
-    line-height:1.5;
+    line-height:1.4;
     margin-bottom:6px;
   }
-  .skill-tile-tags{
+  .skill-card-tags{
     gap:3px;
   }
-  .skill-tile-tags span{
+  .skill-card-tags span{
     font-size:0.5rem;
-    padding:2px 7px;
-    border-radius:10px;
+    padding:2px 5px;
+    border-radius:4px;
   }
   
   .project-desc-text{font-size:.88rem;}
@@ -1075,7 +892,7 @@ html.is-day .scanline{opacity:0;}
   #scene-2 .chapter-marker{margin-bottom:8px;font-size:0.6rem;}
   #scene-2 .scene-headline-fa{font-size:clamp(1.3rem, 5vw, 1.8rem);}
   #scene-2 .scene-headline-en{font-size:0.65rem;margin-top:2px;}
-  #scene-2 .skills-bento{margin-top:10px;}
+  #scene-2 .skills-cards-grid{margin-top:10px;}
 }
 
 
@@ -1087,38 +904,37 @@ html.is-day .scanline{opacity:0;}
   .fab-btn svg{width:15px;height:15px;}
   
   /* فوق فشرده برای صفحه‌های خیلی کوچک */
-  .skills-bento{
+  .skills-cards-grid{
     grid-template-columns: repeat(2, 1fr);
     gap:6px;
     padding:0 2px;
   }
-  .skill-tile{
+  .skill-card{
     padding:8px 8px;
     border-radius:8px;
   }
-  .skill-tile-icon{
-    width:26px;height:26px;
-    font-size:0.8rem;
-    margin-bottom:2px;
+  .skill-card-icon{
+    font-size:0.9rem;
+    margin-bottom:3px;
   }
-  .skill-tile-name{
+  .skill-card-name{
     font-size:0.65rem;
     margin-bottom:2px;
   }
-  .skill-tile-desc{
+  .skill-card-desc{
     font-size:0.55rem;
-    line-height:1.35;
+    line-height:1.3;
     margin-bottom:5px;
   }
-  .skill-tile-tags span{
+  .skill-card-tags span{
     font-size:0.48rem;
-    padding:2px 6px;
+    padding:2px 4px;
   }
   
   #scene-2 .chapter-marker{margin-bottom:6px;}
   #scene-2 .scene-headline-fa{font-size:1.2rem;}
   #scene-2 .scene-headline-en{font-size:0.6rem;}
-  #scene-2 .skills-bento{margin-top:8px;}
+  #scene-2 .skills-cards-grid{margin-top:8px;}
 }
 
 /* ══ PRELOADER ══ */
@@ -1274,232 +1090,182 @@ document.documentElement.style.overflow = 'hidden';
   <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
   <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
   <div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
-  <div class="skills-bento" id="s2-skills">
-    <div class="skill-tile t-wide" style="--tile-color:#2946ff;">
-      <div class="skill-tile-index">01</div>
-      <span class="skill-tile-icon">🗄️</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">بک‌اند و پایگاه داده</div>
-        <div class="skill-tile-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</div>
-        <div class="skill-tile-tags"><span>Python</span><span>Django</span><span>Node.js</span><span>PHP</span><span>PostgreSQL</span></div>
-      </div>
+  <div class="skills-cards-grid" id="s2-skills">
+    <div class="skill-card"><span class="skill-card-icon">🗄️</span><div class="skill-card-name">بک‌اند و پایگاه داده</div><div class="skill-card-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</div><div class="skill-card-tags"><span>Python</span><span>Django</span><span>PHP</span><span>PostgreSQL</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">🎨</span><div class="skill-card-name">فرانت‌اند</div><div class="skill-card-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</div><div class="skill-card-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">🤖</span><div class="skill-card-name">ربات‌های تلگرام</div><div class="skill-card-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</div><div class="skill-card-tags"><span>Telegram Bot</span><span>Automation</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">🖥️</span><div class="skill-card-name">نرم‌افزار دسکتاپ</div><div class="skill-card-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div><div class="skill-card-tags"><span>PyQt6</span><span>Excel</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">🖌️</span><div class="skill-card-name">طراحی گرافیک</div><div class="skill-card-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div><div class="skill-card-tags"><span>Photoshop</span><span>UI/UX</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">🛠️</span><div class="skill-card-name">ابزار و زیرساخت</div><div class="skill-card-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div><div class="skill-card-tags"><span>Git</span><span>Linux</span><span>SEO</span></div></div>
+    <div class="skill-card"><span class="skill-card-icon">📱</span><div class="skill-card-name">اپلیکیشن موبایل و سخت‌افزار</div><div class="skill-card-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div><div class="skill-card-tags"><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div></div>
+  </div>
+</div></div></section>
+
+<!-- SCENE 3 ─ AZIN DEJ -->
+<section class="scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی · Featured Project</div>
+  <div class="project-reveal" id="s3-pr">
+    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
+    <div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.webp" alt="آذین دژ" loading="lazy"></div>
+    <div class="project-title-fa">آذین دژ</div>
+    <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
+    <div class="project-desc-text">پلتفرم شرکتی تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر می‌تواند انواع پنجره‌های دوجداره را با اشکال هندسی گوناگون طراحی کند، رنگ‌بندی، شیشه و یراق‌آلات را انتخاب کند، چند پنجره را در یک سفارش ترکیب کرده و قیمت را به‌صورت لحظه‌ای مشاهده و فاکتور کامل دریافت کند. تمام انواع بازشوی پنجره نیز با انیمیشن به کاربر نمایش داده می‌شود.</div>
+    <div class="project-desc-en">Corporate UPVC door &amp; window platform with an interactive SVG configurator. Users design double-glazed windows in a wide range of geometric shapes, pick colors, glass and hardware, combine multiple windows into a single order, see real-time pricing, and receive a full invoice — with every opening mode shown through animation.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">PHP</span><span class="tech-chip">SVG Animations</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
     </div>
-    <div class="skill-tile t-wide" style="--tile-color:#7dd3fc;">
-      <div class="skill-tile-index">02</div>
-      <span class="skill-tile-icon">🎨</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">فرانت‌اند</div>
-        <div class="skill-tile-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</div>
-        <div class="skill-tile-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
-      </div>
+    <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+  </div>
+</div></div></section>
+
+<!-- SCENE 4 ─ RASA (جدید) -->
+<section class="scene" id="scene-4"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s4-ch">04 · پروژه شرکتی · Corporate Website</div>
+  <div class="project-reveal" id="s4-pr">
+    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
+    <div class="project-image-wrap" id="s4-img"><img src="assets/projects/rasa.webp" alt="رسا" loading="lazy"></div>
+    <div class="project-title-fa">رسا</div>
+    <div class="project-title-en">Rasa — Corporate Identity & CMS Platform</div>
+    <div class="project-desc-text">پلتفرم تخصصی و چندمنظوره شرکتی با پنل مدیریت اختصاصی. شامل سیستم انتشار مقالات، مدیریت پروژه‌ها و ابزارهای داخلی پیشرفته. این پروژه در حال حاضر تحت توسعه و بهینه‌سازی مستمر قرار دارد.</div>
+    <div class="project-desc-en">A versatile corporate platform featuring a dedicated admin panel, article publishing system, and project management tools. Currently under active development and continuous improvement.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">PHP</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip blue">CMS</span><span class="tech-chip ember">Under Development</span>
     </div>
-    <div class="skill-tile" style="--tile-color:#34d399;">
-      <div class="skill-tile-index">03</div>
-      <span class="skill-tile-icon">🤖</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">ربات‌های تلگرام</div>
-        <div class="skill-tile-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</div>
-        <div class="skill-tile-tags"><span>Telegram Bot</span><span>Automation</span></div>
-      </div>
-    </div>
-    <div class="skill-tile" style="--tile-color:#f59e0b;">
-      <div class="skill-tile-index">04</div>
-      <span class="skill-tile-icon">🖥️</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">نرم‌افزار دسکتاپ</div>
-        <div class="skill-tile-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div>
-        <div class="skill-tile-tags"><span>PyQt6</span><span>Excel</span></div>
-      </div>
-    </div>
-    <div class="skill-tile" style="--tile-color:#c084fc;">
-      <div class="skill-tile-index">05</div>
-      <span class="skill-tile-icon">🖌️</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">طراحی گرافیک</div>
-        <div class="skill-tile-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div>
-        <div class="skill-tile-tags"><span>Photoshop</span><span>UI/UX</span></div>
-      </div>
-    </div>
-    <div class="skill-tile" style="--tile-color:#94a3b8;">
-      <div class="skill-tile-index">06</div>
-      <span class="skill-tile-icon">🛠️</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">ابزار و زیرساخت</div>
-        <div class="skill-tile-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div>
-        <div class="skill-tile-tags"><span>Git</span><span>Linux</span><span>SEO</span></div>
-      </div>
-    </div>
-    <div class="skill-tile t-full" style="--tile-color:#5068ff;">
-      <div class="skill-tile-index">07</div>
-      <span class="skill-tile-icon">📱</span>
-      <div class="skill-tile-body">
-        <div class="skill-tile-name">اپلیکیشن موبایل و سخت‌افزار</div>
-        <div class="skill-tile-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div>
-        <div class="skill-tile-tags"><span>Android Studio</span><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div>
-      </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank" rel="noopener">مشاهده پروژه ←</a>
+      <a class="project-link-btn" href="https://github.com/mohmmadjavad/rasa-website-php-opensource" target="_blank" rel="noopener">مشاهده سورس کد ←</a>
     </div>
   </div>
 </div></div></section>
 
-<!-- SCENE 3 — نمونه‌کارها (Selected Work), minimal editorial grid -->
-<section class="scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner projects-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s3-ch">03 · نمونه‌کارها · Selected Work</div>
-  <div class="scene-headline-fa" id="s3-h">پروژه‌هایی که ساختم</div>
-  <div class="scene-headline-en" id="s3-hen">A Decade of Shipping Real Things</div>
-
-  <div class="proj-filter-tabs" id="s3-filters">
-    <button class="proj-filter-tab active" data-filter="all">همه</button>
-    <button class="proj-filter-tab" data-filter="corporate">شرکتی</button>
-    <button class="proj-filter-tab" data-filter="ecommerce">فروشگاه</button>
-    <button class="proj-filter-tab" data-filter="bot">ربات</button>
-    <button class="proj-filter-tab" data-filter="desktop">دسکتاپ</button>
-    <button class="proj-filter-tab" data-filter="mobile">موبایل</button>
-    <button class="proj-filter-tab" data-filter="tool">ابزار</button>
+<!-- SCENE 5 ─ FASHION -->
+<section class="scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s5-ch">05 · فروشگاه · E-Commerce</div>
+  <div class="project-reveal" id="s5-pr">
+    <div class="project-label">فروشگاه آنلاین · Live</div>
+    <div class="project-image-wrap" id="s5-img"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
+    <div class="project-title-fa">برازنده تن</div>
+    <div class="project-title-en">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
+    <div class="project-desc-text">فروشگاه اینترنتی پوشاک با پنل ادمین پیشرفته، قابلیت پرو مجازی برای انتخاب دقیق‌تر سایز و مدل، ربات چت هوشمند شخصی‌سازی‌شده (شبیه Eilike) و رابط کاربری جذاب. همچنین دارای زیرسیستم «دفتر برش» برای مدیریت سفارش‌های برش پارچه‌ی کارگاه.</div>
+    <div class="project-desc-en">Fashion store featuring an advanced admin panel, virtual try-on for smarter fitting, a personalized AI chatbot (Eilike-style), and a modern UI/UX design — plus a "Cutting Book" subsystem for managing the workshop's fabric-cutting orders.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Virtual Try-On</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">دفتر برش</span>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://barazandetan.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+      <a class="project-link-btn" href="https://mohmmadjavad.github.io/barazandeh-ecommerce-template/" target="_blank" rel="noopener">قالب استاتیک (فرانت‌اند) ←</a>
+    </div>
   </div>
+</div></div></section>
 
-  <div class="proj-grid" id="s3-grid">
-
-    <div class="plate" data-category="corporate">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
-      <div class="plate-idx">01</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/azindej.webp" alt="آذین دژ" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> آذین دژ</div>
-        <div class="plate-type">وب‌سایت شرکتی · Corporate Platform</div>
-        <div class="plate-desc">پلتفرم تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی، قیمت‌گذاری لحظه‌ای و فاکتور کامل.</div>
-        <div class="plate-tags"><span>PHP</span><span>SVG</span><span>PostgreSQL</span></div>
-        <div class="plate-links"><a href="https://azindejwin.ir" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده وب‌سایت ↗</a></div>
-      </div>
+<!-- SCENE 6 ─ KALA2 -->
+<section class="scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s6-ch">06 · ربات · Telegram Bot</div>
+  <div class="project-reveal" id="s6-pr">
+    <div class="project-label">ربات جستجوی کالا · Search Bot</div>
+    <div class="project-image-wrap" id="s6-img"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
+    <div class="project-title-fa">ربات کالا ۲</div>
+    <div class="project-title-en">Kala2 — Divar Scraper Bot</div>
+    <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.</div>
+    <div class="project-desc-en">Advanced Telegram bot for scraping Divar ads. Fetches price, images and descriptions directly into Telegram.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Python</span><span class="tech-chip">Web Scraping</span><span class="tech-chip blue">Telegram API</span><span class="tech-chip green">BeautifulSoup</span>
     </div>
+    <a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+  </div>
+</div></div></section>
 
-    <div class="plate" data-category="corporate">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
-      <div class="plate-idx">02</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/rasa.webp" alt="رسا" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> رسا</div>
-        <div class="plate-type">وب‌سایت شرکتی · CMS Platform</div>
-        <div class="plate-desc">پلتفرم چندمنظوره شرکتی با پنل مدیریت اختصاصی و سیستم انتشار مقالات — در حال توسعه.</div>
-        <div class="plate-tags"><span>PHP</span><span>Custom Admin</span><span>CMS</span></div>
-        <div class="plate-links">
-          <a href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده پروژه ↗</a>
-          <a href="https://github.com/mohmmadjavad/rasa-website-php-opensource" target="_blank" rel="noopener" onclick="event.stopPropagation()">سورس کد ↗</a>
-        </div>
-      </div>
+<!-- SCENE 7 ─ TELEDATA -->
+<section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s7-ch">07 · ابزار داده · Data Tool</div>
+  <div class="project-reveal" id="s7-pr">
+    <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
+    <div class="project-image-wrap" id="s7-img"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
+    <div class="project-title-fa">Teledata</div>
+    <div class="project-title-en">Telegram Channel Extractor</div>
+    <div class="project-desc-text">ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.</div>
+    <div class="project-desc-en">Tool to extract all messages and media from Telegram channels. Input ID + date range → get Excel file + Media folder.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Python</span><span class="tech-chip blue">Telethon</span><span class="tech-chip">Excel Export</span><span class="tech-chip green">CustomTkinter</span>
     </div>
+    <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+  </div>
+</div></div></section>
 
-    <div class="plate" data-category="ecommerce">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
-      <div class="plate-idx">03</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> برازنده تن</div>
-        <div class="plate-type">فروشگاه آنلاین · Fashion E-Commerce</div>
-        <div class="plate-desc">فروشگاه پوشاک با پرو مجازی، ربات چت هوشمند و زیرسیستم «دفتر برش» کارگاهی.</div>
-        <div class="plate-tags"><span>Django</span><span>AI Chatbot</span><span>Virtual Try-On</span></div>
-        <div class="plate-links">
-          <a href="https://barazandetan.ir" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده وب‌سایت ↗</a>
-          <a href="https://mohmmadjavad.github.io/barazandeh-ecommerce-template/" target="_blank" rel="noopener" onclick="event.stopPropagation()">قالب استاتیک ↗</a>
-        </div>
-      </div>
+<!-- SCENE 8 ─ ACCOUNTING -->
+<section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s8-ch">08 · نرم‌افزار · Desktop App</div>
+  <div class="project-reveal" id="s8-pr">
+    <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
+    <div class="project-image-wrap" id="s8-img"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
+    <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
+    <div class="project-title-en">Accounting &amp; Warehouse Management</div>
+    <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel.</div>
+    <div class="project-desc-en">Full-featured ERP desktop app built with PyQt6. Includes Persian calendar, inventory tracking, invoice generation, Excel reporting.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span><span class="tech-chip ember">Persian Calendar</span><span class="tech-chip">Excel</span><span class="tech-chip green">ReportLab</span>
     </div>
+    <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+  </div>
+</div></div></section>
 
-    <div class="plate" data-category="bot">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-bot"><span class="badge-dot"></span>ربات</div>
-      <div class="plate-idx">04</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">ربات</span> کالا ۲</div>
-        <div class="plate-type">ربات تلگرام · Divar Scraper Bot</div>
-        <div class="plate-desc">جستجو و دریافت خودکار آگهی‌های دیوار — قیمت، تصویر و توضیحات، مستقیم در تلگرام.</div>
-        <div class="plate-tags"><span>Python</span><span>Telegram API</span><span>BeautifulSoup</span></div>
-        <div class="plate-links"><a href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده در GitHub ↗</a></div>
-      </div>
+<!-- SCENE 9 ─ KARFAHM -->
+<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s9-ch">09 · اپلیکیشن اندروید · Car Diagnostics</div>
+  <div class="project-reveal" id="s9-pr">
+    <div class="project-label">تشخیص خودرو · Native Android App</div>
+    <div class="project-image-wrap" id="s9-img"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
+    <div class="project-title-fa">کارفهم</div>
+    <div class="project-title-en">Karfahm — OBD-II Car Diagnostics (Persian)</div>
+    <div class="project-desc-text">اپلیکیشن اندرویدی تشخیص خودرو به زبان فارسی که از طریق بلوتوث به دانگل‌های ارزان‌قیمت ELM327 وصل می‌شود و داده‌های زنده موتور و کدهای خطا را می‌خواند و به فارسی روان توضیح می‌دهد. پروتکل OBD-II (دستورات AT، رمزگشایی PID و کدهای خطا طبق استاندارد SAE J2012) کاملاً از پایه پیاده‌سازی شده، بدون وابستگی به هیچ سرور یا سرویس ابری.</div>
+    <div class="project-desc-en">Persian-language Android app for car diagnostics over Bluetooth to low-cost ELM327 dongles — reads live engine data and fault codes and explains them in plain Persian. The full OBD-II protocol (AT commands, PID decoding, SAE J2012 fault codes) is implemented from scratch, fully offline with no server or cloud dependency.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Capacitor</span><span class="tech-chip">JavaScript</span><span class="tech-chip blue">OBD-II Protocol</span><span class="tech-chip blue">ELM327 / Bluetooth SPP</span><span class="tech-chip green">Native Android</span>
     </div>
+    <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+  </div>
+</div></div></section>
 
-    <div class="plate" data-category="tool">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-desktop"><span class="badge-dot"></span>دسکتاپ</div>
-      <div class="plate-idx">05</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">ابزار</span> Teledata</div>
-        <div class="plate-type">ابزار داده · Telegram Extractor</div>
-        <div class="plate-desc">استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام — خروجی Excel و پوشه Media.</div>
-        <div class="plate-tags"><span>Python</span><span>Telethon</span><span>CustomTkinter</span></div>
-        <div class="plate-links"><a href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده در GitHub ↗</a></div>
-      </div>
+<!-- SCENE 10 ─ CUTTING BOOK -->
+<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s10-ch">10 · نرم‌افزار چندسکویی · Multi-Platform</div>
+  <div class="project-reveal" id="s10-pr">
+    <div class="project-label">مدیریت کارگاهی · Multi-Platform System</div>
+    <div class="project-image-wrap" id="s10-img"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
+    <div class="project-title-fa">دفتر برش لباس</div>
+    <div class="project-title-en">Cutting Book — Fabric Cutting Management System</div>
+    <div class="project-desc-text">سیستم مدیریت برش پارچه برای کارگاه‌های خیاطی. می‌توان چند مشتری تعریف کرد و برش‌های هر مشتری را ثبت نمود؛ از روی داده‌های وزن پارچه و تعداد لا، تعداد کارها و آمار دقیق وزن به‌صورت خودکار محاسبه می‌شود. دارای سیستم پرینت، اشتراک‌گذاری و آمارگیری. یک نسخه Django روی سرور دارد که برشکاران و مشتریان با نام کاربری و رمز اختصاصی خود وارد شده و به اطلاعات دسترسی و امکان ویرایش دارند (کد این نسخه خصوصی نگه داشته شده). نسخه اندروید آفلاین، ثبت برش و آمار را انجام می‌دهد، بک‌آپ می‌گیرد و امکان اشتراک‌گذاری آمار برش را فراهم می‌کند. نسخه وب نیز مخصوص برشکار است و به‌صورت کاملاً آفلاین روی حافظه محلی مرورگر ذخیره می‌شود.</div>
+    <div class="project-desc-en">A cutting-management system for tailoring workshops. Multiple customers can be added and each customer's cuts logged; from fabric weight and layer-count data, job counts and precise weight statistics are calculated automatically. Includes printing, sharing, and analytics. A Django server edition lets tailors and customers log in with their own credentials to view and edit their data (source kept private). An offline Android app logs cuts and stats, backs up data, and shares cutting reports. A lightweight offline web edition — for the tailor's own use — stores everything in the browser's local storage.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Django</span><span class="tech-chip blue">Capacitor / Android</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip green">Offline-first</span><span class="tech-chip ember">Multi-Platform</span>
     </div>
-
-    <div class="plate" data-category="desktop">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-desktop"><span class="badge-dot"></span>دسکتاپ</div>
-      <div class="plate-idx">06</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">نرم‌افزار</span> حسابداری و انبارداری</div>
-        <div class="plate-type">نرم‌افزار دسکتاپ · ERP System</div>
-        <div class="plate-desc">مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری Excel.</div>
-        <div class="plate-tags"><span>PyQt6</span><span>SQLite</span><span>ReportLab</span></div>
-        <div class="plate-links"><a href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده در GitHub ↗</a></div>
-      </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener">دانلود اندروید (مایکت) ←</a>
+      <a class="project-link-btn" href="https://mohmmadjavad.github.io/cutting-ledger-static/" target="_blank" rel="noopener">مشاهده نسخه وب ←</a>
     </div>
+  </div>
+</div></div></section>
 
-    <div class="plate" data-category="mobile">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-android"><span class="badge-dot"></span>اندروید</div>
-      <div class="plate-idx">07</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">اپ</span> کارفهم</div>
-        <div class="plate-type">اپلیکیشن اندروید · OBD-II Diagnostics</div>
-        <div class="plate-desc">تشخیص خودرو فارسی روی بلوتوث به ELM327 — پروتکل OBD-II کامل، کاملاً آفلاین.</div>
-        <div class="plate-tags"><span>Capacitor</span><span>OBD-II</span><span>Bluetooth SPP</span></div>
-        <div class="plate-links"><a href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener" onclick="event.stopPropagation()">دانلود از مایکت ↗</a></div>
-      </div>
+<!-- SCENE 11 ─ KONKUR ARSHAD -->
+<section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s11-ch">11 · ابزار وب · Personal Utility Tool</div>
+  <div class="project-reveal" id="s11-pr">
+    <div class="project-label">راهنمای انتخاب رشته · Open Source</div>
+    <div class="project-image-wrap" id="s11-img"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
+    <div class="project-title-fa">راهنمای انتخاب رشته کارشناسی‌ارشد ۱۴۰۵</div>
+    <div class="project-title-en">Konkur Arshad — Grad-School Priority List Builder</div>
+    <div class="project-desc-text">ابزاری سبک و کاملاً آفلاین برای مرتب کردن، جست‌وجو و اولویت‌بندی کدرشته‌محل‌های کارشناسی‌ارشد، ساخته‌شده از یک نیاز واقعی شخصی هنگام انتخاب رشته. داده‌های دفترچه رسمی سازمان سنجش استخراج و ساخت‌یافته شده و در یک صفحه تک‌فایل با جست‌وجوی آنی، فیلتر بر اساس گروه رشته، افزودن به لیست انتخابی، اولویت‌بندی با درگ‌ودراپ، ذخیره‌سازی خودکار در مرورگر و خروجی/ورودی اکسل در اختیار داوطلبان قرار گرفته است.</div>
+    <div class="project-desc-en">A lightweight, fully offline tool for searching, filtering, and prioritizing graduate-school program codes — built out of a real personal need while choosing programs. Official exam-organization booklet data was extracted and structured into a single-file page with instant search, category filters, a drag-and-drop priority list, browser auto-save, and Excel import/export.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">JavaScript</span><span class="tech-chip blue">HTML/CSS</span><span class="tech-chip green">SheetJS (xlsx)</span><span class="tech-chip">localStorage</span><span class="tech-chip ember">MIT License</span>
     </div>
-
-    <div class="plate" data-category="mobile">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-both"><span class="badge-dot"></span>وب + اپ</div>
-      <div class="plate-idx">08</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">وب + اپ</span> دفتر برش لباس</div>
-        <div class="plate-type">چندسکویی · Multi-Platform System</div>
-        <div class="plate-desc">مدیریت برش پارچه کارگاهی: نسخه سرور Django، اپ آفلاین اندروید و نسخه وب سبک.</div>
-        <div class="plate-tags"><span>Django</span><span>Capacitor</span><span>Offline-first</span></div>
-        <div class="plate-links">
-          <a href="https://myket.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener" onclick="event.stopPropagation()">دانلود اندروید ↗</a>
-          <a href="https://mohmmadjavad.github.io/cutting-ledger-static/" target="_blank" rel="noopener" onclick="event.stopPropagation()">نسخه وب ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="plate" data-category="tool">
-      <span class="plate-corner tl"></span><span class="plate-corner br"></span>
-      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
-      <div class="plate-idx">09</div>
-      <div class="plate-thumb project-image-wrap"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
-      <div class="plate-meta">
-        <div class="plate-name"><span class="plate-name-type">ابزار</span> راهنمای انتخاب رشته ارشد ۱۴۰۵</div>
-        <div class="plate-type">ابزار وب · Open Source</div>
-        <div class="plate-desc">مرتب‌سازی و اولویت‌بندی کدرشته‌محل‌ها — جست‌وجوی آنی، درگ‌ودراپ، خروجی Excel.</div>
-        <div class="plate-tags"><span>JavaScript</span><span>SheetJS</span><span>localStorage</span></div>
-        <div class="plate-links"><a href="https://github.com/mohmmadjavad/konkur-arshad-computer-1405" target="_blank" rel="noopener" onclick="event.stopPropagation()">مشاهده در GitHub ↗</a></div>
-      </div>
-    </div>
-
+    <a class="project-link-btn" href="https://github.com/mohmmadjavad/konkur-arshad-computer-1405" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
   </div>
 </div></div></section>
 
 <!-- SCENE 12 ─ EXPERIENCE -->
 <section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s12-ch">04 · تجربه کاری · Experience</div>
+  <div class="chapter-marker" id="s12-ch">12 · تجربه کاری · Experience</div>
   <div class="exp-reveal" id="s12-e1">
     <div class="exp-period">2022 — اکنون · Present</div>
     <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
@@ -1517,7 +1283,7 @@ document.documentElement.style.overflow = 'hidden';
 
 <!-- SCENE 13 ─ EDUCATION -->
 <section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s13-ch">05 · تحصیل و زبان · Education &amp; Languages</div>
+  <div class="chapter-marker" id="s13-ch">13 · تحصیل و زبان · Education &amp; Languages</div>
   <div class="edu-reveal" id="s13-edu">
     <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:14px;font-weight:600;">B.Sc. Computer Engineering · Currently Enrolled</div>
     <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
@@ -1536,7 +1302,7 @@ document.documentElement.style.overflow = 'hidden';
 
 <!-- SCENE 14 ─ CONTACT -->
 <section class="scene scene-bookend" id="scene-14"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s14-ch">06 · تماس · Let's Connect</div>
+  <div class="chapter-marker" id="s14-ch">14 · تماس · Let's Connect</div>
   <div class="scene-headline-fa" id="s14-h">بیایید<br>بسازیم</div>
   <div class="scene-headline-en" id="s14-hen">Let's Build Something Real</div>
   <div class="contact-grid" id="s14-cg">
@@ -2020,10 +1786,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(window._updateThreeColors)window._updateThreeColors([night.threeCore,null,night.threeMid,night.threeOuter],0xffffff,0x7c8fff,0xffffff);
 
   const root=document.documentElement;
-  // Moved from scene-6 (middle of the projects) to scene-3 (the very first
-  // project) so the whole "پروژه‌ها" section reads as its own light/minimal
-  // chapter, not half-dark/half-light.
-  const zone=document.getElementById('scene-3'); // start of the projects journey — آذین دژ
+  const zone=document.getElementById('scene-6'); // middle of the journey — کالا۲
   if(!zone) return;
 
   function hexLerp(a,b,t){
@@ -2056,11 +1819,6 @@ document.addEventListener('DOMContentLoaded', function(){
   function apply(t){
     if(Math.abs(t-lastT)<0.004)return; // skip imperceptible steps
     lastT=t;
-    // Discrete (non-lerped) style hook: lets CSS switch things like
-    // box-shadow/backdrop-filter/border-style at the crossover instant,
-    // for the parts of the "minimal day" look that shouldn't fade in
-    // gradually (a blurred glass card doesn't have a sensible halfway point).
-    root.classList.toggle('is-day', t>=0.5);
     const voidHex=hexLerp(night.void,day.void,t);
     root.style.setProperty('--void',voidHex);
     root.style.setProperty('--text',hexLerp(night.text,day.text,t));
@@ -2139,22 +1897,16 @@ document.addEventListener('DOMContentLoaded', function(){
     animId=requestAnimationFrame(runAnimation);
   }
 
-  // threshold was 0.5, which worked when "zone" was a single ~100vh scene.
-  // Now that zone (scene-3) is a tall multi-row projects grid, it can never
-  // fill 50% of the viewport at once, so that threshold would never fire —
-  // leaving the site stuck in night mode (strong vignette, white text) for
-  // the entire projects section. threshold:0 fires as soon as any part of
-  // the section is on screen, which is all we actually need here.
   const themeObserver=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       const rect=entry.target.getBoundingClientRect();
       if(entry.isIntersecting){
-        goTo(1); // reached the projects section scrolling down -> become day
+        goTo(1); // reached the midpoint scene scrolling down -> become day
       }else if(rect.top>0){
         goTo(0); // scrolled back above the zone -> return to night
       }
     });
-  },{threshold:0});
+  },{threshold:0.5});
   themeObserver.observe(zone);
 
   apply(0);
@@ -2174,7 +1926,15 @@ function revealElements(ids){ids.forEach(id=>{const el=document.getElementById(i
 const sceneElements={
   'scene-1':['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],
   'scene-2':['s2-ch','s2-h','s2-hen','s2-skills','s2-graphic-btn'],
-  'scene-3':['s3-ch','s3-h','s3-hen','s3-filters','s3-grid'],
+  'scene-3':['s3-ch','s3-img','s3-pr'],
+  'scene-4':['s4-ch','s4-img','s4-pr'],
+  'scene-5':['s5-ch','s5-img','s5-pr'],
+  'scene-6':['s6-ch','s6-img','s6-pr'],
+  'scene-7':['s7-ch','s7-img','s7-pr'],
+  'scene-8':['s8-ch','s8-img','s8-pr'],
+  'scene-9':['s9-ch','s9-img','s9-pr'],
+  'scene-10':['s10-ch','s10-img','s10-pr'],
+  'scene-11':['s11-ch','s11-img','s11-pr'],
   'scene-12':['s12-ch','s12-e1','s12-div','s12-e2'],
   'scene-13':['s13-ch','s13-edu','s13-lg'],
   'scene-14':['s14-ch','s14-h','s14-hen','s14-cg','s14-logo','footer-line']
@@ -2190,166 +1950,24 @@ const sceneElements={
   allScenes.forEach(s=>revealObserver.observe(s));window.addEventListener('scroll',onScroll,{passive:true});onScroll();activateNav(0);
 })();
 
-// SCENE-3 REVEAL FIX — the projects grid is much taller than a normal
-// 100vh scene (it holds 9 cards), so it can never satisfy the shared
-// revealObserver's 40%-visible threshold above (a very tall element never
-// gets 40% of its own height on screen at once). Without this, the section
-// stayed stuck at opacity:0 forever — visible only as a blank white block.
-// This dedicated observer fires as soon as any part of it enters view.
-(function(){
-  const el=document.getElementById('scene-3');
-  if(!el)return;
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        revealElements(sceneElements['scene-3']);
-        io.disconnect();
-      }
-    });
-  },{threshold:0});
-  io.observe(el);
-  // Safety net: if for any reason the observer never fires (e.g. the page
-  // loads already scrolled past it), reveal it anyway after a short delay.
-  setTimeout(()=>revealElements(sceneElements['scene-3']),3000);
-})();
-
 // PROFILE MODAL
 (function(){const modal=document.getElementById('profile-modal'),closeBtn=document.getElementById('profile-modal-close'),trigger=document.querySelector('.profile-hero-img');if(!modal||!trigger)return;function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}trigger.addEventListener('click',openModal);closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});modal.addEventListener('click',closeModal);modal.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});})();
 
-// PROJECT FILTER TABS
-(function(){
-  const tabs=document.getElementById('s3-filters'),grid=document.getElementById('s3-grid');
-  if(!tabs||!grid)return;
-  tabs.addEventListener('click',e=>{
-    const btn=e.target.closest('.proj-filter-tab');
-    if(!btn)return;
-    tabs.querySelectorAll('.proj-filter-tab').forEach(t=>t.classList.remove('active'));
-    btn.classList.add('active');
-    const f=btn.dataset.filter;
-    grid.querySelectorAll('.plate').forEach(p=>{
-      p.classList.toggle('is-hidden', !(f==='all'||p.dataset.category===f));
-    });
-  });
-})();
-
-// PROJECT IMAGE MODAL (fullscreen, zoomable/pannable)
+// PROJECT IMAGE MODAL (fullscreen)
 (function(){
   const modal=document.getElementById('project-image-modal');
   const closeBtn=document.getElementById('project-image-modal-close');
   if(!modal||!closeBtn)return;
   const modalImg=modal.querySelector('img');
-
-  let scale=1, tx=0, ty=0;
-  const MIN_SCALE=1, MAX_SCALE=4;
-  const clampScale=s=>Math.min(MAX_SCALE, Math.max(MIN_SCALE, s));
-
-  function applyTransform(withTransition){
-    modalImg.style.transition = withTransition ? 'transform .25s ease' : 'none';
-    modalImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-    modalImg.style.cursor = scale>1.01 ? 'grab' : 'zoom-in';
-  }
-  function resetZoom(withTransition){ scale=1; tx=0; ty=0; applyTransform(withTransition); }
-
-  // Zoom toward a specific screen point (cursor/pinch center) so that point
-  // stays visually still while the scale changes, instead of always zooming
-  // toward the image's center.
-  function zoomAt(clientX, clientY, newScale){
-    const rect=modalImg.getBoundingClientRect();
-    const cx=clientX-(rect.left+rect.width/2);
-    const cy=clientY-(rect.top+rect.height/2);
-    const ratio=newScale/scale;
-    tx=cx-(cx-tx)*ratio;
-    ty=cy-(cy-ty)*ratio;
-    scale=newScale;
-    if(scale<=1.001){ tx=0; ty=0; scale=1; }
-    applyTransform(true);
-  }
-
-  function openModal(src,alt){
-    modalImg.src=src;modalImg.alt=alt||'';
-    resetZoom(false);
-    modal.classList.add('open');
-    document.body.style.overflow='hidden';
-  }
-  function closeModal(){
-    modal.classList.remove('open');
-    document.body.style.overflow='';
-    resetZoom(false);
-  }
+  function openModal(src,alt){modalImg.src=src;modalImg.alt=alt||'';modal.classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
   document.querySelectorAll('.project-image-wrap img').forEach(img=>{
     img.addEventListener('click',()=>openModal(img.currentSrc||img.src,img.alt));
   });
   closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});
-  modal.addEventListener('click',()=>{ if(scale<=1.001) closeModal(); }); // don't close on background click while zoomed — likely mid-pan
+  modal.addEventListener('click',closeModal);
   modalImg.addEventListener('click',e=>e.stopPropagation());
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
-
-  // Double-click / double-tap toggles zoom in/out
-  modalImg.addEventListener('dblclick', e=>{
-    e.stopPropagation();
-    if(scale>1.01){ resetZoom(true); } else { zoomAt(e.clientX, e.clientY, 2.4); }
-  });
-
-  // Mouse wheel zoom (desktop)
-  modalImg.addEventListener('wheel', e=>{
-    e.preventDefault();
-    const factor = e.deltaY<0 ? 1.15 : 1/1.15;
-    zoomAt(e.clientX, e.clientY, clampScale(scale*factor));
-  }, {passive:false});
-
-  // Drag to pan once zoomed in (mouse)
-  let dragging=false, dragStartX=0, dragStartY=0, startTx=0, startTy=0;
-  modalImg.addEventListener('mousedown', e=>{
-    if(scale<=1.001)return;
-    dragging=true; dragStartX=e.clientX; dragStartY=e.clientY; startTx=tx; startTy=ty;
-    modalImg.style.transition='none'; modalImg.style.cursor='grabbing';
-    e.preventDefault();
-  });
-  window.addEventListener('mousemove', e=>{
-    if(!dragging)return;
-    tx=startTx+(e.clientX-dragStartX); ty=startTy+(e.clientY-dragStartY);
-    applyTransform(false);
-  });
-  window.addEventListener('mouseup', ()=>{
-    if(!dragging)return;
-    dragging=false;
-    modalImg.style.cursor = scale>1.01 ? 'grab' : 'zoom-in';
-  });
-
-  // Touch: two-finger pinch to zoom, one-finger drag to pan once zoomed
-  let touchMode=null, pinchStartDist=0, pinchStartScale=1, pinchMid={x:0,y:0};
-  let panStartX=0, panStartY=0, panStartTx=0, panStartTy=0;
-  const touchDist=(a,b)=>Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
-
-  modalImg.addEventListener('touchstart', e=>{
-    if(e.touches.length===2){
-      touchMode='pinch';
-      pinchStartDist=touchDist(e.touches[0],e.touches[1]);
-      pinchStartScale=scale;
-      pinchMid={x:(e.touches[0].clientX+e.touches[1].clientX)/2, y:(e.touches[0].clientY+e.touches[1].clientY)/2};
-      modalImg.style.transition='none';
-    } else if(e.touches.length===1 && scale>1.001){
-      touchMode='pan';
-      panStartX=e.touches[0].clientX; panStartY=e.touches[0].clientY;
-      panStartTx=tx; panStartTy=ty;
-      modalImg.style.transition='none';
-    }
-  }, {passive:true});
-
-  modalImg.addEventListener('touchmove', e=>{
-    if(touchMode==='pinch' && e.touches.length===2){
-      e.preventDefault();
-      const dist=touchDist(e.touches[0],e.touches[1]);
-      zoomAt(pinchMid.x, pinchMid.y, clampScale(pinchStartScale*(dist/pinchStartDist)));
-    } else if(touchMode==='pan' && e.touches.length===1){
-      e.preventDefault();
-      tx=panStartTx+(e.touches[0].clientX-panStartX);
-      ty=panStartTy+(e.touches[0].clientY-panStartY);
-      applyTransform(false);
-    }
-  }, {passive:false});
-
-  modalImg.addEventListener('touchend', e=>{ if(e.touches.length===0) touchMode=null; });
 })();
 
 // SHARE
