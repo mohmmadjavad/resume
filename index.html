@@ -85,14 +85,14 @@ html{scroll-behavior:auto;scrollbar-width:none;overflow-x:hidden;}
 html::-webkit-scrollbar{display:none;}
 body{background:var(--void);color:var(--text);font-family:'Vazirmatn',sans-serif;overflow-x:hidden;transition:background .1s linear;}
 
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center, transparent 30%, var(--vignette-outer) 100%);pointer-events:none;z-index:5;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center, transparent 30%, var(--vignette-outer) 100%);pointer-events:none;z-index:5;transition:opacity .8s ease;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.028;pointer-events:none;z-index:6;}
 
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-#ambient{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 60% 50% at 30% 50%, rgba(41,70,255,0.11), transparent 70%),radial-gradient(ellipse 40% 40% at 75% 80%, rgba(124,143,255,0.06), transparent 60%);pointer-events:none;transition:background 0.8s ease;}
+#ambient{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 60% 50% at 30% 50%, rgba(41,70,255,0.11), transparent 70%),radial-gradient(ellipse 40% 40% at 75% 80%, rgba(124,143,255,0.06), transparent 60%);pointer-events:none;transition:background 0.8s ease, opacity .8s ease;}
 
-.scanline{position:fixed;top:-100%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(41,70,255,0.1),transparent);z-index:7;pointer-events:none;animation:scan 12s linear infinite;}
+.scanline{position:fixed;top:-100%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,rgba(41,70,255,0.1),transparent);z-index:7;pointer-events:none;animation:scan 12s linear infinite;transition:opacity .8s ease;}
 @keyframes scan{0%{top:-3px;}100%{top:100%;}}
 
 #scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent3),var(--ember));z-index:100;box-shadow:0 0 12px var(--glow);transition:width 0.5s cubic-bezier(.4,0,.2,1);}
@@ -804,7 +804,14 @@ html.is-day .project-link-btn:hover{
 }
 html.is-day #chapter-nav .nav-dot.active{box-shadow:none;}
 html.is-day body::after{opacity:0.012;}
-html.is-day .scanline{opacity:0.35;}
+/* Hard cut: once we've crossed into the projects section, the "space"
+   atmosphere should be fully gone — not just faded colors. These fixed
+   decorative layers sit above every section (z-index 5/6/7), so leaving
+   them at even a faint night-tinted opacity is what read as "the galaxy is
+   still running behind the minimal section". Force them off completely. */
+html.is-day #ambient{opacity:0;}
+html.is-day body::before{opacity:0;}
+html.is-day .scanline{opacity:0;}
 
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
 .exp-period{
@@ -2111,16 +2118,22 @@ document.addEventListener('DOMContentLoaded', function(){
     animId=requestAnimationFrame(runAnimation);
   }
 
+  // threshold was 0.5, which worked when "zone" was a single ~100vh scene.
+  // Now that zone (scene-3) is a tall multi-row projects grid, it can never
+  // fill 50% of the viewport at once, so that threshold would never fire —
+  // leaving the site stuck in night mode (strong vignette, white text) for
+  // the entire projects section. threshold:0 fires as soon as any part of
+  // the section is on screen, which is all we actually need here.
   const themeObserver=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       const rect=entry.target.getBoundingClientRect();
       if(entry.isIntersecting){
-        goTo(1); // reached the midpoint scene scrolling down -> become day
+        goTo(1); // reached the projects section scrolling down -> become day
       }else if(rect.top>0){
         goTo(0); // scrolled back above the zone -> return to night
       }
     });
-  },{threshold:0.5});
+  },{threshold:0});
   themeObserver.observe(zone);
 
   apply(0);
