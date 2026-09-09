@@ -2156,6 +2156,29 @@ const sceneElements={
   allScenes.forEach(s=>revealObserver.observe(s));window.addEventListener('scroll',onScroll,{passive:true});onScroll();activateNav(0);
 })();
 
+// SCENE-3 REVEAL FIX — the projects grid is much taller than a normal
+// 100vh scene (it holds 9 cards), so it can never satisfy the shared
+// revealObserver's 40%-visible threshold above (a very tall element never
+// gets 40% of its own height on screen at once). Without this, the section
+// stayed stuck at opacity:0 forever — visible only as a blank white block.
+// This dedicated observer fires as soon as any part of it enters view.
+(function(){
+  const el=document.getElementById('scene-3');
+  if(!el)return;
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        revealElements(sceneElements['scene-3']);
+        io.disconnect();
+      }
+    });
+  },{threshold:0});
+  io.observe(el);
+  // Safety net: if for any reason the observer never fires (e.g. the page
+  // loads already scrolled past it), reveal it anyway after a short delay.
+  setTimeout(()=>revealElements(sceneElements['scene-3']),3000);
+})();
+
 // PROFILE MODAL
 (function(){const modal=document.getElementById('profile-modal'),closeBtn=document.getElementById('profile-modal-close'),trigger=document.querySelector('.profile-hero-img');if(!modal||!trigger)return;function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}trigger.addEventListener('click',openModal);closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});modal.addEventListener('click',closeModal);modal.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});})();
 
