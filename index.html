@@ -460,12 +460,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 #project-image-modal{position:fixed;inset:0;z-index:10000;background:rgba(2,2,6,0);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 0.35s ease,background 0.35s ease;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);padding:24px;}
 #project-image-modal.open{opacity:1;pointer-events:auto;background:rgba(2,2,6,0.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
-#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;}
-#project-image-modal.open img{transform:scale(1);}
+#project-image-modal .pim-frame{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;position:relative;}
+#project-image-modal.open .pim-frame{transform:scale(1);}
+#project-image-modal .pim-frame img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform 0.25s ease;touch-action:none;user-select:none;-webkit-user-select:none;}
+#project-image-modal .pim-frame img.zoomed{cursor:grab;}
+#project-image-modal .pim-frame img.dragging{cursor:grabbing;transition:none;}
 #project-image-modal-close{position:absolute;top:24px;right:28px;width:48px;height:48px;border:2px solid rgba(80,104,255,0.5);border-radius:50%;background:rgba(6,6,10,0.9);color:var(--accent2);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight:bold;}
 #project-image-modal-close:hover{background:rgba(41,70,255,0.3);border-color:var(--accent2);transform:scale(1.1);}
 @media(max-width:600px){
-  #project-image-modal img{width:92vw;height:auto;max-height:80vh;}
+  #project-image-modal .pim-frame{width:92vw;height:auto;max-height:80vh;}
   #project-image-modal-close{top:14px;right:14px;width:42px;height:42px;}
 }
 
@@ -574,20 +577,41 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   font-weight:400;
 }
 
-.skills-cards-grid{opacity:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:820px;width:100%;margin:20px auto 0;}
-.skill-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px 16px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all 0.3s ease;}
-.skill-card:hover{border-color:rgba(80,104,255,0.55);background:var(--card-hover-bg);transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.5),0 0 24px var(--glow);}
-.skill-card-icon{font-size:1.25rem;margin-bottom:6px;display:block;}
-.skill-card-name{font-size:.82rem;font-weight:700;color:var(--heading);margin-bottom:5px;letter-spacing:-0.01em;}
-.skill-card-desc{font-size:.68rem;line-height:1.6;color:var(--text-body);margin-bottom:8px;}
-.skill-card-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.skill-card-tags span{font-size:.56rem;padding:3px 8px;border-radius:5px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
+/* ════ SKILLS TERMINAL (creative redesign) ════ */
+.skills-terminal{opacity:0;max-width:820px;width:100%;margin:20px auto 0;background:var(--terminal-bg);border:1px solid var(--terminal-border);border-radius:14px;overflow:hidden;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 50px rgba(0,0,0,0.55),0 0 30px var(--glow);text-align:right;direction:rtl;}
+.skills-terminal-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--terminal-border);direction:ltr;}
+.skills-terminal-dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.skills-terminal-dot.r{background:#ff5f57;}
+.skills-terminal-dot.y{background:#febc2e;}
+.skills-terminal-dot.g{background:#28c840;}
+.skills-terminal-path{margin-inline-start:8px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--terminal-dim);letter-spacing:.02em;}
+.skills-terminal-body{padding:14px 16px 16px;max-height:min(52vh,460px);overflow-y:auto;scrollbar-width:thin;}
+.skills-terminal-body::-webkit-scrollbar{width:5px;}
+.skills-terminal-body::-webkit-scrollbar-thumb{background:var(--terminal-border);border-radius:4px;}
+.skills-terminal-prompt{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--terminal-green);margin-bottom:10px;direction:ltr;text-align:left;}
+.skills-terminal-prompt::before{content:'❯ ';color:var(--terminal-prompt);}
+.skill-row{border:1px solid transparent;border-radius:10px;cursor:pointer;transition:background .25s ease,border-color .25s ease;}
+.skill-row+.skill-row{margin-top:2px;}
+.skill-row:hover,.skill-row:focus-visible,.skill-row.open{background:rgba(255,255,255,0.04);border-color:var(--terminal-border);}
+.skill-row-head{display:flex;align-items:center;gap:10px;padding:9px 8px;}
+.skill-row-idx{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--terminal-dim);min-width:20px;}
+.skill-row-icon{font-size:1.05rem;line-height:1;}
+.skill-row-name{flex:1;font-size:.8rem;font-weight:700;color:var(--heading);letter-spacing:-0.01em;}
+.skill-row-caret{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--terminal-highlight);transition:transform .25s ease;}
+.skill-row.open .skill-row-caret{transform:rotate(90deg);}
+.skill-row-body{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s ease,margin .35s ease;padding:0 8px;}
+.skill-row.open .skill-row-body{max-height:180px;opacity:1;margin-bottom:4px;}
+.skill-row-desc{font-size:.68rem;line-height:1.65;color:var(--text-body);margin:0 0 8px;padding-inline-start:30px;}
+.skill-row-tags{display:flex;flex-wrap:wrap;gap:5px;padding-inline-start:30px;}
+.skill-row-tags span{font-family:'JetBrains Mono',monospace;font-size:.56rem;padding:3px 8px;border-radius:5px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
+.skills-terminal-caret{font-family:'JetBrains Mono',monospace;color:var(--terminal-prompt);animation:termBlink 1.1s step-end infinite;margin-top:6px;}
+@keyframes termBlink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
 
 /* scene-2 has extra content (the grid), so shrink the headline block to fit the pinned 100vh scene without clipping */
 #scene-2 .chapter-marker{margin-bottom:14px;}
 #scene-2 .scene-headline-fa{font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.15;}
 #scene-2 .scene-headline-en{margin-top:4px;font-size:clamp(.7rem,1.6vw,1rem);}
-#scene-2 .skills-cards-grid{margin-top:14px;}
+#scene-2 .skills-terminal{margin-top:14px;}
 #scene-2 .graphic-resume-btn{margin-top:14px !important;}
 
 .scene-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, var(--vignette-inner) 0%, transparent 70%);pointer-events:none;z-index:0;}
@@ -849,40 +873,17 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .profile-hero-img{width:160px;height:160px;}
   .project-image-wrap{max-width:100%;margin-bottom:10px;}
   
-  /* اصلاح گرید مهارت‌ها */
-  .skills-cards-grid{
-    grid-template-columns: repeat(2, 1fr);
-    gap:8px;
-    max-width:100%;
-    width:100%;
-    padding:0 4px;
-  }
-  .skill-card{
-    padding:10px 10px;
-    border-radius:10px;
-  }
-  .skill-card-icon{
-    font-size:1rem;
-    margin-bottom:4px;
-  }
-  .skill-card-name{
-    font-size:0.7rem;
-    margin-bottom:3px;
-  }
-  .skill-card-desc{
-    font-size:0.6rem;
-    line-height:1.4;
-    margin-bottom:6px;
-  }
-  .skill-card-tags{
-    gap:3px;
-  }
-  .skill-card-tags span{
-    font-size:0.5rem;
-    padding:2px 5px;
-    border-radius:4px;
-  }
-  
+  /* اصلاح ترمینال مهارت‌ها برای موبایل */
+  .skills-terminal{max-width:100%;width:100%;border-radius:10px;}
+  .skills-terminal-body{padding:10px 8px 12px;max-height:min(48vh,380px);}
+  .skill-row-head{padding:8px 5px;gap:8px;}
+  .skill-row-name{font-size:0.72rem;}
+  .skill-row-icon{font-size:0.92rem;}
+  .skill-row-idx{font-size:0.56rem;min-width:16px;}
+  .skill-row-desc{font-size:0.62rem;line-height:1.5;padding-inline-start:24px;}
+  .skill-row-tags{gap:3px;padding-inline-start:24px;}
+  .skill-row-tags span{font-size:0.5rem;padding:2px 6px;border-radius:4px;}
+
   .project-desc-text{font-size:.88rem;}
   .exp-desc-text{font-size:.88rem;}
   .graphic-resume-btn{padding:10px 18px;font-size:0.78rem;}
@@ -892,7 +893,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   #scene-2 .chapter-marker{margin-bottom:8px;font-size:0.6rem;}
   #scene-2 .scene-headline-fa{font-size:clamp(1.3rem, 5vw, 1.8rem);}
   #scene-2 .scene-headline-en{font-size:0.65rem;margin-top:2px;}
-  #scene-2 .skills-cards-grid{margin-top:10px;}
+  #scene-2 .skills-terminal{margin-top:10px;}
 }
 
 
@@ -904,37 +905,18 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .fab-btn svg{width:15px;height:15px;}
   
   /* فوق فشرده برای صفحه‌های خیلی کوچک */
-  .skills-cards-grid{
-    grid-template-columns: repeat(2, 1fr);
-    gap:6px;
-    padding:0 2px;
-  }
-  .skill-card{
-    padding:8px 8px;
-    border-radius:8px;
-  }
-  .skill-card-icon{
-    font-size:0.9rem;
-    margin-bottom:3px;
-  }
-  .skill-card-name{
-    font-size:0.65rem;
-    margin-bottom:2px;
-  }
-  .skill-card-desc{
-    font-size:0.55rem;
-    line-height:1.3;
-    margin-bottom:5px;
-  }
-  .skill-card-tags span{
-    font-size:0.48rem;
-    padding:2px 4px;
-  }
+  .skills-terminal-body{padding:8px 6px 10px;max-height:min(46vh,340px);}
+  .skill-row-head{padding:7px 4px;gap:6px;}
+  .skill-row-name{font-size:0.66rem;}
+  .skill-row-icon{font-size:0.85rem;}
+  .skill-row-desc{font-size:0.58rem;line-height:1.4;padding-inline-start:20px;}
+  .skill-row-tags{padding-inline-start:20px;}
+  .skill-row-tags span{font-size:0.48rem;padding:2px 5px;}
   
   #scene-2 .chapter-marker{margin-bottom:6px;}
   #scene-2 .scene-headline-fa{font-size:1.2rem;}
   #scene-2 .scene-headline-en{font-size:0.6rem;}
-  #scene-2 .skills-cards-grid{margin-top:8px;}
+  #scene-2 .skills-terminal{margin-top:8px;}
 }
 
 /* ══ PRELOADER ══ */
@@ -1048,15 +1030,16 @@ document.documentElement.style.overflow = 'hidden';
   <div class="nav-dot" data-index="3" data-label="آذین دژ"></div>
   <div class="nav-dot" data-index="4" data-label="رسا"></div>
   <div class="nav-dot" data-index="5" data-label="فروشگاه"></div>
-  <div class="nav-dot" data-index="6" data-label="کالا ۲"></div>
-  <div class="nav-dot" data-index="7" data-label="Teledata"></div>
-  <div class="nav-dot" data-index="8" data-label="حسابداری"></div>
-  <div class="nav-dot" data-index="9" data-label="کارفهم"></div>
-  <div class="nav-dot" data-index="10" data-label="دفتر برش"></div>
-  <div class="nav-dot" data-index="11" data-label="کنکور ارشد"></div>
-  <div class="nav-dot" data-index="12" data-label="تجربه"></div>
-  <div class="nav-dot" data-index="13" data-label="تحصیل"></div>
-  <div class="nav-dot" data-index="14" data-label="تماس"></div>
+  <div class="nav-dot" data-index="6" data-label="متانما"></div>
+  <div class="nav-dot" data-index="7" data-label="کالا ۲"></div>
+  <div class="nav-dot" data-index="8" data-label="Teledata"></div>
+  <div class="nav-dot" data-index="9" data-label="حسابداری"></div>
+  <div class="nav-dot" data-index="10" data-label="کارفهم"></div>
+  <div class="nav-dot" data-index="11" data-label="دفتر برش"></div>
+  <div class="nav-dot" data-index="12" data-label="کنکور ارشد"></div>
+  <div class="nav-dot" data-index="13" data-label="تجربه"></div>
+  <div class="nav-dot" data-index="14" data-label="تحصیل"></div>
+  <div class="nav-dot" data-index="15" data-label="تماس"></div>
 </nav>
 
 <div id="fab-group">
@@ -1090,14 +1073,72 @@ document.documentElement.style.overflow = 'hidden';
   <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
   <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
   <div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
-  <div class="skills-cards-grid" id="s2-skills">
-    <div class="skill-card"><span class="skill-card-icon">🗄️</span><div class="skill-card-name">بک‌اند و پایگاه داده</div><div class="skill-card-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</div><div class="skill-card-tags"><span>Python</span><span>Django</span><span>PHP</span><span>PostgreSQL</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🎨</span><div class="skill-card-name">فرانت‌اند</div><div class="skill-card-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</div><div class="skill-card-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🤖</span><div class="skill-card-name">ربات‌های تلگرام</div><div class="skill-card-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</div><div class="skill-card-tags"><span>Telegram Bot</span><span>Automation</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🖥️</span><div class="skill-card-name">نرم‌افزار دسکتاپ</div><div class="skill-card-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div><div class="skill-card-tags"><span>PyQt6</span><span>Excel</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🖌️</span><div class="skill-card-name">طراحی گرافیک</div><div class="skill-card-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div><div class="skill-card-tags"><span>Photoshop</span><span>UI/UX</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🛠️</span><div class="skill-card-name">ابزار و زیرساخت</div><div class="skill-card-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div><div class="skill-card-tags"><span>Git</span><span>Linux</span><span>SEO</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">📱</span><div class="skill-card-name">اپلیکیشن موبایل و سخت‌افزار</div><div class="skill-card-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div><div class="skill-card-tags"><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div></div>
+  <div class="skills-terminal" id="s2-skills">
+    <div class="skills-terminal-bar">
+      <span class="skills-terminal-dot r"></span><span class="skills-terminal-dot y"></span><span class="skills-terminal-dot g"></span>
+      <span class="skills-terminal-path">~/mohammadjavad — skills.sh</span>
+    </div>
+    <div class="skills-terminal-body">
+      <div class="skills-terminal-line skills-terminal-prompt">./list-skills --verbose</div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">01</span><span class="skill-row-icon">🗄️</span><span class="skill-row-name">بک‌اند و پایگاه داده</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</p>
+          <div class="skill-row-tags"><span>Python</span><span>Django</span><span>PHP</span><span>PostgreSQL</span><span>Node.js</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">02</span><span class="skill-row-icon">🎨</span><span class="skill-row-name">فرانت‌اند</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</p>
+          <div class="skill-row-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">03</span><span class="skill-row-icon">🤖</span><span class="skill-row-name">ربات‌های تلگرام</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</p>
+          <div class="skill-row-tags"><span>Telegram Bot</span><span>Automation</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">04</span><span class="skill-row-icon">🖥️</span><span class="skill-row-name">نرم‌افزار دسکتاپ</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</p>
+          <div class="skill-row-tags"><span>PyQt6</span><span>Excel</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">05</span><span class="skill-row-icon">🖌️</span><span class="skill-row-name">طراحی گرافیک</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</p>
+          <div class="skill-row-tags"><span>Photoshop</span><span>UI/UX</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">06</span><span class="skill-row-icon">🛠️</span><span class="skill-row-name">ابزار و زیرساخت</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</p>
+          <div class="skill-row-tags"><span>Git</span><span>Linux</span><span>SEO</span></div>
+        </div>
+      </div>
+
+      <div class="skill-row" tabindex="0">
+        <div class="skill-row-head"><span class="skill-row-idx">07</span><span class="skill-row-icon">📱</span><span class="skill-row-name">اپلیکیشن موبایل و سخت‌افزار</span><span class="skill-row-caret">❯</span></div>
+        <div class="skill-row-body">
+          <p class="skill-row-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</p>
+          <div class="skill-row-tags"><span>Capacitor</span><span>Android</span><span>Android Studio</span><span>Bluetooth</span></div>
+        </div>
+      </div>
+
+      <div class="skills-terminal-line skills-terminal-caret">_</div>
+    </div>
   </div>
 </div></div></section>
 
@@ -1158,12 +1199,29 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 6 ─ KALA2 -->
+<!-- SCENE 6 ─ METANAMA -->
 <section class="scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s6-ch">06 · ربات · Telegram Bot</div>
+  <div class="chapter-marker" id="s6-ch">06 · ابزار وب · Client-Side Web Tools</div>
   <div class="project-reveal" id="s6-pr">
+    <div class="project-label">ابزارهای آنلاین · 100% Client-Side</div>
+    <div class="project-image-wrap" id="s6-img"><img src="assets/projects/metanama.webp" alt="متانما" loading="lazy"></div>
+    <div class="project-title-fa">متانما</div>
+    <div class="project-title-en">Metanama — Privacy-First File Utility Suite</div>
+    <div class="project-desc-text">مجموعه ابزارهای آنلاین برای کار روی فایل‌های عکس، موزیک و PDF؛ حذف اطلاعات مخفی (متادیتا) از عکس‌ها، ویرایش اطلاعات و کاور فایل‌های موزیک، ابزارهای کاربردی PDF شامل ترکیب چند فایل، حذف صفحات و تقسیم فایل، و همچنین تبدیل فرمت‌های مختلف عکس به یکدیگر. مهم‌ترین ویژگی این پروژه این است که تمام پردازش‌ها کاملاً سمت کلاینت (در مرورگر کاربر) انجام می‌شود و هیچ فایلی به هیچ سروری ارسال نمی‌گردد.</div>
+    <div class="project-desc-en">A suite of online utilities for images, music files and PDFs: strip hidden metadata from photos, edit music tags and cover art, handy PDF tools (merge, delete pages, split), and convert between image formats. The key feature is that every operation runs entirely client-side in the browser — no file is ever uploaded to a server.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">JavaScript</span><span class="tech-chip blue">100% Client-Side</span><span class="tech-chip blue">Privacy-First</span><span class="tech-chip green">PDF Tools</span><span class="tech-chip ember">Image/Audio Metadata</span>
+    </div>
+    <a class="project-link-btn" href="https://metanama.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+  </div>
+</div></div></section>
+
+<!-- SCENE 7 ─ KALA2 -->
+<section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s7-ch">07 · ربات · Telegram Bot</div>
+  <div class="project-reveal" id="s7-pr">
     <div class="project-label">ربات جستجوی کالا · Search Bot</div>
-    <div class="project-image-wrap" id="s6-img"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
+    <div class="project-image-wrap" id="s7-img"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
     <div class="project-title-fa">ربات کالا ۲</div>
     <div class="project-title-en">Kala2 — Divar Scraper Bot</div>
     <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.</div>
@@ -1175,12 +1233,12 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 7 ─ TELEDATA -->
-<section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s7-ch">07 · ابزار داده · Data Tool</div>
-  <div class="project-reveal" id="s7-pr">
+<!-- SCENE 8 ─ TELEDATA -->
+<section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s8-ch">08 · ابزار داده · Data Tool</div>
+  <div class="project-reveal" id="s8-pr">
     <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
-    <div class="project-image-wrap" id="s7-img"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
+    <div class="project-image-wrap" id="s8-img"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
     <div class="project-title-fa">Teledata</div>
     <div class="project-title-en">Telegram Channel Extractor</div>
     <div class="project-desc-text">ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.</div>
@@ -1192,12 +1250,12 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 8 ─ ACCOUNTING -->
-<section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s8-ch">08 · نرم‌افزار · Desktop App</div>
-  <div class="project-reveal" id="s8-pr">
+<!-- SCENE 9 ─ ACCOUNTING -->
+<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s9-ch">09 · نرم‌افزار · Desktop App</div>
+  <div class="project-reveal" id="s9-pr">
     <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
-    <div class="project-image-wrap" id="s8-img"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
+    <div class="project-image-wrap" id="s9-img"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
     <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
     <div class="project-title-en">Accounting &amp; Warehouse Management</div>
     <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel.</div>
@@ -1209,12 +1267,12 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 9 ─ KARFAHM -->
-<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s9-ch">09 · اپلیکیشن اندروید · Car Diagnostics</div>
-  <div class="project-reveal" id="s9-pr">
+<!-- SCENE 10 ─ KARFAHM -->
+<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s10-ch">10 · اپلیکیشن اندروید · Car Diagnostics</div>
+  <div class="project-reveal" id="s10-pr">
     <div class="project-label">تشخیص خودرو · Native Android App</div>
-    <div class="project-image-wrap" id="s9-img"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
+    <div class="project-image-wrap" id="s10-img"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
     <div class="project-title-fa">کارفهم</div>
     <div class="project-title-en">Karfahm — OBD-II Car Diagnostics (Persian)</div>
     <div class="project-desc-text">اپلیکیشن اندرویدی تشخیص خودرو به زبان فارسی که از طریق بلوتوث به دانگل‌های ارزان‌قیمت ELM327 وصل می‌شود و داده‌های زنده موتور و کدهای خطا را می‌خواند و به فارسی روان توضیح می‌دهد. پروتکل OBD-II (دستورات AT، رمزگشایی PID و کدهای خطا طبق استاندارد SAE J2012) کاملاً از پایه پیاده‌سازی شده، بدون وابستگی به هیچ سرور یا سرویس ابری.</div>
@@ -1226,12 +1284,12 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 10 ─ CUTTING BOOK -->
-<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s10-ch">10 · نرم‌افزار چندسکویی · Multi-Platform</div>
-  <div class="project-reveal" id="s10-pr">
+<!-- SCENE 11 ─ CUTTING BOOK -->
+<section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s11-ch">11 · نرم‌افزار چندسکویی · Multi-Platform</div>
+  <div class="project-reveal" id="s11-pr">
     <div class="project-label">مدیریت کارگاهی · Multi-Platform System</div>
-    <div class="project-image-wrap" id="s10-img"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
+    <div class="project-image-wrap" id="s11-img"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
     <div class="project-title-fa">دفتر برش لباس</div>
     <div class="project-title-en">Cutting Book — Fabric Cutting Management System</div>
     <div class="project-desc-text">سیستم مدیریت برش پارچه برای کارگاه‌های خیاطی. می‌توان چند مشتری تعریف کرد و برش‌های هر مشتری را ثبت نمود؛ از روی داده‌های وزن پارچه و تعداد لا، تعداد کارها و آمار دقیق وزن به‌صورت خودکار محاسبه می‌شود. دارای سیستم پرینت، اشتراک‌گذاری و آمارگیری. یک نسخه Django روی سرور دارد که برشکاران و مشتریان با نام کاربری و رمز اختصاصی خود وارد شده و به اطلاعات دسترسی و امکان ویرایش دارند (کد این نسخه خصوصی نگه داشته شده). نسخه اندروید آفلاین، ثبت برش و آمار را انجام می‌دهد، بک‌آپ می‌گیرد و امکان اشتراک‌گذاری آمار برش را فراهم می‌کند. نسخه وب نیز مخصوص برشکار است و به‌صورت کاملاً آفلاین روی حافظه محلی مرورگر ذخیره می‌شود.</div>
@@ -1246,12 +1304,12 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 11 ─ KONKUR ARSHAD -->
-<section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s11-ch">11 · ابزار وب · Personal Utility Tool</div>
-  <div class="project-reveal" id="s11-pr">
+<!-- SCENE 12 ─ KONKUR ARSHAD -->
+<section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s12-ch">12 · ابزار وب · Personal Utility Tool</div>
+  <div class="project-reveal" id="s12-pr">
     <div class="project-label">راهنمای انتخاب رشته · Open Source</div>
-    <div class="project-image-wrap" id="s11-img"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
+    <div class="project-image-wrap" id="s12-img"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
     <div class="project-title-fa">راهنمای انتخاب رشته کارشناسی‌ارشد ۱۴۰۵</div>
     <div class="project-title-en">Konkur Arshad — Grad-School Priority List Builder</div>
     <div class="project-desc-text">ابزاری سبک و کاملاً آفلاین برای مرتب کردن، جست‌وجو و اولویت‌بندی کدرشته‌محل‌های کارشناسی‌ارشد، ساخته‌شده از یک نیاز واقعی شخصی هنگام انتخاب رشته. داده‌های دفترچه رسمی سازمان سنجش استخراج و ساخت‌یافته شده و در یک صفحه تک‌فایل با جست‌وجوی آنی، فیلتر بر اساس گروه رشته، افزودن به لیست انتخابی، اولویت‌بندی با درگ‌ودراپ، ذخیره‌سازی خودکار در مرورگر و خروجی/ورودی اکسل در اختیار داوطلبان قرار گرفته است.</div>
@@ -1263,17 +1321,17 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 12 ─ EXPERIENCE -->
-<section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s12-ch">12 · تجربه کاری · Experience</div>
-  <div class="exp-reveal" id="s12-e1">
+<!-- SCENE 13 ─ EXPERIENCE -->
+<section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
+  <div class="chapter-marker" id="s13-ch">13 · تجربه کاری · Experience</div>
+  <div class="exp-reveal" id="s13-e1">
     <div class="exp-period">2022 — اکنون · Present</div>
     <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
     <div class="exp-role-en">Freelance Full Stack Developer</div>
     <div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
   </div>
-  <div class="scene-divider" id="s12-div"></div>
-  <div class="exp-reveal" id="s12-e2">
+  <div class="scene-divider" id="s13-div"></div>
+  <div class="exp-reveal" id="s13-e2">
     <div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div>
     <div class="exp-role-fa" style="background:linear-gradient(130deg,var(--grad-a) 0%,#fcd34d 40%,var(--ember) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div>
     <div class="exp-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
@@ -1281,14 +1339,14 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 13 ─ EDUCATION -->
-<section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s13-ch">13 · تحصیل و زبان · Education &amp; Languages</div>
-  <div class="edu-reveal" id="s13-edu">
+<!-- SCENE 14 ─ EDUCATION -->
+<section class="scene" id="scene-14"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
+  <div class="chapter-marker" id="s14-ch">14 · تحصیل و زبان · Education &amp; Languages</div>
+  <div class="edu-reveal" id="s14-edu">
     <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:14px;font-weight:600;">B.Sc. Computer Engineering · Currently Enrolled</div>
     <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
   </div>
-  <div class="lang-pair" id="s13-lg">
+  <div class="lang-pair" id="s14-lg">
     <div class="lang-item">
       <div class="lang-name-fa">فارسی</div><div class="lang-name-en">Persian — Native</div>
       <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
@@ -1300,19 +1358,19 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 14 ─ CONTACT -->
-<section class="scene scene-bookend" id="scene-14"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s14-ch">14 · تماس · Let's Connect</div>
-  <div class="scene-headline-fa" id="s14-h">بیایید<br>بسازیم</div>
-  <div class="scene-headline-en" id="s14-hen">Let's Build Something Real</div>
-  <div class="contact-grid" id="s14-cg">
+<!-- SCENE 15 ─ CONTACT -->
+<section class="scene scene-bookend" id="scene-15"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
+  <div class="chapter-marker" id="s15-ch">15 · تماس · Let's Connect</div>
+  <div class="scene-headline-fa" id="s15-h">بیایید<br>بسازیم</div>
+  <div class="scene-headline-en" id="s15-hen">Let's Build Something Real</div>
+  <div class="contact-grid" id="s15-cg">
     <a class="contact-link" href="https://t.me/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg><span>mohmmadjavad</span></a>
     <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display">نمایش شماره</span></a>
     <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
   </div>
-  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s14-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
+  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s15-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
   <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.</div>
 </div></div></section>
 
@@ -1320,7 +1378,7 @@ document.documentElement.style.overflow = 'hidden';
 
 <!-- PROFILE MODAL -->
 <div id="profile-modal"><button id="profile-modal-close">✕</button><img src="assets/profile.webp" alt="محمد جواد محمودی" draggable="false"></div>
-<div id="project-image-modal"><button id="project-image-modal-close">✕</button><img src="" alt="" draggable="false"></div>
+<div id="project-image-modal"><button id="project-image-modal-close">✕</button><div class="pim-frame"><img src="" alt="" draggable="false"></div></div>
 
 <script src="vendor/js/three.min.js" defer></script>
 <script src="vendor/js/gsap.min.js" defer></script>
@@ -1786,7 +1844,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(window._updateThreeColors)window._updateThreeColors([night.threeCore,null,night.threeMid,night.threeOuter],0xffffff,0x7c8fff,0xffffff);
 
   const root=document.documentElement;
-  const zone=document.getElementById('scene-6'); // middle of the journey — کالا۲
+  const zone=document.getElementById('scene-7'); // middle of the journey — کالا۲
   if(!zone) return;
 
   function hexLerp(a,b,t){
@@ -1935,9 +1993,10 @@ const sceneElements={
   'scene-9':['s9-ch','s9-img','s9-pr'],
   'scene-10':['s10-ch','s10-img','s10-pr'],
   'scene-11':['s11-ch','s11-img','s11-pr'],
-  'scene-12':['s12-ch','s12-e1','s12-div','s12-e2'],
-  'scene-13':['s13-ch','s13-edu','s13-lg'],
-  'scene-14':['s14-ch','s14-h','s14-hen','s14-cg','s14-logo','footer-line']
+  'scene-12':['s12-ch','s12-img','s12-pr'],
+  'scene-13':['s13-ch','s13-e1','s13-div','s13-e2'],
+  'scene-14':['s14-ch','s14-edu','s14-lg'],
+  'scene-15':['s15-ch','s15-h','s15-hen','s15-cg','s15-logo','footer-line']
 };
 
 (function initNavigator(){
@@ -1953,21 +2012,137 @@ const sceneElements={
 // PROFILE MODAL
 (function(){const modal=document.getElementById('profile-modal'),closeBtn=document.getElementById('profile-modal-close'),trigger=document.querySelector('.profile-hero-img');if(!modal||!trigger)return;function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}trigger.addEventListener('click',openModal);closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});modal.addEventListener('click',closeModal);modal.querySelector('img').addEventListener('click',e=>e.stopPropagation());document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});})();
 
-// PROJECT IMAGE MODAL (fullscreen)
+// PROJECT IMAGE MODAL (fullscreen, with zoom & pan)
 (function(){
   const modal=document.getElementById('project-image-modal');
   const closeBtn=document.getElementById('project-image-modal-close');
   if(!modal||!closeBtn)return;
+  const frame=modal.querySelector('.pim-frame');
   const modalImg=modal.querySelector('img');
-  function openModal(src,alt){modalImg.src=src;modalImg.alt=alt||'';modal.classList.add('open');document.body.style.overflow='hidden';}
-  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
+  const MIN_SCALE=1,MAX_SCALE=4,DBL_SCALE=2.5;
+  let scale=1,tx=0,ty=0;
+
+  function applyTransform(withTransition){
+    modalImg.style.transition=withTransition?'transform 0.25s ease':'none';
+    modalImg.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`;
+    modalImg.classList.toggle('zoomed',scale>1.01);
+  }
+  function clampPan(){
+    const r=frame.getBoundingClientRect();
+    const maxX=Math.max(0,(r.width*(scale-1))/2);
+    const maxY=Math.max(0,(r.height*(scale-1))/2);
+    tx=Math.max(-maxX,Math.min(maxX,tx));
+    ty=Math.max(-maxY,Math.min(maxY,ty));
+  }
+  function zoomAt(clientX,clientY,newScale){
+    const r=frame.getBoundingClientRect();
+    const px=clientX-r.left-r.width/2;
+    const py=clientY-r.top-r.height/2;
+    newScale=Math.max(MIN_SCALE,Math.min(MAX_SCALE,newScale));
+    tx=px-(px-tx)*(newScale/scale);
+    ty=py-(py-ty)*(newScale/scale);
+    scale=newScale;
+    clampPan();
+    applyTransform(true);
+  }
+  function resetZoom(){scale=1;tx=0;ty=0;applyTransform(false);}
+  function openModal(src,alt){modalImg.src=src;modalImg.alt=alt||'';resetZoom();modal.classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';resetZoom();}
+
   document.querySelectorAll('.project-image-wrap img').forEach(img=>{
     img.addEventListener('click',()=>openModal(img.currentSrc||img.src,img.alt));
   });
   closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});
   modal.addEventListener('click',closeModal);
-  modalImg.addEventListener('click',e=>e.stopPropagation());
+  frame.addEventListener('click',e=>e.stopPropagation());
+
+  // double-click / double-tap toggles zoom
+  modalImg.addEventListener('dblclick',e=>{
+    e.stopPropagation();
+    if(scale>1.01)resetZoom();else zoomAt(e.clientX,e.clientY,DBL_SCALE);
+  });
+
+  // wheel to zoom (desktop)
+  modalImg.addEventListener('wheel',e=>{
+    e.preventDefault();e.stopPropagation();
+    const delta=e.deltaY<0?0.3:-0.3;
+    zoomAt(e.clientX,e.clientY,scale+delta);
+  },{passive:false});
+
+  // drag to pan with mouse
+  let dragging=false,dragStartX=0,dragStartY=0,startTx=0,startTy=0;
+  modalImg.addEventListener('mousedown',e=>{
+    if(scale<=1.01)return;
+    e.preventDefault();e.stopPropagation();
+    dragging=true;dragStartX=e.clientX;dragStartY=e.clientY;startTx=tx;startTy=ty;
+    modalImg.classList.add('dragging');
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!dragging)return;
+    tx=startTx+(e.clientX-dragStartX);
+    ty=startTy+(e.clientY-dragStartY);
+    clampPan();applyTransform(false);
+  });
+  window.addEventListener('mouseup',()=>{
+    if(!dragging)return;
+    dragging=false;modalImg.classList.remove('dragging');
+  });
+
+  // touch: pinch-zoom, one-finger pan, double-tap
+  let touchMode=null,lastTapTime=0;
+  let pinchStartDist=0,pinchStartScale=1;
+  let panStartX=0,panStartY=0,panStartTx=0,panStartTy=0;
+  function touchDist(t0,t1){return Math.hypot(t1.clientX-t0.clientX,t1.clientY-t0.clientY);}
+  modalImg.addEventListener('touchstart',e=>{
+    e.stopPropagation();
+    if(e.touches.length===2){
+      touchMode='pinch';
+      pinchStartDist=touchDist(e.touches[0],e.touches[1]);
+      pinchStartScale=scale;
+    }else if(e.touches.length===1){
+      const now=Date.now();
+      if(now-lastTapTime<300){
+        if(scale>1.01)resetZoom();else zoomAt(e.touches[0].clientX,e.touches[0].clientY,DBL_SCALE);
+        lastTapTime=0;touchMode=null;return;
+      }
+      lastTapTime=now;
+      if(scale>1.01){
+        touchMode='pan';
+        panStartX=e.touches[0].clientX;panStartY=e.touches[0].clientY;
+        panStartTx=tx;panStartTy=ty;
+      }
+    }
+  },{passive:true});
+  modalImg.addEventListener('touchmove',e=>{
+    if(touchMode==='pinch'&&e.touches.length===2){
+      e.preventDefault();
+      const dist=touchDist(e.touches[0],e.touches[1]);
+      const midX=(e.touches[0].clientX+e.touches[1].clientX)/2;
+      const midY=(e.touches[0].clientY+e.touches[1].clientY)/2;
+      zoomAt(midX,midY,pinchStartScale*(dist/pinchStartDist));
+    }else if(touchMode==='pan'&&e.touches.length===1){
+      e.preventDefault();
+      tx=panStartTx+(e.touches[0].clientX-panStartX);
+      ty=panStartTy+(e.touches[0].clientY-panStartY);
+      clampPan();applyTransform(false);
+    }
+  },{passive:false});
+  modalImg.addEventListener('touchend',e=>{
+    if(e.touches.length===0)touchMode=null;
+  });
+
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+})();
+
+// SKILLS TERMINAL — click/tap to expand a row
+(function(){
+  document.querySelectorAll('.skill-row').forEach(row=>{
+    function toggle(){row.classList.toggle('open');}
+    row.addEventListener('click',toggle);
+    row.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
+    });
+  });
 })();
 
 // SHARE
