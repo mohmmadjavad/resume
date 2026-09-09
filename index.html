@@ -460,7 +460,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 #project-image-modal{position:fixed;inset:0;z-index:10000;background:rgba(2,2,6,0);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 0.35s ease,background 0.35s ease;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);padding:24px;}
 #project-image-modal.open{opacity:1;pointer-events:auto;background:rgba(2,2,6,0.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
-#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:default;}
+#project-image-modal img{width:min(92vw,calc(88vh * 16 / 9));max-width:92vw;max-height:88vh;aspect-ratio:16/9;object-fit:contain;border-radius:12px;border:2px solid rgba(80,104,255,0.5);box-shadow:0 0 80px rgba(41,70,255,0.4),0 0 160px rgba(41,70,255,0.15);transform:scale(0.7);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:zoom-in;touch-action:none;}
 #project-image-modal.open img{transform:scale(1);}
 #project-image-modal-close{position:absolute;top:24px;right:28px;width:48px;height:48px;border:2px solid rgba(80,104,255,0.5);border-radius:50%;background:rgba(6,6,10,0.9);color:var(--accent2);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s ease;z-index:1;font-weight:bold;}
 #project-image-modal-close:hover{background:rgba(41,70,255,0.3);border-color:var(--accent2);transform:scale(1.1);}
@@ -641,19 +641,28 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 #scene-3 .plate-corner.br{bottom:8px;left:8px;border-bottom:1px solid var(--plate-accent);border-left:1px solid var(--plate-accent);}
 #scene-3 .plate:hover .plate-corner{opacity:1;}
 #scene-3 .plate-idx{font-family:'Vazirmatn',sans-serif;font-size:1.4rem;font-weight:300;color:var(--plate-ink-faint);line-height:1;}
-#scene-3 .plate-thumb{opacity:1;margin:14px 0 0;aspect-ratio:16/10;border-radius:3px;background:var(--plate-paper);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--plate-line);box-shadow:none;max-width:100%;width:100%;cursor:pointer;flex-shrink:0;}
+/* platform badge — top-left corner, shows web / android / both / other */
+#scene-3 .plate-badge{position:absolute;top:10px;left:10px;z-index:2;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.04em;padding:4px 10px;border-radius:20px;background:var(--plate-raised);border:1px solid var(--plate-line-strong);color:var(--plate-ink-soft);}
+#scene-3 .plate-badge .badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+#scene-3 .plate-badge.badge-web{color:#1d3fd6;border-color:rgba(29,63,214,.3);}
+#scene-3 .plate-badge.badge-android{color:#0d8f5a;border-color:rgba(13,143,90,.3);}
+#scene-3 .plate-badge.badge-both{color:var(--plate-accent);border-color:rgba(41,70,255,.3);}
+#scene-3 .plate-badge.badge-bot{color:#a35b00;border-color:rgba(163,91,0,.3);}
+#scene-3 .plate-badge.badge-desktop{color:#5b21b6;border-color:rgba(91,33,182,.3);}
+#scene-3 .plate-thumb{opacity:1;margin:14px 0 0;aspect-ratio:16/9;border-radius:3px;background:var(--plate-paper);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--plate-line);box-shadow:none;max-width:100%;width:100%;cursor:zoom-in;flex-shrink:0;}
 #scene-3 .plate-thumb:hover{transform:none;box-shadow:none;}
-#scene-3 .plate-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.22,.61,.36,1);}
-#scene-3 .plate:hover .plate-thumb img{transform:scale(1.045);}
+#scene-3 .plate-thumb img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .45s cubic-bezier(.22,.61,.36,1);}
+#scene-3 .plate:hover .plate-thumb img{transform:scale(1.03);}
 #scene-3 .plate-meta{margin-top:14px;}
-#scene-3 .plate-name{font-size:1rem;font-weight:800;color:var(--plate-ink);}
+#scene-3 .plate-name{font-size:1.18rem;font-weight:800;color:var(--plate-ink);line-height:1.35;}
+#scene-3 .plate-name .plate-name-type{font-weight:600;color:var(--plate-accent);}
 #scene-3 .plate-type{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.07em;color:var(--plate-ink-soft);margin-top:4px;text-transform:uppercase;}
 #scene-3 .plate-desc{font-size:.76rem;line-height:1.75;color:var(--plate-ink-soft);margin-top:10px;}
 #scene-3 .plate-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;justify-content:flex-end;}
 #scene-3 .plate-tags span{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:3px 9px;border-radius:20px;border:1px solid var(--plate-line-strong);color:var(--plate-ink-soft);letter-spacing:.02em;}
-#scene-3 .plate-links{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;justify-content:flex-end;}
-#scene-3 .plate-links a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.05em;color:var(--plate-accent);text-decoration:none;border-bottom:1px solid var(--plate-accent-mid);}
-#scene-3 .plate-links a:hover{border-bottom-color:var(--plate-accent);}
+#scene-3 .plate-links{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;justify-content:flex-end;}
+#scene-3 .plate-links a{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.04em;color:var(--plate-ink);text-decoration:none;padding:8px 14px;border-radius:3px;border:1px solid var(--plate-line-strong);background:transparent;transition:all .2s ease;}
+#scene-3 .plate-links a:hover{background:var(--plate-ink);border-color:var(--plate-ink);color:var(--plate-raised);}
 
 @media(max-width:900px){#scene-3 .proj-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:640px){#scene-3 .proj-grid{grid-template-columns:1fr;}}
@@ -662,6 +671,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   #scene-3 .plate{padding:16px 14px 14px;}
   #scene-3 .proj-filter-tabs{gap:6px;}
   #scene-3 .proj-filter-tab{padding:6px 12px;font-size:.62rem;}
+  #scene-3 .plate-name{font-size:1rem;}
+  #scene-3 .plate-badge{font-size:.52rem;padding:3px 8px;}
+  #scene-3 .plate-links a{padding:7px 12px;font-size:.58rem;}
 }
 
 .project-reveal{opacity:0;max-width:800px;width:100%;text-align:right;}
@@ -1349,10 +1361,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="corporate">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
       <div class="plate-idx">01</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/azindej.webp" alt="آذین دژ" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">آذین دژ</div>
+        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> آذین دژ</div>
         <div class="plate-type">وب‌سایت شرکتی · Corporate Platform</div>
         <div class="plate-desc">پلتفرم تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی، قیمت‌گذاری لحظه‌ای و فاکتور کامل.</div>
         <div class="plate-tags"><span>PHP</span><span>SVG</span><span>PostgreSQL</span></div>
@@ -1362,10 +1375,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="corporate">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
       <div class="plate-idx">02</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/rasa.webp" alt="رسا" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">رسا</div>
+        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> رسا</div>
         <div class="plate-type">وب‌سایت شرکتی · CMS Platform</div>
         <div class="plate-desc">پلتفرم چندمنظوره شرکتی با پنل مدیریت اختصاصی و سیستم انتشار مقالات — در حال توسعه.</div>
         <div class="plate-tags"><span>PHP</span><span>Custom Admin</span><span>CMS</span></div>
@@ -1378,10 +1392,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="ecommerce">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
       <div class="plate-idx">03</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">برازنده تن</div>
+        <div class="plate-name"><span class="plate-name-type">وب‌سایت</span> برازنده تن</div>
         <div class="plate-type">فروشگاه آنلاین · Fashion E-Commerce</div>
         <div class="plate-desc">فروشگاه پوشاک با پرو مجازی، ربات چت هوشمند و زیرسیستم «دفتر برش» کارگاهی.</div>
         <div class="plate-tags"><span>Django</span><span>AI Chatbot</span><span>Virtual Try-On</span></div>
@@ -1394,10 +1409,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="bot">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-bot"><span class="badge-dot"></span>ربات</div>
       <div class="plate-idx">04</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">ربات کالا ۲</div>
+        <div class="plate-name"><span class="plate-name-type">ربات</span> کالا ۲</div>
         <div class="plate-type">ربات تلگرام · Divar Scraper Bot</div>
         <div class="plate-desc">جستجو و دریافت خودکار آگهی‌های دیوار — قیمت، تصویر و توضیحات، مستقیم در تلگرام.</div>
         <div class="plate-tags"><span>Python</span><span>Telegram API</span><span>BeautifulSoup</span></div>
@@ -1407,10 +1423,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="tool">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-desktop"><span class="badge-dot"></span>دسکتاپ</div>
       <div class="plate-idx">05</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">Teledata</div>
+        <div class="plate-name"><span class="plate-name-type">ابزار</span> Teledata</div>
         <div class="plate-type">ابزار داده · Telegram Extractor</div>
         <div class="plate-desc">استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام — خروجی Excel و پوشه Media.</div>
         <div class="plate-tags"><span>Python</span><span>Telethon</span><span>CustomTkinter</span></div>
@@ -1420,10 +1437,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="desktop">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-desktop"><span class="badge-dot"></span>دسکتاپ</div>
       <div class="plate-idx">06</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">حسابداری و انبارداری</div>
+        <div class="plate-name"><span class="plate-name-type">نرم‌افزار</span> حسابداری و انبارداری</div>
         <div class="plate-type">نرم‌افزار دسکتاپ · ERP System</div>
         <div class="plate-desc">مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری Excel.</div>
         <div class="plate-tags"><span>PyQt6</span><span>SQLite</span><span>ReportLab</span></div>
@@ -1433,10 +1451,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="mobile">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-android"><span class="badge-dot"></span>اندروید</div>
       <div class="plate-idx">07</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">کارفهم</div>
+        <div class="plate-name"><span class="plate-name-type">اپ</span> کارفهم</div>
         <div class="plate-type">اپلیکیشن اندروید · OBD-II Diagnostics</div>
         <div class="plate-desc">تشخیص خودرو فارسی روی بلوتوث به ELM327 — پروتکل OBD-II کامل، کاملاً آفلاین.</div>
         <div class="plate-tags"><span>Capacitor</span><span>OBD-II</span><span>Bluetooth SPP</span></div>
@@ -1446,10 +1465,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="mobile">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-both"><span class="badge-dot"></span>وب + اپ</div>
       <div class="plate-idx">08</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">دفتر برش لباس</div>
+        <div class="plate-name"><span class="plate-name-type">وب + اپ</span> دفتر برش لباس</div>
         <div class="plate-type">چندسکویی · Multi-Platform System</div>
         <div class="plate-desc">مدیریت برش پارچه کارگاهی: نسخه سرور Django، اپ آفلاین اندروید و نسخه وب سبک.</div>
         <div class="plate-tags"><span>Django</span><span>Capacitor</span><span>Offline-first</span></div>
@@ -1462,10 +1482,11 @@ document.documentElement.style.overflow = 'hidden';
 
     <div class="plate" data-category="tool">
       <span class="plate-corner tl"></span><span class="plate-corner br"></span>
+      <div class="plate-badge badge-web"><span class="badge-dot"></span>وب</div>
       <div class="plate-idx">09</div>
       <div class="plate-thumb project-image-wrap"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
       <div class="plate-meta">
-        <div class="plate-name">راهنمای انتخاب رشته ارشد ۱۴۰۵</div>
+        <div class="plate-name"><span class="plate-name-type">ابزار</span> راهنمای انتخاب رشته ارشد ۱۴۰۵</div>
         <div class="plate-type">ابزار وب · Open Source</div>
         <div class="plate-desc">مرتب‌سازی و اولویت‌بندی کدرشته‌محل‌ها — جست‌وجوی آنی، درگ‌ودراپ، خروجی Excel.</div>
         <div class="plate-tags"><span>JavaScript</span><span>SheetJS</span><span>localStorage</span></div>
@@ -2211,21 +2232,124 @@ const sceneElements={
   });
 })();
 
-// PROJECT IMAGE MODAL (fullscreen)
+// PROJECT IMAGE MODAL (fullscreen, zoomable/pannable)
 (function(){
   const modal=document.getElementById('project-image-modal');
   const closeBtn=document.getElementById('project-image-modal-close');
   if(!modal||!closeBtn)return;
   const modalImg=modal.querySelector('img');
-  function openModal(src,alt){modalImg.src=src;modalImg.alt=alt||'';modal.classList.add('open');document.body.style.overflow='hidden';}
-  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
+
+  let scale=1, tx=0, ty=0;
+  const MIN_SCALE=1, MAX_SCALE=4;
+  const clampScale=s=>Math.min(MAX_SCALE, Math.max(MIN_SCALE, s));
+
+  function applyTransform(withTransition){
+    modalImg.style.transition = withTransition ? 'transform .25s ease' : 'none';
+    modalImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+    modalImg.style.cursor = scale>1.01 ? 'grab' : 'zoom-in';
+  }
+  function resetZoom(withTransition){ scale=1; tx=0; ty=0; applyTransform(withTransition); }
+
+  // Zoom toward a specific screen point (cursor/pinch center) so that point
+  // stays visually still while the scale changes, instead of always zooming
+  // toward the image's center.
+  function zoomAt(clientX, clientY, newScale){
+    const rect=modalImg.getBoundingClientRect();
+    const cx=clientX-(rect.left+rect.width/2);
+    const cy=clientY-(rect.top+rect.height/2);
+    const ratio=newScale/scale;
+    tx=cx-(cx-tx)*ratio;
+    ty=cy-(cy-ty)*ratio;
+    scale=newScale;
+    if(scale<=1.001){ tx=0; ty=0; scale=1; }
+    applyTransform(true);
+  }
+
+  function openModal(src,alt){
+    modalImg.src=src;modalImg.alt=alt||'';
+    resetZoom(false);
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+    resetZoom(false);
+  }
   document.querySelectorAll('.project-image-wrap img').forEach(img=>{
     img.addEventListener('click',()=>openModal(img.currentSrc||img.src,img.alt));
   });
   closeBtn.addEventListener('click',e=>{e.stopPropagation();closeModal();});
-  modal.addEventListener('click',closeModal);
+  modal.addEventListener('click',()=>{ if(scale<=1.001) closeModal(); }); // don't close on background click while zoomed — likely mid-pan
   modalImg.addEventListener('click',e=>e.stopPropagation());
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+
+  // Double-click / double-tap toggles zoom in/out
+  modalImg.addEventListener('dblclick', e=>{
+    e.stopPropagation();
+    if(scale>1.01){ resetZoom(true); } else { zoomAt(e.clientX, e.clientY, 2.4); }
+  });
+
+  // Mouse wheel zoom (desktop)
+  modalImg.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const factor = e.deltaY<0 ? 1.15 : 1/1.15;
+    zoomAt(e.clientX, e.clientY, clampScale(scale*factor));
+  }, {passive:false});
+
+  // Drag to pan once zoomed in (mouse)
+  let dragging=false, dragStartX=0, dragStartY=0, startTx=0, startTy=0;
+  modalImg.addEventListener('mousedown', e=>{
+    if(scale<=1.001)return;
+    dragging=true; dragStartX=e.clientX; dragStartY=e.clientY; startTx=tx; startTy=ty;
+    modalImg.style.transition='none'; modalImg.style.cursor='grabbing';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e=>{
+    if(!dragging)return;
+    tx=startTx+(e.clientX-dragStartX); ty=startTy+(e.clientY-dragStartY);
+    applyTransform(false);
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!dragging)return;
+    dragging=false;
+    modalImg.style.cursor = scale>1.01 ? 'grab' : 'zoom-in';
+  });
+
+  // Touch: two-finger pinch to zoom, one-finger drag to pan once zoomed
+  let touchMode=null, pinchStartDist=0, pinchStartScale=1, pinchMid={x:0,y:0};
+  let panStartX=0, panStartY=0, panStartTx=0, panStartTy=0;
+  const touchDist=(a,b)=>Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+
+  modalImg.addEventListener('touchstart', e=>{
+    if(e.touches.length===2){
+      touchMode='pinch';
+      pinchStartDist=touchDist(e.touches[0],e.touches[1]);
+      pinchStartScale=scale;
+      pinchMid={x:(e.touches[0].clientX+e.touches[1].clientX)/2, y:(e.touches[0].clientY+e.touches[1].clientY)/2};
+      modalImg.style.transition='none';
+    } else if(e.touches.length===1 && scale>1.001){
+      touchMode='pan';
+      panStartX=e.touches[0].clientX; panStartY=e.touches[0].clientY;
+      panStartTx=tx; panStartTy=ty;
+      modalImg.style.transition='none';
+    }
+  }, {passive:true});
+
+  modalImg.addEventListener('touchmove', e=>{
+    if(touchMode==='pinch' && e.touches.length===2){
+      e.preventDefault();
+      const dist=touchDist(e.touches[0],e.touches[1]);
+      zoomAt(pinchMid.x, pinchMid.y, clampScale(pinchStartScale*(dist/pinchStartDist)));
+    } else if(touchMode==='pan' && e.touches.length===1){
+      e.preventDefault();
+      tx=panStartTx+(e.touches[0].clientX-panStartX);
+      ty=panStartTy+(e.touches[0].clientY-panStartY);
+      applyTransform(false);
+    }
+  }, {passive:false});
+
+  modalImg.addEventListener('touchend', e=>{ if(e.touches.length===0) touchMode=null; });
 })();
 
 // SHARE
