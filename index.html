@@ -574,20 +574,36 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   font-weight:400;
 }
 
-.skills-cards-grid{opacity:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:820px;width:100%;margin:20px auto 0;}
-.skill-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px 16px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all 0.3s ease;}
-.skill-card:hover{border-color:rgba(80,104,255,0.55);background:var(--card-hover-bg);transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.5),0 0 24px var(--glow);}
-.skill-card-icon{font-size:1.25rem;margin-bottom:6px;display:block;}
-.skill-card-name{font-size:.82rem;font-weight:700;color:var(--heading);margin-bottom:5px;letter-spacing:-0.01em;}
-.skill-card-desc{font-size:.68rem;line-height:1.6;color:var(--text-body);margin-bottom:8px;}
-.skill-card-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.skill-card-tags span{font-size:.56rem;padding:3px 8px;border-radius:5px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
+/* ════ SKILLS — asymmetric "bento" showcase ════
+   Deliberately not a uniform 3-col grid: two featured tiles (Backend,
+   Frontend) run wide, four compact tiles sit in a row, and Mobile/Hardware
+   spans the full width as a closing banner. An animated conic-gradient
+   ring sweeps in on hover (desktop only — touch devices never trigger
+   :hover so mobile just gets the flat card, no wasted animation). */
+@property --angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
+.skills-bento{opacity:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:960px;width:100%;margin:22px auto 0;}
+.skill-tile{position:relative;background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:20px;text-align:right;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s ease,box-shadow .3s ease;overflow:hidden;}
+.skill-tile.t-wide{grid-column:span 2;}
+.skill-tile.t-full{grid-column:span 4;display:flex;align-items:center;gap:22px;}
+.skill-tile::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--angle,0deg),transparent 0 65%,var(--tile-color,var(--accent2)) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s ease;pointer-events:none;}
+.skill-tile:hover::before{opacity:1;animation:tileRing 2.6s linear infinite;}
+@keyframes tileRing{to{--angle:360deg;}}
+.skill-tile:hover{transform:translateY(-5px);border-color:var(--tile-color,var(--accent2));box-shadow:0 14px 34px rgba(0,0,0,0.4),0 0 26px color-mix(in srgb, var(--tile-color,var(--accent2)) 35%, transparent);}
+.skill-tile-index{position:absolute;top:16px;left:18px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.16em;}
+.skill-tile-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:color-mix(in srgb, var(--tile-color,var(--accent)) 18%, transparent);margin-bottom:12px;flex-shrink:0;}
+.t-full .skill-tile-icon{margin-bottom:0;}
+.skill-tile-body{min-width:0;}
+.skill-tile-name{font-size:.92rem;font-weight:800;color:var(--heading);margin-bottom:6px;letter-spacing:-0.01em;}
+.skill-tile-desc{font-size:.7rem;line-height:1.75;color:var(--text-body);margin-bottom:10px;}
+.skill-tile-tags{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;}
+.t-full .skill-tile-tags{justify-content:flex-start;}
+.skill-tile-tags span{font-size:.57rem;padding:3px 10px;border-radius:20px;border:1px solid var(--chip-border);color:var(--chip-color);background:var(--chip-bg);letter-spacing:.02em;}
 
 /* scene-2 has extra content (the grid), so shrink the headline block to fit the pinned 100vh scene without clipping */
 #scene-2 .chapter-marker{margin-bottom:14px;}
 #scene-2 .scene-headline-fa{font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.15;}
 #scene-2 .scene-headline-en{margin-top:4px;font-size:clamp(.7rem,1.6vw,1rem);}
-#scene-2 .skills-cards-grid{margin-top:14px;}
+#scene-2 .skills-bento{margin-top:14px;}
 #scene-2 .graphic-resume-btn{margin-top:14px !important;}
 
 .scene-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, var(--vignette-inner) 0%, transparent 70%);pointer-events:none;z-index:0;}
@@ -687,6 +703,53 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   box-shadow:0 0 24px rgba(41,70,255,0.3);
   transform: translateY(-2px);
 }
+
+/* ════ PROJECTS — minimal day mode ════
+   Once scrolled into the projects chapter (html.is-day), the section
+   should read as a clean, paper-white, black-and-blue minimal layout —
+   not just "the same glowing glass UI with lighter colors". So beyond the
+   color variables (already lerped elsewhere), flatten the heavy glass/glow
+   treatment: no blur, no drop-shadow halos, thin flat borders, plain
+   outline buttons instead of gradient-filled ones. */
+html.is-day .project-image-wrap{
+  border:1px solid rgba(41,70,255,0.16);
+  box-shadow:0 10px 28px rgba(21,24,29,0.08);
+  background:#fff;
+}
+html.is-day .project-image-wrap:hover{
+  box-shadow:0 16px 36px rgba(21,24,29,0.12);
+}
+html.is-day .project-title-fa,html.is-day .exp-role-fa,html.is-day .edu-degree-fa{
+  filter:none;
+}
+html.is-day .project-label,html.is-day .exp-period,html.is-day .chapter-marker{
+  text-shadow:none;
+}
+html.is-day .chapter-marker::before,html.is-day .chapter-marker::after{
+  background:linear-gradient(90deg,transparent,rgba(41,70,255,0.35));
+}
+html.is-day .chapter-marker::after{background:linear-gradient(90deg,rgba(41,70,255,0.35),transparent);}
+html.is-day .project-desc-text,html.is-day .exp-desc-text{text-shadow:none;}
+html.is-day .tech-chip{box-shadow:none;background:#fff;}
+html.is-day .tech-chip:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+html.is-day .tech-chip.blue{background:rgba(29,63,214,.06);}
+html.is-day .tech-chip.ember{background:rgba(180,83,9,.06);}
+html.is-day .tech-chip.green{background:rgba(4,120,87,.06);}
+html.is-day .project-link-btn{
+  background:transparent;
+  border:1.5px solid var(--mono-accent);
+  color:var(--mono-accent);
+  backdrop-filter:none;
+  box-shadow:none;
+}
+html.is-day .project-link-btn:hover{
+  background:var(--mono-accent);
+  border-color:var(--mono-accent);
+  box-shadow:0 10px 22px rgba(41,70,255,0.18);
+}
+html.is-day #chapter-nav .nav-dot.active{box-shadow:none;}
+html.is-day body::after{opacity:0.012;}
+html.is-day .scanline{opacity:0.35;}
 
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
 .exp-period{
@@ -814,6 +877,48 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   margin-right:auto;
 }
 
+/* ════ FINAL SCENE — a deliberate third look ════
+   Neither the night cosmos nor the paper-white minimal projects chapter:
+   the closing "let's build" scene gets its own signature indigo/violet
+   identity, painted directly on the section (so it reads the same whether
+   the page is still mid-crossfade or fully in day mode by the time you
+   reach it), with its own type treatment and a redesigned, tactile contact
+   grid of glass pill-buttons. */
+#scene-14{
+  background:
+    radial-gradient(ellipse 70% 55% at 22% 15%, rgba(123,47,247,0.32), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 82% 85%, rgba(41,70,255,0.34), transparent 60%),
+    #07051a;
+  isolation:isolate;
+}
+#scene-14 .chapter-marker{color:#c9b8ff;text-shadow:0 0 20px rgba(123,47,247,0.4);}
+#scene-14 .chapter-marker::before,#scene-14 .chapter-marker::after{background:linear-gradient(90deg,transparent,#7b2ff7);}
+#scene-14 .chapter-marker::after{background:linear-gradient(90deg,#7b2ff7,transparent);}
+#scene-14 .scene-headline-fa{
+  background:linear-gradient(120deg,#ffffff 0%,#cdd6ff 35%,#b78bff 70%,#7b2ff7 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 4px 24px rgba(123,47,247,0.35));
+}
+#scene-14 .scene-headline-en{color:#b9aee0;}
+#scene-14 .contact-grid{gap:16px;}
+#scene-14 .contact-link{
+  background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:999px;
+  color:#f1edff;
+  backdrop-filter:blur(10px);
+  padding:15px 26px;
+}
+#scene-14 .contact-link::before{background:linear-gradient(135deg,#7b2ff7,#2946ff);}
+#scene-14 .contact-link:hover{
+  border-color:transparent;
+  color:#fff;
+  box-shadow:0 10px 30px rgba(123,47,247,0.35),0 0 24px rgba(41,70,255,0.25);
+}
+#scene-14 .contact-link:hover::before{opacity:1;}
+#scene-14 #footer-line{color:#8f84b8;border-top-color:rgba(123,47,247,0.25);}
+#scene-14 #s14-logo{filter:drop-shadow(0 0 24px rgba(123,47,247,0.3));}
+
 .tagline-text{
   font-family:'JetBrains Mono',monospace;
   font-size:0.65rem;
@@ -850,37 +955,41 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .project-image-wrap{max-width:100%;margin-bottom:10px;}
   
   /* اصلاح گرید مهارت‌ها */
-  .skills-cards-grid{
+  .skills-bento{
     grid-template-columns: repeat(2, 1fr);
     gap:8px;
     max-width:100%;
     width:100%;
     padding:0 4px;
   }
-  .skill-card{
-    padding:10px 10px;
-    border-radius:10px;
+  .skill-tile.t-wide,.skill-tile.t-full{grid-column:span 2;}
+  .skill-tile.t-full{flex-direction:column;align-items:flex-start;}
+  .skill-tile{
+    padding:12px 12px;
+    border-radius:12px;
   }
-  .skill-card-icon{
-    font-size:1rem;
+  .skill-tile-icon{
+    width:32px;height:32px;
+    font-size:0.9rem;
     margin-bottom:4px;
   }
-  .skill-card-name{
-    font-size:0.7rem;
+  .skill-tile-index{top:10px;left:12px;}
+  .skill-tile-name{
+    font-size:0.72rem;
     margin-bottom:3px;
   }
-  .skill-card-desc{
+  .skill-tile-desc{
     font-size:0.6rem;
-    line-height:1.4;
+    line-height:1.5;
     margin-bottom:6px;
   }
-  .skill-card-tags{
+  .skill-tile-tags{
     gap:3px;
   }
-  .skill-card-tags span{
+  .skill-tile-tags span{
     font-size:0.5rem;
-    padding:2px 5px;
-    border-radius:4px;
+    padding:2px 7px;
+    border-radius:10px;
   }
   
   .project-desc-text{font-size:.88rem;}
@@ -892,7 +1001,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   #scene-2 .chapter-marker{margin-bottom:8px;font-size:0.6rem;}
   #scene-2 .scene-headline-fa{font-size:clamp(1.3rem, 5vw, 1.8rem);}
   #scene-2 .scene-headline-en{font-size:0.65rem;margin-top:2px;}
-  #scene-2 .skills-cards-grid{margin-top:10px;}
+  #scene-2 .skills-bento{margin-top:10px;}
 }
 
 
@@ -904,37 +1013,38 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .fab-btn svg{width:15px;height:15px;}
   
   /* فوق فشرده برای صفحه‌های خیلی کوچک */
-  .skills-cards-grid{
+  .skills-bento{
     grid-template-columns: repeat(2, 1fr);
     gap:6px;
     padding:0 2px;
   }
-  .skill-card{
+  .skill-tile{
     padding:8px 8px;
     border-radius:8px;
   }
-  .skill-card-icon{
-    font-size:0.9rem;
-    margin-bottom:3px;
+  .skill-tile-icon{
+    width:26px;height:26px;
+    font-size:0.8rem;
+    margin-bottom:2px;
   }
-  .skill-card-name{
+  .skill-tile-name{
     font-size:0.65rem;
     margin-bottom:2px;
   }
-  .skill-card-desc{
+  .skill-tile-desc{
     font-size:0.55rem;
-    line-height:1.3;
+    line-height:1.35;
     margin-bottom:5px;
   }
-  .skill-card-tags span{
+  .skill-tile-tags span{
     font-size:0.48rem;
-    padding:2px 4px;
+    padding:2px 6px;
   }
   
   #scene-2 .chapter-marker{margin-bottom:6px;}
   #scene-2 .scene-headline-fa{font-size:1.2rem;}
   #scene-2 .scene-headline-en{font-size:0.6rem;}
-  #scene-2 .skills-cards-grid{margin-top:8px;}
+  #scene-2 .skills-bento{margin-top:8px;}
 }
 
 /* ══ PRELOADER ══ */
@@ -1090,14 +1200,70 @@ document.documentElement.style.overflow = 'hidden';
   <div class="chapter-marker" id="s2-ch">02 · مهارت‌ها · Skills</div>
   <div class="scene-headline-fa" id="s2-h">مهارت‌هایی که بلدم</div>
   <div class="scene-headline-en" id="s2-hen">What I Bring to the Table</div>
-  <div class="skills-cards-grid" id="s2-skills">
-    <div class="skill-card"><span class="skill-card-icon">🗄️</span><div class="skill-card-name">بک‌اند و پایگاه داده</div><div class="skill-card-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</div><div class="skill-card-tags"><span>Python</span><span>Django</span><span>PHP</span><span>PostgreSQL</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🎨</span><div class="skill-card-name">فرانت‌اند</div><div class="skill-card-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</div><div class="skill-card-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🤖</span><div class="skill-card-name">ربات‌های تلگرام</div><div class="skill-card-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</div><div class="skill-card-tags"><span>Telegram Bot</span><span>Automation</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🖥️</span><div class="skill-card-name">نرم‌افزار دسکتاپ</div><div class="skill-card-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div><div class="skill-card-tags"><span>PyQt6</span><span>Excel</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🖌️</span><div class="skill-card-name">طراحی گرافیک</div><div class="skill-card-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div><div class="skill-card-tags"><span>Photoshop</span><span>UI/UX</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">🛠️</span><div class="skill-card-name">ابزار و زیرساخت</div><div class="skill-card-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div><div class="skill-card-tags"><span>Git</span><span>Linux</span><span>SEO</span></div></div>
-    <div class="skill-card"><span class="skill-card-icon">📱</span><div class="skill-card-name">اپلیکیشن موبایل و سخت‌افزار</div><div class="skill-card-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div><div class="skill-card-tags"><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div></div>
+  <div class="skills-bento" id="s2-skills">
+    <div class="skill-tile t-wide" style="--tile-color:#2946ff;">
+      <div class="skill-tile-index">01</div>
+      <span class="skill-tile-icon">🗄️</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">بک‌اند و پایگاه داده</div>
+        <div class="skill-tile-desc">ساخت هسته و منطق اصلی وب‌سایت‌ها، پنل‌های مدیریت و ارتباط با دیتابیس.</div>
+        <div class="skill-tile-tags"><span>Python</span><span>Django</span><span>Node.js</span><span>PHP</span><span>PostgreSQL</span></div>
+      </div>
+    </div>
+    <div class="skill-tile t-wide" style="--tile-color:#7dd3fc;">
+      <div class="skill-tile-index">02</div>
+      <span class="skill-tile-icon">🎨</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">فرانت‌اند</div>
+        <div class="skill-tile-desc">طراحی و پیاده‌سازی رابط کاربری روان، زیبا و واکنش‌گرا برای وب‌سایت‌ها.</div>
+        <div class="skill-tile-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+      </div>
+    </div>
+    <div class="skill-tile" style="--tile-color:#34d399;">
+      <div class="skill-tile-index">03</div>
+      <span class="skill-tile-icon">🤖</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">ربات‌های تلگرام</div>
+        <div class="skill-tile-desc">ساخت ربات‌های هوشمند برای اتوماسیون، جستجو و مدیریت کانال‌ها.</div>
+        <div class="skill-tile-tags"><span>Telegram Bot</span><span>Automation</span></div>
+      </div>
+    </div>
+    <div class="skill-tile" style="--tile-color:#f59e0b;">
+      <div class="skill-tile-index">04</div>
+      <span class="skill-tile-icon">🖥️</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">نرم‌افزار دسکتاپ</div>
+        <div class="skill-tile-desc">توسعه نرم‌افزارهای کاربردی دسکتاپ مثل سیستم‌های حسابداری و مدیریت.</div>
+        <div class="skill-tile-tags"><span>PyQt6</span><span>Excel</span></div>
+      </div>
+    </div>
+    <div class="skill-tile" style="--tile-color:#c084fc;">
+      <div class="skill-tile-index">05</div>
+      <span class="skill-tile-icon">🖌️</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">طراحی گرافیک</div>
+        <div class="skill-tile-desc">بیش از ۶ سال تجربه در طراحی بصری و ویرایش حرفه‌ای تصویر.</div>
+        <div class="skill-tile-tags"><span>Photoshop</span><span>UI/UX</span></div>
+      </div>
+    </div>
+    <div class="skill-tile" style="--tile-color:#94a3b8;">
+      <div class="skill-tile-index">06</div>
+      <span class="skill-tile-icon">🛠️</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">ابزار و زیرساخت</div>
+        <div class="skill-tile-desc">مدیریت نسخه، راه‌اندازی سرور و بهینه‌سازی برای موتورهای جستجو.</div>
+        <div class="skill-tile-tags"><span>Git</span><span>Linux</span><span>SEO</span></div>
+      </div>
+    </div>
+    <div class="skill-tile t-full" style="--tile-color:#5068ff;">
+      <div class="skill-tile-index">07</div>
+      <span class="skill-tile-icon">📱</span>
+      <div class="skill-tile-body">
+        <div class="skill-tile-name">اپلیکیشن موبایل و سخت‌افزار</div>
+        <div class="skill-tile-desc">ساخت اپ‌های هیبریدی اندروید و پیاده‌سازی پروتکل‌های ارتباطی با سخت‌افزار خارجی از طریق بلوتوث.</div>
+        <div class="skill-tile-tags"><span>Android Studio</span><span>Capacitor</span><span>Android</span><span>Bluetooth</span></div>
+      </div>
+    </div>
   </div>
 </div></div></section>
 
@@ -1337,8 +1503,12 @@ document.addEventListener('DOMContentLoaded', function(){
   const W = window.innerWidth, H = window.innerHeight;
   const isMobile = W < 769;
 
+  // Mobile GPUs have much less headroom than their high devicePixelRatio
+  // suggests, so we deliberately render mobile at a LOWER pixel ratio than
+  // desktop (the previous code did the opposite — capping mobile at 2x and
+  // desktop at 1.5x — which was the single biggest cause of the reported lag).
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 2 : 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.3 : 2));
   renderer.setSize(W, H);
   renderer.setClearColor(0x000000, 0);
 
@@ -1348,9 +1518,9 @@ document.addEventListener('DOMContentLoaded', function(){
   camera.position.set(0, 2, isMobile ? 20 : 18);
   camera.lookAt(0, 0, -5);
 
-  const GALAXY_COUNT = isMobile ? 2000 : 3500;
-  const STARS_COUNT  = isMobile ? 800 : 1500;
-  const DUST_COUNT   = isMobile ? 300 : 600;
+  const GALAXY_COUNT = isMobile ? 1100 : 3500;
+  const STARS_COUNT  = isMobile ? 450 : 1500;
+  const DUST_COUNT   = isMobile ? 160 : 600;
 
   const initTheme = window.getThemeData ? window.getThemeData() : null;
   const colCore  = new THREE.Color(initTheme?.threeColors[0] || '#ffffff');
@@ -1456,7 +1626,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }));
   scene.add(dust);
 
-  const icoDetail = 1;
+  const icoDetail = isMobile ? 0 : 1;
   const coreIco = new THREE.Mesh(
     new THREE.IcosahedronGeometry(1.8, icoDetail),
     new THREE.MeshBasicMaterial({
@@ -1520,6 +1690,15 @@ document.addEventListener('DOMContentLoaded', function(){
   let bigBangMode = false;
   let bigBangOpacity = 1;
 
+  // Mobile frame pacing: rendering a heavy WebGL scene at a full,
+  // uncapped 60fps is what actually reads as "lag" on mid-range phones —
+  // the GPU never gets to rest. We cap mobile to ~30fps and scale every
+  // per-frame accumulator (t, ring spin, speed-line drift) by how much
+  // real time actually elapsed (dtScale), so the motion still plays at
+  // the same speed — it just skips redundant frames instead of slowing down.
+  const targetFrameMs = isMobile ? 1000/30 : 0;
+  let lastFrameTs = 0, lastTickTs = performance.now();
+
   document.addEventListener('mousemove', e => {
     mx = (e.clientX / window.innerWidth - 0.5) * 2;
     my = -(e.clientY / window.innerHeight - 0.5) * 2;
@@ -1566,15 +1745,24 @@ document.addEventListener('DOMContentLoaded', function(){
     bigBangOpacity = 1;
   };
 
-  function tick(){
+  function tick(now){
     animId = requestAnimationFrame(tick);
-    
+    now = now || performance.now();
+
     if(paused && !bigBangMode){
-      renderer.render(scene, camera);
+      // Nothing is visibly changing while paused (tab hidden) — skip the
+      // GPU render entirely instead of re-drawing an identical frame.
       return;
     }
-    
-    t += 0.003;
+
+    if(targetFrameMs && (now - lastFrameTs) < targetFrameMs){
+      return; // mobile frame cap — bail before doing any of the per-frame math below
+    }
+    const dtScale = Math.min(3, (now - lastTickTs) / 16.67); // normalized to a 60fps baseline
+    lastFrameTs = now;
+    lastTickTs = now;
+
+    t += 0.003 * dtScale;
     
     const px = mx;
     const py = my;
@@ -1697,13 +1885,13 @@ document.addEventListener('DOMContentLoaded', function(){
     glowIco.rotation.y = -t * 0.3;
     glowIco.scale.setScalar(1 + Math.sin(t * 2.5) * 0.08 + dive * 0.4);
 
-    ring1.rotation.z += 0.0015;
-    ring2.rotation.z -= 0.001;
+    ring1.rotation.z += 0.0015 * dtScale;
+    ring2.rotation.z -= 0.001 * dtScale;
     ring1.scale.setScalar(1 + dive * 0.8);
     ring2.scale.setScalar(1 + dive * 0.6);
 
     speedLines.forEach(sl => {
-      sl.line.position.z += sl.speed * (dive * 3 + orbit * 1.5);
+      sl.line.position.z += sl.speed * dtScale * (dive * 3 + orbit * 1.5);
       if(sl.line.position.z > 4) sl.line.position.z = sl.baseZ;
       sl.line.material.opacity = (dive * 0.7 + orbit * 0.5) * (1 - Math.abs(sl.line.position.z) / 14);
     });
@@ -1725,6 +1913,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
+
+  // These hooks existed but nothing ever called them — wiring them to tab
+  // visibility means the render loop actually stops burning battery/GPU
+  // (and contributing to perceived lag) whenever the tab isn't on screen.
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){ window._threePause(); } else { lastTickTs = performance.now(); window._threeResume(); }
+  });
 
   window.addEventListener('resize', () => {
     const w = window.innerWidth, h = window.innerHeight;
@@ -1786,7 +1981,10 @@ document.addEventListener('DOMContentLoaded', function(){
   if(window._updateThreeColors)window._updateThreeColors([night.threeCore,null,night.threeMid,night.threeOuter],0xffffff,0x7c8fff,0xffffff);
 
   const root=document.documentElement;
-  const zone=document.getElementById('scene-6'); // middle of the journey — کالا۲
+  // Moved from scene-6 (middle of the projects) to scene-3 (the very first
+  // project) so the whole "پروژه‌ها" section reads as its own light/minimal
+  // chapter, not half-dark/half-light.
+  const zone=document.getElementById('scene-3'); // start of the projects journey — آذین دژ
   if(!zone) return;
 
   function hexLerp(a,b,t){
@@ -1819,6 +2017,11 @@ document.addEventListener('DOMContentLoaded', function(){
   function apply(t){
     if(Math.abs(t-lastT)<0.004)return; // skip imperceptible steps
     lastT=t;
+    // Discrete (non-lerped) style hook: lets CSS switch things like
+    // box-shadow/backdrop-filter/border-style at the crossover instant,
+    // for the parts of the "minimal day" look that shouldn't fade in
+    // gradually (a blurred glass card doesn't have a sensible halfway point).
+    root.classList.toggle('is-day', t>=0.5);
     const voidHex=hexLerp(night.void,day.void,t);
     root.style.setProperty('--void',voidHex);
     root.style.setProperty('--text',hexLerp(night.text,day.text,t));
