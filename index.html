@@ -704,6 +704,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   transition:all .3s ease;
   backdrop-filter: blur(8px);
 }
+.project-link-btn.soon{opacity:.55;cursor:default;border-style:dashed;pointer-events:none;}
 .project-link-btn:hover{
   color:#fff;
   border-color:var(--accent);
@@ -1036,10 +1037,11 @@ document.documentElement.style.overflow = 'hidden';
   <div class="nav-dot" data-index="9" data-label="حسابداری"></div>
   <div class="nav-dot" data-index="10" data-label="کارفهم"></div>
   <div class="nav-dot" data-index="11" data-label="دفتر برش"></div>
-  <div class="nav-dot" data-index="12" data-label="کنکور ارشد"></div>
-  <div class="nav-dot" data-index="13" data-label="تجربه"></div>
-  <div class="nav-dot" data-index="14" data-label="تحصیل"></div>
-  <div class="nav-dot" data-index="15" data-label="تماس"></div>
+  <div class="nav-dot" data-index="12" data-label="برج جواهرات"></div>
+  <div class="nav-dot" data-index="13" data-label="واژه‌چین"></div>
+  <div class="nav-dot" data-index="14" data-label="تجربه"></div>
+  <div class="nav-dot" data-index="15" data-label="تحصیل"></div>
+  <div class="nav-dot" data-index="16" data-label="تماس"></div>
 </nav>
 
 <div id="fab-group">
@@ -1150,12 +1152,17 @@ document.documentElement.style.overflow = 'hidden';
     <div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.webp" alt="آذین دژ" loading="lazy"></div>
     <div class="project-title-fa">آذین دژ</div>
     <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
-    <div class="project-desc-text">پلتفرم شرکتی تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر می‌تواند انواع پنجره‌های دوجداره را با اشکال هندسی گوناگون طراحی کند، رنگ‌بندی، شیشه و یراق‌آلات را انتخاب کند، چند پنجره را در یک سفارش ترکیب کرده و قیمت را به‌صورت لحظه‌ای مشاهده و فاکتور کامل دریافت کند. تمام انواع بازشوی پنجره نیز با انیمیشن به کاربر نمایش داده می‌شود.</div>
-    <div class="project-desc-en">Corporate UPVC door &amp; window platform with an interactive SVG configurator. Users design double-glazed windows in a wide range of geometric shapes, pick colors, glass and hardware, combine multiple windows into a single order, see real-time pricing, and receive a full invoice — with every opening mode shown through animation.</div>
+    <div class="project-desc-text">پلتفرم شرکتی تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر می‌تواند انواع پنجره‌های دوجداره را با اشکال هندسی گوناگون طراحی کند، رنگ‌بندی، شیشه و یراق‌آلات را انتخاب کند، چند پنجره را در یک سفارش ترکیب کرده و قیمت را به‌صورت لحظه‌ای مشاهده و فاکتور کامل دریافت کند. تمام انواع بازشوی پنجره نیز با انیمیشن به کاربر نمایش داده می‌شود. برای این پروژه یک برنامه اندروید اختصاصی هم ساخته شده است.</div>
+    <div class="project-desc-en">Corporate UPVC door &amp; window platform with an interactive SVG configurator. Users design double-glazed windows in a wide range of geometric shapes, pick colors, glass and hardware, combine multiple windows into a single order, see real-time pricing, and receive a full invoice — with every opening mode shown through animation. A dedicated Android app was also built for this project.</div>
     <div class="tech-chips">
-      <span class="tech-chip">PHP</span><span class="tech-chip">SVG Animations</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span>
+      <span class="tech-chip">PHP</span><span class="tech-chip">SVG Animations</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span><span class="tech-chip ember">Android App</span>
     </div>
-    <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+      <a class="project-link-btn" href="https://myket.ir/app/ir.azindejwin.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+      <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.azindejwin.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
+      <a class="project-link-btn" href="https://azindejwin.ir/static/apk/azindej.apk" target="_blank" rel="noopener">دریافت مستقیم نسخه اندروید ←</a>
+    </div>
   </div>
 </div></div></section>
 
@@ -1187,14 +1194,17 @@ document.documentElement.style.overflow = 'hidden';
     <div class="project-image-wrap" id="s5-img"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
     <div class="project-title-fa">برازنده تن</div>
     <div class="project-title-en">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
-    <div class="project-desc-text">فروشگاه اینترنتی پوشاک با پنل ادمین پیشرفته، قابلیت پرو مجازی برای انتخاب دقیق‌تر سایز و مدل، ربات چت هوشمند شخصی‌سازی‌شده (شبیه Eilike) و رابط کاربری جذاب. همچنین دارای زیرسیستم «دفتر برش» برای مدیریت سفارش‌های برش پارچه‌ی کارگاه.</div>
-    <div class="project-desc-en">Fashion store featuring an advanced admin panel, virtual try-on for smarter fitting, a personalized AI chatbot (Eilike-style), and a modern UI/UX design — plus a "Cutting Book" subsystem for managing the workshop's fabric-cutting orders.</div>
+    <div class="project-desc-text">فروشگاه اینترنتی پوشاک با پنل ادمین پیشرفته، قابلیت پرو مجازی برای انتخاب دقیق‌تر سایز و مدل، ربات چت هوشمند شخصی‌سازی‌شده (شبیه Eilike) و رابط کاربری جذاب. همچنین دارای سیستم حسابداری، انبارداری و «دفتر برش» برای مدیریت کارگاه و سفارش‌های برش پارچه. برای دفتر برش، حسابداری و پنل ادمین، برنامه اندروید اختصاصی نوشته شده است.</div>
+    <div class="project-desc-en">Fashion store featuring an advanced admin panel, virtual try-on for smarter fitting, a personalized AI chatbot (Eilike-style), and a modern UI/UX design — plus built-in accounting, warehouse management and a "Cutting Book" subsystem for running the workshop and its fabric-cutting orders. Dedicated Android apps were built for the Cutting Book, accounting and the admin panel.</div>
     <div class="tech-chips">
-      <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Virtual Try-On</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">دفتر برش</span>
+      <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Virtual Try-On</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">دفتر برش</span><span class="tech-chip green">حسابداری و انبارداری</span><span class="tech-chip ember">Android App</span>
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <a class="project-link-btn" href="https://barazandetan.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/barazandeh-ecommerce-template/" target="_blank" rel="noopener">قالب استاتیک (فرانت‌اند) ←</a>
+      <a class="project-link-btn" href="https://myket.ir/app/com.barazandetan.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+      <a class="project-link-btn" href="https://cafebazaar.ir/app/com.barazandetan.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
+      <a class="project-link-btn" href="https://barazandetan.ir/static/apk/barazandetan.apk" target="_blank" rel="noopener">دریافت مستقیم نسخه اندروید ←</a>
     </div>
   </div>
 </div></div></section>
@@ -1280,7 +1290,10 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Capacitor</span><span class="tech-chip">JavaScript</span><span class="tech-chip blue">OBD-II Protocol</span><span class="tech-chip blue">ELM327 / Bluetooth SPP</span><span class="tech-chip green">Native Android</span>
     </div>
-    <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+      <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
+    </div>
   </div>
 </div></div></section>
 
@@ -1299,39 +1312,64 @@ document.documentElement.style.overflow = 'hidden';
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener">دانلود اندروید (مایکت) ←</a>
+      <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener">دانلود اندروید (کافه بازار) ←</a>
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/cutting-ledger-static/" target="_blank" rel="noopener">مشاهده نسخه وب ←</a>
     </div>
   </div>
 </div></div></section>
 
-<!-- SCENE 12 ─ KONKUR ARSHAD -->
+<!-- SCENE 12 ─ JEWEL TOWER -->
 <section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
-  <div class="chapter-marker" id="s12-ch">12 · ابزار وب · Personal Utility Tool</div>
+  <div class="chapter-marker" id="s12-ch">12 · بازی اندروید · Casual Game</div>
   <div class="project-reveal" id="s12-pr">
-    <div class="project-label">راهنمای انتخاب رشته · Open Source</div>
-    <div class="project-image-wrap" id="s12-img"><img src="assets/projects/konkor-arshad.webp" alt="راهنمای انتخاب رشته ارشد" loading="lazy"></div>
-    <div class="project-title-fa">راهنمای انتخاب رشته کارشناسی‌ارشد ۱۴۰۵</div>
-    <div class="project-title-en">Konkur Arshad — Grad-School Priority List Builder</div>
-    <div class="project-desc-text">ابزاری سبک و کاملاً آفلاین برای مرتب کردن، جست‌وجو و اولویت‌بندی کدرشته‌محل‌های کارشناسی‌ارشد، ساخته‌شده از یک نیاز واقعی شخصی هنگام انتخاب رشته. داده‌های دفترچه رسمی سازمان سنجش استخراج و ساخت‌یافته شده و در یک صفحه تک‌فایل با جست‌وجوی آنی، فیلتر بر اساس گروه رشته، افزودن به لیست انتخابی، اولویت‌بندی با درگ‌ودراپ، ذخیره‌سازی خودکار در مرورگر و خروجی/ورودی اکسل در اختیار داوطلبان قرار گرفته است.</div>
-    <div class="project-desc-en">A lightweight, fully offline tool for searching, filtering, and prioritizing graduate-school program codes — built out of a real personal need while choosing programs. Official exam-organization booklet data was extracted and structured into a single-file page with instant search, category filters, a drag-and-drop priority list, browser auto-save, and Excel import/export.</div>
+    <div class="project-label">بازی تفننی · Android Game</div>
+    <div class="project-image-wrap" id="s12-img"><img src="assets/projects/jeweltower.webp" alt="برج جواهرات" loading="lazy"></div>
+    <div class="project-title-fa">برج جواهرات</div>
+    <div class="project-title-en">Jewel Tower — Stack-the-Blocks Arcade Game</div>
+    <div class="project-desc-text">بازی تفننی و روان که در آن بلوک‌های جواهر را در لحظه‌ی درست روی برج می‌چینی؛ هر تکه‌ی بیرون‌زده می‌افتد و برج باریک‌تر می‌شود. با بالا رفتن برج، حامل بلوک‌ها از جرثقیل به هلیکوپتر، فضاپیما و آدم‌فضایی‌های جت‌پک‌دار تغییر می‌کند. دارای کومبو، جواهرهای طلایی و افسانه‌ای، محافظ، خط رکورد، پنج دنیای متفاوت، باد، ماموریت‌های روزانه، دستاوردها و صدای اختصاصی برای هر حامل، با رابط کاملاً فارسی.</div>
+    <div class="project-desc-en">A smooth casual arcade game: drop jewel blocks onto the tower at the perfect moment — any overhang falls off and the tower gets narrower. As you climb, the block carrier evolves from a crane to helicopters, spaceships and jetpack aliens. Features combos, golden and legendary gems, shields, a record line, five worlds, wind, daily missions, achievements and unique sounds per carrier — with a fully Persian interface.</div>
     <div class="tech-chips">
-      <span class="tech-chip">JavaScript</span><span class="tech-chip blue">HTML/CSS</span><span class="tech-chip green">SheetJS (xlsx)</span><span class="tech-chip">localStorage</span><span class="tech-chip ember">MIT License</span>
+      <span class="tech-chip">Android Game</span><span class="tech-chip blue">Casual Arcade</span><span class="tech-chip blue">۵ دنیا · 5 Worlds</span><span class="tech-chip green">Daily Missions</span><span class="tech-chip ember">Web Version Soon</span>
     </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/konkur-arshad-computer-1405" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a class="project-link-btn" href="https://myket.ir/app/com.jeweltower.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
+      <a class="project-link-btn" href="https://cafebazaar.ir/app/com.jeweltower.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
+      <span class="project-link-btn soon">نسخه وب · به‌زودی منتشر می‌شود</span>
+    </div>
   </div>
 </div></div></section>
 
-<!-- SCENE 13 ─ EXPERIENCE -->
-<section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
-  <div class="chapter-marker" id="s13-ch">13 · تجربه کاری · Experience</div>
-  <div class="exp-reveal" id="s13-e1">
+<!-- SCENE 13 ─ WORDQUEST -->
+<section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+  <div class="chapter-marker" id="s13-ch">13 · بازی اندروید · Word Puzzle</div>
+  <div class="project-reveal" id="s13-pr">
+    <div class="project-label">بازی آموزشی · Android Game</div>
+    <div class="project-image-wrap" id="s13-img"><img src="assets/projects/wordquest.webp" alt="واژه‌چین" loading="lazy"></div>
+    <div class="project-title-fa">واژه‌چین</div>
+    <div class="project-title-en">WordQuest — Crossword that Teaches English</div>
+    <div class="project-desc-text">جدول‌کلمات با چرخ حروف که هنگام بازی، انگلیسی یاد می‌دهد: حروف را وصل می‌کنی، کلمه می‌سازی و معنی فارسی‌اش را همان لحظه می‌بینی. از رایج‌ترین کلمات شروع می‌شود و از ساده به سخت پیش می‌رود. ۳۰۰ مرحله روی یک نقشه‌ی فانتزی یکپارچه در ۲۵ سرزمین (از خانه و باغ تا قطب، زیر دریا، فضا و رویا)، یک حالت بی‌نهایت تصادفی، سه ستاره در هر مرحله، راهنما و سکه‌های داخل بازی؛ کاملاً آفلاین.</div>
+    <div class="project-desc-en">A letter-wheel crossword game that genuinely teaches English: connect letters, build a word and instantly see its Persian meaning. It starts from the most common words and progresses from easy to hard. 300 levels across 25 lands on a single fantasy map (from home and garden to the arctic, undersea, space and dreams), an endless random mode, three-star ratings, hints and in-game coins — fully offline.</div>
+    <div class="tech-chips">
+      <span class="tech-chip">Android Game</span><span class="tech-chip blue">300 Levels</span><span class="tech-chip blue">25 Lands</span><span class="tech-chip green">Offline</span><span class="tech-chip ember">Coming Soon</span>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <span class="project-link-btn soon">به‌زودی منتشر می‌شود</span>
+      <a class="project-link-btn" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">مشاهده پروژه‌های بیشتر در GitHub ←</a>
+    </div>
+  </div>
+</div></div></section>
+
+<!-- SCENE 14 ─ EXPERIENCE -->
+<section class="scene" id="scene-14"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.1">
+  <div class="chapter-marker" id="s14-ch">14 · تجربه کاری · Experience</div>
+  <div class="exp-reveal" id="s14-e1">
     <div class="exp-period">2022 — اکنون · Present</div>
     <div class="exp-role-fa">توسعه‌دهنده فریلنسر</div>
     <div class="exp-role-en">Freelance Full Stack Developer</div>
     <div class="exp-desc-text">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی — وب‌سایت‌های شرکتی پیچیده، ربات‌های تلگرامی، نرم‌افزارهای دسکتاپ، فروشگاه‌های آنلاین و ابزارهای استخراج داده.</div>
   </div>
-  <div class="scene-divider" id="s13-div"></div>
-  <div class="exp-reveal" id="s13-e2">
+  <div class="scene-divider" id="s14-div"></div>
+  <div class="exp-reveal" id="s14-e2">
     <div class="exp-period" style="color:var(--ember);">2017 — 2023 · ۶+ سال</div>
     <div class="exp-role-fa" style="background:linear-gradient(130deg,var(--grad-a) 0%,#fcd34d 40%,var(--ember) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">طراح و ویرایشگر تصویر</div>
     <div class="exp-role-en">Freelance Photo Editor &amp; Graphic Designer</div>
@@ -1339,14 +1377,14 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 14 ─ EDUCATION -->
-<section class="scene" id="scene-14"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
-  <div class="chapter-marker" id="s14-ch">14 · تحصیل و زبان · Education &amp; Languages</div>
-  <div class="edu-reveal" id="s14-edu">
+<!-- SCENE 15 ─ EDUCATION -->
+<section class="scene" id="scene-15"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
+  <div class="chapter-marker" id="s15-ch">15 · تحصیل و زبان · Education &amp; Languages</div>
+  <div class="edu-reveal" id="s15-edu">
     <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:14px;font-weight:600;">B.Sc. Computer Engineering · Currently Enrolled</div>
     <div class="edu-degree-fa">کارشناسی مهندسی کامپیوتر</div>
   </div>
-  <div class="lang-pair" id="s14-lg">
+  <div class="lang-pair" id="s15-lg">
     <div class="lang-item">
       <div class="lang-name-fa">فارسی</div><div class="lang-name-en">Persian — Native</div>
       <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
@@ -1358,19 +1396,19 @@ document.documentElement.style.overflow = 'hidden';
   </div>
 </div></div></section>
 
-<!-- SCENE 15 ─ CONTACT -->
-<section class="scene scene-bookend" id="scene-15"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
-  <div class="chapter-marker" id="s15-ch">15 · تماس · Let's Connect</div>
-  <div class="scene-headline-fa" id="s15-h">بیایید<br>بسازیم</div>
-  <div class="scene-headline-en" id="s15-hen">Let's Build Something Real</div>
-  <div class="contact-grid" id="s15-cg">
+<!-- SCENE 16 ─ CONTACT -->
+<section class="scene scene-bookend" id="scene-16"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.05">
+  <div class="chapter-marker" id="s16-ch">16 · تماس · Let's Connect</div>
+  <div class="scene-headline-fa" id="s16-h">بیایید<br>بسازیم</div>
+  <div class="scene-headline-en" id="s16-hen">Let's Build Something Real</div>
+  <div class="contact-grid" id="s16-cg">
     <a class="contact-link" href="https://t.me/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.08 14.6l-2.95-.924c-.642-.2-.654-.642.136-.953l11.527-4.445c.535-.194 1.003.131.769.97z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://instagram.com/immdjavad" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg><span>@immdjavad</span></a>
     <a class="contact-link" href="https://github.com/mohmmadjavad" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg><span>mohmmadjavad</span></a>
     <a class="contact-link" href="#" id="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12.5 19.79 19.79 0 0 1 1.88 3.94 2 2 0 0 1 3.86 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="phone-display">نمایش شماره</span></a>
     <a class="contact-link" href="mailto:mohmmadjavad.mahmoodi@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mohmmadjavad.mahmoodi@gmail.com</span></a>
   </div>
-  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s15-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
+  <img src="assets/logo/name+logo-1line.webp.webp" alt="Mohammad Javad Mahmoudi" id="s16-logo" style="width:min(320px,70vw);height:auto;margin-top:34px;opacity:0;display:block;margin-left:auto;margin-right:auto;">
   <div id="footer-line">محمد جواد محمودی · اگر ایده‌ای داری که هنوز وجود ندارد، بسازیمش.</div>
 </div></div></section>
 
@@ -1994,9 +2032,10 @@ const sceneElements={
   'scene-10':['s10-ch','s10-img','s10-pr'],
   'scene-11':['s11-ch','s11-img','s11-pr'],
   'scene-12':['s12-ch','s12-img','s12-pr'],
-  'scene-13':['s13-ch','s13-e1','s13-div','s13-e2'],
-  'scene-14':['s14-ch','s14-edu','s14-lg'],
-  'scene-15':['s15-ch','s15-h','s15-hen','s15-cg','s15-logo','footer-line']
+  'scene-13':['s13-ch','s13-img','s13-pr'],
+  'scene-14':['s14-ch','s14-e1','s14-div','s14-e2'],
+  'scene-15':['s15-ch','s15-edu','s15-lg'],
+  'scene-16':['s16-ch','s16-h','s16-hen','s16-cg','s16-logo','footer-line']
 };
 
 (function initNavigator(){
