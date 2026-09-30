@@ -714,6 +714,27 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 }
 
 
+/* ── Project cards: terminal style ── */
+.project-card{max-width:640px;width:100%;margin:0 auto;background:var(--terminal-bg);border:1px solid var(--terminal-border);border-radius:14px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.6);}
+.pc-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--terminal-border);direction:ltr;}
+.pc-bar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.22);display:block;}
+.pc-path{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--terminal-dim);margin-left:8px;letter-spacing:.02em;}
+.pc-body{padding:16px;}
+.pc-body .project-image-wrap{max-width:100%;margin-bottom:0;border-radius:10px;}
+.pc-body .project-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.06em;color:var(--terminal-green);text-transform:none;text-shadow:none;margin:16px 0 8px;}
+.pc-body .project-label::before{content:'❯ ';color:var(--terminal-prompt);}
+.pc-body .project-title-fa{font-size:clamp(1.6rem,4.4vw,2.6rem);}
+.pc-body .project-title-en{margin-bottom:12px;}
+.pc-body .project-desc-en{margin-bottom:14px;}
+.pc-links{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);}
+.pc-links .project-link-btn{display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box;text-align:center;padding:12px 16px;border-width:1px;}
+.pc-links .project-link-btn:first-child:not(.soon){background:var(--accent);border-color:var(--accent);color:#fff;}
+.pc-links .project-link-btn:first-child:not(.soon):hover{box-shadow:0 0 24px rgba(41,70,255,.45);}
+@media(max-width:600px){.pc-body{padding:12px;}}
+/* galaxy fades away while the projects section is on screen */
+#bg-canvas{transition:opacity .8s ease;}
+body.galaxy-off #bg-canvas{opacity:0;}
+
 /* ── More projects (GitHub) block ── */
 .more-projects{position:relative;margin:96px auto 8px;width:min(630px,94vw);text-align:center;}
 .mp-grid{display:block;width:100%;height:auto;overflow:visible;direction:ltr;}
@@ -1171,8 +1192,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی · Featured Project</div>
   <div class="project-reveal" id="s3-pr">
-    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/azindej</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s3-img"><img src="assets/projects/azindej.webp" alt="آذین دژ" loading="lazy"></div>
+    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
     <div class="project-title-fa">آذین دژ</div>
     <div class="project-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
     <div class="project-desc-text">پلتفرم شرکتی تولید درب و پنجره UPVC با پیکربندساز SVG تعاملی. کاربر می‌تواند انواع پنجره‌های دوجداره را با اشکال هندسی گوناگون طراحی کند، رنگ‌بندی، شیشه و یراق‌آلات را انتخاب کند، چند پنجره را در یک سفارش ترکیب کرده و قیمت را به‌صورت لحظه‌ای مشاهده و فاکتور کامل دریافت کند. تمام انواع بازشوی پنجره نیز با انیمیشن به کاربر نمایش داده می‌شود. برای این پروژه یک برنامه اندروید اختصاصی هم ساخته شده است.</div>
@@ -1180,12 +1202,12 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">PHP</span><span class="tech-chip">SVG Animations</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip ember">PostgreSQL</span><span class="tech-chip">SEO</span><span class="tech-chip ember">Android App</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://azindejwin.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
       <a class="project-link-btn" href="https://myket.ir/app/ir.azindejwin.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
       <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.azindejwin.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
       <a class="project-link-btn" href="https://azindejwin.ir/static/apk/azindej.apk" target="_blank" rel="noopener">دریافت مستقیم نسخه اندروید ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1193,8 +1215,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-4"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s4-ch">04 · پروژه شرکتی · Corporate Website</div>
   <div class="project-reveal" id="s4-pr">
-    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/rasa</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s4-img"><img src="assets/projects/rasa.webp" alt="رسا" loading="lazy"></div>
+    <div class="project-label">وب‌سایت شرکتی · Corporate Platform</div>
     <div class="project-title-fa">رسا</div>
     <div class="project-title-en">Rasa — Corporate Identity & CMS Platform</div>
     <div class="project-desc-text">پلتفرم تخصصی و چندمنظوره شرکتی با پنل مدیریت اختصاصی. شامل سیستم انتشار مقالات، مدیریت پروژه‌ها و ابزارهای داخلی پیشرفته. این پروژه در حال حاضر تحت توسعه و بهینه‌سازی مستمر قرار دارد.</div>
@@ -1202,10 +1225,10 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">PHP</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip blue">CMS</span><span class="tech-chip ember">Under Development</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank" rel="noopener">مشاهده پروژه ←</a>
       <a class="project-link-btn" href="https://github.com/mohmmadjavad/rasa-website-php-opensource" target="_blank" rel="noopener">مشاهده سورس کد ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1213,8 +1236,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s5-ch">05 · فروشگاه · E-Commerce</div>
   <div class="project-reveal" id="s5-pr">
-    <div class="project-label">فروشگاه آنلاین · Live</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/barazandeh</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s5-img"><img src="assets/projects/barazandeh.webp" alt="برازنده تن" loading="lazy"></div>
+    <div class="project-label">فروشگاه آنلاین · Live</div>
     <div class="project-title-fa">برازنده تن</div>
     <div class="project-title-en">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
     <div class="project-desc-text">فروشگاه اینترنتی پوشاک با پنل ادمین پیشرفته، قابلیت پرو مجازی برای انتخاب دقیق‌تر سایز و مدل، ربات چت هوشمند شخصی‌سازی‌شده (شبیه Eilike) و رابط کاربری جذاب. همچنین دارای سیستم حسابداری، انبارداری و «دفتر برش» برای مدیریت کارگاه و سفارش‌های برش پارچه. برای دفتر برش، حسابداری و پنل ادمین، برنامه اندروید اختصاصی نوشته شده است.</div>
@@ -1222,13 +1246,13 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Django</span><span class="tech-chip blue">AI Chatbot</span><span class="tech-chip blue">Virtual Try-On</span><span class="tech-chip blue">Custom Admin</span><span class="tech-chip green">دفتر برش</span><span class="tech-chip green">حسابداری و انبارداری</span><span class="tech-chip ember">Android App</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://barazandetan.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/barazandeh-ecommerce-template/" target="_blank" rel="noopener">قالب استاتیک (فرانت‌اند) ←</a>
       <a class="project-link-btn" href="https://myket.ir/app/com.barazandetan.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
       <a class="project-link-btn" href="https://cafebazaar.ir/app/com.barazandetan.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
       <a class="project-link-btn" href="https://barazandetan.ir/static/apk/barazandetan.apk" target="_blank" rel="noopener">دریافت مستقیم نسخه اندروید ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1236,8 +1260,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s6-ch">06 · ابزار وب · Client-Side Web Tools</div>
   <div class="project-reveal" id="s6-pr">
-    <div class="project-label">ابزارهای آنلاین · 100% Client-Side</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/metanama</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s6-img"><img src="assets/projects/metanama.webp" alt="متانما" loading="lazy"></div>
+    <div class="project-label">ابزارهای آنلاین · 100% Client-Side</div>
     <div class="project-title-fa">متانما</div>
     <div class="project-title-en">Metanama — Privacy-First File Utility Suite</div>
     <div class="project-desc-text">مجموعه ابزارهای آنلاین برای کار روی فایل‌های عکس، موزیک و PDF؛ حذف اطلاعات مخفی (متادیتا) از عکس‌ها، ویرایش اطلاعات و کاور فایل‌های موزیک، ابزارهای کاربردی PDF شامل ترکیب چند فایل، حذف صفحات و تقسیم فایل، و همچنین تبدیل فرمت‌های مختلف عکس به یکدیگر. مهم‌ترین ویژگی این پروژه این است که تمام پردازش‌ها کاملاً سمت کلاینت (در مرورگر کاربر) انجام می‌شود و هیچ فایلی به هیچ سروری ارسال نمی‌گردد.</div>
@@ -1245,7 +1270,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">JavaScript</span><span class="tech-chip blue">100% Client-Side</span><span class="tech-chip blue">Privacy-First</span><span class="tech-chip green">PDF Tools</span><span class="tech-chip ember">Image/Audio Metadata</span>
     </div>
-    <a class="project-link-btn" href="https://metanama.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a>
+    <div class="pc-links"><a class="project-link-btn" href="https://metanama.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ←</a></div></div></div>
   </div>
 </div></div></section>
 
@@ -1253,8 +1278,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s7-ch">07 · ربات · Telegram Bot</div>
   <div class="project-reveal" id="s7-pr">
-    <div class="project-label">ربات جستجوی کالا · Search Bot</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/kala2</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s7-img"><img src="assets/projects/kala2.webp" alt="کالا ۲" loading="lazy"></div>
+    <div class="project-label">ربات جستجوی کالا · Search Bot</div>
     <div class="project-title-fa">ربات کالا ۲</div>
     <div class="project-title-en">Kala2 — Divar Scraper Bot</div>
     <div class="project-desc-text">ربات تلگرامی قدرتمند برای جستجو و دریافت خودکار آگهی‌های دیوار. قیمت، تصاویر و توضیحات کالاهای دست‌دوم را مستقیماً در تلگرام دریافت کنید.</div>
@@ -1262,7 +1288,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Python</span><span class="tech-chip">Web Scraping</span><span class="tech-chip blue">Telegram API</span><span class="tech-chip green">BeautifulSoup</span>
     </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+    <div class="pc-links"><a class="project-link-btn" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank" rel="noopener">مشاهده در GitHub ←</a></div></div></div>
   </div>
 </div></div></section>
 
@@ -1270,8 +1296,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s8-ch">08 · ابزار داده · Data Tool</div>
   <div class="project-reveal" id="s8-pr">
-    <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/teledata</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s8-img"><img src="assets/projects/teledata.webp" alt="Teledata" loading="lazy"></div>
+    <div class="project-label">استخراج‌گر تلگرام · Open Source</div>
     <div class="project-title-fa">Teledata</div>
     <div class="project-title-en">Telegram Channel Extractor</div>
     <div class="project-desc-text">ابزاری کاربردی برای استخراج تمام پیام‌ها و رسانه‌های کانال‌های تلگرام. با وارد کردن آیدی و بازه زمانی، خروجی Excel و پوشه Media تحویل بگیرید.</div>
@@ -1279,7 +1306,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Python</span><span class="tech-chip blue">Telethon</span><span class="tech-chip">Excel Export</span><span class="tech-chip green">CustomTkinter</span>
     </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+    <div class="pc-links"><a class="project-link-btn" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank" rel="noopener">مشاهده در GitHub ←</a></div></div></div>
   </div>
 </div></div></section>
 
@@ -1287,8 +1314,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s9-ch">09 · نرم‌افزار · Desktop App</div>
   <div class="project-reveal" id="s9-pr">
-    <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/Accounting</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s9-img"><img src="assets/projects/Accounting.webp" alt="حسابداری" loading="lazy"></div>
+    <div class="project-label">نرم‌افزار دسکتاپ · ERP System</div>
     <div class="project-title-fa">نرم‌افزار حسابداری و انبارداری</div>
     <div class="project-title-en">Accounting &amp; Warehouse Management</div>
     <div class="project-desc-text">سیستم جامع مدیریت حسابداری، انبار و فاکتور با تقویم شمسی و گزارش‌گیری پیشرفته در قالب Excel.</div>
@@ -1296,7 +1324,7 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">PyQt6</span><span class="tech-chip blue">SQLite</span><span class="tech-chip ember">Persian Calendar</span><span class="tech-chip">Excel</span><span class="tech-chip green">ReportLab</span>
     </div>
-    <a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">مشاهده در GitHub ←</a>
+    <div class="pc-links"><a class="project-link-btn" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank" rel="noopener">مشاهده در GitHub ←</a></div></div></div>
   </div>
 </div></div></section>
 
@@ -1304,8 +1332,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s10-ch">10 · اپلیکیشن اندروید · Car Diagnostics</div>
   <div class="project-reveal" id="s10-pr">
-    <div class="project-label">تشخیص خودرو · Native Android App</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/karfahm</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s10-img"><img src="assets/projects/karfahm.webp" alt="کارفهم" loading="lazy"></div>
+    <div class="project-label">تشخیص خودرو · Native Android App</div>
     <div class="project-title-fa">کارفهم</div>
     <div class="project-title-en">Karfahm — OBD-II Car Diagnostics (Persian)</div>
     <div class="project-desc-text">اپلیکیشن اندرویدی تشخیص خودرو به زبان فارسی که از طریق بلوتوث به دانگل‌های ارزان‌قیمت ELM327 وصل می‌شود و داده‌های زنده موتور و کدهای خطا را می‌خواند و به فارسی روان توضیح می‌دهد. پروتکل OBD-II (دستورات AT، رمزگشایی PID و کدهای خطا طبق استاندارد SAE J2012) کاملاً از پایه پیاده‌سازی شده، بدون وابستگی به هیچ سرور یا سرویس ابری.</div>
@@ -1313,10 +1342,10 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Capacitor</span><span class="tech-chip">JavaScript</span><span class="tech-chip blue">OBD-II Protocol</span><span class="tech-chip blue">ELM327 / Bluetooth SPP</span><span class="tech-chip green">Native Android</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از مایکت ←</a>
       <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.immdjavad.diag206" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1324,8 +1353,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s11-ch">11 · نرم‌افزار چندسکویی · Multi-Platform</div>
   <div class="project-reveal" id="s11-pr">
-    <div class="project-label">مدیریت کارگاهی · Multi-Platform System</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/cuttingbook</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s11-img"><img src="assets/projects/cuttingbook.webp" alt="دفتر برش لباس" loading="lazy"></div>
+    <div class="project-label">مدیریت کارگاهی · Multi-Platform System</div>
     <div class="project-title-fa">دفتر برش لباس</div>
     <div class="project-title-en">Cutting Book — Fabric Cutting Management System</div>
     <div class="project-desc-text">سیستم مدیریت برش پارچه برای کارگاه‌های خیاطی. می‌توان چند مشتری تعریف کرد و برش‌های هر مشتری را ثبت نمود؛ از روی داده‌های وزن پارچه و تعداد لا، تعداد کارها و آمار دقیق وزن به‌صورت خودکار محاسبه می‌شود. دارای سیستم پرینت، اشتراک‌گذاری و آمارگیری. یک نسخه Django روی سرور دارد که برشکاران و مشتریان با نام کاربری و رمز اختصاصی خود وارد شده و به اطلاعات دسترسی و امکان ویرایش دارند (کد این نسخه خصوصی نگه داشته شده). نسخه اندروید آفلاین، ثبت برش و آمار را انجام می‌دهد، بک‌آپ می‌گیرد و امکان اشتراک‌گذاری آمار برش را فراهم می‌کند. نسخه وب نیز مخصوص برشکار است و به‌صورت کاملاً آفلاین روی حافظه محلی مرورگر ذخیره می‌شود.</div>
@@ -1333,11 +1363,11 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Django</span><span class="tech-chip blue">Capacitor / Android</span><span class="tech-chip blue">JavaScript</span><span class="tech-chip green">Offline-first</span><span class="tech-chip ember">Multi-Platform</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://myket.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener">دانلود اندروید (مایکت) ←</a>
       <a class="project-link-btn" href="https://cafebazaar.ir/app/ir.immdjavad.cuttingbook" target="_blank" rel="noopener">دانلود اندروید (کافه بازار) ←</a>
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/cutting-ledger-static/" target="_blank" rel="noopener">مشاهده نسخه وب ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1345,8 +1375,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s12-ch">12 · بازی اندروید · Casual Game</div>
   <div class="project-reveal" id="s12-pr">
-    <div class="project-label">بازی تفننی · Android Game</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/jeweltower</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s12-img"><img src="assets/projects/jeweltower.webp" alt="برج جواهرات" loading="lazy"></div>
+    <div class="project-label">بازی تفننی · Android Game</div>
     <div class="project-title-fa">برج جواهرات</div>
     <div class="project-title-en">Jewel Tower — Stack-the-Blocks Arcade Game</div>
     <div class="project-desc-text">بازی تفننی و روان که در آن بلوک‌های جواهر را در لحظه‌ی درست روی برج می‌چینی؛ هر تکه‌ی بیرون‌زده می‌افتد و برج باریک‌تر می‌شود. با بالا رفتن برج، حامل بلوک‌ها از جرثقیل به هلیکوپتر، فضاپیما و آدم‌فضایی‌های جت‌پک‌دار تغییر می‌کند. دارای کومبو، جواهرهای طلایی و افسانه‌ای، محافظ، خط رکورد، پنج دنیای متفاوت، باد، ماموریت‌های روزانه، دستاوردها و صدای اختصاصی برای هر حامل، با رابط کاملاً فارسی.</div>
@@ -1354,12 +1385,12 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Android Game</span><span class="tech-chip blue">Casual Arcade</span><span class="tech-chip blue">۵ دنیا · 5 Worlds</span><span class="tech-chip green">Daily Missions</span><span class="tech-chip green">Web Version</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <a class="project-link-btn" href="https://myket.ir/app/com.jeweltower.app" target="_blank" rel="noopener">دانلود از مایکت ←</a>
       <a class="project-link-btn" href="https://cafebazaar.ir/app/com.jeweltower.app" target="_blank" rel="noopener">دانلود از کافه بازار ←</a>
       <a class="project-link-btn" href="https://raw.githubusercontent.com/mohmmadjavad/resume/main/assets/apk/jeweltower.apk" download="jeweltower.apk" rel="noopener">دریافت مستقیم نسخه اندروید ←</a>
       <a class="project-link-btn" href="https://mohmmadjavad.github.io/jewel-tower/" target="_blank" rel="noopener">بازی آنلاین (نسخه وب) ←</a>
-    </div>
+    </div></div></div>
   </div>
 </div></div></section>
 
@@ -1367,8 +1398,9 @@ document.documentElement.style.overflow = 'hidden';
 <section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s13-ch">13 · بازی اندروید · Word Puzzle</div>
   <div class="project-reveal" id="s13-pr">
-    <div class="project-label">بازی آموزشی · Android Game</div>
+    <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/wordquest</span></div><div class="pc-body">
     <div class="project-image-wrap" id="s13-img"><img src="assets/projects/wordquest.webp" alt="واژه‌چین" loading="lazy"></div>
+    <div class="project-label">بازی آموزشی · Android Game</div>
     <div class="project-title-fa">واژه‌چین</div>
     <div class="project-title-en">WordQuest — Crossword that Teaches English</div>
     <div class="project-desc-text">جدول‌کلمات با چرخ حروف که هنگام بازی، انگلیسی یاد می‌دهد: حروف را وصل می‌کنی، کلمه می‌سازی و معنی فارسی‌اش را همان لحظه می‌بینی. از رایج‌ترین کلمات شروع می‌شود و از ساده به سخت پیش می‌رود. ۳۰۰ مرحله روی یک نقشه‌ی فانتزی یکپارچه در ۲۵ سرزمین (از خانه و باغ تا قطب، زیر دریا، فضا و رویا)، یک حالت بی‌نهایت تصادفی، سه ستاره در هر مرحله، راهنما و سکه‌های داخل بازی؛ کاملاً آفلاین.</div>
@@ -1376,9 +1408,9 @@ document.documentElement.style.overflow = 'hidden';
     <div class="tech-chips">
       <span class="tech-chip">Android Game</span><span class="tech-chip blue">300 Levels</span><span class="tech-chip blue">25 Lands</span><span class="tech-chip green">Offline</span><span class="tech-chip ember">Coming Soon</span>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div class="pc-links">
       <span class="project-link-btn soon">به‌زودی منتشر می‌شود</span>
-    </div>
+    </div></div></div>
     <div class="more-projects">
       <svg class="mp-grid" viewBox="-2 -2 634 244" role="img" aria-label="شبکه‌ی پروژه‌ها" xmlns="http://www.w3.org/2000/svg"><g class="mp-cell a mp-dash" style="animation-delay:0.0s"><rect x="0" y="0" width="150" height="70" rx="14" class="mp-box"/><circle cx="16" cy="16" r="5" class="mp-dot"/><rect x="30" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="46" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="56" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.23s"><rect x="0" y="80" width="150" height="90" rx="14" class="mp-box"/><circle cx="16" cy="96" r="5" class="mp-dot"/><rect x="30" y="93" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="146" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="156" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.46s"><rect x="0" y="180" width="150" height="60" rx="14" class="mp-box"/><circle cx="16" cy="196" r="5" class="mp-dot"/><rect x="30" y="193" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.69s"><rect x="160" y="0" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="16" r="5" class="mp-dot"/><rect x="190" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="66" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="76" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.92s"><rect x="160" y="150" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="166" r="5" class="mp-dot"/><rect x="190" y="163" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.15s"><rect x="320" y="0" width="150" height="80" rx="14" class="mp-box"/><circle cx="336" cy="16" r="5" class="mp-dot"/><rect x="350" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="56" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="66" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.38s"><rect x="320" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="336" cy="171" r="5" class="mp-dot"/><rect x="350" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.61s"><rect x="480" y="0" width="150" height="55" rx="14" class="mp-box"/><circle cx="496" cy="16" r="5" class="mp-dot"/><rect x="510" y="13" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.84s"><rect x="480" y="65" width="150" height="80" rx="14" class="mp-box"/><circle cx="496" cy="81" r="5" class="mp-dot"/><rect x="510" y="78" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="121" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="131" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b mp-dash" style="animation-delay:2.07s"><rect x="480" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="496" cy="171" r="5" class="mp-dot"/><rect x="510" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g></svg>
       <a class="mp-btn" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">
@@ -1850,6 +1882,9 @@ document.addEventListener('DOMContentLoaded', function(){
     window.dispatchEvent(new Event('galaxy-ready'));
   }));
 
+  let sleeping=false;
+  window._threeSleep = () => { if(sleeping) return; sleeping=true; if(animId) cancelAnimationFrame(animId); };
+  window._threeWake = () => { if(!sleeping) return; sleeping=false; tick(); };
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
 
@@ -2042,6 +2077,19 @@ document.addEventListener('DOMContentLoaded', function(){
    GSAP + SCROLLTRIGGER + NAV + METEOR + MODALS + SHARE + PHONE + BIG BANG
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
+
+/* کهکشان فقط در بخش پروژه‌ها محو می‌شود و بعد از آخرین پروژه برمی‌گردد */
+(function galaxyFade(){
+  let offTimer=null;
+  function apply(off){
+    document.body.classList.toggle('galaxy-off',off);
+    clearTimeout(offTimer);
+    if(off){offTimer=setTimeout(()=>{if(window._threeSleep)window._threeSleep();},900);}
+    else if(window._threeWake){window._threeWake();}
+  }
+  const st=ScrollTrigger.create({trigger:'#scene-3',start:'top 60%',endTrigger:'#scene-13',end:'bottom 40%',onToggle:self=>apply(self.isActive)});
+  apply(st.isActive);
+})();
 
 (function typewriter(){const el=document.getElementById('s0-title');const full=el.dataset.full;let i=0;function type(){if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(type,35);}}setTimeout(type,600);})();
 
