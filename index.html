@@ -714,6 +714,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 }
 
 
+/* project scenes: compact and uniform spacing (no forced 100vh) */
+.scene.proj-scene{min-height:0;}
+.proj-scene .scene-sticky{min-height:0;padding-block:0;}
+.proj-scene .scene-inner{padding:14px 40px;}
+.proj-scene .chapter-marker{margin-bottom:10px;}
+#scene-13 .scene-inner{padding-bottom:56px;}
+@media(max-width:768px){.proj-scene .scene-inner{padding:12px 10px;}#scene-13 .scene-inner{padding-bottom:44px;}}
+@media(max-width:480px){.proj-scene .scene-inner{padding:12px 6px;}}
 /* ── Project cards: terminal style ── */
 .project-card{
   /* everything derives from the page tokens that the theme script flips, so the card turns light in day mode */
@@ -751,12 +759,10 @@ body[data-plang="en"] .pc-body .project-desc-en{font-family:'Vazirmatn',sans-ser
 .fab-lang{background:linear-gradient(135deg,rgba(20,8,40,.95),rgba(6,6,10,.95));border:1px solid rgba(41,70,255,.4);box-shadow:0 4px 20px rgba(0,0,0,.5);color:var(--accent2);backdrop-filter:blur(12px);}
 .fab-lang svg{width:21px;height:21px;}
 .lang-badge{position:absolute;right:-5px;bottom:-5px;min-width:19px;padding:1px 4px;border-radius:6px;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.5rem;font-weight:600;line-height:1.5;text-align:center;border:1px solid rgba(255,255,255,.25);}
-/* galaxy fades away while the projects section is on screen */
-#bg-canvas{transition:opacity .8s ease;}
-body.galaxy-off #bg-canvas{opacity:0;}
+
 
 /* ── More projects (GitHub) block ── */
-.more-projects{position:relative;margin:96px auto 8px;width:min(630px,94vw);text-align:center;}
+.more-projects{position:relative;margin:150px auto 24px;width:min(630px,94vw);text-align:center;}
 .mp-grid{display:block;width:100%;height:auto;overflow:visible;direction:ltr;}
 .mp-cell{opacity:.55;animation:mpPulse 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;transition:transform .35s ease;}
 .mp-box{fill:rgba(41,70,255,.10);stroke:rgba(80,104,255,.45);stroke-width:1.5;transition:fill .3s ease,stroke .3s ease;}
@@ -774,7 +780,7 @@ body.galaxy-off #bg-canvas{opacity:0;}
 .mp-btn em{font-style:normal;transition:transform .3s ease;}
 .mp-btn:hover{transform:translate(-50%,calc(-50% - 3px));box-shadow:0 0 0 8px rgba(8,10,25,.55),0 14px 36px rgba(41,70,255,.55);}
 .mp-btn:hover em{transform:translateX(-6px);}
-@media(max-width:600px){.more-projects{margin-top:64px;}.mp-btn{font-size:.72rem;padding:10px 16px;gap:8px;box-shadow:0 0 0 5px rgba(8,10,25,.55),0 6px 20px rgba(41,70,255,.4);}.mp-btn svg{width:17px;height:17px;}}
+@media(max-width:600px){.more-projects{margin-top:110px;}.mp-btn{font-size:.72rem;padding:10px 16px;gap:8px;box-shadow:0 0 0 5px rgba(8,10,25,.55),0 6px 20px rgba(41,70,255,.4);}.mp-btn svg{width:17px;height:17px;}}
 @media(prefers-reduced-motion:reduce){.mp-cell{animation:none;opacity:.85;}}
 
 .exp-reveal{opacity:0;max-width:680px;width:100%;}
@@ -1210,7 +1216,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 3 ─ AZIN DEJ -->
-<section class="scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-3"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s3-ch">03 · پروژه اصلی · Featured Project</div>
   <div class="project-reveal" id="s3-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/azindej</span></div><div class="pc-body">
@@ -1233,7 +1239,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 4 ─ RASA (جدید) -->
-<section class="scene" id="scene-4"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-4"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s4-ch">04 · پروژه شرکتی · Corporate Website</div>
   <div class="project-reveal" id="s4-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/rasa</span></div><div class="pc-body">
@@ -1254,7 +1260,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 5 ─ FASHION -->
-<section class="scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-5"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s5-ch">05 · فروشگاه · E-Commerce</div>
   <div class="project-reveal" id="s5-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/barazandeh</span></div><div class="pc-body">
@@ -1278,7 +1284,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 6 ─ METANAMA -->
-<section class="scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-6"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s6-ch">06 · ابزار وب · Client-Side Web Tools</div>
   <div class="project-reveal" id="s6-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/metanama</span></div><div class="pc-body">
@@ -1296,7 +1302,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 7 ─ KALA2 -->
-<section class="scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-7"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s7-ch">07 · ربات · Telegram Bot</div>
   <div class="project-reveal" id="s7-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/kala2</span></div><div class="pc-body">
@@ -1314,7 +1320,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 8 ─ TELEDATA -->
-<section class="scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-8"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s8-ch">08 · ابزار داده · Data Tool</div>
   <div class="project-reveal" id="s8-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/teledata</span></div><div class="pc-body">
@@ -1332,7 +1338,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 9 ─ ACCOUNTING -->
-<section class="scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-9"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s9-ch">09 · نرم‌افزار · Desktop App</div>
   <div class="project-reveal" id="s9-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/Accounting</span></div><div class="pc-body">
@@ -1350,7 +1356,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 10 ─ KARFAHM -->
-<section class="scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-10"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s10-ch">10 · اپلیکیشن اندروید · Car Diagnostics</div>
   <div class="project-reveal" id="s10-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/karfahm</span></div><div class="pc-body">
@@ -1371,7 +1377,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 11 ─ CUTTING BOOK -->
-<section class="scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-11"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s11-ch">11 · نرم‌افزار چندسکویی · Multi-Platform</div>
   <div class="project-reveal" id="s11-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/cuttingbook</span></div><div class="pc-body">
@@ -1393,7 +1399,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 12 ─ JEWEL TOWER -->
-<section class="scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-12"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s12-ch">12 · بازی اندروید · Casual Game</div>
   <div class="project-reveal" id="s12-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/jeweltower</span></div><div class="pc-body">
@@ -1416,7 +1422,7 @@ document.documentElement.style.overflow = 'hidden';
 </div></div></section>
 
 <!-- SCENE 13 ─ WORDQUEST -->
-<section class="scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
+<section class="scene proj-scene" id="scene-13"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.08">
   <div class="chapter-marker" id="s13-ch">13 · بازی اندروید · Word Puzzle</div>
   <div class="project-reveal" id="s13-pr">
     <div class="project-card"><div class="pc-bar"><i></i><i></i><i></i><span class="pc-path">~/projects/wordquest</span></div><div class="pc-body">
@@ -1433,7 +1439,7 @@ document.documentElement.style.overflow = 'hidden';
       <span class="project-link-btn soon">به‌زودی منتشر می‌شود</span>
     </div></div></div>
     <div class="more-projects">
-      <svg class="mp-grid" viewBox="-2 -2 634 244" role="img" aria-label="شبکه‌ی پروژه‌ها" xmlns="http://www.w3.org/2000/svg"><g class="mp-cell a mp-dash" style="animation-delay:0.0s"><rect x="0" y="0" width="150" height="70" rx="14" class="mp-box"/><circle cx="16" cy="16" r="5" class="mp-dot"/><rect x="30" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="46" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="56" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.23s"><rect x="0" y="80" width="150" height="90" rx="14" class="mp-box"/><circle cx="16" cy="96" r="5" class="mp-dot"/><rect x="30" y="93" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="146" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="156" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.46s"><rect x="0" y="180" width="150" height="60" rx="14" class="mp-box"/><circle cx="16" cy="196" r="5" class="mp-dot"/><rect x="30" y="193" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.69s"><rect x="160" y="0" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="16" r="5" class="mp-dot"/><rect x="190" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="66" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="76" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.92s"><rect x="160" y="150" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="166" r="5" class="mp-dot"/><rect x="190" y="163" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.15s"><rect x="320" y="0" width="150" height="80" rx="14" class="mp-box"/><circle cx="336" cy="16" r="5" class="mp-dot"/><rect x="350" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="56" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="66" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.38s"><rect x="320" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="336" cy="171" r="5" class="mp-dot"/><rect x="350" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.61s"><rect x="480" y="0" width="150" height="55" rx="14" class="mp-box"/><circle cx="496" cy="16" r="5" class="mp-dot"/><rect x="510" y="13" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.84s"><rect x="480" y="65" width="150" height="80" rx="14" class="mp-box"/><circle cx="496" cy="81" r="5" class="mp-dot"/><rect x="510" y="78" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="121" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="131" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b mp-dash" style="animation-delay:2.07s"><rect x="480" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="496" cy="171" r="5" class="mp-dot"/><rect x="510" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g></svg>
+      <svg class="mp-grid" viewBox="-2 -2 634 544" role="img" aria-label="شبکه‌ی پروژه‌ها" xmlns="http://www.w3.org/2000/svg"><g class="mp-cell a" style="animation-delay:0.00s"><rect x="0" y="0" width="150" height="55" rx="14" class="mp-box"/><circle cx="16" cy="16" r="5" class="mp-dot"/><rect x="30" y="13" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell b mp-dash" style="animation-delay:0.17s"><rect x="160" y="0" width="150" height="70" rx="14" class="mp-box"/><circle cx="176" cy="16" r="5" class="mp-dot"/><rect x="190" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="46" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="56" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.34s"><rect x="320" y="0" width="150" height="60" rx="14" class="mp-box"/><circle cx="336" cy="16" r="5" class="mp-dot"/><rect x="350" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="36" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="46" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:0.51s"><rect x="480" y="0" width="150" height="80" rx="14" class="mp-box"/><circle cx="496" cy="16" r="5" class="mp-dot"/><rect x="510" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="56" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="66" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.68s"><rect x="0" y="65" width="150" height="75" rx="14" class="mp-box"/><circle cx="16" cy="81" r="5" class="mp-dot"/><rect x="30" y="78" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="116" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="126" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.85s"><rect x="160" y="80" width="150" height="60" rx="14" class="mp-box"/><circle cx="176" cy="96" r="5" class="mp-dot"/><rect x="190" y="93" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="116" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="126" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.02s"><rect x="320" y="70" width="150" height="70" rx="14" class="mp-box"/><circle cx="336" cy="86" r="5" class="mp-dot"/><rect x="350" y="83" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="116" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="126" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:1.19s"><rect x="480" y="90" width="150" height="50" rx="14" class="mp-box"/><circle cx="496" cy="106" r="5" class="mp-dot"/><rect x="510" y="103" width="60" height="6" rx="3" class="mp-line"/></g><g transform="translate(0,150)"><g class="mp-cell a mp-dash" style="animation-delay:0.0s"><rect x="0" y="0" width="150" height="70" rx="14" class="mp-box"/><circle cx="16" cy="16" r="5" class="mp-dot"/><rect x="30" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="46" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="56" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.23s"><rect x="0" y="80" width="150" height="90" rx="14" class="mp-box"/><circle cx="16" cy="96" r="5" class="mp-dot"/><rect x="30" y="93" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="146" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="156" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.46s"><rect x="0" y="180" width="150" height="60" rx="14" class="mp-box"/><circle cx="16" cy="196" r="5" class="mp-dot"/><rect x="30" y="193" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.69s"><rect x="160" y="0" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="16" r="5" class="mp-dot"/><rect x="190" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="66" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="76" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.92s"><rect x="160" y="150" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="166" r="5" class="mp-dot"/><rect x="190" y="163" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.15s"><rect x="320" y="0" width="150" height="80" rx="14" class="mp-box"/><circle cx="336" cy="16" r="5" class="mp-dot"/><rect x="350" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="56" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="66" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.38s"><rect x="320" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="336" cy="171" r="5" class="mp-dot"/><rect x="350" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.61s"><rect x="480" y="0" width="150" height="55" rx="14" class="mp-box"/><circle cx="496" cy="16" r="5" class="mp-dot"/><rect x="510" y="13" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.84s"><rect x="480" y="65" width="150" height="80" rx="14" class="mp-box"/><circle cx="496" cy="81" r="5" class="mp-dot"/><rect x="510" y="78" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="121" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="131" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b mp-dash" style="animation-delay:2.07s"><rect x="480" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="496" cy="171" r="5" class="mp-dot"/><rect x="510" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g></g><g class="mp-cell c" style="animation-delay:1.36s"><rect x="0" y="400" width="150" height="65" rx="14" class="mp-box"/><circle cx="16" cy="416" r="5" class="mp-dot"/><rect x="30" y="413" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="441" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="451" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.53s"><rect x="160" y="400" width="150" height="50" rx="14" class="mp-box"/><circle cx="176" cy="416" r="5" class="mp-dot"/><rect x="190" y="413" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:1.70s"><rect x="320" y="400" width="150" height="75" rx="14" class="mp-box"/><circle cx="336" cy="416" r="5" class="mp-dot"/><rect x="350" y="413" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="451" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="461" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.87s"><rect x="480" y="400" width="150" height="60" rx="14" class="mp-box"/><circle cx="496" cy="416" r="5" class="mp-dot"/><rect x="510" y="413" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="436" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="446" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:2.04s"><rect x="0" y="475" width="150" height="65" rx="14" class="mp-box"/><circle cx="16" cy="491" r="5" class="mp-dot"/><rect x="30" y="488" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="516" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="526" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:2.21s"><rect x="160" y="460" width="150" height="80" rx="14" class="mp-box"/><circle cx="176" cy="476" r="5" class="mp-dot"/><rect x="190" y="473" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="516" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="526" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c mp-dash" style="animation-delay:2.38s"><rect x="320" y="485" width="150" height="55" rx="14" class="mp-box"/><circle cx="336" cy="501" r="5" class="mp-dot"/><rect x="350" y="498" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:2.55s"><rect x="480" y="470" width="150" height="70" rx="14" class="mp-box"/><circle cx="496" cy="486" r="5" class="mp-dot"/><rect x="510" y="483" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="516" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="526" width="70" height="5" rx="2.5" class="mp-line"/></g></svg>
       <a class="mp-btn" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         <span data-fa="مشاهده پروژه‌های بیشتر در GitHub" data-en="More projects on GitHub">مشاهده پروژه‌های بیشتر در GitHub</span>
@@ -1696,7 +1702,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   let mx=0, my=0, scrollP=0, t=0;
-  let paused=false, animId=null, sleeping=false;
+  let paused=false, animId=null;
   let bigBangMode = false;
   let bigBangOpacity = 1;
 
@@ -1748,7 +1754,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function tick(){
     animId = requestAnimationFrame(tick);
-    if(sleeping) return;
     
     if(paused && !bigBangMode){
       renderer.render(scene, camera);
@@ -1904,8 +1909,6 @@ document.addEventListener('DOMContentLoaded', function(){
     window.dispatchEvent(new Event('galaxy-ready'));
   }));
 
-  window._threeSleep = () => { sleeping = true; };
-  window._threeWake = () => { sleeping = false; };
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
 
@@ -2098,31 +2101,6 @@ document.addEventListener('DOMContentLoaded', function(){
    GSAP + SCROLLTRIGGER + NAV + METEOR + MODALS + SHARE + PHONE + BIG BANG
 ════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
-
-/* کهکشان فقط در بخش پروژه‌ها محو می‌شود و بعد از آخرین پروژه برمی‌گردد */
-(function galaxyFade(){
-  var first=document.getElementById('scene-3'),last=document.getElementById('scene-13');
-  if(!first||!last)return;
-  var off=null,offTimer=null,ticking=false;
-  function apply(v){
-    if(v===off)return;off=v;
-    document.body.classList.toggle('galaxy-off',v);
-    clearTimeout(offTimer);
-    if(v){offTimer=setTimeout(function(){if(window._threeSleep)window._threeSleep();},900);}
-    else if(window._threeWake){window._threeWake();}
-  }
-  function check(){
-    ticking=false;
-    var h=window.innerHeight;
-    var r1=first.getBoundingClientRect(),r2=last.getBoundingClientRect();
-    apply(r1.top<h*0.6 && r2.bottom>h*0.4);
-  }
-  function req(){if(!ticking){ticking=true;requestAnimationFrame(check);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',req);
-  check();
-})();
-
 (function typewriter(){const el=document.getElementById('s0-title');const full=el.dataset.full;let i=0;function type(){if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(type,35);}}setTimeout(type,600);})();
 
 const allScenes=document.querySelectorAll('.scene'),navDots=document.querySelectorAll('.nav-dot');
