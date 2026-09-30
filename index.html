@@ -755,6 +755,10 @@ body[data-plang="en"] .pc-body{direction:ltr;text-align:left;}
 body[data-plang="en"] .pc-body .project-title-fa{font-size:clamp(1.25rem,3.2vw,1.8rem);line-height:1.15;}
 body[data-plang="en"] .pc-body .project-title-en{letter-spacing:.06em;font-family:'JetBrains Mono',monospace;font-size:.68rem;}
 body[data-plang="en"] .pc-body .project-desc-en{font-family:'Vazirmatn',sans-serif;font-size:.78rem;line-height:1.85;color:var(--text-body);}
+/* bilingual sections that switch to English-only in English mode */
+body[data-plang="en"] .only-fa{display:none !important;}
+body:not([data-plang="en"]) .only-en{display:none !important;}
+body[data-plang="en"] .exp-reveal{direction:ltr;}
 /* language button */
 .fab-lang{background:linear-gradient(135deg,rgba(20,8,40,.95),rgba(6,6,10,.95));border:1px solid rgba(41,70,255,.4);box-shadow:0 4px 20px rgba(0,0,0,.5);color:var(--accent2);backdrop-filter:blur(12px);}
 .fab-lang svg{width:21px;height:21px;}
@@ -2312,6 +2316,27 @@ window.shareResume = shareResume;
       if(T[m]){a.dataset.fa=m;a.dataset.en=T[m];if(arrow)a.dataset.arrow='1';}
     });
   }
+  /* بخش تجربه کاری: در حالت انگلیسی فقط انگلیسی نمایش داده می‌شود */
+  (function expLang(){
+    function span(c,t){var e=document.createElement('span');e.className=c;e.textContent=t;return e;}
+    var ch=document.getElementById('s14-ch');
+    if(ch){var p=ch.textContent.split(' · ');if(p.length>=3){ch.textContent='';ch.appendChild(document.createTextNode(p[0]+' · '));ch.appendChild(span('only-fa',p[1]+' · '));ch.appendChild(document.createTextNode(p.slice(2).join(' · ')));}}
+    var EN={
+      s14e1:{period:['2022 — ','اکنون · ','Present'],desc:'Building and delivering real projects from scratch to launch — complex corporate websites, Telegram bots, desktop software, online stores, and data-extraction tools.'},
+      s14e2:{period:['2017 — 2023',' · ۶+ سال',' · 6+ years'],desc:'Over 6 years of professional Photoshop work for photography studios and personal projects — this experience gives me a distinctive visual eye for UI/UX.'}
+    };
+    [['s14-e1','s14e1'],['s14-e2','s14e2']].forEach(function(x){
+      var box=document.getElementById(x[0]);if(!box)return;var d=EN[x[1]];
+      var per=box.querySelector('.exp-period');
+      if(per){per.textContent='';
+        if(x[1]==='s14e1'){per.appendChild(document.createTextNode(d.period[0]));per.appendChild(span('only-fa',d.period[1]));per.appendChild(document.createTextNode(d.period[2]));}
+        else{per.appendChild(document.createTextNode(d.period[0]));per.appendChild(span('only-fa',d.period[1]));per.appendChild(span('only-en',d.period[2]));}
+      }
+      var rf=box.querySelector('.exp-role-fa'),re=box.querySelector('.exp-role-en'),dt=box.querySelector('.exp-desc-text');
+      if(rf&&re){var cl=rf.cloneNode(false);cl.textContent=re.textContent;cl.className='exp-role-fa only-en';rf.classList.add('only-fa');re.classList.add('only-fa');rf.parentNode.insertBefore(cl,rf);}
+      if(dt){var dn=dt.cloneNode(false);dn.textContent=d.desc;dn.classList.add('only-en');dt.classList.add('only-fa');dt.parentNode.insertBefore(dn,dt.nextSibling);}
+    });
+  })();
   var badge=document.getElementById('lang-badge'),btn=document.getElementById('lang-toggle');
   function apply(l,save){
     document.body.setAttribute('data-plang',l);
