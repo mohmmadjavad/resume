@@ -716,19 +716,19 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* ── Project cards: terminal style ── */
 .project-card{
-  /* colors are pinned so the card stays readable in day mode (the page-level tokens flip to dark ink) */
-  --heading:#fff;--text-body:rgba(255,255,255,.88);--text-dim:rgba(255,255,255,.66);--muted:rgba(255,255,255,.62);
-  --mono-accent:#c9d4ff;--grad-a:#fff;--grad-b:#eef2ff;--accent2:#5068ff;
-  --chip-border:rgba(255,255,255,.2);--chip-color:rgba(255,255,255,.78);--chip-bg:rgba(255,255,255,.05);
-  --tag-blue:#a3e0ff;--tag-ember:#fcd34d;--tag-green:#6ee7b7;--image-bg:rgba(6,6,10,.7);
-  max-width:560px;width:calc(100% - 20px);margin:0 auto;background:#050509;border:1px solid var(--terminal-border);border-radius:14px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.45);color:#fff;
+  /* everything derives from the page tokens that the theme script flips, so the card turns light in day mode */
+  max-width:560px;width:calc(100% - 20px);margin:0 auto;
+  background:color-mix(in srgb,var(--void) 90%,var(--accent) 10%);
+  border:1px solid var(--card-border);border-radius:14px;overflow:hidden;
+  box-shadow:0 14px 36px color-mix(in srgb,var(--heading) 22%,transparent);
+  color:var(--text-body);
 }
-.pc-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(255,255,255,.05);border-bottom:1px solid var(--terminal-border);direction:ltr;}
-.pc-bar i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.24);display:block;}
-.pc-path{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.55);margin-left:8px;letter-spacing:.02em;}
+.pc-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:color-mix(in srgb,var(--heading) 6%,transparent);border-bottom:1px solid var(--card-border);direction:ltr;}
+.pc-bar i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--heading) 28%,transparent);display:block;}
+.pc-path{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);margin-left:8px;letter-spacing:.02em;}
 .pc-body{padding:14px;}
 .pc-body .project-image-wrap{max-width:100%;margin-bottom:0;border-radius:10px;}
-.pc-body .project-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--terminal-green);text-transform:none;text-shadow:none;margin:12px 0 6px;}
+.pc-body .project-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--tag-green);text-transform:none;text-shadow:none;margin:12px 0 6px;}
 .pc-body .project-label::before{content:'❯ ';color:var(--terminal-prompt);}
 .pc-body .project-title-fa{font-size:clamp(1.3rem,3.4vw,1.9rem);margin-bottom:4px;}
 .pc-body .project-title-en{font-size:clamp(.7rem,1.6vw,.9rem);letter-spacing:.14em;margin-bottom:10px;}
@@ -736,7 +736,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .pc-body .project-desc-en{font-size:.68rem;line-height:1.85;margin-bottom:12px;}
 .pc-body .tech-chips{gap:6px;margin-bottom:12px;}
 .pc-body .tech-chip{font-size:.56rem;padding:4px 10px;}
-.pc-links{display:flex;flex-direction:column;gap:7px;margin-top:4px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);}
+.pc-links{display:flex;flex-direction:column;gap:7px;margin-top:4px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--heading) 14%,transparent);}
 .pc-links .project-link-btn{display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box;text-align:center;padding:9px 14px;font-size:.72rem;border-width:1px;}
 .pc-links .project-link-btn:first-child:not(.soon){background:var(--accent);border-color:var(--accent);color:#fff;}
 .pc-links .project-link-btn:first-child:not(.soon):hover{box-shadow:0 0 24px rgba(41,70,255,.45);}
@@ -1696,7 +1696,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   let mx=0, my=0, scrollP=0, t=0;
-  let paused=false, animId=null;
+  let paused=false, animId=null, sleeping=false;
   let bigBangMode = false;
   let bigBangOpacity = 1;
 
@@ -1748,6 +1748,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function tick(){
     animId = requestAnimationFrame(tick);
+    if(sleeping) return;
     
     if(paused && !bigBangMode){
       renderer.render(scene, camera);
@@ -1903,9 +1904,8 @@ document.addEventListener('DOMContentLoaded', function(){
     window.dispatchEvent(new Event('galaxy-ready'));
   }));
 
-  let sleeping=false;
-  window._threeSleep = () => { if(sleeping) return; sleeping=true; if(animId) cancelAnimationFrame(animId); };
-  window._threeWake = () => { if(!sleeping) return; sleeping=false; tick(); };
+  window._threeSleep = () => { sleeping = true; };
+  window._threeWake = () => { sleeping = false; };
   window._threePause = () => { paused = true; };
   window._threeResume = () => { paused = false; };
 
@@ -2101,15 +2101,26 @@ gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
 /* کهکشان فقط در بخش پروژه‌ها محو می‌شود و بعد از آخرین پروژه برمی‌گردد */
 (function galaxyFade(){
-  let offTimer=null;
-  function apply(off){
-    document.body.classList.toggle('galaxy-off',off);
+  var first=document.getElementById('scene-3'),last=document.getElementById('scene-13');
+  if(!first||!last)return;
+  var off=null,offTimer=null,ticking=false;
+  function apply(v){
+    if(v===off)return;off=v;
+    document.body.classList.toggle('galaxy-off',v);
     clearTimeout(offTimer);
-    if(off){offTimer=setTimeout(()=>{if(window._threeSleep)window._threeSleep();},900);}
+    if(v){offTimer=setTimeout(function(){if(window._threeSleep)window._threeSleep();},900);}
     else if(window._threeWake){window._threeWake();}
   }
-  const st=ScrollTrigger.create({trigger:'#scene-3',start:'top 60%',endTrigger:'#scene-13',end:'bottom 40%',onToggle:self=>apply(self.isActive)});
-  apply(st.isActive);
+  function check(){
+    ticking=false;
+    var h=window.innerHeight;
+    var r1=first.getBoundingClientRect(),r2=last.getBoundingClientRect();
+    apply(r1.top<h*0.6 && r2.bottom>h*0.4);
+  }
+  function req(){if(!ticking){ticking=true;requestAnimationFrame(check);}}
+  window.addEventListener('scroll',req,{passive:true});
+  window.addEventListener('resize',req);
+  check();
 })();
 
 (function typewriter(){const el=document.getElementById('s0-title');const full=el.dataset.full;let i=0;function type(){if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(type,35);}}setTimeout(type,600);})();
