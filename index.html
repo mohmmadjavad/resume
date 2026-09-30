@@ -715,22 +715,42 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 
 /* ── Project cards: terminal style ── */
-.project-card{max-width:640px;width:100%;margin:0 auto;background:var(--terminal-bg);border:1px solid var(--terminal-border);border-radius:14px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.6);}
-.pc-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--terminal-border);direction:ltr;}
-.pc-bar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.22);display:block;}
-.pc-path{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--terminal-dim);margin-left:8px;letter-spacing:.02em;}
-.pc-body{padding:16px;}
+.project-card{
+  /* colors are pinned so the card stays readable in day mode (the page-level tokens flip to dark ink) */
+  --heading:#fff;--text-body:rgba(255,255,255,.88);--text-dim:rgba(255,255,255,.66);--muted:rgba(255,255,255,.62);
+  --mono-accent:#c9d4ff;--grad-a:#fff;--grad-b:#eef2ff;--accent2:#5068ff;
+  --chip-border:rgba(255,255,255,.2);--chip-color:rgba(255,255,255,.78);--chip-bg:rgba(255,255,255,.05);
+  --tag-blue:#a3e0ff;--tag-ember:#fcd34d;--tag-green:#6ee7b7;--image-bg:rgba(6,6,10,.7);
+  max-width:560px;width:calc(100% - 20px);margin:0 auto;background:#050509;border:1px solid var(--terminal-border);border-radius:14px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.45);color:#fff;
+}
+.pc-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(255,255,255,.05);border-bottom:1px solid var(--terminal-border);direction:ltr;}
+.pc-bar i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.24);display:block;}
+.pc-path{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.55);margin-left:8px;letter-spacing:.02em;}
+.pc-body{padding:14px;}
 .pc-body .project-image-wrap{max-width:100%;margin-bottom:0;border-radius:10px;}
-.pc-body .project-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.06em;color:var(--terminal-green);text-transform:none;text-shadow:none;margin:16px 0 8px;}
+.pc-body .project-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--terminal-green);text-transform:none;text-shadow:none;margin:12px 0 6px;}
 .pc-body .project-label::before{content:'❯ ';color:var(--terminal-prompt);}
-.pc-body .project-title-fa{font-size:clamp(1.6rem,4.4vw,2.6rem);}
-.pc-body .project-title-en{margin-bottom:12px;}
-.pc-body .project-desc-en{margin-bottom:14px;}
-.pc-links{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);}
-.pc-links .project-link-btn{display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box;text-align:center;padding:12px 16px;border-width:1px;}
+.pc-body .project-title-fa{font-size:clamp(1.3rem,3.4vw,1.9rem);margin-bottom:4px;}
+.pc-body .project-title-en{font-size:clamp(.7rem,1.6vw,.9rem);letter-spacing:.14em;margin-bottom:10px;}
+.pc-body .project-desc-text{font-size:.8rem;line-height:1.95;margin-bottom:10px;}
+.pc-body .project-desc-en{font-size:.68rem;line-height:1.85;margin-bottom:12px;}
+.pc-body .tech-chips{gap:6px;margin-bottom:12px;}
+.pc-body .tech-chip{font-size:.56rem;padding:4px 10px;}
+.pc-links{display:flex;flex-direction:column;gap:7px;margin-top:4px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);}
+.pc-links .project-link-btn{display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box;text-align:center;padding:9px 14px;font-size:.72rem;border-width:1px;}
 .pc-links .project-link-btn:first-child:not(.soon){background:var(--accent);border-color:var(--accent);color:#fff;}
 .pc-links .project-link-btn:first-child:not(.soon):hover{box-shadow:0 0 24px rgba(41,70,255,.45);}
-@media(max-width:600px){.pc-body{padding:12px;}}
+@media(max-width:768px){.project-card{width:calc(100% - 22px);}.pc-body{padding:11px;}}
+/* project language: only one language is shown inside project steps */
+body[data-plang="fa"] .l-en,body[data-plang="en"] .l-fa,.l-none{display:none !important;}
+body[data-plang="en"] .pc-body{direction:ltr;text-align:left;}
+body[data-plang="en"] .pc-body .project-title-fa{font-size:clamp(1.25rem,3.2vw,1.8rem);line-height:1.15;}
+body[data-plang="en"] .pc-body .project-title-en{letter-spacing:.06em;font-family:'JetBrains Mono',monospace;font-size:.68rem;}
+body[data-plang="en"] .pc-body .project-desc-en{font-family:'Vazirmatn',sans-serif;font-size:.78rem;line-height:1.85;color:var(--text-body);}
+/* language button */
+.fab-lang{background:linear-gradient(135deg,rgba(20,8,40,.95),rgba(6,6,10,.95));border:1px solid rgba(41,70,255,.4);box-shadow:0 4px 20px rgba(0,0,0,.5);color:var(--accent2);backdrop-filter:blur(12px);}
+.fab-lang svg{width:21px;height:21px;}
+.lang-badge{position:absolute;right:-5px;bottom:-5px;min-width:19px;padding:1px 4px;border-radius:6px;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.5rem;font-weight:600;line-height:1.5;text-align:center;border:1px solid rgba(255,255,255,.25);}
 /* galaxy fades away while the projects section is on screen */
 #bg-canvas{transition:opacity .8s ease;}
 body.galaxy-off #bg-canvas{opacity:0;}
@@ -1090,6 +1110,7 @@ document.documentElement.style.overflow = 'hidden';
 
 <div id="fab-group">
   <button class="fab-btn fab-share" title="اشتراک‌گذاری" onclick="shareResume()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+  <button class="fab-btn fab-lang" id="lang-toggle" title="English / فارسی" aria-label="تغییر زبان پروژه‌ها"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/></svg><span class="lang-badge" id="lang-badge">FA</span></button>
   <button class="fab-btn fab-print" title="چاپ رزومه" onclick="window.open('print.html','_blank')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
 </div>
 
@@ -1415,8 +1436,8 @@ document.documentElement.style.overflow = 'hidden';
       <svg class="mp-grid" viewBox="-2 -2 634 244" role="img" aria-label="شبکه‌ی پروژه‌ها" xmlns="http://www.w3.org/2000/svg"><g class="mp-cell a mp-dash" style="animation-delay:0.0s"><rect x="0" y="0" width="150" height="70" rx="14" class="mp-box"/><circle cx="16" cy="16" r="5" class="mp-dot"/><rect x="30" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="46" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="56" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.23s"><rect x="0" y="80" width="150" height="90" rx="14" class="mp-box"/><circle cx="16" cy="96" r="5" class="mp-dot"/><rect x="30" y="93" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="146" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="156" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.46s"><rect x="0" y="180" width="150" height="60" rx="14" class="mp-box"/><circle cx="16" cy="196" r="5" class="mp-dot"/><rect x="30" y="193" width="60" height="6" rx="3" class="mp-line"/><rect x="14" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="14" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b" style="animation-delay:0.69s"><rect x="160" y="0" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="16" r="5" class="mp-dot"/><rect x="190" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="66" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="76" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:0.92s"><rect x="160" y="150" width="150" height="90" rx="14" class="mp-box"/><circle cx="176" cy="166" r="5" class="mp-dot"/><rect x="190" y="163" width="60" height="6" rx="3" class="mp-line"/><rect x="174" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="174" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.15s"><rect x="320" y="0" width="150" height="80" rx="14" class="mp-box"/><circle cx="336" cy="16" r="5" class="mp-dot"/><rect x="350" y="13" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="56" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="66" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.38s"><rect x="320" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="336" cy="171" r="5" class="mp-dot"/><rect x="350" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="334" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="334" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell a" style="animation-delay:1.61s"><rect x="480" y="0" width="150" height="55" rx="14" class="mp-box"/><circle cx="496" cy="16" r="5" class="mp-dot"/><rect x="510" y="13" width="60" height="6" rx="3" class="mp-line"/></g><g class="mp-cell c" style="animation-delay:1.84s"><rect x="480" y="65" width="150" height="80" rx="14" class="mp-box"/><circle cx="496" cy="81" r="5" class="mp-dot"/><rect x="510" y="78" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="121" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="131" width="70" height="5" rx="2.5" class="mp-line"/></g><g class="mp-cell b mp-dash" style="animation-delay:2.07s"><rect x="480" y="155" width="150" height="85" rx="14" class="mp-box"/><circle cx="496" cy="171" r="5" class="mp-dot"/><rect x="510" y="168" width="60" height="6" rx="3" class="mp-line"/><rect x="494" y="216" width="110" height="5" rx="2.5" class="mp-line"/><rect x="494" y="226" width="70" height="5" rx="2.5" class="mp-line"/></g></svg>
       <a class="mp-btn" href="https://github.com/mohmmadjavad" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-        <span>مشاهده پروژه‌های بیشتر در GitHub</span>
-        <em>←</em>
+        <span data-fa="مشاهده پروژه‌های بیشتر در GitHub" data-en="More projects on GitHub">مشاهده پروژه‌های بیشتر در GitHub</span>
+        <em data-fa="←" data-en="→">←</em>
       </a>
     </div>
   </div>
@@ -2274,6 +2295,50 @@ window.shareResume = shareResume;
    No finale effect on the closing scene — removed per request.
 ════════════════════════════════════════════ */
 });
+</script>
+<script>
+/* زبان استپ‌های پروژه: پیش‌فرض فارسی؛ فقط بخش پروژه‌ها تک‌زبانه می‌شود */
+(function projectLang(){
+  var T={'مشاهده وب‌سایت':'View website','دانلود از مایکت':'Download on Myket','دانلود از کافه بازار':'Download on Cafe Bazaar','دریافت مستقیم نسخه اندروید':'Direct Android download (APK)','مشاهده پروژه':'View project','مشاهده سورس کد':'View source code','قالب استاتیک (فرانت‌اند)':'Static template (front-end)','مشاهده در GitHub':'View on GitHub','دانلود اندروید (مایکت)':'Android download (Myket)','دانلود اندروید (کافه بازار)':'Android download (Cafe Bazaar)','مشاهده نسخه وب':'View web version','بازی آنلاین (نسخه وب)':'Play online (web version)','به‌زودی منتشر می‌شود':'Coming soon'};
+  function sp(c,t){var e=document.createElement('span');e.className=c;e.textContent=t;return e;}
+  function split(el,faIdx,prefix){
+    if(!el)return;var p=el.textContent.split(' · ');if(p.length<faIdx+2)return;
+    el.textContent='';if(prefix)el.appendChild(document.createTextNode(p[0]+' · '));
+    el.appendChild(sp('l-fa',p[faIdx]));el.appendChild(sp('l-en',p.slice(faIdx+1).join(' · ')));
+  }
+  for(var n=3;n<=13;n++){
+    split(document.getElementById('s'+n+'-ch'),1,true);
+    var pr=document.getElementById('s'+n+'-pr');if(!pr)continue;
+    split(pr.querySelector('.project-label'),0,false);
+    var tf=pr.querySelector('.project-title-fa'),te=pr.querySelector('.project-title-en'),dt=pr.querySelector('.project-desc-text'),de=pr.querySelector('.project-desc-en');
+    if(tf&&te){
+      tf.classList.add('l-fa');
+      var full=te.textContent,i=full.indexOf(' — '),name=i>-1?full.slice(0,i):full,tag=i>-1?full.slice(i+3):'';
+      var nm=document.createElement('div');nm.className='project-title-fa l-en';nm.textContent=name;tf.parentNode.insertBefore(nm,tf.nextSibling);
+      if(tag){te.textContent=tag;te.classList.add('l-en');}else{te.classList.add('l-none');}
+    }
+    if(dt)dt.classList.add('l-fa');if(de)de.classList.add('l-en');
+    pr.querySelectorAll('.project-link-btn').forEach(function(a){
+      var raw=a.textContent.trim(),arrow=/←$/.test(raw),m=raw.replace(/\s*←$/,'');
+      if(T[m]){a.dataset.fa=m;a.dataset.en=T[m];if(arrow)a.dataset.arrow='1';}
+    });
+  }
+  var badge=document.getElementById('lang-badge'),btn=document.getElementById('lang-toggle');
+  function apply(l,save){
+    document.body.setAttribute('data-plang',l);
+    document.querySelectorAll('[data-en]').forEach(function(a){
+      var t=l==='en'?a.dataset.en:a.dataset.fa;
+      a.textContent=t+(a.dataset.arrow?(l==='en'?' →':' ←'):'');
+    });
+    if(badge)badge.textContent=l==='en'?'EN':'FA';
+    if(btn)btn.setAttribute('aria-label',l==='en'?'Switch projects to Persian':'تغییر زبان پروژه‌ها به انگلیسی');
+    if(save){try{localStorage.setItem('plang',l);}catch(e){}}
+    if(window.ScrollTrigger){try{ScrollTrigger.refresh();}catch(e){}}
+  }
+  var cur='fa';try{if(localStorage.getItem('plang')==='en')cur='en';}catch(e){}
+  apply(cur,false);
+  if(btn)btn.addEventListener('click',function(){cur=cur==='en'?'fa':'en';apply(cur,true);});
+})();
 </script>
 </body>
 </html>
