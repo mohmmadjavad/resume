@@ -5,13 +5,13 @@
   <!-- ═══ صفحه اصلی ═══ -->
   <url>
     <loc>https://immdjavad.ir/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://immdjavad.ir/assets/profile.webp</image:loc>
-      <image:title>Mohammad Javad Mahmoudi — Full Stack Developer</image:title>
-      <image:caption>محمد جواد محمودی — توسعه‌دهنده Full Stack متخصص Python و Django</image:caption>
+      <image:title>محمد جواد محمودی — Mohammad Javad Mahmoudi</image:title>
+      <image:caption>تصویر محمد جواد محمودی (Mohammad Javad Mahmoudi) — توسعه‌دهنده Full Stack متخصص Python و Django</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://immdjavad.ir/assets/projects/azindej.webp</image:loc>
