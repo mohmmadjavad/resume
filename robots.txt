@@ -1,9 +1,6 @@
 User-agent: *
 Allow: /
 
-# Prevent indexing design page
-Disallow: /design/
-
 # Prevent indexing print version
 Disallow: /print.html
 
