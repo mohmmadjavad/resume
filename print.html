@@ -279,11 +279,12 @@
   .edu-card {
     background: var(--paper); border: 1px solid var(--line);
     border-right: 3px solid var(--accent);
-    padding: 6px 8px; border-radius: var(--radius);
+    padding: 5px 8px; border-radius: var(--radius);
   }
+  .edu-card + .edu-card { margin-top: 4px; }
   .edu-deg-fa { font-size: 8px; font-weight: 800; color: var(--ink); }
   .edu-deg-en { font-family: var(--mono); font-size: 6px; color: var(--accent); margin-bottom: 3px; }
-  .edu-school { font-size: 6.5px; color: var(--ink-soft); margin-bottom: 5px; }
+  .edu-school { font-size: 6.5px; color: var(--ink-soft); }
   .etags { display: flex; flex-wrap: wrap; gap: 3.5px; }
   .etag {
     font-family: var(--mono); font-size: 6px;
@@ -307,10 +308,21 @@
   .dot.on { background: var(--accent); border-color: var(--accent); }
 
   /* ══ PROJECTS (افزایش ارتفاع و فاصله‌ها جهت پر شدن صفحه) ══ */
-  .projects { display: flex; flex-direction: column; gap: 8px; }
+  .projects { display: flex; flex-direction: column; gap: 6px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .pc > .pc-tag { margin-bottom: 3px; }
+  .pc.sm { padding: 6.5px 8px; }
+  .pc.sm .pc-title-fa { font-size: 8.6px; margin-bottom: 1px; }
+  .pc.sm .pc-title-en { font-size: 6px; margin-bottom: 3px; }
+  .pc.sm .pc-desc { font-size: 6.5px; line-height: 1.7; margin-bottom: 4px; }
+  .pc.sm .pc-tech { margin-bottom: 3px; gap: 3px; }
+  .pc.sm .ptag { font-size: 5.6px; padding: 1.5px 5px; }
+  .pc.sm .pc-link { font-size: 6.2px; }
+  .pc-note { font-size: 6.6px; line-height: 1.7; color: var(--ink); background: var(--accent-soft); border: 1px solid var(--accent-mid); padding: 3px 7px; border-radius: var(--radius); margin-bottom: 4px; }
+  .pc-note b { color: var(--accent); }
   .pc {
     background: var(--paper-raised); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 8.5px 11px; position: relative;
+    border-radius: var(--radius); padding: 7px 10px; position: relative;
   }
   .pc.feat {
     border-color: var(--line-strong);
@@ -330,7 +342,7 @@
     font-family: var(--mono); font-size: 7px;
     color: var(--ink-faint); margin-bottom: 5px;
   }
-  .pc-desc { font-size: 7.2px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 6px; }
+  .pc-desc { font-size: 6.9px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 5px; }
   .pc-tech { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
   .ptag {
     font-family: var(--mono); font-size: 6.2px;
@@ -426,7 +438,7 @@
           <span class="stitle-en">About Me</span>
         </div>
         <p style="font-size:7px;line-height:1.85;color:var(--ink-soft);">
-          توسعه‌دهنده Full Stack با بیش از ۲ سال تجربه حرفه‌ای در پیاده‌سازی سیستم‌های پیچیده وب، ربات‌های تلگرام و نرم‌افزارهای دسکتاپ. دانشجوی کارشناسی مهندسی کامپیوتر با رویکرد حل مسئله. دارای بیش از ۶ سال تجربه تخصصی در طراحی گرافیک و فتوشاپ که موجب خلق رابط‌های کاربرپسند و دقیق در UI/UX گردیده است.
+          توسعه‌دهنده Full Stack با بیش از ۲ سال تجربه حرفه‌ای در پیاده‌سازی سیستم‌های پیچیده وب، ربات‌های تلگرام و نرم‌افزارهای دسکتاپ. کارشناس مهندسی کامپیوتر و دانشجوی کارشناسی ارشد فناوری اطلاعات (IT)، با رویکرد حل مسئله و تجربه ساخت اپلیکیشن‌های اندروید. دارای بیش از ۶ سال تجربه در طراحی گرافیک و فتوشاپ که به خلق رابط‌های کاربرپسند و دقیق در UI/UX انجامیده است.
         </p>
       </div>
 
@@ -439,16 +451,16 @@
         <div class="skills-grid">
           <div class="sk"><div class="sk-name">پایتون</div><div class="sk-en">Python</div><div class="sk-bar"><div class="sk-fill" style="width:90%"></div></div></div>
           <div class="sk"><div class="sk-name">جنگو</div><div class="sk-en">Django</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
+          <div class="sk"><div class="sk-name">PHP</div><div class="sk-en">PHP / Custom CMS</div><div class="sk-bar"><div class="sk-fill" style="width:80%"></div></div></div>
           <div class="sk"><div class="sk-name">جاوااسکریپت</div><div class="sk-en">JavaScript</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
           <div class="sk"><div class="sk-name">HTML / CSS</div><div class="sk-en">HTML / CSS</div><div class="sk-bar"><div class="sk-fill" style="width:85%"></div></div></div>
+          <div class="sk"><div class="sk-name">پایگاه داده</div><div class="sk-en">PostgreSQL / SQL</div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
           <div class="sk"><div class="sk-name">ربات تلگرام</div><div class="sk-en">Telegram Bot</div><div class="sk-bar"><div class="sk-fill" style="width:85%"></div></div></div>
           <div class="sk"><div class="sk-name">وب‌اسکرپینگ</div><div class="sk-en">Web Scraping</div><div class="sk-bar"><div class="sk-fill" style="width:80%"></div></div></div>
-          <div class="sk"><div class="sk-name">پایگاه داده</div><div class="sk-en">SQL / ORM</div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
-          <div class="sk"><div class="sk-name">تحلیل داده</div><div class="sk-en">Data Analysis</div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
-          <div class="sk"><div class="sk-name">فتوشاپ</div><div class="sk-en">Photoshop</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
-          <div class="sk"><div class="sk-name">SVG / انیمیشن</div><div class="sk-en">SVG Animation</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
-          <div class="sk"><div class="sk-name">گیت</div><div class="sk-en">Git / GitHub</div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
-          <div class="sk"><div class="sk-name">لینوکس / سرور</div><div class="sk-en">Linux Server</div><div class="sk-bar"><div class="sk-fill" style="width:60%"></div></div></div>
+          <div class="sk"><div class="sk-name">اندروید</div><div class="sk-en">Capacitor / Android</div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+          <div class="sk"><div class="sk-name">نرم‌افزار دسکتاپ</div><div class="sk-en">PyQt6</div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
+          <div class="sk"><div class="sk-name">فتوشاپ / UI</div><div class="sk-en">Photoshop · UI/UX</div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
+          <div class="sk"><div class="sk-name">گیت / سرور</div><div class="sk-en">Git · Linux · SEO</div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
         </div>
       </div>
 
@@ -462,7 +474,7 @@
           <div class="exp-period">2022 — اکنون · Present</div>
           <div class="exp-role-fa">توسعه‌دهنده فریلنسر وب</div>
           <div class="exp-role-en">Freelance Full Stack Developer</div>
-          <div class="exp-desc">طراحی و پیاده‌سازی کامل پروژه‌های واقعی شامل پلتفرم‌های شرکتی، ربات‌های هوشمند تلگرام، برنامه‌های کاربردی دسکتاپ و سیستم‌های استخراج و تحلیل داده با رعایت استانداردها.</div>
+          <div class="exp-desc">ساخت و تحویل پروژه‌های واقعی از صفر تا راه‌اندازی: وب‌سایت‌های شرکتی و فروشگاهی، اپلیکیشن‌های اندروید، ربات‌های تلگرام، نرم‌افزارهای دسکتاپ و ابزارهای استخراج داده.</div>
         </div>
         <div class="exp-item" style="margin-bottom:0">
           <div class="exp-period">2017 — 2023 · ۶+ سال</div>
@@ -479,14 +491,14 @@
           <span class="stitle-en">Education</span>
         </div>
         <div class="edu-card">
+          <div class="edu-deg-fa">کارشناسی ارشد فناوری اطلاعات (IT)</div>
+          <div class="edu-deg-en">M.Sc. Information Technology</div>
+          <div class="edu-school">در حال تحصیل · Currently Enrolled</div>
+        </div>
+        <div class="edu-card">
           <div class="edu-deg-fa">کارشناسی مهندسی کامپیوتر</div>
           <div class="edu-deg-en">B.Sc. Computer Engineering</div>
-          <div class="edu-school">دانشجوی در حال تحصیل · Currently Enrolled</div>
-          <div class="etags">
-            <span class="etag">الگوریتم‌ها</span>
-            <span class="etag">سیستم‌عامل</span>
-            <span class="etag">داده‌کاوی</span>
-          </div>
+          <div class="edu-school">فارغ‌التحصیل · Graduated</div>
         </div>
       </div>
 
@@ -526,114 +538,100 @@
 
         <!-- آذین دژ -->
         <div class="pc feat">
-          <div class="pc-label-row">
-            <div class="pc-tag">وب‌سایت تخصصی · Featured Project</div>
-          </div>
-          <div class="pc-title-fa">آذین دژ — پلتفرم محاسبه‌گر و محاسبات مهندسی UPVC</div>
-          <div class="pc-title-en">Azin Dej — UPVC Door & Window Platform</div>
-          <div class="pc-desc">طراحی و پیاده‌سازی پلتفرم تخصصی صنعت درب و پنجره با قابلیت قیمت‌دهی لحظه‌ای؛ شامل کانفیگوریتور تعاملی SVG برای بیش از ۷ نوع بازشو همراه با انیمیشن، طراحی پنجره‌های دوجداره با ترکیب چند شکل هندسی در یک سفارش سفارشی، صدور فاکتور کامل، پنل ادمین اختصاصی با قابلیت مدل‌سازی قیمت و وبلاگ مدیریت محتوا.</div>
-          <div class="pc-tech">
-            <span class="ptag accent">PHP</span>
-            <span class="ptag">JavaScript</span><span class="ptag">SVG Animations</span>
-            <span class="ptag">Custom Admin</span><span class="ptag">PostgreSQL</span>
-          </div>
+          <div class="pc-label-row"><div class="pc-tag">وب‌سایت شرکتی · Featured Project</div></div>
+          <div class="pc-title-fa">آذین دژ — پلتفرم تولید درب و پنجره UPVC</div>
+          <div class="pc-title-en">Azin Dej — UPVC Door &amp; Window Platform</div>
+          <div class="pc-desc">پیکربندساز تعاملی SVG برای طراحی پنجره‌های دوجداره با اشکال هندسی گوناگون و انتخاب رنگ، شیشه و یراق‌آلات؛ ترکیب چند پنجره در یک سفارش، قیمت‌دهی لحظه‌ای، صدور فاکتور کامل و نمایش انیمیشنی انواع بازشو. شامل پنل ادمین اختصاصی با مدل‌سازی قیمت، وبلاگ، سئو و یک اپلیکیشن اندروید اختصاصی.</div>
+          <div class="pc-tech"><span class="ptag accent">PHP</span><span class="ptag">JavaScript</span><span class="ptag">SVG Animations</span><span class="ptag">Custom Admin</span><span class="ptag">PostgreSQL</span><span class="ptag">SEO</span><span class="ptag">Android App</span></div>
           <a class="pc-link" href="https://azindejwin.ir" target="_blank">🌐 azindejwin.ir →</a>
         </div>
 
-        <!-- رسا -->
+        <!-- برازنده تن -->
         <div class="pc">
-          <div class="pc-label-row">
-            <div class="pc-tag">وب‌سایت شرکتی · Corporate Platform</div>
-          </div>
-          <div class="pc-title-fa">رسا — پلتفرم مدیریت هویت شرکتی و CMS اختصاصی</div>
-          <div class="pc-title-en">Rasa — Corporate Identity & CMS Platform</div>
-          <div class="pc-desc">پلتفرم جامع و چندمنظوره شرکتی با پنل مدیریت اختصاصی جهت مدیریت مقالات، معرفی نمونه کارها و پروژه‌ها، به همراه سیستم ساختاریافته تحلیل مخاطب؛ با بهینه‌سازی مستمر سئو و سرعت بارگذاری.</div>
-          <div class="pc-tech">
-            <span class="ptag accent">PHP</span><span class="ptag">Custom Admin</span><span class="ptag">CMS</span>
-          </div>
-          <a class="pc-link" href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank">🌐 مشاهده پروژه →</a>
-          &nbsp;·&nbsp;
-          <a class="pc-link" href="https://github.com/mohmmadjavad/rasa-website-php-opensource" target="_blank">💻 سورس کد →</a>
-        </div>
-
-        <!-- برازنده -->
-        <div class="pc">
-          <div class="pc-label-row">
-            <div class="pc-tag">فروشگاه آنلاین · AR Try-On</div>
-          </div>
-          <div class="pc-title-fa">برازنده — فروشگاه آنلاین پوشاک با پرو مجازی</div>
-          <div class="pc-title-en">Barazandeh — Fashion E-Commerce Platform</div>
-          <div class="pc-desc">فروشگاه پیشرفته پوشاک با قابلیت پرو مجازی واقعیت افزوده (AR)، چت‌بات تعاملی هوشمند eilik، و پنل مدیریت همه‌جانبه شامل انبارداری، مدیریت سفارشات، تیکتینگ، مرجوعی و کمپین‌های مارکتینگ.</div>
-          <div class="pc-tech">
-            <span class="ptag accent">Django</span><span class="ptag">AI Chatbot</span>
-            <span class="ptag">AR Try-On</span><span class="ptag">Custom Admin</span>
-          </div>
+          <div class="pc-label-row"><div class="pc-tag">فروشگاه آنلاین · Live</div></div>
+          <div class="pc-title-fa">برازنده تن — فروشگاه پوشاک با پرو مجازی</div>
+          <div class="pc-title-en">Barazandeh Tan — Fashion E-Commerce &amp; Virtual Try-On</div>
+          <div class="pc-desc">فروشگاه اینترنتی پوشاک با پرو مجازی (AR) برای انتخاب دقیق‌تر سایز و مدل، ربات چت هوشمند شخصی‌سازی‌شده، پنل ادمین پیشرفته و سیستم حسابداری، انبارداری و «دفتر برش» برای مدیریت کارگاه. برای دفتر برش، حسابداری و پنل ادمین، اپلیکیشن اندروید اختصاصی نوشته شده است.</div>
+          <div class="pc-tech"><span class="ptag accent">Django</span><span class="ptag">AI Chatbot</span><span class="ptag">Virtual Try-On</span><span class="ptag">Custom Admin</span><span class="ptag">Android App</span></div>
+          <a class="pc-link" href="https://barazandetan.ir" target="_blank">🌐 barazandetan.ir →</a>
         </div>
 
         <!-- دفتر برش لباس -->
         <div class="pc">
-          <div class="pc-label-row">
-            <div class="pc-tag">نرم‌افزار چندسکویی · Multi-Platform</div>
-          </div>
+          <div class="pc-label-row"><div class="pc-tag">مدیریت کارگاهی · Multi-Platform</div></div>
           <div class="pc-title-fa">دفتر برش لباس — مدیریت برش و آمار کارگاه خیاطی</div>
-          <div class="pc-title-en">Cutting Book — Fabric Cutting Ledger &amp; Analytics</div>
-          <div class="pc-desc">ثبت مشتری‌ها و برش‌های هر مشتری، با محاسبه خودکار تعداد کار و آمار دقیق وزن از روی وزن پارچه و تعداد لا؛ همراه با پرینت، اشتراک‌گذاری و آمارگیری. نسخه سرور (Django)، اپ اندروید آفلاین و نسخه وب سبک با ذخیره‌سازی محلی.</div>
-          <div class="pc-tech">
-            <span class="ptag accent">Django</span><span class="ptag">Android · Capacitor</span><span class="ptag">Offline-first</span>
-          </div>
-          <a class="pc-link" href="https://myket.ir/app/ir.immdjavad.cuttingbook" target="_blank">📱 اندروید (مایکت) →</a>
-          &nbsp;·&nbsp;
-          <a class="pc-link" href="https://mohmmadjavad.github.io/cutting-ledger-static/" target="_blank">🌐 نسخه وب →</a>
+          <div class="pc-title-en">Cutting Book — Fabric Cutting Management System</div>
+          <div class="pc-note">پیاده‌سازی اختصاصی برای برندها و کارخانه‌های تولید لباس؛ در حال استفاده در <b>برازنده تن</b> و <b>ALCO</b></div>
+          <div class="pc-desc">ثبت مشتری‌ها و برش‌های هر مشتری با محاسبه خودکار تعداد کار و آمار دقیق وزن از روی وزن پارچه و تعداد لا، همراه با پرینت و اشتراک‌گذاری آمار. نسخه سرور (Django) با ورود جداگانه برشکار و مشتری، اپ اندروید آفلاین با بک‌آپ‌گیری و نسخه وب سبک با ذخیره‌سازی محلی.</div>
+          <div class="pc-tech"><span class="ptag accent">Django</span><span class="ptag">Android · Capacitor</span><span class="ptag">JavaScript</span><span class="ptag">Offline-first</span></div>
         </div>
 
-        <!-- دو کارت کنار هم: کالا۲ + teledata -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-          <div class="pc">
-            <div class="pc-tag">ربات تلگرام</div>
-            <div class="pc-title-fa">ربات کالا ۲</div>
-            <div class="pc-title-en">Kala2 — Used Goods Price Bot</div>
-            <div class="pc-desc">اسکرپ خودکار آگهی‌های دیوار و استخراج قیمت، مشخصات و تصاویر کالاهای دست‌دوم جهت تحلیل بازار از طریق تلگرام.</div>
-            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Web Scraping</span></div>
+        <div class="pair">
+          <div class="pc sm">
+            <div class="pc-tag">وب‌سایت شرکتی</div>
+            <div class="pc-title-fa">رسا — CMS اختصاصی</div>
+            <div class="pc-title-en">Rasa — Corporate Identity &amp; CMS</div>
+            <div class="pc-desc">پلتفرم چندمنظوره شرکتی با پنل مدیریت اختصاصی، سیستم انتشار مقالات و مدیریت پروژه‌ها؛ در حال توسعه و بهینه‌سازی مستمر.</div>
+            <div class="pc-tech"><span class="ptag accent">PHP</span><span class="ptag">Custom Admin</span><span class="ptag">CMS</span></div><a class="pc-link" href="https://mohmmadjavad.github.io/rasa/index.html" target="_blank">🌐 پروژه →</a> &nbsp;·&nbsp; <a class="pc-link" href="https://github.com/mohmmadjavad/rasa-website-php-opensource" target="_blank">💻 سورس →</a>
           </div>
-          <div class="pc">
-            <div class="pc-tag">ابزار داده</div>
-            <div class="pc-title-fa">استخراج‌گر کانال تلگرام</div>
-            <div class="pc-title-en">Telegram Extractor — teledata</div>
-            <div class="pc-desc">استخراج دقیق داده‌ها، متون و رسانه‌های کانال‌های تلگرام براساس بازه‌های زمانی مشخص با خروجی سازمان‌یافته Excel.</div>
-            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Telethon</span></div>
+          <div class="pc sm">
+            <div class="pc-tag">ابزار آنلاین · Client-Side</div>
+            <div class="pc-title-fa">متانما</div>
+            <div class="pc-title-en">Metanama — Privacy-First File Tools</div>
+            <div class="pc-desc">ابزارهای عکس، موزیک و PDF: حذف متادیتا، ویرایش کاور موزیک، ترکیب/حذف/تقسیم PDF و تبدیل فرمت تصویر؛ تمام پردازش‌ها در مرورگر کاربر و بدون ارسال فایل به سرور.</div>
+            <div class="pc-tech"><span class="ptag accent">JavaScript</span><span class="ptag">100% Client-Side</span><span class="ptag">PDF Tools</span></div><a class="pc-link" href="https://metanama.ir" target="_blank">🌐 metanama.ir →</a>
           </div>
         </div>
 
-        <!-- دو کارت کنار هم: حسابداری + کارفهم -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-          <div class="pc">
-            <div class="pc-tag">نرم‌افزار دسکتاپ</div>
-            <div class="pc-title-fa">حسابداری و انبارداری</div>
-            <div class="pc-title-en">Accounting & Inventory App</div>
-            <div class="pc-desc">نرم‌افزار مدیریت مالی، انبار و فاکتور ساز با پشتیبانی کامل از تقویم شمسی، بک‌آپ‌گیری خودکار و بخش اختصاصی «دفتر خیاط».</div>
-            <div class="pc-tech"><span class="ptag accent">PyQt6</span><span class="ptag">SQLite</span></div>
-          </div>
-          <div class="pc">
+        <div class="pair">
+          <div class="pc sm">
             <div class="pc-tag">اپلیکیشن اندروید</div>
             <div class="pc-title-fa">کارفهم</div>
-            <div class="pc-title-en">Karfahm — OBD-II Diagnostics</div>
-            <div class="pc-desc">اپلیکیشن اندرویدی تشخیص خودرو به فارسی؛ اتصال بلوتوث به دانگل‌های ELM327 و پیاده‌سازی کامل پروتکل OBD-II از پایه، بدون وابستگی به سرور.</div>
-            <div class="pc-tech"><span class="ptag accent">Capacitor</span><span class="ptag">Bluetooth</span></div>
+            <div class="pc-title-en">Karfahm — OBD-II Car Diagnostics</div>
+            <div class="pc-desc">اپ تشخیص خودرو به فارسی؛ اتصال بلوتوث به دانگل ELM327، خواندن داده‌های زنده و کدهای خطا با پیاده‌سازی کامل پروتکل OBD-II از پایه و بدون وابستگی به سرور.</div>
+            <div class="pc-tech"><span class="ptag accent">Capacitor</span><span class="ptag">OBD-II</span><span class="ptag">Bluetooth SPP</span></div><a class="pc-link" href="https://myket.ir/app/ir.immdjavad.diag206" target="_blank">📱 مایکت →</a>
+          </div>
+          <div class="pc sm">
+            <div class="pc-tag">نرم‌افزار دسکتاپ</div>
+            <div class="pc-title-fa">حسابداری و انبارداری</div>
+            <div class="pc-title-en">Accounting &amp; Warehouse Management</div>
+            <div class="pc-desc">سیستم مدیریت حسابداری، انبار و فاکتور با تقویم شمسی، گزارش‌گیری Excel/PDF و بک‌آپ‌گیری خودکار.</div>
+            <div class="pc-tech"><span class="ptag accent">PyQt6</span><span class="ptag">SQLite</span><span class="ptag">ReportLab</span></div><a class="pc-link" href="https://github.com/mohmmadjavad/clothing-accounting" target="_blank">💻 GitHub →</a>
           </div>
         </div>
 
-        <!-- کنکور ارشد -->
-        <div class="pc">
-          <div class="pc-label-row">
-            <div class="pc-tag">ابزار وب · Open Source</div>
+        <div class="pair">
+          <div class="pc sm">
+            <div class="pc-tag">بازی آموزشی · Android</div>
+            <div class="pc-title-fa">واژه‌چین</div>
+            <div class="pc-title-en">WordQuest — Crossword that Teaches English</div>
+            <div class="pc-desc">جدول‌کلمات با چرخ حروف که هنگام بازی انگلیسی یاد می‌دهد: ۳۰۰ مرحله در ۲۵ سرزمین، حالت بی‌نهایت و کاملاً آفلاین. به‌زودی منتشر می‌شود.</div>
+            <div class="pc-tech"><span class="ptag accent">Android Game</span><span class="ptag">300 Levels</span><span class="ptag">Offline</span></div>
           </div>
-          <div class="pc-title-fa">راهنمای انتخاب رشته کارشناسی‌ارشد ۱۴۰۵</div>
-          <div class="pc-title-en">Konkur Arshad — Grad-School Priority List Builder</div>
-          <div class="pc-desc">ابزار سبک و آفلاین برای جست‌وجو، فیلتر و اولویت‌بندی کدرشته‌محل‌های ارشد؛ داده‌های دفترچه سنجش استخراج‌شده، اولویت‌بندی با درگ‌ودراپ، ذخیره خودکار در مرورگر و خروجی/ورودی اکسل.</div>
-          <div class="pc-tech">
-            <span class="ptag accent">JavaScript</span><span class="ptag">SheetJS</span><span class="ptag">MIT License</span>
+          <div class="pc sm">
+            <div class="pc-tag">بازی تفننی · Android</div>
+            <div class="pc-title-fa">برج جواهرات</div>
+            <div class="pc-title-en">Jewel Tower — Stack-the-Blocks Arcade</div>
+            <div class="pc-desc">بازی چیدن بلوک‌های جواهر روی برج با پنج دنیا، کومبو، ماموریت‌های روزانه و دستاوردها؛ رابط کاملاً فارسی و دارای نسخه وب.</div>
+            <div class="pc-tech"><span class="ptag accent">Android Game</span><span class="ptag">5 Worlds</span><span class="ptag">Web Version</span></div><a class="pc-link" href="https://myket.ir/app/com.jeweltower.app" target="_blank">📱 مایکت →</a>
           </div>
-          <a class="pc-link" href="https://github.com/mohmmadjavad/konkur-arshad-computer-1405" target="_blank">💻 مشاهده در GitHub →</a>
+        </div>
+
+        <div class="pair">
+          <div class="pc sm">
+            <div class="pc-tag">ربات تلگرام</div>
+            <div class="pc-title-fa">ربات کالا ۲</div>
+            <div class="pc-title-en">Kala2 — Divar Scraper Bot</div>
+            <div class="pc-desc">اسکرپ خودکار آگهی‌های دیوار و دریافت قیمت، تصاویر و توضیحات کالاهای دست‌دوم در تلگرام.</div>
+            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Web Scraping</span><span class="ptag">BeautifulSoup</span></div><a class="pc-link" href="https://github.com/mohmmadjavad/divar-telegram-bot" target="_blank">💻 GitHub →</a>
+          </div>
+          <div class="pc sm">
+            <div class="pc-tag">ابزار داده · Open Source</div>
+            <div class="pc-title-fa">Teledata</div>
+            <div class="pc-title-en">Telegram Channel Extractor</div>
+            <div class="pc-desc">استخراج پیام‌ها و رسانه‌های کانال‌های تلگرام در بازه زمانی دلخواه با خروجی Excel و پوشه Media.</div>
+            <div class="pc-tech"><span class="ptag accent">Python</span><span class="ptag">Telethon</span><span class="ptag">CustomTkinter</span></div><a class="pc-link" href="https://github.com/mohmmadjavad/telegram-channel-downloader" target="_blank">💻 GitHub →</a>
+          </div>
         </div>
 
       </div>
