@@ -1102,34 +1102,8 @@ body[data-plang="en"] .exp-reveal{direction:ltr;}
 }
 
 /* ═══ v2 refinements ═══ */
-.hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px;}
-.cta-btn{font-family:'Vazirmatn',sans-serif;font-size:.85rem;font-weight:700;padding:11px 22px;border-radius:12px;border:1px solid rgba(80,104,255,.5);color:var(--text-body);background:rgba(41,70,255,.1);text-decoration:none;transition:all .25s ease;}
-.cta-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-2px);box-shadow:0 0 24px rgba(41,70,255,.4);}
-.cta-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
-.hero-value{font-family:'Vazirmatn',sans-serif !important;font-size:clamp(.95rem,1.5vw,1.15rem) !important;letter-spacing:0 !important;text-transform:none !important;color:var(--text-body) !important;max-width:820px;line-height:2;}
 /* readable scrim behind text scenes */
 .scene:not(.proj-scene):not(.scene-bookend) .scene-inner::before,#scene-16 .scene-inner::before{content:'';position:absolute;inset:-8% -6%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--void) 82%,transparent) 0%,color-mix(in srgb,var(--void) 60%,transparent) 50%,transparent 78%);}
-/* about */
-.about-wrap{display:flex;align-items:center;justify-content:center;gap:40px;margin-top:26px;max-width:900px;width:100%;}
-.about-photo{opacity:0;flex:0 0 auto;width:200px;height:200px;border-radius:50%;overflow:hidden;border:2px solid rgba(80,104,255,.55);box-shadow:0 0 40px rgba(41,70,255,.35);background:var(--image-bg);}
-.about-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.about-text{flex:1;min-width:0;text-align:right;}
-.about-bio{margin-top:0 !important;max-width:none !important;font-size:clamp(.95rem,1.3vw,1.1rem);line-height:2.1;}
-.about-stats{opacity:0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px;}
-.stat{border:1px solid var(--card-border);background:var(--card-bg);border-radius:12px;padding:12px 8px;text-align:center;backdrop-filter:blur(6px);}
-.stat b{display:block;font-size:1.5rem;font-weight:900;color:var(--accent2);line-height:1.2;}
-.stat span{display:block;font-size:.76rem;color:var(--text-dim);line-height:1.6;margin-top:2px;}
-@media(max-width:768px){.about-wrap{flex-direction:column;gap:18px;}.about-photo{width:120px;height:120px;}.about-text{text-align:center;}.about-stats{grid-template-columns:repeat(2,1fr);}}
-/* skills: everything open, two columns on wide screens */
-.skill-row .skill-row-body{max-height:none !important;opacity:1 !important;margin-bottom:4px;}
-.skill-row-caret{display:none;}
-.skill-row{cursor:default;}
-.skill-row-tags span{font-size:.72rem;}
-@media(min-width:900px){
-  #scene-2 .skills-terminal{max-width:980px;width:92vw;}
-  #scene-2 .skills-terminal-body{display:grid;grid-template-columns:1fr 1fr;column-gap:22px;max-height:none !important;overflow:visible;}
-  #scene-2 .skills-terminal-line{grid-column:1/-1;}
-}
 .skills-terminal{--heading:#f2f4ff;--text-body:rgba(255,255,255,.9);--text-dim:rgba(255,255,255,.78);--muted:rgba(255,255,255,.7);}
 .day .hero-name-fa{background-image:linear-gradient(155deg,#15181D 0%,#1f3be0 50%,#15181D 100%);filter:none;}
 .day .hero-name-en{color:var(--text-dim);}
@@ -1157,30 +1131,11 @@ body[data-plang="en"] .exp-reveal{direction:ltr;}
 .more-projects-wrap .more-projects{margin:70px auto 24px;}
 /* chips: neutral tech, accent for platform/status */
 .tech-chip.ember{border-color:rgba(245,158,11,.45);color:var(--tag-ember);background:rgba(245,158,11,.08);}
-/* education */
-.edu-pair{opacity:0;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;max-width:860px;width:100%;margin-top:6px;}
-.edu-card2{flex:1 1 300px;max-width:410px;padding:22px 20px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:16px;backdrop-filter:blur(8px);text-align:center;}
-.edu-kicker{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;color:var(--accent2);font-weight:600;margin-bottom:10px;}
-.edu-name{font-size:clamp(1.15rem,2vw,1.5rem);font-weight:800;line-height:1.5;color:var(--heading);}
-.edu-status{margin-top:10px;font-size:.85rem;color:var(--text-dim);}
-.edu-status.now{color:var(--tag-green);}
-.lang-pair{margin-top:30px !important;}
 /* theme + mobile menu buttons */
 .fab-theme{background:linear-gradient(135deg,rgba(20,8,40,.95),rgba(6,6,10,.95));border:1px solid rgba(41,70,255,.4);box-shadow:0 4px 20px rgba(0,0,0,.5);color:var(--accent2);backdrop-filter:blur(12px);}
 .fab-theme .ic-moon{display:none;}
 .fab-theme.is-day .ic-sun{display:none;}
 .fab-theme.is-day .ic-moon{display:block;}
-.fab-menu{display:none;background:linear-gradient(135deg,var(--accent),#7b2ff7);color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:0 4px 20px var(--glow);}
-.nav-dot::before{content:'';position:absolute;inset:-6px;}
-@media(max-width:768px){
-  #chapter-nav{display:none;}
-  .fab-menu{display:flex;}
-  #fab-group .fab-btn:not(.fab-menu){display:none;}
-  #fab-group.open .fab-btn:not(.fab-menu){display:flex;}
-  .project-image-wrap{aspect-ratio:16/9;max-height:26vh;}
-  .hero-cta .cta-btn{flex:1 1 40%;text-align:center;padding:11px 10px;}
-}
-@media(prefers-reduced-motion:reduce){.cta-btn{transition:none;}}
 </style>
 </head>
 <body>
@@ -1247,7 +1202,6 @@ document.documentElement.style.overflow = 'hidden';
   <button class="fab-btn fab-share" title="اشتراک‌گذاری" onclick="shareResume()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
   <button class="fab-btn fab-lang" id="lang-toggle" title="English / فارسی" aria-label="تغییر زبان پروژه‌ها"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/></svg><span class="lang-badge" id="lang-badge">FA</span></button>
   <button class="fab-btn fab-print" title="چاپ رزومه" onclick="window.open('print.html','_blank')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
-  <button class="fab-btn fab-menu" id="fab-menu" aria-label="منو" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div>
 
 <div id="scroll-container">
@@ -1259,12 +1213,7 @@ document.documentElement.style.overflow = 'hidden';
   <h1 class="hero-name-fa" id="s0-fa">محمد جواد محمودی</h1>
   <h2 class="hero-name-en" id="s0-en" style="font-size:inherit;font-weight:inherit;margin:0;">Mohammad Javad Mahmoudi</h2>
   <div class="hero-title" id="s0-title" data-full="Full Stack Developer · Web · Bots · Desktop · Creative Engineer"></div>
-  <div id="s0-tagline" style="opacity:0;margin-top:18px;" class="tagline-text hero-value">ساخت وب‌سایت، فروشگاه آنلاین، اپ اندروید و ربات تلگرام — از طراحی تا راه‌اندازی</div>
-  <div id="s0-cta" class="hero-cta" style="opacity:0;">
-    <a class="cta-btn primary" href="#scene-3" data-goto="scene-3">مشاهده پروژه‌ها</a>
-    <a class="cta-btn" href="#scene-16" data-goto="scene-16">تماس با من</a>
-    <a class="cta-btn" href="print.html" target="_blank" rel="noopener">دانلود رزومه</a>
-  </div>
+  <div id="s0-tagline" style="opacity:0;margin-top:18px;" class="tagline-text">کد + طراحی + محصول — هر سه با هم</div>
 </div></div></section>
 
 <!-- SCENE 1 ─ ABOUT -->
@@ -1272,18 +1221,8 @@ document.documentElement.style.overflow = 'hidden';
   <div class="chapter-marker" id="s1-ch">01 · درباره من · About</div>
   <div class="scene-headline-fa" id="s1-h">آنجا که طراحی<br>به کد تبدیل می‌شود</div>
   <div class="scene-headline-en" id="s1-hen">Where Design Becomes Code.</div>
-  <div class="about-wrap">
-    <div class="about-photo" id="s1-photo"><img src="assets/profile.webp" alt="محمد جواد محمودی" width="400" height="400" loading="lazy" draggable="false"></div>
-    <div class="about-text">
-      <div class="scene-body about-bio" id="s1-body">برنامه‌نویس Full Stack و دانشجوی کارشناسی ارشد فناوری اطلاعات (IT). وب‌سایت‌های شرکتی و فروشگاهی، اپلیکیشن‌های اندروید، ربات‌های تلگرام و نرم‌افزارهای دسکتاپ می‌سازم و از ایده تا راه‌اندازی کنار پروژه می‌مانم. شش سال تجربه در طراحی گرافیک باعث شده رابط‌هایی بسازم که هم دقیق‌اند و هم دیدنی.</div>
-      <div class="about-stats" id="s1-ben">
-        <div class="stat"><b>۲+</b><span>سال تجربه حرفه‌ای</span></div>
-        <div class="stat"><b>۶+</b><span>سال طراحی گرافیک</span></div>
-        <div class="stat"><b>۱۱</b><span>پروژه واقعی</span></div>
-        <div class="stat"><b>۳</b><span>پلتفرم: وب · اندروید · دسکتاپ</span></div>
-      </div>
-    </div>
-  </div>
+  <div class="scene-body" id="s1-body">Full Stack · وب · ربات · دسکتاپ · دانشجوی ارشد فناوری اطلاعات (IT)</div>
+  <div class="scene-body-en" id="s1-ben">2+ yrs professional · 6 yrs design · real products shipped</div>
 </div></div></section>
 
 <!-- SCENE 2 ─ SKILLS -->
@@ -1626,17 +1565,13 @@ document.documentElement.style.overflow = 'hidden';
 <!-- SCENE 15 ─ EDUCATION -->
 <section class="scene" id="scene-15"><div class="scene-sticky"><div class="scene-inner" data-parallax="0.12">
   <div class="chapter-marker" id="s15-ch">15 · تحصیل و زبان · Education &amp; Languages</div>
-  <div class="edu-pair" id="s15-edu">
-    <div class="edu-card2">
-      <div class="edu-kicker">M.Sc. Information Technology</div>
-      <div class="edu-name">کارشناسی ارشد فناوری اطلاعات (IT)</div>
-      <div class="edu-status now">در حال تحصیل</div>
-    </div>
-    <div class="edu-card2">
-      <div class="edu-kicker">B.Sc. Computer Engineering</div>
-      <div class="edu-name">کارشناسی مهندسی کامپیوتر</div>
-      <div class="edu-status">فارغ‌التحصیل</div>
-    </div>
+  <div class="edu-reveal" id="s15-edu">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:14px;font-weight:600;">M.Sc. Information Technology · Currently Enrolled</div>
+    <div class="edu-degree-fa">کارشناسی ارشد فناوری اطلاعات (IT)</div>
+    <div style="font-size:.95rem;opacity:.75;margin:6px 0 22px;">در حال تحصیل</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.26em;color:var(--accent2);margin-bottom:10px;font-weight:600;">B.Sc. Computer Engineering · Graduated</div>
+    <div class="edu-degree-fa" style="font-size:clamp(1.2rem,3.2vw,2.2rem);">کارشناسی مهندسی کامپیوتر</div>
+    <div style="font-size:.95rem;opacity:.75;margin-top:6px;">فارغ‌التحصیل</div>
   </div>
   <div class="lang-pair" id="s15-lg">
     <div class="lang-item">
@@ -2268,11 +2203,11 @@ gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
 const allScenes=document.querySelectorAll('.scene'),navDots=document.querySelectorAll('.nav-dot');
 function activateNav(i){navDots.forEach(d=>d.classList.remove('active'));if(navDots[i])navDots[i].classList.add('active');}
-gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline','#s0-cta'],{opacity:0});
-const enterTl=gsap.timeline({delay:0.35});enterTl.fromTo('#s0-ch',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'power3.out'});enterTl.fromTo('#s0-profile',{opacity:0,scale:0.65},{opacity:1,scale:1,duration:0.5,ease:'back.out(1.4)'},'-=0.3');enterTl.fromTo('#s0-fa',{opacity:0,y:80},{opacity:1,y:0,duration:0.5,ease:'expo.out'},'-=0.35');enterTl.fromTo('#s0-en',{opacity:0,y:30},{opacity:1,y:0,duration:0.4,ease:'power2.out'},'-=0.3');enterTl.fromTo('#s0-title',{opacity:0,y:20},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');enterTl.fromTo('#s0-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');enterTl.fromTo('#s0-cta',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.15');
+gsap.set(['#s0-ch','#s0-profile','#s0-fa','#s0-en','#s0-title','#s0-tagline'],{opacity:0});
+const enterTl=gsap.timeline({delay:0.35});enterTl.fromTo('#s0-ch',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'power3.out'});enterTl.fromTo('#s0-profile',{opacity:0,scale:0.65},{opacity:1,scale:1,duration:0.5,ease:'back.out(1.4)'},'-=0.3');enterTl.fromTo('#s0-fa',{opacity:0,y:80},{opacity:1,y:0,duration:0.5,ease:'expo.out'},'-=0.35');enterTl.fromTo('#s0-en',{opacity:0,y:30},{opacity:1,y:0,duration:0.4,ease:'power2.out'},'-=0.3');enterTl.fromTo('#s0-title',{opacity:0,y:20},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');enterTl.fromTo('#s0-tagline',{opacity:0,y:14},{opacity:1,y:0,duration:0.35,ease:'power2.out'},'-=0.25');
 function revealElements(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el&&(el.style.opacity==='0'||el.style.opacity==='')){gsap.to(el,{opacity:1,y:0,x:0,scale:1,duration:0.5,ease:'power2.out',overwrite:'auto'});}});}
 const sceneElements={
-  'scene-1':['s1-ch','s1-h','s1-hen','s1-photo','s1-body','s1-ben'],
+  'scene-1':['s1-ch','s1-h','s1-hen','s1-body','s1-ben'],
   'scene-2':['s2-ch','s2-h','s2-hen','s2-skills'],
   'scene-3':['s3-ch','s3-img','s3-pr'],
   'scene-4':['s4-ch','s4-img','s4-pr'],
@@ -2429,7 +2364,7 @@ const sceneElements={
 (function(){
   document.querySelectorAll('.skill-row').forEach(row=>{
     function toggle(){row.classList.toggle('open');}
-    row.classList.add('open');
+    row.addEventListener('click',toggle);
     row.addEventListener('keydown',e=>{
       if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
     });
@@ -2514,22 +2449,5 @@ window.shareResume = shareResume;
 })();
 </script>
 
-<script>
-(function(){
-  document.querySelectorAll('[data-goto]').forEach(function(a){
-    a.addEventListener('click',function(e){
-      e.preventDefault();
-      var t=document.getElementById(a.dataset.goto);
-      if(t&&window.gsap){gsap.to(window,{scrollTo:{y:t,offsetY:0},duration:0.9,ease:'power2.inOut'});}
-      else if(t){t.scrollIntoView();}
-    });
-  });
-  var g=document.getElementById('fab-group'),m=document.getElementById('fab-menu');
-  if(g&&m){
-    m.addEventListener('click',function(e){e.stopPropagation();var o=g.classList.toggle('open');m.setAttribute('aria-expanded',o?'true':'false');});
-    document.addEventListener('click',function(e){if(!g.contains(e.target)){g.classList.remove('open');m.setAttribute('aria-expanded','false');}});
-  }
-})();
-</script>
 </body>
 </html>
